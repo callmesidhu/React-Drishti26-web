@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "SportenPerson";
+  src: url("/sportenperson.otf") format("opentype");
+  font-weight: 400 700;
+}
+
+@theme {
+  --color-gold: #e19d00;
+  --color-ink: #0b0b0b;
+  --font-display: "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background: #000;
+  }
+}
