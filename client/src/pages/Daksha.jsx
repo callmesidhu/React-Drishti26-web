@@ -1,3 +1,5 @@
+import Navbar from '../components/Navbar.jsx'
+
 const events = [
   {
     title: 'Shark Tank',
@@ -78,12 +80,7 @@ function Daksha() {
     <div className="relative min-h-svh w-full text-gold">
       <Backdrop />
 
-      <nav className="sticky top-0 z-10 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md">
-        <img className="block h-11 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" />
-        <span className="hidden text-[11px] uppercase tracking-[4px] text-gold/50 sm:block">
-          Daksha / Events
-        </span>
-      </nav>
+      <Navbar />
 
       <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
         <h1 className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight text-gold font-display [text-shadow:0_0_20px_rgba(225,157,0,0.45),0_0_60px_rgba(225,157,0,0.2)]">
