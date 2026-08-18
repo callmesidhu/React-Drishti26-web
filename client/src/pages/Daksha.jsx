@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
@@ -36,10 +37,23 @@ function formatDetail(line) {
 
 function Daksha() {
   const [activeSection, setActiveSection] = useState('daksha')
+  const location = useLocation()
   const teamSectionRef = useRef(null)
   const aboutSectionRef = useRef(null)
   const contactSectionRef = useRef(null)
   const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '')
+      const el = document.getElementById(id)
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' })
+        }, 300)
+      }
+    }
+  }, [location])
 
   useEffect(() => {
     const teamSection = teamSectionRef.current

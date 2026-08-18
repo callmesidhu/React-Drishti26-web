@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const links = [
   { label: 'Workshops', to: '/workshops' },
-  { label: 'Competitions', to: '/competitions' },
+  { label: 'Competitions', to: '/workshops', scrollTo: 'competitions-section' },
   { label: 'Aaram', to: '/aaram' },
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },
@@ -24,14 +24,18 @@ function Navbar({ activeSection }) {
   }
 
   const handleClick = (link, e) => {
-    if (location.pathname === '/daksha' && link.scrollTo) {
+    if (link.scrollTo) {
       e.preventDefault()
       setMenuOpen(false)
-      setTimeout(() => {
-        const el = document.getElementById(link.scrollTo)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
-    } else if (location.pathname === '/daksha' && link.label === 'Daksha') {
+      if (location.pathname === link.to) {
+        setTimeout(() => {
+          const el = document.getElementById(link.scrollTo)
+          if (el) el.scrollIntoView({ behavior: 'smooth' })
+        }, 100)
+      } else {
+        navigate(`${link.to}#${link.scrollTo}`)
+      }
+    } else if (link.label === 'Daksha' && location.pathname === '/daksha') {
       e.preventDefault()
       setMenuOpen(false)
       setTimeout(() => {

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
@@ -52,6 +53,7 @@ const workshops = [
 
 function Workshops() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const location = useLocation()
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
   const titleRef = useRef(null)
@@ -62,6 +64,17 @@ function Workshops() {
   const activeIndexRef = useRef(0)
   const busyRef = useRef(false)
   const competitionsSectionRef = useRef(null)
+
+  useEffect(() => {
+    if (location.hash === '#competitions-section') {
+      const el = document.getElementById('competitions-section')
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: 'smooth' })
+        }, 500)
+      }
+    }
+  }, [location])
 
   useEffect(() => {
     const section = sectionRef.current
@@ -225,7 +238,7 @@ function Workshops() {
         </div>
       </section>
 
-      <div ref={competitionsSectionRef} className="relative w-full min-h-svh">
+      <div ref={competitionsSectionRef} id="competitions-section" className="relative w-full min-h-svh">
         <Competitions embedded />
       </div>
     </div>

@@ -4,13 +4,13 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 
 const teamMembers = [
-  { id: 1, name: 'Ananya', role: 'President', image: 'https://i.pravatar.cc/400?img=1' },
-  { id: 2, name: 'Rahul', role: 'Vice President', image: 'https://i.pravatar.cc/400?img=3' },
-  { id: 3, name: 'Priya', role: 'Secretary', image: 'https://i.pravatar.cc/400?img=5' },
-  { id: 4, name: 'Arjun', role: 'Treasurer', image: 'https://i.pravatar.cc/400?img=7' },
-  { id: 5, name: 'Sneha', role: 'Technical Head', image: 'https://i.pravatar.cc/400?img=9' },
-  { id: 6, name: 'Vikram', role: 'Design Head', image: 'https://i.pravatar.cc/400?img=11' },
-  { id: 7, name: 'Meera', role: 'Marketing Head', image: 'https://i.pravatar.cc/400?img=16' },
+  { id: 1, name: 'Ananya', role: 'President' },
+  { id: 2, name: 'Rahul', role: 'Vice President' },
+  { id: 3, name: 'Priya', role: 'Secretary' },
+  { id: 4, name: 'Arjun', role: 'Treasurer' },
+  { id: 5, name: 'Sneha', role: 'Technical Head' },
+  { id: 6, name: 'Vikram', role: 'Design Head' },
+  { id: 7, name: 'Meera', role: 'Marketing Head' },
 ]
 
 const TOTAL = teamMembers.length
@@ -209,7 +209,7 @@ function Team({ embedded = false }) {
               onClick={() => setActiveIndex(index)}
             >
               <div
-                className="card-inner relative overflow-hidden rounded-md"
+                className="card-inner relative flex items-center justify-center overflow-hidden rounded-md"
                 style={{
                   height: '420px',
                   width: '300px',
@@ -220,12 +220,7 @@ function Team({ embedded = false }) {
                     : '0 10px 30px rgba(0,0,0,0.4)',
                 }}
               >
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="card-img h-full w-full object-cover grayscale"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10" />
                 <div className="absolute top-0 right-4 flex h-full items-center">
                   <span
                     className="text-3xl font-bold uppercase tracking-wider text-white/15"
