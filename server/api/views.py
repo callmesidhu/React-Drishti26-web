@@ -1,9 +1,11 @@
 from rest_framework.views import APIView
+from rest_framework.generics import CreateAPIView
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.response import Response
 from rest_framework import status
 
 from .models import CampusAmbassador
+from .serializers import CampusAmbassadorSerializer
 
 from django.shortcuts import get_object_or_404
 from django.db.models import F
@@ -55,3 +57,7 @@ class AddPointsLeaderboardAPIView(APIView):
         )
 
         
+class AddCampusAmbassadorAPIView(CreateAPIView):
+    serializer_class=CampusAmbassadorSerializer
+    permission_classes=[HasAPIKey]
+    
