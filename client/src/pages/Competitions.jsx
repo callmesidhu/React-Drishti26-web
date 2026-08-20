@@ -194,13 +194,13 @@ function Competitions({ embedded = false }) {
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               <span className="relative inline-block">
-                <span className="competitions-text">Competitions</span>
-                <span
-                  className="absolute -top-1 left-[30%] text-lg md:-top-2 md:left-[30%] md:text-3xl"
-                  style={{ color: '#e19d00', WebkitTextFillColor: '#e19d00', filter: 'blur(0.5px)' }}
-                >
-                  ✦
-                </span>
+                    <span className="relative z-10 competitions-text">Competitions</span>
+                    <img
+                      src="/workshops/shine.svg"
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none"
+                    />
               </span>
             </h1>
           </div>
