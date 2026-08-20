@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import { applyLetterGradient } from '../utils/letterGradient.js'
 
 const competitions = [
   {
@@ -38,6 +39,27 @@ function Competitions({ embedded = false }) {
   const detailRef = useRef(null)
   const activeRef = useRef(activeIndex)
   const navRef = useRef(false)
+
+  // Letter-gradient refs
+  const h1Ref = useRef(null)
+  const h2Ref = useRef(null)
+
+  // Apply letter gradient to static h1 once on mount
+  useEffect(() => {
+    if (!h1Ref.current) return
+    // The h1 contains a <span> with the text and a sparkle child span.
+    // We only split the text node (first child text content), not the sparkle.
+    const textSpan = h1Ref.current.querySelector('.competitions-text')
+    if (textSpan) applyLetterGradient(textSpan)
+  }, [])
+
+  // Re-apply letter gradient to h2 whenever activeIndex changes
+  useEffect(() => {
+    if (!h2Ref.current) return
+    // Reset and re-apply on each index change
+    h2Ref.current.textContent = competitions[activeIndex].title
+    applyLetterGradient(h2Ref.current)
+  }, [activeIndex])
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
@@ -167,11 +189,12 @@ function Competitions({ embedded = false }) {
         <section className="flex flex-1 flex-col justify-center md:pl-4">
           <div className="relative mb-2">
             <h1
-              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight text-gold-gradient md:text-[clamp(56px,9vw,110px)]"
+              ref={h1Ref}
+              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               <span className="relative inline-block">
-                Competitions
+                <span className="competitions-text">Competitions</span>
                 <span
                   className="absolute -top-1 left-[30%] text-lg md:-top-2 md:left-[30%] md:text-3xl"
                   style={{ color: '#e19d00', WebkitTextFillColor: '#e19d00', filter: 'blur(0.5px)' }}
@@ -184,7 +207,8 @@ function Competitions({ embedded = false }) {
 
           <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
             <h2
-              className="text-[clamp(24px,5vw,44px)] font-bold text-gold-gradient"
+              ref={h2Ref}
+              className="text-[clamp(24px,5vw,44px)] font-bold"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               {active.title}

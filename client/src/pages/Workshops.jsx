@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import Competitions from './Competitions.jsx'
+import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -64,6 +65,14 @@ function Workshops() {
   const activeIndexRef = useRef(0)
   const busyRef = useRef(false)
   const competitionsSectionRef = useRef(null)
+
+  // Apply letter gradient on initial mount
+  useEffect(() => {
+    if (titleRef.current) {
+      titleRef.current.textContent = workshops[0].title
+      applyLetterGradient(titleRef.current)
+    }
+  }, [])
 
   useEffect(() => {
     if (location.hash === '#competitions-section') {
@@ -136,7 +145,11 @@ function Workshops() {
 
       setTimeout(() => {
         setActiveIndex(newIndex)
+
+        // Reset text, re-apply letter gradient, then fade in
         titleRef.current.textContent = ws.title
+        applyLetterGradient(titleRef.current)
+
         descRef.current.textContent = ws.description
         btnRef.current.href = ws.registerUrl
 
@@ -181,7 +194,7 @@ function Workshops() {
 
             <h1
               ref={titleRef}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight text-gold-gradient font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
+              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
             >
               {active.title}
             </h1>
