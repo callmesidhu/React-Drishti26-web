@@ -17,3 +17,19 @@
     background: #000;
   }
 }
+
+@utility text-gold-gradient {
+  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}

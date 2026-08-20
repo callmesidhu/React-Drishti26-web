@@ -113,7 +113,7 @@ function Competitions({ embedded = false }) {
   return (
     <div ref={pageRef} className={`relative min-h-svh w-full touch-none ${embedded ? 'bg-transparent' : ''}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="competitions" />}
 
       <div className="mx-auto flex min-h-[calc(100vh-60px)] max-w-[1400px] flex-col gap-6 px-[clamp(16px,4vw,40px)] py-8 md:flex-row md:gap-12 md:py-10">
         <aside
@@ -167,14 +167,14 @@ function Competitions({ embedded = false }) {
         <section className="flex flex-1 flex-col justify-center md:pl-4">
           <div className="relative mb-2">
             <h1
-              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight text-gold md:text-[clamp(56px,9vw,110px)]"
+              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight text-gold-gradient md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               <span className="relative inline-block">
                 Competitions
                 <span
                   className="absolute -top-1 left-[30%] text-lg md:-top-2 md:left-[30%] md:text-3xl"
-                  style={{ color: '#e19d00', filter: 'blur(0.5px)' }}
+                  style={{ color: '#e19d00', WebkitTextFillColor: '#e19d00', filter: 'blur(0.5px)' }}
                 >
                   ✦
                 </span>
@@ -184,7 +184,7 @@ function Competitions({ embedded = false }) {
 
           <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
             <h2
-              className="text-[clamp(24px,5vw,44px)] font-bold text-gold"
+              className="text-[clamp(24px,5vw,44px)] font-bold text-gold-gradient"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               {active.title}

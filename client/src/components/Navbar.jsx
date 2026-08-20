@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const links = [
   { label: 'Workshops', to: '/workshops' },
-  { label: 'Competitions', to: '/workshops', scrollTo: 'competitions-section' },
+  { label: 'Competitions', to: '/competitions', scrollTo: 'competitions-section' },
   { label: 'Aaram', to: '/aaram' },
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },

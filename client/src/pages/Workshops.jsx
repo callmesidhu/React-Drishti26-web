@@ -181,7 +181,7 @@ function Workshops() {
 
             <h1
               ref={titleRef}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight text-gold font-display [text-shadow:0_0_20px_rgba(225,157,0,0.45),0_0_60px_rgba(225,157,0,0.2)]"
+              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight text-gold-gradient font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
             >
               {active.title}
             </h1>

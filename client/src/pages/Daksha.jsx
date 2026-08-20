@@ -115,10 +115,10 @@ function Daksha() {
 
       <section className="relative min-h-svh w-full">
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
-          <h1 className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight text-gold font-display [text-shadow:0_0_20px_rgba(225,157,0,0.45),0_0_60px_rgba(225,157,0,0.2)]">
+          <h1 className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight text-gold-gradient font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]">
             Daksha
           </h1>
-          <p className="text-[30px] uppercase tracking-[4px] text-gold/60">Events</p>
+          <p className="text-[30px] uppercase tracking-[4px] text-gold-gradient font-display">Events</p>
         </header>
 
         <main className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(56px,8vw,88px)] px-[clamp(16px,4vw,40px)] pb-24">
@@ -129,7 +129,7 @@ function Daksha() {
             >
               <div className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start">
                 <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
-                <h2 className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight text-gold font-display [text-shadow:0_0_16px_rgba(225,157,0,0.4)]">
+                <h2 className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight text-gold-gradient font-display drop-shadow-[0_0_20px_rgba(225,157,0,0.35)]">
                   {event.title}
                 </h2>
 

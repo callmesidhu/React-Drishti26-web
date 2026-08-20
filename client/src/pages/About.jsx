@@ -73,7 +73,7 @@ function About({ embedded = false }) {
   return (
     <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="about" />}
 
       <header
         ref={heroRef}
@@ -81,13 +81,13 @@ function About({ embedded = false }) {
       >
         <p className="text-[11px] uppercase tracking-[6px] text-gold/60">About Us</p>
         <h1
-          className="mt-4 text-[clamp(40px,9vw,100px)] font-bold uppercase leading-none tracking-tight text-gold"
+          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Drishti
         </h1>
         <p
-          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px] text-gold/50"
+          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px] text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Technical Festival
@@ -106,7 +106,7 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Our Numbers
@@ -115,7 +115,7 @@ function About({ embedded = false }) {
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <p
-                className="text-[clamp(36px,6vw,64px)] font-bold text-gold"
+                className="text-[clamp(36px,6vw,64px)] font-bold text-gold-gradient"
                 style={{ fontFamily: "'Clash Display', sans-serif" }}
               >
                 {stat.number}
@@ -130,7 +130,7 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           What We Stand For
@@ -143,7 +143,7 @@ function About({ embedded = false }) {
             >
               <span className="text-3xl text-gold">{value.icon}</span>
               <h3
-                className="mt-4 text-xl font-bold uppercase tracking-wider text-gold"
+                className="mt-4 text-xl font-bold uppercase tracking-wider text-gold-gradient"
                 style={{ fontFamily: "'Clash Display', sans-serif" }}
               >
                 {value.title}
@@ -158,7 +158,7 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[800px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Our Journey
@@ -174,7 +174,7 @@ function About({ embedded = false }) {
             >
               <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
                 <p
-                  className="text-2xl font-bold text-gold"
+                  className="text-2xl font-bold text-gold-gradient"
                   style={{ fontFamily: "'Clash Display', sans-serif" }}
                 >
                   {item.year}
@@ -192,7 +192,7 @@ function About({ embedded = false }) {
 
       <section className="px-[clamp(16px,4vw,40px)] py-[clamp(40px,8vw,100px)] text-center">
         <h2
-          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Ready to be part of something extraordinary?

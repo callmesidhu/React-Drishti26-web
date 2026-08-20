@@ -47,7 +47,7 @@ function Team({ embedded = false }) {
       const span = document.createElement('span')
       span.textContent = char === ' ' ? '\u00A0' : char
       span.style.display = 'inline-block'
-      span.className = 'bg-gradient-to-r from-gold via-yellow-300 to-gold bg-clip-text text-transparent'
+      span.className = 'text-gold-gradient'
       fragment.appendChild(span)
     })
     el.appendChild(fragment)
@@ -177,12 +177,12 @@ function Team({ embedded = false }) {
   return (
     <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="team" />}
 
       <header className="px-[clamp(16px,4vw,40px)] pb-4 pt-[clamp(32px,6vw,64px)] text-center">
         <h1
           ref={titleRef}
-          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight"
+          className="text-[clamp(32px,8vw,120px)] font-bold leading-none tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Meet The Team
