@@ -6,6 +6,7 @@ const links = [
   { label: 'Competitions', to: '/workshops', scrollTo: 'competitions-section' },
   { label: 'Aaram', to: '/aaram' },
   { label: 'Daksha', to: '/daksha' },
+  { label: 'Leaderboard', to: '/leaderboard' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },
   { label: 'About', to: '/about', scrollTo: 'about-section' },
   { label: 'Contact', to: '/contact', scrollTo: 'contact-section' },
