@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import { applyLetterGradient } from '../utils/letterGradient.js'
 
 const competitions = [
   {
@@ -38,6 +39,27 @@ function Competitions({ embedded = false }) {
   const detailRef = useRef(null)
   const activeRef = useRef(activeIndex)
   const navRef = useRef(false)
+
+  // Letter-gradient refs
+  const h1Ref = useRef(null)
+  const h2Ref = useRef(null)
+
+  // Apply letter gradient to static h1 once on mount
+  useEffect(() => {
+    if (!h1Ref.current) return
+    // The h1 contains a <span> with the text and a sparkle child span.
+    // We only split the text node (first child text content), not the sparkle.
+    const textSpan = h1Ref.current.querySelector('.competitions-text')
+    if (textSpan) applyLetterGradient(textSpan)
+  }, [])
+
+  // Re-apply letter gradient to h2 whenever activeIndex changes
+  useEffect(() => {
+    if (!h2Ref.current) return
+    // Reset and re-apply on each index change
+    h2Ref.current.textContent = competitions[activeIndex].title
+    applyLetterGradient(h2Ref.current)
+  }, [activeIndex])
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
@@ -113,7 +135,7 @@ function Competitions({ embedded = false }) {
   return (
     <div ref={pageRef} className={`relative min-h-svh w-full touch-none ${embedded ? 'bg-transparent' : ''}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="competitions" />}
 
       <div className="mx-auto flex min-h-[calc(100vh-60px)] max-w-[1400px] flex-col gap-6 px-[clamp(16px,4vw,40px)] py-8 md:flex-row md:gap-12 md:py-10">
         <aside
@@ -167,24 +189,26 @@ function Competitions({ embedded = false }) {
         <section className="flex flex-1 flex-col justify-center md:pl-4">
           <div className="relative mb-2">
             <h1
-              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight text-gold md:text-[clamp(56px,9vw,110px)]"
+              ref={h1Ref}
+              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               <span className="relative inline-block">
-                Competitions
-                <span
-                  className="absolute -top-1 left-[30%] text-lg md:-top-2 md:left-[30%] md:text-3xl"
-                  style={{ color: '#e19d00', filter: 'blur(0.5px)' }}
-                >
-                  ✦
-                </span>
+                    <span className="relative z-10 competitions-text">Competitions</span>
+                    <img
+                      src="/workshops/shine.svg"
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none"
+                    />
               </span>
             </h1>
           </div>
 
           <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
             <h2
-              className="text-[clamp(24px,5vw,44px)] font-bold text-gold"
+              ref={h2Ref}
+              className="text-[clamp(24px,5vw,44px)] font-bold"
               style={{ fontFamily: "'Clash Display', sans-serif" }}
             >
               {active.title}
