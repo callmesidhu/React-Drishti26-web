@@ -19,10 +19,20 @@ function Footer() {
               Pages
             </h4>
             <ul className="mt-4 flex flex-col gap-3">
-              {['Home', 'Workshops', 'Competitions', 'Aaram', 'Daksha', 'Team', 'About Us', 'Contact'].map((page) => (
-                <li key={page}>
-                  <a href={`/${page.toLowerCase().replace(' ', '')}`} className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
-                    {page}
+              {[
+                { name: 'Home', path: '/daksha' },
+                { name: 'Workshops', path: '/workshops' },
+                { name: 'Competitions', path: '/competitions' },
+                { name: 'Pro Shows', path: '/proshows' },
+                { name: 'Exhibitions', path: '/exhibitions' },
+                { name: 'Talks', path: '/talks' },
+                { name: 'Daksha', path: '/daksha' },
+                { name: 'Team', path: '/team' },
+                { name: 'About Us', path: '/about' },
+              ].map((page) => (
+                <li key={page.name}>
+                  <a href={page.path} className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
+                    {page.name}
                   </a>
                 </li>
               ))}
