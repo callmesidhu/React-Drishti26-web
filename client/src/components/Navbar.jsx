@@ -4,6 +4,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 const links = [
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions', scrollTo: 'competitions-section' },
+  { label: 'Talks & Panels', to: '/talks' },
+  { label: 'Exhibitions', to: '/exhibitions' },
+  { label: 'Pro Shows', to: '/proshows' },
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },
   { label: 'About', to: '/about', scrollTo: 'about-section' },
@@ -17,7 +20,12 @@ function Navbar({ activeSection }) {
 
   const isActive = (link) => {
     if (activeSection) {
-      return activeSection === link.label.toLowerCase()
+      const active = activeSection.toLowerCase()
+      const label = link.label.toLowerCase()
+      if (active === 'talks' && label.includes('talks')) return true
+      if (active === 'exhibitions' && label.includes('exhibitions')) return true
+      if (active === 'proshows' && label.includes('pro show')) return true
+      return active === label
     }
     return location.pathname === link.to
   }
