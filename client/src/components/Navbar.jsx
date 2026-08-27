@@ -7,7 +7,6 @@ const links = [
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },
   { label: 'About', to: '/about', scrollTo: 'about-section' },
-  { label: 'Contact', to: '/contact', scrollTo: 'contact-section' },
 ]
 
 function Navbar({ activeSection }) {
