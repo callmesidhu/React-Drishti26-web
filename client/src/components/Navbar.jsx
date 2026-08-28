@@ -4,13 +4,13 @@ import gsap from 'gsap'
 
 const links = [
   { label: 'Workshops', to: '/workshops' },
-  { label: 'Competitions', to: '/competitions', scrollTo: 'competitions-section' },
+  { label: 'Competitions', to: '/competitions' },
   { label: 'Pro Shows', to: '/proshows' },
   { label: 'Exhibitions', to: '/exhibitions' },
   { label: 'Talks', to: '/talks' },
   { label: 'Daksha', to: '/daksha' },
-  { label: 'Team', to: '/team', scrollTo: 'team-section' },
-  { label: 'About', to: '/about', scrollTo: 'about-section' },
+  { label: 'Team', to: '/team' },
+  { label: 'About', to: '/about' },
 ]
 
 function Navbar({ activeSection }) {
@@ -63,27 +63,8 @@ function Navbar({ activeSection }) {
     return location.pathname === link.to
   }
 
-  const handleClick = (link, e) => {
-    if (link.scrollTo) {
-      e.preventDefault()
-      setMenuOpen(false)
-      if (location.pathname === link.to) {
-        setTimeout(() => {
-          const el = document.getElementById(link.scrollTo)
-          if (el) el.scrollIntoView({ behavior: 'smooth' })
-        }, 100)
-      } else {
-        navigate(`${link.to}#${link.scrollTo}`)
-      }
-    } else if (link.label === 'Daksha' && location.pathname === '/daksha') {
-      e.preventDefault()
-      setMenuOpen(false)
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 100)
-    } else {
-      setMenuOpen(false)
-    }
+  const handleClick = () => {
+    setMenuOpen(false)
   }
 
   return (
@@ -98,7 +79,7 @@ function Navbar({ activeSection }) {
             <Link
               key={link.to}
               to={link.to}
-              onClick={(e) => handleClick(link, e)}
+              onClick={() => handleClick()}
               className={`relative text-[11px] lg:text-[13px] uppercase tracking-[1.5px] lg:tracking-[2px] transition-colors duration-200 ${
                 isActive(link)
                   ? 'text-gold'
@@ -138,7 +119,7 @@ function Navbar({ activeSection }) {
               key={link.to}
               ref={(el) => { mobileLinksRef.current[i] = el }}
               to={link.to}
-              onClick={(e) => handleClick(link, e)}
+              onClick={() => handleClick()}
               className={`text-2xl uppercase tracking-[4px] transition-colors duration-200 ${
                 isActive(link)
                   ? 'text-gold'

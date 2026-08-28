@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 const competitions = [
@@ -272,6 +273,8 @@ function Competitions({ embedded = false }) {
           </div>
         </section>
       </div>
+
+      <Footer />
     </div>
   )
 }

@@ -1,12 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import Footer from '../components/Footer.jsx'
-import Team from './Team.jsx'
-import About from './About.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -37,12 +34,6 @@ function formatDetail(line) {
 }
 
 function Daksha() {
-  const [activeSection, setActiveSection] = useState('daksha')
-  const location = useLocation()
-  const teamSectionRef = useRef(null)
-  const aboutSectionRef = useRef(null)
-  const contactSectionRef = useRef(null)
-  const wrapperRef = useRef(null)
   const heroRef = useRef(null)
   const eventSectionRef = useRef(null)
   const eventContentRef = useRef(null)
@@ -101,75 +92,11 @@ function Daksha() {
     return () => ctx.revert()
   }, [])
 
-  useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.replace('#', '')
-      const el = document.getElementById(id)
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' })
-        }, 300)
-      }
-    }
-  }, [location])
-
-  useEffect(() => {
-    const teamSection = teamSectionRef.current
-    if (!teamSection) return
-
-    gsap.fromTo(
-      teamSection,
-      { y: '100vh' },
-      {
-        y: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: 'top top',
-          end: () => `+=${window.innerHeight}`,
-          scrub: true,
-          pin: false,
-        },
-      }
-    )
-
-    return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill())
-    }
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const teamSection = teamSectionRef.current
-      const aboutSection = aboutSectionRef.current
-      const contactSection = contactSectionRef.current
-      if (!teamSection) return
-
-      const teamRect = teamSection.getBoundingClientRect()
-      const aboutRect = aboutSection?.getBoundingClientRect()
-      const contactRect = contactSection?.getBoundingClientRect()
-
-      if (contactRect && contactRect.top < window.innerHeight * 0.5) {
-        setActiveSection('contact')
-      } else if (aboutRect && aboutRect.top < window.innerHeight * 0.5) {
-        setActiveSection('about')
-      } else if (teamRect.top < window.innerHeight * 0.5) {
-        setActiveSection('team')
-      } else {
-        setActiveSection('daksha')
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
-    <div ref={wrapperRef} className="relative w-full text-gold">
+    <div className="relative w-full text-gold">
       <Backdrop />
 
-      <Navbar activeSection={activeSection} />
+      <Navbar activeSection="daksha" />
 
       <section ref={heroRef} className="relative min-h-svh w-full">
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
@@ -238,28 +165,9 @@ function Daksha() {
             </section>
           ))}
         </main>
-
-        <div ref={scrollIndicatorRef} className="flex justify-center pb-16" style={{ opacity: 0 }}>
-          <div className="flex flex-col items-center gap-2 text-gold/50">
-            <span className="text-xs uppercase tracking-[4px]">Scroll for more</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 5v14M19 12l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
       </section>
 
-      <div ref={teamSectionRef} id="team-section" className="relative w-full">
-        <Team embedded />
-      </div>
-
-      <div ref={aboutSectionRef} id="about-section" className="relative w-full min-h-svh">
-        <About embedded />
-      </div>
-
-      <div ref={contactSectionRef}>
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }
