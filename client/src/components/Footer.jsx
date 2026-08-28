@@ -7,7 +7,7 @@ import {
 
 // ---- Footer assets ----
 const footerLogo = "/home/drishti-logo.png";
-const footerMap = "/home/drishti-logo.png";
+const footerMap = "/home/map-footer.png";
 
 const pageLinks = [
   { label: "Home", href: "#home" },
