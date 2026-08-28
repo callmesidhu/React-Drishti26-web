@@ -55,24 +55,33 @@ function Footer() {
           </p>
         </div>
 
-        {/* Pages */}
-        <nav aria-label="Footer navigation">
-          <p className="mb-4 font-['Satoshi-Medium',Helvetica] text-[15px] font-normal leading-[normal] text-[#b7b7b7]">
-            Pages
-          </p>
-          <ul className="m-0 flex list-none flex-col gap-3 p-0">
-            {pageLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="font-['Satoshi-Medium',Helvetica] text-xs font-normal leading-[normal] text-[#b7b7b7] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <div>
+            <h4
+              className="text-sm font-bold uppercase tracking-[3px] text-white"
+              style={{ fontFamily: "'Clash Display', sans-serif" }}
+            >
+              Pages
+            </h4>
+            <ul className="mt-4 flex flex-col gap-3">
+              {[
+                { name: 'Home', path: '/daksha' },
+                { name: 'Workshops', path: '/workshops' },
+                { name: 'Competitions', path: '/competitions' },
+                { name: 'Pro Shows', path: '/proshows' },
+                { name: 'Exhibitions', path: '/exhibitions' },
+                { name: 'Talks', path: '/talks' },
+                { name: 'Daksha', path: '/daksha' },
+                { name: 'Team', path: '/team' },
+                { name: 'About Us', path: '/about' },
+              ].map((page) => (
+                <li key={page.name}>
+                  <a href={page.path} className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
+                    {page.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
         {/* Contact */}
         <div>
