@@ -1,39 +1,40 @@
 import { useEffect, useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
-import Footer from '../components/Footer.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { dakshaEventsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const events = [
-  {
-    title: 'Shark Tank',
-    image: '/daksha/shark-tank.png',
-    alt: 'Shark Tank event',
-    guidelines: 'Shark tank guidelines',
-    registerUrl: 'https://snaptiqz.com/event/shark-tank',
-    details: [
-      'Open to: Student founders, startups in ideation/early-growth stages & registered MSMEs.',
-      'Initial Screening → Expert Panel Pitch → Grand Finale with Investors.',
-      'Pitch your startup before industry experts and investors.',
-      'Evaluation: Innovation • Market Potential • Business Model • Scalability • Investment Potential.',
-      'Grand Finale: 19 September 2026.',
-    ],
-  },
-]
+const events = dakshaEventsData
 
 function formatDetail(line) {
-  return line
+  const formatted = line
     .replace(/^Open to:\s*/i, 'Open to — ')
     .replace(/^Evaluation:\s*/i, 'Evaluation — ')
     .replace(/^Grand Finale:\s*/i, 'Grand Finale — ')
     .replace(/•/g, '·')
+
+  if (formatted.includes(' — ')) {
+    const [label, ...rest] = formatted.split(' — ')
+    return (
+      <span>
+        <span className="font-semibold text-sky-400">{label} — </span>
+        <span className="text-white/85">{rest.join(' — ')}</span>
+      </span>
+    )
+  }
+  return <span className="text-white/85">{formatted}</span>
 }
 
 function Daksha() {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
+  const selectedModalEvent = slug ? events.find((e) => e.slug === slug) : null
   const heroRef = useRef(null)
   const eventSectionRef = useRef(null)
   const eventContentRef = useRef(null)
@@ -47,9 +48,10 @@ function Daksha() {
   const eventH2Refs = useRef([])
 
   useEffect(() => {
-    applyLetterGradient(h1Ref.current)
-    applyLetterGradient(eventsLabelRef.current)
-    eventH2Refs.current.forEach(applyLetterGradient)
+    document.body.classList.add('theme-blue')
+    applyLetterGradient(h1Ref.current, 'text-blue-gradient')
+    applyLetterGradient(eventsLabelRef.current, 'text-blue-gradient')
+    eventH2Refs.current.forEach((el) => applyLetterGradient(el, 'text-blue-gradient'))
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -89,14 +91,17 @@ function Daksha() {
       })
     })
 
-    return () => ctx.revert()
+    return () => {
+      document.body.classList.remove('theme-blue')
+      ctx.revert()
+    }
   }, [])
 
   return (
-    <div className="relative w-full text-gold">
-      <Backdrop />
+    <div className="theme-blue relative w-full text-sky-400">
+      <Backdrop theme="blue" />
 
-      <Navbar activeSection="daksha" />
+      <Navbar activeSection="daksha" theme="blue" />
 
       <section ref={heroRef} className="relative min-h-svh w-full">
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
@@ -121,10 +126,10 @@ function Daksha() {
             <section
               key={event.title}
               ref={eventSectionRef}
-              className="flex flex-col items-center border-t border-gold/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
+              className="flex flex-col items-center border-t border-sky-500/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
             >
               <div ref={eventContentRef} className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start" style={{ opacity: 0 }}>
-                <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
+                <p className="text-[11px] uppercase tracking-[4px] text-sky-400/70">{event.guidelines}</p>
                 <h2
                   ref={(el) => { eventH2Refs.current[i] = el }}
                   style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
@@ -135,40 +140,45 @@ function Daksha() {
 
                 <ul ref={eventDetailsRef} className="mt-6 flex flex-col gap-4">
                   {event.details.map((line, j) => (
-                    <li key={j} className="leading-[1.7] text-gold/80" style={{ opacity: 0 }}>
+                    <li key={j} className="leading-[1.7] text-sky-100/80" style={{ opacity: 0 }}>
                       {formatDetail(line)}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-gold/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2" style={{ opacity: 0 }}>
-                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-gold" />
-                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-gold" />
-                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-gold" />
-                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-gold" />
+              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.2)]" style={{ opacity: 0 }}>
+                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
 
                 <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
               </div>
 
               <div className="order-3 mt-8 md:mt-0 md:col-start-1 md:row-start-2">
-                <a
+                <button
                   ref={eventBtnRef}
-                  href={event.registerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                  type="button"
+                  onClick={() => routerNavigate(`/daksha/${event.slug}`)}
+                  className="inline-block border border-sky-400 bg-sky-500/10 px-10 py-3 text-xs uppercase tracking-[3px] text-sky-400 transition-all duration-200 hover:bg-sky-400 hover:text-black hover:shadow-[0_0_25px_rgba(56,189,248,0.5)] cursor-pointer"
                   style={{ opacity: 0 }}
                 >
-                  Register
-                </a>
+                  View Details
+                </button>
               </div>
             </section>
           ))}
         </main>
       </section>
 
-      <Footer />
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/daksha')}
+        />
+      )}
     </div>
   )
 }

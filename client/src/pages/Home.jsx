@@ -3,6 +3,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ProShows from "./ProShows";
+import EventDetailsModal from "../components/EventDetailsModal";
+import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,16 +30,14 @@ const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGA
 const workshopItems = [
   { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
   { title: "COMPETITIONS", image: categoriesPhoto, rotate: 11.17 },
-  { title: "TALKS AND PANELS", image: categoriesPhoto, rotate: -11.17 },
-  { title: "EXHIBITIONS", image: categoriesPhoto, rotate: 11.17 },
   { title: "PRO SHOWS", image: categoriesPhoto, rotate: -11.17 },
 ];
 
 const featuredEvents = [
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
+  dakshaEventsData[0],
+  competitionsData[0],
+  competitionsData[1],
+  workshopsData[0],
 ];
 
 const galleryImages = [
@@ -52,6 +53,7 @@ function Home() {
   const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [carouselStep, setCarouselStep] = useState(412);
+  const [activeModalEvent, setActiveModalEvent] = useState(null);
 
   const categoryImageRef = useRef(null);
   const categoryListRef = useRef(null);
@@ -196,6 +198,7 @@ function Home() {
   }, []);
 
   const handleRegistration = (eventIndex) => {
+    setActiveModalEvent(featuredEvents[eventIndex]);
     window.dispatchEvent(
       new CustomEvent("featured-event-registration", { detail: { eventIndex } })
     );
@@ -843,6 +846,11 @@ function Home() {
         />
       </section>
 
+      {/* ============ PRO SHOWS ============ */}
+      <section id="proshows" className="relative w-full bg-black">
+        <ProShows embedded={true} />
+      </section>
+
       {/* ============ FEATURED EVENTS ============ */}
       <section
         className="relative min-h-[clamp(800px,86vw,1250px)] w-full overflow-hidden bg-black py-20 flex flex-col justify-center"
@@ -918,11 +926,11 @@ function Home() {
                     <button
                       type="button"
                       className="absolute bottom-0 left-0 flex h-[68px] w-full cursor-pointer items-center justify-between px-[13px] text-left border-t border-white bg-black/50 backdrop-blur-sm transition-all duration-300 hover:bg-gold/30 hover:border-gold"
-                      aria-label={`Register now for featured event ${index + 1}`}
+                      aria-label={`View details for featured event ${index + 1}`}
                       onClick={() => handleRegistration(index)}
                     >
-                      <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(20px,2.2vw,32px)] font-normal leading-8 tracking-[0] text-white transition-colors duration-300 group-hover:text-gold">
-                        REGISTER NOW
+                      <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(18px,2vw,28px)] font-normal leading-8 tracking-[0] text-white transition-colors duration-300 group-hover:text-gold">
+                        VIEW DETAILS
                       </span>
                       <img
                         className="h-[clamp(20px,2.2vw,32px)] w-[clamp(20px,2.2vw,32px)] -rotate-90 transition-all duration-300 group-hover:rotate-0 group-hover:scale-125"
@@ -1055,6 +1063,14 @@ function Home() {
       </section>
 
       <Footer />
+
+      {/* View Details Popup Modal */}
+      {activeModalEvent && (
+        <EventDetailsModal
+          event={activeModalEvent}
+          onClose={() => setActiveModalEvent(null)}
+        />
+      )}
     </main>
   );
 }

@@ -348,7 +348,7 @@ function About({ embedded = false }) {
         </a>
       </section>
 
-      <Footer />
+      {!embedded && <Footer />}
     </div>
   )
 }

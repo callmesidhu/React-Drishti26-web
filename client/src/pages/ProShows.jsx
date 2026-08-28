@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
-import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Import image via relative path
 import ProShow from '/proshow/proshow.png'
@@ -80,7 +82,16 @@ function ProShowsPage({ embedded = false }) {
         })
       })
 
-      const mainTl = gsap.timeline({ delay: 0.3 })
+      const mainTl = gsap.timeline(
+        embedded
+          ? {
+              scrollTrigger: {
+                trigger: stageAreaRef.current,
+                start: 'top 75%',
+              },
+            }
+          : { delay: 0.3 }
+      )
 
       // Step A: Plain golden card appears on ground plane with shadow
       mainTl
@@ -333,8 +344,6 @@ function ProShowsPage({ embedded = false }) {
           ))}
         </div>
       </section>
-
-      {!embedded && <Footer />}
     </div>
   )
 }
