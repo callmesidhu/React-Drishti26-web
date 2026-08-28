@@ -37,9 +37,9 @@ function Daksha() {
   const eventH2Refs = useRef([])
 
   useEffect(() => {
-    applyLetterGradient(h1Ref.current)
-    applyLetterGradient(eventsLabelRef.current)
-    eventH2Refs.current.forEach(applyLetterGradient)
+    applyLetterGradient(h1Ref.current, 'text-blue-gradient')
+    applyLetterGradient(eventsLabelRef.current, 'text-blue-gradient')
+    eventH2Refs.current.forEach((el) => applyLetterGradient(el, 'text-blue-gradient'))
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -83,7 +83,7 @@ function Daksha() {
   }, [])
 
   return (
-    <div className="relative w-full text-gold">
+    <div className="relative w-full text-sky-400">
       <Backdrop />
 
       <Navbar activeSection="daksha" />
@@ -111,10 +111,10 @@ function Daksha() {
             <section
               key={event.title}
               ref={eventSectionRef}
-              className="flex flex-col items-center border-t border-gold/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
+              className="flex flex-col items-center border-t border-sky-500/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
             >
               <div ref={eventContentRef} className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start" style={{ opacity: 0 }}>
-                <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
+                <p className="text-[11px] uppercase tracking-[4px] text-sky-400/70">{event.guidelines}</p>
                 <h2
                   ref={(el) => { eventH2Refs.current[i] = el }}
                   style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
@@ -125,18 +125,18 @@ function Daksha() {
 
                 <ul ref={eventDetailsRef} className="mt-6 flex flex-col gap-4">
                   {event.details.map((line, j) => (
-                    <li key={j} className="leading-[1.7] text-gold/80" style={{ opacity: 0 }}>
+                    <li key={j} className="leading-[1.7] text-sky-100/80" style={{ opacity: 0 }}>
                       {formatDetail(line)}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-gold/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2" style={{ opacity: 0 }}>
-                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-gold" />
-                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-gold" />
-                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-gold" />
-                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-gold" />
+              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.2)]" style={{ opacity: 0 }}>
+                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
 
                 <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
               </div>
@@ -146,7 +146,7 @@ function Daksha() {
                   ref={eventBtnRef}
                   type="button"
                   onClick={() => routerNavigate(`/daksha/${event.slug}`)}
-                  className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer"
+                  className="inline-block border border-sky-400 bg-sky-500/10 px-10 py-3 text-xs uppercase tracking-[3px] text-sky-400 transition-all duration-200 hover:bg-sky-400 hover:text-black hover:shadow-[0_0_25px_rgba(56,189,248,0.5)] cursor-pointer"
                   style={{ opacity: 0 }}
                 >
                   View Details

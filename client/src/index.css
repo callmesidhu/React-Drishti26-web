@@ -112,6 +112,26 @@
   background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
 }
 
+@utility text-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+}
+
 @utility font-bietro {
   font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
