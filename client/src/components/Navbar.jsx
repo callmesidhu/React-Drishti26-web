@@ -46,7 +46,7 @@ function Navbar({ activeSection }) {
         if (!isHoveredRef.current && !menuOpen) {
           setVisible(false)
         }
-      }, 3000)
+      }, 1500)
     }
 
     const handleScrollActivity = () => {
@@ -134,7 +134,7 @@ function Navbar({ activeSection }) {
         ref={navRef}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md"
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/[0.08] bg-black/25 px-[clamp(16px,4vw,40px)] py-3.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl backdrop-saturate-150"
       >
         <Link to="/" className="flex items-center gap-2">
           <img ref={logoRef} className="block h-10 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" style={{ opacity: 0 }} />
@@ -174,7 +174,7 @@ function Navbar({ activeSection }) {
 
       <div
         ref={mobileOverlayRef}
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/95 backdrop-blur-md md:hidden ${
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/70 backdrop-blur-2xl md:hidden ${
           menuOpen ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
         style={{ opacity: 0 }}
