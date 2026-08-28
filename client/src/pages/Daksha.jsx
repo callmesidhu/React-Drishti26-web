@@ -1,3 +1,13 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Navbar from '../components/Navbar.jsx'
+import Backdrop from '../components/Backdrop.jsx'
+import Footer from '../components/Footer.jsx'
+import { applyLetterGradient } from '../utils/letterGradient.js'
+
+gsap.registerPlugin(ScrollTrigger)
+
 const events = [
   {
     title: 'Shark Tank',
@@ -23,118 +33,142 @@ function formatDetail(line) {
     .replace(/•/g, '·')
 }
 
-function Backdrop() {
-  return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#050505]">
-      <div
-        className="absolute inset-0 opacity-80"
-        style={{
-          background: `
-            radial-gradient(45% 40% at 20% 10%, rgba(212, 175, 55, 0.14), transparent 70%),
-            radial-gradient(50% 50% at 85% 35%, rgba(212, 175, 55, 0.10), transparent 75%),
-            radial-gradient(60% 55% at 50% 90%, rgba(212, 175, 55, 0.08), transparent 80%),
-            radial-gradient(35% 30% at 50% 45%, rgba(255, 215, 0, 0.05), transparent 60%)
-          `,
-        }}
-      />
-
-      <svg className="absolute inset-0 h-full w-full opacity-[0.14] mix-blend-screen" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern id="brutalist-grid" width="60" height="60" patternUnits="userSpaceOnUse">
-            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-gold" />
-            <path d="M 57 60 H 63 M 60 57 V 63" fill="none" stroke="currentColor" strokeWidth="0.8" className="text-gold" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#brutalist-grid)" />
-      </svg>
-
-      <div className="absolute inset-0 opacity-25">
-        <div className="absolute -top-40 left-1/4 h-[800px] w-[1px] rotate-[35deg] bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
-        <div className="absolute top-1/3 -right-20 h-[1000px] w-[1px] -rotate-[35deg] bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-      </div>
-
-      <div className="absolute top-6 left-6 h-8 w-8 border-l-2 border-t-2 border-gold/40" />
-      <div className="absolute top-6 right-6 h-8 w-8 border-r-2 border-t-2 border-gold/40" />
-      <div className="absolute bottom-6 left-6 h-8 w-8 border-l-2 border-b-2 border-gold/40" />
-      <div className="absolute bottom-6 right-6 h-8 w-8 border-r-2 border-b-2 border-gold/40" />
-
-      <svg className="absolute inset-0 h-full w-full opacity-[0.06] mix-blend-overlay">
-        <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#grain)" />
-      </svg>
-
-      <div
-        className="absolute inset-0"
-        style={{ boxShadow: 'inset 0 0 180px 60px rgba(0, 0, 0, 0.85)' }}
-      />
-    </div>
-  )
-}
-
 function Daksha() {
+  const heroRef = useRef(null)
+  const eventSectionRef = useRef(null)
+  const eventContentRef = useRef(null)
+  const eventImageRef = useRef(null)
+  const eventDetailsRef = useRef(null)
+  const eventBtnRef = useRef(null)
+  const scrollIndicatorRef = useRef(null)
+
+  const h1Ref = useRef(null)
+  const eventsLabelRef = useRef(null)
+  const eventH2Refs = useRef([])
+
+  useEffect(() => {
+    applyLetterGradient(h1Ref.current)
+    applyLetterGradient(eventsLabelRef.current)
+    eventH2Refs.current.forEach(applyLetterGradient)
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      tl.fromTo(h1Ref.current, { y: 80, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 1 })
+      tl.fromTo(eventsLabelRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, '-=0.5')
+
+      if (eventContentRef.current) {
+        gsap.fromTo(eventContentRef.current, { x: -60, opacity: 0 }, {
+          x: 0, opacity: 1, duration: 0.8,
+          scrollTrigger: { trigger: eventSectionRef.current, start: 'top 75%' },
+        })
+      }
+      if (eventImageRef.current) {
+        gsap.fromTo(eventImageRef.current, { x: 60, opacity: 0, scale: 0.95 }, {
+          x: 0, opacity: 1, scale: 1, duration: 0.8,
+          scrollTrigger: { trigger: eventSectionRef.current, start: 'top 75%' },
+        })
+      }
+      if (eventDetailsRef.current) {
+        gsap.fromTo(eventDetailsRef.current.children, { y: 20, opacity: 0 }, {
+          y: 0, opacity: 1, stagger: 0.1, duration: 0.5,
+          scrollTrigger: { trigger: eventDetailsRef.current, start: 'top 80%' },
+        })
+      }
+      if (eventBtnRef.current) {
+        gsap.fromTo(eventBtnRef.current, { y: 20, opacity: 0 }, {
+          y: 0, opacity: 1, duration: 0.5,
+          scrollTrigger: { trigger: eventBtnRef.current, start: 'top 90%' },
+        })
+      }
+
+      gsap.fromTo(scrollIndicatorRef.current, { opacity: 0 }, {
+        opacity: 1, duration: 1, delay: 1.5,
+      })
+      gsap.to(scrollIndicatorRef.current?.querySelector('svg'), {
+        y: 8, duration: 0.8, ease: 'power1.inOut', yoyo: true, repeat: -1,
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <div className="relative min-h-svh w-full text-gold">
+    <div className="relative w-full text-gold">
       <Backdrop />
 
-      <nav className="sticky top-0 z-10 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md">
-        <img className="block h-11 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" />
-        <span className="hidden text-[11px] uppercase tracking-[4px] text-gold/50 sm:block">
-          Daksha / Events
-        </span>
-      </nav>
+      <Navbar activeSection="daksha" />
 
-      <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
-        <h1 className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight text-gold font-display [text-shadow:0_0_20px_rgba(225,157,0,0.45),0_0_60px_rgba(225,157,0,0.2)]">
-          Daksha
-        </h1>
-        <p className="text-[30px] uppercase tracking-[4px] text-gold/60">Events</p>
-      </header>
-
-      <main className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(56px,8vw,88px)] px-[clamp(16px,4vw,40px)] pb-24">
-        {events.map((event) => (
-          <section
-            key={event.title}
-            className="flex flex-col items-center border-t border-gold/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
+      <section ref={heroRef} className="relative min-h-svh w-full">
+        <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
+          <h1
+            ref={h1Ref}
+            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight"
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
-            <div className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start">
-              <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
-              <h2 className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight text-gold font-display [text-shadow:0_0_16px_rgba(225,157,0,0.4)]">
-                {event.title}
-              </h2>
+            DAKSHA
+          </h1>
+          <p
+            ref={eventsLabelRef}
+            className="text-[30px] uppercase tracking-[4px]"
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
+          >
+            EVENTS
+          </p>
+        </header>
 
-              <ul className="mt-6 flex flex-col gap-4">
-                {event.details.map((line, i) => (
-                  <li key={i} className="leading-[1.7] text-gold/80">
-                    {formatDetail(line)}
-                  </li>
-                ))}
-              </ul>
-            </div>
+        <main className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(56px,8vw,88px)] px-[clamp(16px,4vw,40px)] pb-24">
+          {events.map((event, i) => (
+            <section
+              key={event.title}
+              ref={eventSectionRef}
+              className="flex flex-col items-center border-t border-gold/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
+            >
+              <div ref={eventContentRef} className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start" style={{ opacity: 0 }}>
+                <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
+                <h2
+                  ref={(el) => { eventH2Refs.current[i] = el }}
+                  style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight"
+                >
+                  {event.title}
+                </h2>
 
-            <div className="relative order-2 mt-8 w-full border border-gold/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2">
-              <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-gold" />
-              <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-gold" />
-              <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-gold" />
-              <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-gold" />
+                <ul ref={eventDetailsRef} className="mt-6 flex flex-col gap-4">
+                  {event.details.map((line, j) => (
+                    <li key={j} className="leading-[1.7] text-gold/80" style={{ opacity: 0 }}>
+                      {formatDetail(line)}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-              <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
-            </div>
+              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-gold/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2" style={{ opacity: 0 }}>
+                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-gold" />
+                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-gold" />
+                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-gold" />
+                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-gold" />
 
-            <div className="order-3 mt-8 md:mt-0 md:col-start-1 md:row-start-2">
-              <a
-                href={event.registerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]"
-              >
-                Register
-              </a>
-            </div>
-          </section>
-        ))}
-      </main>
+                <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
+              </div>
+
+              <div className="order-3 mt-8 md:mt-0 md:col-start-1 md:row-start-2">
+                <a
+                  ref={eventBtnRef}
+                  href={event.registerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                  style={{ opacity: 0 }}
+                >
+                  Register
+                </a>
+              </div>
+            </section>
+          ))}
+        </main>
+      </section>
+
+      <Footer />
     </div>
   )
 }

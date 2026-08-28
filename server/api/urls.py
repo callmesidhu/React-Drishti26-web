@@ -4,7 +4,7 @@ from .views import (AmbassadorLeaderboardAPIView,
                     AddCampusAmbassadorAPIView)
 
 urlpatterns = [
-    path('api/ambassador/leaderboard/', AmbassadorLeaderboardAPIView.as_view()),
-    path('api/ambassador/add_points/', AddPointsLeaderboardAPIView.as_view()),
-    path('api/ambassador/add/', AddCampusAmbassadorAPIView.as_view()),
+    path('ambassador/leaderboard/', AmbassadorLeaderboardAPIView.as_view()),
+    path('ambassador/add_points/', AddPointsLeaderboardAPIView.as_view()),
+    path('ambassador/add/', AddCampusAmbassadorAPIView.as_view()),
 ]
