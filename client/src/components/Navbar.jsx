@@ -38,7 +38,7 @@ function Navbar({ activeSection }) {
     }
   }, [])
 
-  // Auto-hide by default, show for 3s on scroll
+  // Auto-hide by default, show for 3s on scroll (both scroll down and scroll up)
   useEffect(() => {
     const startHideTimer = () => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
@@ -49,17 +49,22 @@ function Navbar({ activeSection }) {
       }, 3000)
     }
 
-    const handleScroll = () => {
+    const handleScrollActivity = () => {
       if (menuOpen) return
 
-      // Show navbar on scroll and keep for 3s
+      // Show navbar on any scroll activity (down or up) and keep for 3s
       setVisible(true)
       startHideTimer()
     }
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('scroll', handleScrollActivity, { passive: true })
+    window.addEventListener('wheel', handleScrollActivity, { passive: true })
+    window.addEventListener('touchmove', handleScrollActivity, { passive: true })
+
     return () => {
-      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('scroll', handleScrollActivity)
+      window.removeEventListener('wheel', handleScrollActivity)
+      window.removeEventListener('touchmove', handleScrollActivity)
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
     }
   }, [menuOpen])
