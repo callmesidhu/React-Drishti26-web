@@ -213,10 +213,10 @@ function Team({ embedded = false }) {
       <header className="px-[clamp(16px,4vw,40px)] pb-4 pt-[clamp(32px,6vw,64px)] text-center">
         <h1
           ref={titleRef}
-          className="text-[clamp(32px,8vw,120px)] font-bold leading-none tracking-tight text-gold-gradient"
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
-          Meet The Team
+          MEET THE TEAM
         </h1>
 
         <div className="mt-8 inline-flex overflow-hidden rounded-full border border-gold/60" role="group" aria-label="Team selection">

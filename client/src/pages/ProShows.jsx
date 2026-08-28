@@ -202,14 +202,14 @@ function ProShowsPage({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="proshows" />}
 
-      {/* Page Header with Clash Display font */}
+      {/* Page Header with Bietro DEMO font */}
       <header ref={headerRef} className="px-[clamp(16px,4vw,40px)] pt-[clamp(40px,6vw,64px)] text-center opacity-0">
         <h1
           ref={h1Ref}
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
           className="text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
         >
-          Pro Show
+          PRO SHOWS
         </h1>
       </header>
 
@@ -282,13 +282,13 @@ function ProShowsPage({ embedded = false }) {
           </div>
         </div>
 
-        {/* Artist Name (Reveals below card in Clash Display) */}
+        {/* Artist Name (Reveals below card in Bietro DEMO) */}
         <div 
           ref={artistRef}
           className="z-10 mt-8 text-center opacity-0"
         >
           <h2
-            style={{ fontFamily: "'Clash Display', sans-serif" }}
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
             className="text-[clamp(28px,5vw,56px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
           >
             {artistName}
@@ -299,7 +299,7 @@ function ProShowsPage({ embedded = false }) {
       {/* FAQ Section */}
       <section ref={faqSectionRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-16 opacity-0">
         <h2 
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
           className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
         >
           ProShow Guidelines & FAQ

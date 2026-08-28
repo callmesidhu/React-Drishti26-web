@@ -38,7 +38,8 @@
 @theme {
   --color-gold: #e19d00;
   --color-ink: #0b0b0b;
-  --font-display: "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bietro DEMO-Regular", "Bietro DEMO", "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+  --font-bietro: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
 
 @layer base {
@@ -89,4 +90,12 @@
 
 .bg-gold-gradient {
   background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
+}
+
+@utility font-bietro {
+  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+}
+
+.font-bietro {
+  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }

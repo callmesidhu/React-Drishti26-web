@@ -207,14 +207,14 @@ function About({ embedded = false }) {
         <h1
           ref={h1Ref}
           className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight"
-          style={{ fontFamily: "'Clash Display', sans-serif", opacity: 0 }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Drishti
         </h1>
         <p
           ref={subheadRef}
           className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px]"
-          style={{ fontFamily: "'Clash Display', sans-serif", opacity: 0 }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Technical Festival
         </p>
@@ -234,7 +234,7 @@ function About({ embedded = false }) {
         <h2
           ref={numbersHeadRef}
           className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           Our Numbers
         </h2>
@@ -244,7 +244,7 @@ function About({ embedded = false }) {
               <p
                 ref={(el) => { statRefs.current[i] = el; statNumberRefs.current[i] = el }}
                 className="text-[clamp(36px,6vw,64px)] font-bold"
-                style={{ fontFamily: "'Clash Display', sans-serif" }}
+                style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
               >
                 0{stat.suffix}
               </p>
@@ -260,7 +260,7 @@ function About({ embedded = false }) {
         <h2
           ref={valuesHeadRef}
           className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           What We Stand For
         </h2>
@@ -275,7 +275,7 @@ function About({ embedded = false }) {
               <h3
                 ref={(el) => { valueH3Refs.current[i] = el }}
                 className="mt-4 text-xl font-bold uppercase tracking-wider"
-                style={{ fontFamily: "'Clash Display', sans-serif" }}
+                style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
               >
                 {value.title}
               </h3>
@@ -291,7 +291,7 @@ function About({ embedded = false }) {
         <h2
           ref={journeyHeadRef}
           className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
-          style={{ fontFamily: "'Clash Display', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           Our Journey
         </h2>
@@ -308,7 +308,7 @@ function About({ embedded = false }) {
                 <p
                   ref={(el) => { timelineYearRefs.current[i] = el }}
                   className="text-2xl font-bold"
-                  style={{ fontFamily: "'Clash Display', sans-serif" }}
+                  style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
                 >
                   {item.year}
                 </p>
@@ -330,7 +330,7 @@ function About({ embedded = false }) {
         <h2
           ref={ctaHeadRef}
           className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
-          style={{ fontFamily: "'Clash Display', sans-serif", opacity: 0 }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Ready to be part of something extraordinary?
         </h2>

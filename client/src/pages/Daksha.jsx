@@ -102,17 +102,17 @@ function Daksha() {
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
           <h1
             ref={h1Ref}
-            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
-            style={{ opacity: 0 }}
+            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
-            Daksha
+            DAKSHA
           </h1>
           <p
             ref={eventsLabelRef}
-            className="text-[30px] uppercase tracking-[4px] font-display"
-            style={{ opacity: 0 }}
+            className="text-[30px] uppercase tracking-[4px]"
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
-            Events
+            EVENTS
           </p>
         </header>
 
@@ -127,7 +127,8 @@ function Daksha() {
                 <p className="text-[11px] uppercase tracking-[4px] text-gold/60">{event.guidelines}</p>
                 <h2
                   ref={(el) => { eventH2Refs.current[i] = el }}
-                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight font-display drop-shadow-[0_0_20px_rgba(225,157,0,0.35)]"
+                  style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight drop-shadow-[0_0_20px_rgba(225,157,0,0.35)]"
                 >
                   {event.title}
                 </h2>

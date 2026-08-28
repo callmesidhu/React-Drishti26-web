@@ -229,10 +229,10 @@ function Talks({ embedded = false }) {
         </p>
         <h1
           ref={h1Ref}
-          className="mt-3 text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
-          style={{ opacity: 0 }}
+          className="mt-3 text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
-          Talks & Panels
+          TALKS AND PANELS
         </h1>
         <p ref={subtitleRef} className="mx-auto mt-4 max-w-[640px] text-[clamp(14px,1.6vw,17px)] leading-relaxed text-white/70" style={{ opacity: 0 }}>
           Listen to visionary keynotes, deep tech insights, and multi-speaker panel debates with industry pioneers from Google DeepMind, ISRO, IBM Quantum, and leading VC firms.

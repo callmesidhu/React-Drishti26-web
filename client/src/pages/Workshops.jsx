@@ -300,7 +300,8 @@ function Workshops() {
 
             <h1
               ref={titleRef}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
             >
             </h1>
 

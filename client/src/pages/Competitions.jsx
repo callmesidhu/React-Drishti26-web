@@ -201,7 +201,7 @@ function Competitions({ embedded = false }) {
                       }`}
                       style={{
                         writingMode: 'horizontal-tb',
-                        fontFamily: "'Clash Display', sans-serif",
+                        fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif",
                       }}
                     >
                       {comp.title}
@@ -217,11 +217,11 @@ function Competitions({ embedded = false }) {
           <div className="relative mb-2">
             <h1
               ref={h1Ref}
-              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
-              style={{ fontFamily: "'Clash Display', sans-serif", opacity: 0 }}
+              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
             >
               <span className="relative inline-block">
-                    <span className="relative z-10 competitions-text">Competitions</span>
+                    <span className="relative z-10 competitions-text">COMPETITIONS</span>
                     <img
                       ref={sparkleRef}
                       src="/workshops/shine.svg"
@@ -236,8 +236,8 @@ function Competitions({ embedded = false }) {
           <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
             <h2
               ref={h2Ref}
-              className="text-[clamp(24px,5vw,44px)] font-bold"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
+              className="text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
             >
               {active.title}
             </h2>
