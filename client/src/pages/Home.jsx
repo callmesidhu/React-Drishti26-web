@@ -66,12 +66,14 @@ function Home() {
   const heroLine1Ref = useRef(null);
   const heroLine2Ref = useRef(null);
   const heroTitleRef = useRef(null);
+  const heroParticlesRef = useRef(null);
   const ideasEmblemRef = useRef(null);
   const ideasTitleRef = useRef(null);
   const ideasParagraphRef = useRef(null);
   const coreValuesRef = useRef([]);
   const ideasVectorLineRef = useRef(null);
   const categoryTitleRefs = useRef([]);
+  const categoryBordersRef = useRef([]);
   const featuredHeadingRef = useRef(null);
   const featuredParagraphRef = useRef(null);
   const featuredCardsRef = useRef([]);
@@ -85,6 +87,45 @@ function Home() {
   const ctaTitle2Ref = useRef(null);
   const ctaButtonRef = useRef(null);
   const ctaBorderRef = useRef(null);
+  const ctaParticlesRef = useRef(null);
+
+  // Split text into individual characters for animation
+  const splitText = (text, ref) => {
+    if (!ref.current) return [];
+    ref.current.innerHTML = "";
+    const chars = [];
+    text.split("").forEach((char) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.style.display = "inline-block";
+      span.style.opacity = "0";
+      ref.current.appendChild(span);
+      chars.push(span);
+    });
+    return chars;
+  };
+
+  // Create floating particles
+  const createParticles = (container, count, colors) => {
+    if (!container) return [];
+    container.innerHTML = "";
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement("div");
+      particle.className = "absolute rounded-full pointer-events-none";
+      const size = Math.random() * 4 + 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.opacity = "0";
+      container.appendChild(particle);
+      particles.push(particle);
+    }
+    return particles;
+  };
 
   const handleWorkshopItemClick = (title, index) => {
     setActiveWorkshopItem(title);
@@ -127,6 +168,15 @@ function Home() {
         { opacity: 0, scale: 0.85, rotate: 0, top, left },
         { opacity: 1, scale: 1, rotate: targetRotate, top, left, duration: 0.55, ease: "power3.out" }
       );
+
+      // Continuous floating animation
+      gsap.to(el, {
+        y: "+=10",
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
     } else {
       gsap.to(el, { opacity: 0, scale: 0.85, rotate: 0, duration: 0.35, ease: "power2.in" });
     }
@@ -157,71 +207,127 @@ function Home() {
     );
   };
 
-  // ==================== GSAP ANIMATIONS ====================
+  // ==================== GSAP ADVANCED ANIMATIONS ====================
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    let ctx;
+    let timer;
 
-      // ---- HERO ANIMATIONS ----
-      gsap.fromTo(heroBgRef.current,
-        { scale: 1.2, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.8, ease: "power2.out" }
-      );
+    timer = setTimeout(() => {
+      ctx = gsap.context(() => {
 
-      gsap.fromTo(heroLeftTextRef.current,
-        { x: -60, opacity: 0 },
-        { x: 0, opacity: 0.6, duration: 0.8, delay: 0.5, ease: "power2.out" }
-      );
+        // ---- HERO ENTRANCE (post loading screen) ----
+        // Background with dramatic 3D reveal
+        gsap.fromTo(heroBgRef.current,
+          { scale: 1.5, opacity: 0, rotation: 5, rotationY: 15, filter: "blur(20px)" },
+          {
+            scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)",
+            duration: 2.5, ease: "power4.out",
+          }
+        );
 
-      gsap.fromTo(heroRightTextRef.current,
-        { x: 60, opacity: 0 },
-        { x: 0, opacity: 0.6, duration: 0.8, delay: 0.5, ease: "power2.out" }
-      );
+        // Text slide-in with skew and 3D
+        gsap.fromTo(heroLeftTextRef.current,
+          { x: -120, opacity: 0, skewX: 25, rotateY: 30 },
+          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+        );
 
-      gsap.fromTo(heroLine1Ref.current,
-        { scaleX: 0, transformOrigin: "left center" },
-        { scaleX: 1, duration: 1, delay: 0.7, ease: "power2.inOut" }
-      );
+        gsap.fromTo(heroRightTextRef.current,
+          { x: 120, opacity: 0, skewX: -25, rotateY: -30 },
+          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+        );
 
-      gsap.fromTo(heroLine2Ref.current,
-        { scaleX: 0, transformOrigin: "right center" },
-        { scaleX: 1, duration: 1, delay: 0.7, ease: "power2.inOut" }
-      );
+        // Lines draw with elastic easing
+        gsap.fromTo(heroLine1Ref.current,
+          { scaleX: 0, transformOrigin: "left center", opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+        );
 
-      gsap.fromTo(heroTitleRef.current,
-        { scale: 0.5, opacity: 0, y: 40 },
-        { scale: 1, opacity: 1, y: 0, duration: 1.2, delay: 0.3, ease: "back.out(1.2)" }
-      );
+        gsap.fromTo(heroLine2Ref.current,
+          { scaleX: 0, transformOrigin: "right center", opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+        );
 
-      // Hero parallax on scroll
-      gsap.to(heroBgRef.current, {
-        yPercent: 20,
-        ease: "none",
-        scrollTrigger: {
-          trigger: heroBgRef.current?.closest('section'),
-          start: "top top",
-          end: "bottom top",
-          scrub: true,
-        }
-      });
+        // Title split text animation with 3D flip
+        const heroChars = splitText("DRISHTI", heroTitleRef);
+        gsap.fromTo(heroChars,
+          { y: 100, opacity: 0, rotationX: -120, scale: 0.5 },
+          {
+            y: 0, opacity: 1, rotationX: 0, scale: 1,
+            stagger: 0.1, duration: 1, delay: 0.6,
+            ease: "back.out(2)",
+          }
+        );
 
-      // ---- IDEAS DON'T ASK PERMISSION ANIMATIONS ----
+        // Hero parallax on scroll
+        gsap.to(heroBgRef.current, {
+          yPercent: 30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroBgRef.current?.closest('section'),
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+
+        // Hero particles
+        const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
+        heroParticles.forEach((particle, i) => {
+          gsap.fromTo(particle,
+            { opacity: 0, scale: 0, y: 50 },
+            {
+              opacity: Math.random() * 0.7 + 0.2,
+              scale: 1,
+              y: 0,
+              duration: Math.random() * 1.5 + 0.5,
+              delay: Math.random() * 1.5 + 0.5,
+              ease: "back.out(2)",
+            }
+          );
+          gsap.to(particle, {
+            y: `${(Math.random() - 0.5) * 250}`,
+            x: `${(Math.random() - 0.5) * 150}`,
+            duration: Math.random() * 8 + 8,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+
+        // ---- IDEAS DON'T ASK PERMISSION ANIMATIONS ----
+      // Emblem with magnetic effect
       gsap.fromTo(ideasEmblemRef.current,
         { scale: 0, rotation: -180, opacity: 0 },
         {
-          scale: 1, rotation: 0, opacity: 1, duration: 1.2, ease: "back.out(1.5)",
+          scale: 1, rotation: 0, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.3)",
           scrollTrigger: {
             trigger: ideasEmblemRef.current,
-            start: "top 80%",
+            start: "top 85%",
             end: "top 40%",
             scrub: 1,
           }
         }
       );
 
+      // Continuous emblem rotation
+      gsap.to(ideasEmblemRef.current, {
+        rotation: 360,
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ideasEmblemRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          toggleActions: "play pause resume pause",
+        }
+      });
+
+      // Title with clip-path reveal
       gsap.fromTo(ideasTitleRef.current,
-        { y: 80, opacity: 0, scale: 0.9 },
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
         {
-          y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out",
+          clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.2, ease: "power4.inOut",
           scrollTrigger: {
             trigger: ideasTitleRef.current,
             start: "top 85%",
@@ -231,23 +337,24 @@ function Home() {
         }
       );
 
+      // Paragraph with wave effect
       gsap.fromTo(ideasParagraphRef.current,
-        { y: 40, opacity: 0 },
+        { y: 60, opacity: 0, skewY: 5 },
         {
-          y: 0, opacity: 1, duration: 0.8, ease: "power2.out",
+          y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out",
           scrollTrigger: {
             trigger: ideasParagraphRef.current,
-            start: "top 85%",
+            start: "top 90%",
             toggleActions: "play none none reverse",
           }
         }
       );
 
-      // Core values stagger
+      // Core values with stagger and rotation
       gsap.fromTo(coreValuesRef.current,
-        { x: -40, opacity: 0 },
+        { x: -60, opacity: 0, rotation: -10 },
         {
-          x: 0, opacity: 0.5, stagger: 0.12, duration: 0.6, ease: "power2.out",
+          x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)",
           scrollTrigger: {
             trigger: coreValuesRef.current[0],
             start: "top 80%",
@@ -256,12 +363,12 @@ function Home() {
         }
       );
 
-      // Ideas vector line draw
+      // Vector line draw with morph
       if (ideasVectorLineRef.current) {
         gsap.fromTo(ideasVectorLineRef.current,
-          { scaleY: 0, transformOrigin: "top center" },
+          { scaleY: 0, transformOrigin: "top center", opacity: 0 },
           {
-            scaleY: 1, duration: 1.2, ease: "power2.inOut",
+            scaleY: 1, opacity: 1, duration: 1.5, ease: "power2.inOut",
             scrollTrigger: {
               trigger: ideasVectorLineRef.current,
               start: "top 70%",
@@ -276,12 +383,29 @@ function Home() {
       categoryTitleRefs.current.forEach((el, i) => {
         if (!el) return;
         gsap.fromTo(el,
-          { x: -80, opacity: 0 },
+          { x: -100, opacity: 0, skewX: 20 },
           {
-            x: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
             scrollTrigger: {
               trigger: el,
               start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.12,
+          }
+        );
+      });
+
+      // Border lines draw animation
+      categoryBordersRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 1, duration: 0.8, ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
               toggleActions: "play none none reverse",
             },
             delay: i * 0.1,
@@ -290,10 +414,12 @@ function Home() {
       });
 
       // ---- FEATURED EVENTS ANIMATIONS ----
+      // Heading with text reveal
       gsap.fromTo(featuredHeadingRef.current,
-        { y: 60, opacity: 0 },
+        { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
         {
-          y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1,
+          duration: 1.2, ease: "power4.inOut",
           scrollTrigger: {
             trigger: featuredHeadingRef.current,
             start: "top 85%",
@@ -303,9 +429,9 @@ function Home() {
       );
 
       gsap.fromTo(featuredParagraphRef.current,
-        { y: 30, opacity: 0 },
+        { y: 40, opacity: 0, scale: 0.95 },
         {
-          y: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "power2.out",
+          y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
           scrollTrigger: {
             trigger: featuredParagraphRef.current,
             start: "top 90%",
@@ -314,15 +440,16 @@ function Home() {
         }
       );
 
+      // Cards with 3D perspective entrance
       featuredCardsRef.current.forEach((el, i) => {
         if (!el) return;
         gsap.fromTo(el,
-          { y: 100, opacity: 0, scale: 0.9 },
+          { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
           {
-            y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out",
+            y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
             scrollTrigger: {
               trigger: el,
-              start: "top 90%",
+              start: "top 95%",
               toggleActions: "play none none reverse",
             },
             delay: i * 0.15,
@@ -332,9 +459,9 @@ function Home() {
 
       // ---- AFTERMOVIE ANIMATIONS ----
       gsap.fromTo(aftermovieContainerRef.current,
-        { scale: 0.8, opacity: 0 },
+        { scale: 0.7, opacity: 0, borderRadius: "50px" },
         {
-          scale: 1, opacity: 1, duration: 1.2, ease: "power3.out",
+          scale: 1, opacity: 1, borderRadius: "0px", duration: 1.5, ease: "power3.out",
           scrollTrigger: {
             trigger: aftermovieContainerRef.current,
             start: "top 80%",
@@ -345,9 +472,9 @@ function Home() {
       );
 
       gsap.fromTo(aftermovieTitleLeftRef.current,
-        { x: -100, opacity: 0 },
+        { x: -150, opacity: 0, skewX: 30 },
         {
-          x: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
           scrollTrigger: {
             trigger: aftermovieTitleLeftRef.current,
             start: "top 85%",
@@ -357,9 +484,9 @@ function Home() {
       );
 
       gsap.fromTo(aftermovieTitleRightRef.current,
-        { x: 100, opacity: 0 },
+        { x: 150, opacity: 0, skewX: -30 },
         {
-          x: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
           scrollTrigger: {
             trigger: aftermovieTitleRightRef.current,
             start: "top 85%",
@@ -369,9 +496,9 @@ function Home() {
       );
 
       gsap.fromTo(aftermovieLogoRef.current,
-        { scale: 0, opacity: 0, rotation: -90 },
+        { scale: 0, opacity: 0, rotation: -180 },
         {
-          scale: 1, opacity: 1, rotation: 0, duration: 0.8, delay: 0.3, ease: "back.out(2)",
+          scale: 1, opacity: 1, rotation: 0, duration: 1, delay: 0.4, ease: "elastic.out(1, 0.3)",
           scrollTrigger: {
             trigger: aftermovieLogoRef.current,
             start: "top 85%",
@@ -384,46 +511,55 @@ function Home() {
       galleryImagesRef.current.forEach((el, i) => {
         if (!el) return;
         const directions = [
-          { x: -200, y: 100, rotation: -15 },
-          { x: 200, y: -80, rotation: 10 },
-          { x: -150, y: -120, rotation: -8 },
-          { x: 180, y: 80, rotation: 12 },
-          { x: -100, y: 150, rotation: -5 },
+          { x: -300, y: 150, rotation: -20, scale: 0.5 },
+          { x: 300, y: -120, rotation: 15, scale: 0.6 },
+          { x: -250, y: -180, rotation: -12, scale: 0.55 },
+          { x: 280, y: 120, rotation: 18, scale: 0.65 },
+          { x: -200, y: 200, rotation: -8, scale: 0.5 },
         ];
-        const dir = directions[i] || { x: 0, y: 0, rotation: 0 };
+        const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
 
         gsap.fromTo(el,
-          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: 0.7 },
+          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
           {
-            x: 0, y: 0, rotation: 0, opacity: 0.8, scale: 1, duration: 1, ease: "power3.out",
+            x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
             scrollTrigger: {
               trigger: el,
-              start: "top 90%",
+              start: "top 95%",
               toggleActions: "play none none reverse",
             },
-            delay: i * 0.12,
+            delay: i * 0.15,
           }
         );
+
+        // Hover magnetic effect
+        el.addEventListener("mouseenter", () => {
+          gsap.to(el, { scale: 1.05, rotation: 2, duration: 0.3, ease: "power2.out" });
+        });
+        el.addEventListener("mouseleave", () => {
+          gsap.to(el, { scale: 1, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+        });
       });
 
       // ---- CTA (READY TO BUILD THE FUTURE) ANIMATIONS ----
       gsap.fromTo(ctaDrishtiRef.current,
-        { scale: 0.3, opacity: 0, y: 100 },
+        { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
         {
-          scale: 1, opacity: 1, y: 0, duration: 1.2, ease: "power3.out",
+          scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
           scrollTrigger: {
             trigger: ctaDrishtiRef.current,
-            start: "top 85%",
+            start: "top 90%",
             end: "top 50%",
             scrub: 1,
           }
         }
       );
 
+      // Title lines with stagger
       gsap.fromTo(ctaTitle1Ref.current,
-        { x: -80, opacity: 0 },
+        { x: -120, opacity: 0, skewX: 25 },
         {
-          x: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
           scrollTrigger: {
             trigger: ctaTitle1Ref.current,
             start: "top 85%",
@@ -433,9 +569,9 @@ function Home() {
       );
 
       gsap.fromTo(ctaTitle2Ref.current,
-        { x: 80, opacity: 0 },
+        { x: 120, opacity: 0, skewX: -25 },
         {
-          x: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+          x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
           scrollTrigger: {
             trigger: ctaTitle2Ref.current,
             start: "top 85%",
@@ -444,10 +580,11 @@ function Home() {
         }
       );
 
+      // Border line with draw + glow
       gsap.fromTo(ctaBorderRef.current,
-        { scaleX: 0 },
+        { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
         {
-          scaleX: 1, duration: 1, ease: "power2.inOut",
+          scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
           scrollTrigger: {
             trigger: ctaBorderRef.current,
             start: "top 85%",
@@ -456,13 +593,14 @@ function Home() {
         }
       );
 
+      // Button with morph effect
       gsap.fromTo(ctaButtonRef.current,
-        { y: 40, opacity: 0, scale: 0.9 },
+        { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
         {
-          y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "back.out(1.5)",
+          y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
           scrollTrigger: {
             trigger: ctaButtonRef.current,
-            start: "top 90%",
+            start: "top 95%",
             toggleActions: "play none none reverse",
           }
         }
@@ -470,21 +608,55 @@ function Home() {
 
       // CTA button glow pulse
       gsap.to(ctaButtonRef.current, {
-        boxShadow: "0 0 40px rgba(255,193,50,0.5)",
+        boxShadow: "0 0 60px rgba(255,193,50,0.7), inset 0 0 30px rgba(255,193,50,0.1)",
         repeat: -1,
         yoyo: true,
-        duration: 2,
+        duration: 2.5,
         ease: "sine.inOut",
         scrollTrigger: {
           trigger: ctaButtonRef.current,
-          start: "top 90%",
+          start: "top 95%",
           toggleActions: "play pause resume pause",
         }
       });
 
+      // CTA particles
+      const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
+      ctaParticles.forEach((particle, i) => {
+        gsap.fromTo(particle,
+          { opacity: 0, scale: 0, y: 50 },
+          {
+            opacity: Math.random() * 0.5 + 0.3,
+            scale: 1,
+            y: 0,
+            duration: Math.random() * 2 + 1,
+            delay: Math.random() * 2,
+            ease: "power2.out",
+          }
+        );
+        gsap.to(particle, {
+          y: `${(Math.random() - 0.5) * 150}`,
+          x: `${(Math.random() - 0.5) * 80}`,
+          duration: Math.random() * 8 + 8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
+      // ---- SMOOTH SCROLL SETUP ----
+      ScrollTrigger.defaults({
+        toggleActions: "play none none reverse",
+      });
+
     });
 
-    return () => ctx.revert();
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      ctx?.revert();
+    };
   }, []);
 
   return (
@@ -503,38 +675,42 @@ function Home() {
           aria-hidden="true"
           src={heroBg}
         />
+
+        {/* Floating particles container */}
+        <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
+
         <div
           ref={heroLeftTextRef}
-          className="absolute top-[clamp(300px,35vw,512px)] left-[clamp(20px,3vw,44px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0"
+          className="absolute top-[clamp(300px,35vw,512px)] left-[clamp(20px,3vw,44px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
         >
           FEST UNLIKE ANY OTHER
         </div>
         <img
           ref={heroLine1Ref}
-          className="hidden md:block absolute left-0 top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,413px)]"
+          className="hidden md:block absolute left-0 top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,413px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine1}
         />
         <img
           ref={heroLine2Ref}
-          className="hidden md:block absolute right-[clamp(0px,10vw,200px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,408px)]"
+          className="hidden md:block absolute right-[clamp(0px,10vw,200px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,408px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine2}
         />
         <div
           ref={heroRightTextRef}
-          className="absolute top-[clamp(300px,35vw,512px)] right-[clamp(20px,3vw,44px)] text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0"
+          className="absolute top-[clamp(300px,35vw,512px)] right-[clamp(20px,3vw,44px)] text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
         >
           REWIND AND REJOICE
         </div>
         <h1
           ref={heroTitleRef}
           id="drishti-title"
-          className="absolute top-[clamp(450px,51vw,736px)] font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(80px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white opacity-0"
+          className="absolute top-[clamp(450px,51vw,736px)] font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(80px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white z-20"
+          style={{ perspective: "1000px" }}
         >
-          DRISHTI
         </h1>
       </section>
 
@@ -581,9 +757,15 @@ function Home() {
           <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
             <img
               ref={ideasEmblemRef}
-              className="w-[clamp(200px,29vw,421px)] aspect-[0.83] opacity-0"
+              className="w-[clamp(200px,29vw,421px)] aspect-[0.83] opacity-0 cursor-pointer"
               alt="Gold geometric innovation emblem"
               src={ideasEmblem}
+              onMouseEnter={(e) => {
+                gsap.to(e.target, { scale: 1.1, rotation: 10, duration: 0.3, ease: "power2.out" });
+              }}
+              onMouseLeave={(e) => {
+                gsap.to(e.target, { scale: 1, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+              }}
             />
           </div>
 
@@ -637,13 +819,13 @@ function Home() {
               </button>
               <button
                 type="button"
-                className="all-unset z-10 flex h-[clamp(40px,7.2vw,104px)] w-[clamp(40px,7.2vw,104px)] cursor-pointer items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-transform duration-300 hover:scale-110"
+                className="all-unset z-10 flex h-[clamp(40px,7.2vw,104px)] w-[clamp(40px,7.2vw,104px)] cursor-pointer items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 hover:scale-125 hover:rotate-45"
                 onClick={() => handleWorkshopItemClick(item.title, index)}
                 aria-label={`View ${item.title.toLowerCase()}`}
                 aria-pressed={activeWorkshopItem === item.title}
               >
                 <img
-                  className="h-[77.84%] w-[77.84%]"
+                  className="h-[77.84%] w-[77.84%] transition-transform duration-300"
                   alt=""
                   aria-hidden="true"
                   src={arrowDownRight}
@@ -705,24 +887,45 @@ function Home() {
                       if (index === 0) carouselCardRef.current = el;
                       featuredCardsRef.current[index] = el;
                     }}
-                    className="relative h-[clamp(400px,39.5vw,569px)] w-[clamp(280px,27.8vw,401px)] shrink-0 overflow-hidden border border-solid border-white opacity-0"
+                    className="relative h-[clamp(400px,39.5vw,569px)] w-[clamp(280px,27.8vw,401px)] shrink-0 overflow-hidden border border-solid border-white opacity-0 group cursor-pointer"
+                    style={{ perspective: "1000px" }}
+                    onMouseEnter={(e) => {
+                      gsap.to(e.currentTarget, {
+                        rotateY: 5,
+                        rotateX: 3,
+                        scale: 1.02,
+                        boxShadow: "0 25px 50px rgba(225,157,0,0.3)",
+                        duration: 0.4,
+                        ease: "power2.out",
+                      });
+                    }}
+                    onMouseLeave={(e) => {
+                      gsap.to(e.currentTarget, {
+                        rotateY: 0,
+                        rotateX: 0,
+                        scale: 1,
+                        boxShadow: "0 0px 0px rgba(225,157,0,0)",
+                        duration: 0.6,
+                        ease: "elastic.out(1, 0.3)",
+                      });
+                    }}
                   >
                     <img
-                      className="absolute left-0 top-0 h-[calc(100%-68px)] w-full object-cover"
+                      className="absolute left-0 top-0 h-[calc(100%-68px)] w-full object-cover transition-transform duration-500 group-hover:scale-110"
                       alt={`Featured event ${index + 1}`}
                       src={event.image}
                     />
                     <button
                       type="button"
-                      className="absolute bottom-0 left-0 flex h-[68px] w-full cursor-pointer items-center justify-between px-[13px] text-left border-t border-white bg-black/50 backdrop-blur-sm transition-colors duration-300 hover:bg-gold/20"
+                      className="absolute bottom-0 left-0 flex h-[68px] w-full cursor-pointer items-center justify-between px-[13px] text-left border-t border-white bg-black/50 backdrop-blur-sm transition-all duration-300 hover:bg-gold/30 hover:border-gold"
                       aria-label={`Register now for featured event ${index + 1}`}
                       onClick={() => handleRegistration(index)}
                     >
-                      <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(20px,2.2vw,32px)] font-normal leading-8 tracking-[0] text-white">
+                      <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(20px,2.2vw,32px)] font-normal leading-8 tracking-[0] text-white transition-colors duration-300 group-hover:text-gold">
                         REGISTER NOW
                       </span>
                       <img
-                        className="h-[clamp(20px,2.2vw,32px)] w-[clamp(20px,2.2vw,32px)] -rotate-90 transition-transform duration-300 group-hover:rotate-0"
+                        className="h-[clamp(20px,2.2vw,32px)] w-[clamp(20px,2.2vw,32px)] -rotate-90 transition-all duration-300 group-hover:rotate-0 group-hover:scale-125"
                         alt=""
                         aria-hidden="true"
                         src={arrowDownRight}
@@ -736,7 +939,7 @@ function Home() {
             <div className="absolute inset-y-0 -left-4 -right-4 flex items-center justify-between pointer-events-none z-20 md:-left-[70px] md:-right-[70px]">
               <button
                 type="button"
-                className="flex h-12 w-12 rotate-[135deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/20 hover:border-gold"
+                className="flex h-12 w-12 rotate-[135deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/30 hover:border-gold hover:scale-110 hover:rotate-[180deg]"
                 onClick={() => moveFeatured(-1)}
                 disabled={featuredIndex === 0}
                 aria-label="Previous featured events"
@@ -745,7 +948,7 @@ function Home() {
               </button>
               <button
                 type="button"
-                className="flex h-12 w-12 -rotate-[45deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/20 hover:border-gold"
+                className="flex h-12 w-12 -rotate-[45deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/30 hover:border-gold hover:scale-110 hover:rotate-0"
                 onClick={() => moveFeatured(1)}
                 disabled={featuredIndex === featuredEvents.length - 1}
                 aria-label="Next featured events"
@@ -760,9 +963,9 @@ function Home() {
       {/* ============ AFTERMOVIE ============ */}
       <section className="relative min-h-[clamp(600px,71vw,1024px)] w-full bg-black flex items-center justify-center overflow-hidden">
         <div className="relative w-full max-w-[1415px] flex flex-col items-center justify-center px-[clamp(20px,4vw,60px)]">
-          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 flex flex-col justify-end opacity-0">
+          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 flex flex-col justify-end opacity-0 overflow-hidden">
             <video
-              className="absolute left-0 top-0 h-full w-full object-cover opacity-80"
+              className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
               src={aftermovieVideo}
               autoPlay
               muted
@@ -803,7 +1006,7 @@ function Home() {
             <img
               key={index}
               ref={(el) => { galleryImagesRef.current[index] = el }}
-              className={`${image.className} object-cover opacity-0 rounded-lg md:rounded-none`}
+              className={`${image.className} object-cover opacity-0 rounded-lg md:rounded-none cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(225,157,0,0.4)]`}
               alt={`Gallery photo ${index + 1}`}
               src={image.src}
             />
@@ -813,16 +1016,19 @@ function Home() {
 
       {/* ============ READY TO BUILD THE FUTURE? ============ */}
       <section
-        className="relative flex min-h-[clamp(800px,97vw,1404px)] py-[clamp(100px,14vw,201px)] w-full flex-col items-center bg-black px-4"
+        className="relative flex min-h-[clamp(800px,97vw,1404px)] py-[clamp(100px,14vw,201px)] w-full flex-col items-center bg-black px-4 overflow-hidden"
         aria-label="Registration call to action"
       >
+        {/* CTA particles */}
+        <div ref={ctaParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0" />
+
         <p
           ref={ctaDrishtiRef}
-          className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,10.8vw,156px)] leading-none text-white text-center opacity-0"
+          className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,10.8vw,156px)] leading-none text-white text-center opacity-0 relative z-10"
         >
           DRISHTI
         </p>
-        <div className="mt-[clamp(40px,6.8vw,98px)] w-full max-w-[715px] text-center overflow-hidden">
+        <div className="mt-[clamp(40px,6.8vw,98px)] w-full max-w-[715px] text-center overflow-hidden relative z-10">
           <p
             ref={ctaTitle1Ref}
             className="m-0 font-['Clash_Display-Medium',Helvetica] text-[clamp(40px,5vw,72px)] leading-[normal] tracking-[1.44px] text-white opacity-0"
@@ -836,11 +1042,11 @@ function Home() {
             THE FUTURE?
           </p>
         </div>
-        <div ref={ctaBorderRef} className="w-full max-w-[514px] h-[2px] bg-[#ffc132] mt-[clamp(40px,6.3vw,91px)]" style={{ transformOrigin: "center" }} />
+        <div ref={ctaBorderRef} className="w-full max-w-[514px] h-[2px] bg-[#ffc132] mt-[clamp(40px,6.3vw,91px)] relative z-10" style={{ transformOrigin: "center", boxShadow: "0 0 0px rgba(255,193,50,0)" }} />
         <a
           ref={ctaButtonRef}
           href="#register"
-          className="mt-8 flex h-[clamp(60px,7vw,103px)] w-full max-w-[514px] items-center justify-center rounded-[50px] border-2 border-solid border-[#ffc132] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-all duration-300 hover:bg-[#ffc132]/10 hover:scale-105 active:scale-95 opacity-0"
+          className="mt-8 flex h-[clamp(60px,7vw,103px)] w-full max-w-[514px] items-center justify-center rounded-[50px] border-2 border-solid border-[#ffc132] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-all duration-300 hover:bg-[#ffc132]/10 hover:scale-105 active:scale-95 opacity-0 relative z-10"
         >
           <span className="bg-gradient-to-b from-[#ffc746] via-[52.404%] via-[#ffd779] to-[#8d6200] bg-clip-text text-center font-['Clash_Display-Medium',Helvetica] text-[clamp(24px,2.7vw,40px)] leading-[normal] text-transparent">
             Register Now
