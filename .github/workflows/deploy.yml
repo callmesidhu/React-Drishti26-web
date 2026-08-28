@@ -34,8 +34,5 @@ jobs:
             cd ~/Drishti26
             tar -xzvf deploy.tar.gz
             rm deploy.tar.gz
-            # Stop Apache if it is interfering with port 80 (optional but recommended if they clash)
-            sudo systemctl stop apache2 || true
-            sudo systemctl disable apache2 || true
-            # Start the Docker containers
+            # Start the Docker containers (ensure ports in docker-compose are > 1024)
             docker-compose up -d --build
