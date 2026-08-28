@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -45,6 +46,33 @@ function About({ embedded = false }) {
   const valuesRef = useRef(null)
   const timelineRef = useRef(null)
 
+  // Refs for letter-gradient targets
+  const h1Ref = useRef(null)
+  const subheadRef = useRef(null)
+  const numbersHeadRef = useRef(null)
+  const valuesHeadRef = useRef(null)
+  const journeyHeadRef = useRef(null)
+  const ctaHeadRef = useRef(null)
+  const statRefs = useRef([])
+  const valueH3Refs = useRef([])
+  const timelineYearRefs = useRef([])
+
+  // Apply letter-wise gradient to all static gradient text
+  useEffect(() => {
+    const els = [
+      h1Ref.current,
+      subheadRef.current,
+      numbersHeadRef.current,
+      valuesHeadRef.current,
+      journeyHeadRef.current,
+      ctaHeadRef.current,
+      ...statRefs.current.filter(Boolean),
+      ...valueH3Refs.current.filter(Boolean),
+      ...timelineYearRefs.current.filter(Boolean),
+    ]
+    els.forEach(applyLetterGradient)
+  }, [])
+
   useEffect(() => {
     const sections = [statsRef, valuesRef, timelineRef]
 
@@ -73,7 +101,7 @@ function About({ embedded = false }) {
   return (
     <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="about" />}
 
       <header
         ref={heroRef}
@@ -81,13 +109,15 @@ function About({ embedded = false }) {
       >
         <p className="text-[11px] uppercase tracking-[6px] text-gold/60">About Us</p>
         <h1
-          className="mt-4 text-[clamp(40px,9vw,100px)] font-bold uppercase leading-none tracking-tight text-gold"
+          ref={h1Ref}
+          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Drishti
         </h1>
         <p
-          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px] text-gold/50"
+          ref={subheadRef}
+          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px]"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Technical Festival
@@ -106,16 +136,18 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          ref={numbersHeadRef}
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Our Numbers
         </h2>
         <div ref={statsRef} className="mt-12 grid grid-cols-2 gap-8 md:grid-cols-4">
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <div key={stat.label} className="text-center">
               <p
-                className="text-[clamp(36px,6vw,64px)] font-bold text-gold"
+                ref={(el) => { statRefs.current[i] = el }}
+                className="text-[clamp(36px,6vw,64px)] font-bold"
                 style={{ fontFamily: "'Clash Display', sans-serif" }}
               >
                 {stat.number}
@@ -130,20 +162,22 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          ref={valuesHeadRef}
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           What We Stand For
         </h2>
         <div ref={valuesRef} className="mt-12 grid gap-8 md:grid-cols-3">
-          {values.map((value) => (
+          {values.map((value, i) => (
             <div
               key={value.title}
               className="border border-gold/20 bg-[#0a0a0a] p-8 transition-all duration-300 hover:border-gold/40 hover:bg-[#111]"
             >
               <span className="text-3xl text-gold">{value.icon}</span>
               <h3
-                className="mt-4 text-xl font-bold uppercase tracking-wider text-gold"
+                ref={(el) => { valueH3Refs.current[i] = el }}
+                className="mt-4 text-xl font-bold uppercase tracking-wider"
                 style={{ fontFamily: "'Clash Display', sans-serif" }}
               >
                 {value.title}
@@ -158,7 +192,8 @@ function About({ embedded = false }) {
 
       <section className="mx-auto max-w-[800px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          ref={journeyHeadRef}
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Our Journey
@@ -174,7 +209,8 @@ function About({ embedded = false }) {
             >
               <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
                 <p
-                  className="text-2xl font-bold text-gold"
+                  ref={(el) => { timelineYearRefs.current[i] = el }}
+                  className="text-2xl font-bold"
                   style={{ fontFamily: "'Clash Display', sans-serif" }}
                 >
                   {item.year}
@@ -192,7 +228,8 @@ function About({ embedded = false }) {
 
       <section className="px-[clamp(16px,4vw,40px)] py-[clamp(40px,8vw,100px)] text-center">
         <h2
-          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight text-gold"
+          ref={ctaHeadRef}
+          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Ready to be part of something extraordinary?

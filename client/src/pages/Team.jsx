@@ -13,6 +13,16 @@ const teamMembers = [
   { id: 7, name: 'Meera', role: 'Marketing Head' },
 ]
 
+const webTeamMembers = [
+  { id: 1, name: 'Member 1', role: 'Web Team' },
+  { id: 2, name: 'Member 2', role: 'Web Team' },
+  { id: 3, name: 'Member 3', role: 'Web Team' },
+  { id: 4, name: 'Member 4', role: 'Web Team' },
+  { id: 5, name: 'Member 5', role: 'Web Team' },
+  { id: 6, name: 'Member 6', role: 'Web Team' },
+  { id: 7, name: 'Member 7', role: 'Web Team' },
+]
+
 const TOTAL = teamMembers.length
 
 function shortestDiff(from, to) {
@@ -24,11 +34,16 @@ function shortestDiff(from, to) {
 
 function Team({ embedded = false }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [activeGroup, setActiveGroup] = useState('committee')
   const containerRef = useRef(null)
   const titleRef = useRef(null)
   const navRef = useRef(false)
   const touchStart = useRef({ x: 0, y: 0 })
+<<<<<<< HEAD
   const activeIndexRef = useRef(0)
+=======
+  const members = activeGroup === 'committee' ? teamMembers : webTeamMembers
+>>>>>>> e53ba71490c5674bbfea6ce0524a9db7dc083be1
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
@@ -57,7 +72,7 @@ function Team({ embedded = false }) {
       const span = document.createElement('span')
       span.textContent = char === ' ' ? '\u00A0' : char
       span.style.display = 'inline-block'
-      span.className = 'bg-gradient-to-r from-gold via-yellow-300 to-gold bg-clip-text text-transparent'
+      span.className = 'text-gold-gradient'
       fragment.appendChild(span)
     })
     el.appendChild(fragment)
@@ -98,14 +113,14 @@ function Team({ embedded = false }) {
 
     const timer = setTimeout(() => {
       imgs.forEach((img, i) => {
-        if (teamMembers[i].id !== teamMembers[activeIndex].id) {
+        if (members[i].id !== members[activeIndex].id) {
           gsap.to(img, { opacity: 0.85, duration: 0.4, ease: 'power2.out' })
         }
       })
     }, 500)
 
     return () => clearTimeout(timer)
-  }, [activeIndex])
+  }, [activeGroup, activeIndex, members])
 
   useEffect(() => {
     const el = containerRef.current
@@ -195,16 +210,40 @@ function Team({ embedded = false }) {
   return (
     <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
-      {!embedded && <Navbar />}
+      {!embedded && <Navbar activeSection="team" />}
 
       <header className="px-[clamp(16px,4vw,40px)] pb-4 pt-[clamp(32px,6vw,64px)] text-center">
         <h1
           ref={titleRef}
-          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight"
+          className="text-[clamp(32px,8vw,120px)] font-bold leading-none tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Clash Display', sans-serif" }}
         >
           Meet The Team
         </h1>
+
+        <div className="mt-8 inline-flex overflow-hidden rounded-full border border-gold/60" role="group" aria-label="Team selection">
+          {[
+            { id: 'committee', label: 'Committee' },
+            { id: 'web', label: 'Web Team' },
+          ].map((group) => {
+            const isSelected = activeGroup === group.id
+            return (
+              <button
+                key={group.id}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => setActiveGroup(group.id)}
+                className={`px-6 py-2.5 text-xs font-semibold uppercase tracking-[2px] transition-colors duration-300 md:px-8 ${
+                  isSelected
+                    ? 'bg-gold-gradient text-black'
+                    : 'bg-black text-gold hover:bg-gold/10'
+                }`}
+              >
+                {group.label}
+              </button>
+            )
+          })}
+        </div>
       </header>
 
       <div
@@ -216,7 +255,7 @@ function Team({ embedded = false }) {
           className="relative flex items-center justify-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {teamMembers.map((member, index) => (
+          {members.map((member, index) => (
             <div
               key={member.id}
               className="absolute cursor-pointer"
@@ -257,7 +296,7 @@ function Team({ embedded = false }) {
       </div>
 
       <div className="mt-8 flex items-center justify-center gap-2 pb-12">
-        {teamMembers.map((_, index) => (
+        {members.map((_, index) => (
           <button
             key={index}
             onClick={() => setActiveIndex(index)}
