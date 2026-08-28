@@ -227,7 +227,7 @@ function Competitions({ embedded = false }) {
                       src="/workshops/shine.svg"
                       alt=""
                       aria-hidden="true"
-                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none"
+                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen remove-black"
                     />
               </span>
             </h1>

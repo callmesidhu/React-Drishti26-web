@@ -99,3 +99,7 @@
 .font-bietro {
   font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
+
+.remove-black {
+  mix-blend-mode: screen;
+}
