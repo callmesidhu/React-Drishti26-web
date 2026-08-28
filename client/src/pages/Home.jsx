@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ProShows from "./ProShows";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -839,6 +840,11 @@ function Home() {
           aria-hidden={hoveredCategoryIndex === null}
           src={workshopItems[hoveredCategoryIndex ?? 0].image}
         />
+      </section>
+
+      {/* ============ PRO SHOWS ============ */}
+      <section id="proshows" className="relative w-full bg-black">
+        <ProShows embedded={true} />
       </section>
 
       {/* ============ FEATURED EVENTS ============ */}
