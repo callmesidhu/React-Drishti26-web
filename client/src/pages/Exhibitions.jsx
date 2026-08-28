@@ -176,7 +176,7 @@ function Exhibitions({ embedded = false }) {
         </p>
         <h1
           ref={h1Ref}
-          className="mt-3 text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+          className="mt-3 text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           EXHIBITIONS

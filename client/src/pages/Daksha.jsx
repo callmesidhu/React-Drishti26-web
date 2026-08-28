@@ -102,7 +102,7 @@ function Daksha() {
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
           <h1
             ref={h1Ref}
-            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
+            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight"
             style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
             DAKSHA
@@ -128,7 +128,7 @@ function Daksha() {
                 <h2
                   ref={(el) => { eventH2Refs.current[i] = el }}
                   style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight drop-shadow-[0_0_20px_rgba(225,157,0,0.35)]"
+                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight"
                 >
                   {event.title}
                 </h2>

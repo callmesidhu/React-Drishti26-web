@@ -207,7 +207,7 @@ function ProShowsPage({ embedded = false }) {
         <h1
           ref={h1Ref}
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-          className="text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+          className="text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight"
         >
           PRO SHOWS
         </h1>
@@ -289,7 +289,7 @@ function ProShowsPage({ embedded = false }) {
         >
           <h2
             style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-            className="text-[clamp(28px,5vw,56px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
+            className="text-[clamp(28px,5vw,56px)] font-bold uppercase tracking-wider text-gold-gradient"
           >
             {artistName}
           </h2>
