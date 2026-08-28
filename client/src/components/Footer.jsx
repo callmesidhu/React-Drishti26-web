@@ -52,6 +52,7 @@ function Footer() {
             </h4>
             <ul className="mt-4 flex flex-col gap-3">
               {[
+                { name: 'Home', path: '/home' },
                 { name: 'Daksha', path: '/daksha' },
                 { name: 'Workshops', path: '/workshops' },
                 { name: 'Competitions', path: '/competitions' },

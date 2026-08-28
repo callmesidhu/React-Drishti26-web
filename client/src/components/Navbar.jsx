@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import gsap from 'gsap'
 
 const links = [
+  { label: 'Home', to: '/home' },
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions' },
   { label: 'Pro Shows', to: '/proshows' },
