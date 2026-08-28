@@ -13,8 +13,10 @@ const links = [
 
 function Navbar({ activeSection }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
   const lastScrollY = useRef(0)
+  const hideTimerRef = useRef(null)
+  const isHoveredRef = useRef(false)
   const location = useLocation()
   const navigate = useNavigate()
   const navRef = useRef(null)
@@ -26,45 +28,80 @@ function Navbar({ activeSection }) {
   const barsRef = useRef([])
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-    tl.fromTo(navRef.current, { y: -60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 })
-    tl.fromTo(logoRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.4 }, '-=0.3')
-    if (desktopLinksRef.current) {
-      const linkEls = desktopLinksRef.current.children
-      tl.fromTo(linkEls, { y: -20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 }, '-=0.2')
+    // Initial state: hidden off-screen above viewport
+    if (navRef.current) {
+      gsap.set(navRef.current, { y: -90, opacity: 1 })
+      if (logoRef.current) gsap.set(logoRef.current, { opacity: 1, scale: 1 })
+      if (desktopLinksRef.current) {
+        gsap.set(desktopLinksRef.current.children, { opacity: 1, y: 0 })
+      }
     }
   }, [])
 
-  // Auto-hide on scroll down, show on scroll up
+  // Auto-hide by default, show for 3s only when scrolling UP
   useEffect(() => {
+    lastScrollY.current = window.scrollY
+
+    const startHideTimer = () => {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+      hideTimerRef.current = setTimeout(() => {
+        if (!isHoveredRef.current && !menuOpen) {
+          setVisible(false)
+        }
+      }, 3000)
+    }
+
     const handleScroll = () => {
       const currentScrollY = window.scrollY
       if (menuOpen) return
 
-      if (currentScrollY < 50) {
-        setVisible(true)
-      } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scrolling DOWN -> Hide
+      const delta = currentScrollY - lastScrollY.current
+
+      if (delta > 6) {
+        // Scrolling DOWN -> Hide immediately
+        if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
         setVisible(false)
-      } else if (currentScrollY < lastScrollY.current - 8) {
-        // Scrolling UP -> Show
+      } else if (delta < -6) {
+        // Scrolling UP -> Reveal and start 3s timer
         setVisible(true)
+        startHideTimer()
       }
+
       lastScrollY.current = currentScrollY
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+    }
   }, [menuOpen])
 
   useEffect(() => {
     if (!navRef.current) return
     gsap.to(navRef.current, {
-      y: visible ? 0 : -90,
+      y: visible || menuOpen ? 0 : -90,
       duration: 0.35,
       ease: 'power2.out',
     })
-  }, [visible])
+  }, [visible, menuOpen])
+
+  const handleMouseEnter = () => {
+    isHoveredRef.current = true
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+  }
+
+  const handleMouseLeave = () => {
+    isHoveredRef.current = false
+    if (visible && !menuOpen) {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+      hideTimerRef.current = setTimeout(() => {
+        if (!isHoveredRef.current && !menuOpen) {
+          setVisible(false)
+        }
+      }, 3000)
+    }
+  }
 
   useEffect(() => {
     if (menuOpen) {
@@ -96,11 +133,17 @@ function Navbar({ activeSection }) {
 
   const handleClick = () => {
     setMenuOpen(false)
+    setVisible(false)
   }
 
   return (
     <>
-      <nav ref={navRef} className="sticky top-0 z-50 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md" style={{ opacity: 0 }}>
+      <nav
+        ref={navRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md"
+      >
         <Link to="/" className="flex items-center gap-2">
           <img ref={logoRef} className="block h-10 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" style={{ opacity: 0 }} />
         </Link>
