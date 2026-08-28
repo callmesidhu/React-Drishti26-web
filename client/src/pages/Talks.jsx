@@ -157,13 +157,38 @@ function Talks({ embedded = false }) {
 
   const h1Ref = useRef(null)
   const eyebrowRef = useRef(null)
+  const subtitleRef = useRef(null)
+  const statsRowRef = useRef(null)
+  const filterRef = useRef(null)
   const gridRef = useRef(null)
+  const agendaRef = useRef(null)
+  const agendaDayRef = useRef(null)
+  const agendaContentRef = useRef(null)
   const statValueRefs = useRef([])
+  const modalRef = useRef(null)
 
   useEffect(() => {
     applyLetterGradient(h1Ref.current)
     applyLetterGradient(eyebrowRef.current)
     statValueRefs.current.forEach(applyLetterGradient)
+  }, [])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(h1Ref.current, { y: 60, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 })
+      gsap.fromTo(subtitleRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.3 })
+      gsap.fromTo(statsRowRef.current, { y: 30, opacity: 0, scale: 0.95 }, { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out', delay: 0.5 })
+      if (filterRef.current) {
+        gsap.fromTo(filterRef.current.children, { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4, ease: 'power2.out', delay: 0.6 })
+      }
+      gsap.fromTo(gridRef.current.children, { opacity: 0, y: 40 }, { opacity: 1, y: 0, stagger: 0.12, duration: 0.6, ease: 'power2.out', delay: 0.7 })
+      if (agendaRef.current) {
+        gsap.fromTo(agendaRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
+          scrollTrigger: { trigger: agendaRef.current, start: 'top 85%' },
+        })
+      }
+    })
+    return () => ctx.revert()
   }, [])
 
   useEffect(() => {
@@ -174,6 +199,18 @@ function Talks({ embedded = false }) {
       { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }
     )
   }, [activeCategory])
+
+  useEffect(() => {
+    if (agendaContentRef.current) {
+      gsap.fromTo(agendaContentRef.current.children, { opacity: 0, x: -20 }, { opacity: 1, x: 0, stagger: 0.08, duration: 0.4, ease: 'power2.out' })
+    }
+  }, [activeDay])
+
+  useEffect(() => {
+    if (selectedTalk && modalRef.current) {
+      gsap.fromTo(modalRef.current, { opacity: 0, scale: 0.9, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'back.out(1.4)' })
+    }
+  }, [selectedTalk])
 
   const filteredTalks =
     activeCategory === 'all'
@@ -187,21 +224,22 @@ function Talks({ embedded = false }) {
 
       {/* Hero Header */}
       <header className="px-[clamp(16px,4vw,40px)] pb-6 pt-[clamp(40px,6vw,64px)] text-center">
-        <p ref={eyebrowRef} className="text-[11px] uppercase tracking-[6px] text-gold/60 font-display">
+        <p ref={eyebrowRef} className="text-[11px] uppercase tracking-[6px] text-gold/60 font-display" style={{ opacity: 0 }}>
           Drishti 2026 Thought Leadership
         </p>
         <h1
           ref={h1Ref}
           className="mt-3 text-[clamp(40px,8vw,90px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+          style={{ opacity: 0 }}
         >
           Talks & Panels
         </h1>
-        <p className="mx-auto mt-4 max-w-[640px] text-[clamp(14px,1.6vw,17px)] leading-relaxed text-white/70">
+        <p ref={subtitleRef} className="mx-auto mt-4 max-w-[640px] text-[clamp(14px,1.6vw,17px)] leading-relaxed text-white/70" style={{ opacity: 0 }}>
           Listen to visionary keynotes, deep tech insights, and multi-speaker panel debates with industry pioneers from Google DeepMind, ISRO, IBM Quantum, and leading VC firms.
         </p>
 
         {/* Stats Row */}
-        <div className="mx-auto mt-10 grid max-w-[850px] grid-cols-2 gap-4 rounded-2xl border border-gold/20 bg-black/40 p-6 backdrop-blur-md sm:grid-cols-4">
+        <div ref={statsRowRef} className="mx-auto mt-10 grid max-w-[850px] grid-cols-2 gap-4 rounded-2xl border border-gold/20 bg-black/40 p-6 backdrop-blur-md sm:grid-cols-4" style={{ opacity: 0 }}>
           {stats.map((stat, idx) => (
             <div key={idx} className="text-center">
               <span
@@ -220,7 +258,7 @@ function Talks({ embedded = false }) {
 
       {/* Filter Tabs */}
       <section className="mx-auto max-w-[1200px] px-[clamp(16px,4vw,40px)] pt-6">
-        <div className="flex flex-wrap items-center justify-center gap-3">
+        <div ref={filterRef} className="flex flex-wrap items-center justify-center gap-3">
           {[
             { id: 'all', label: 'All Sessions' },
             { id: 'keynote', label: 'Keynotes' },
@@ -334,13 +372,13 @@ function Talks({ embedded = false }) {
       </main>
 
       {/* Interactive Agenda Matrix */}
-      <section className="mx-auto max-w-[1000px] px-[clamp(16px,4vw,40px)] py-16">
+      <section ref={agendaRef} className="mx-auto max-w-[1000px] px-[clamp(16px,4vw,40px)] py-16" style={{ opacity: 0 }}>
         <h2 className="text-center text-3xl font-bold uppercase tracking-tight font-display text-gold-gradient">
           Master Agenda & Session Schedule
         </h2>
 
         {/* Day Selector */}
-        <div className="mt-8 flex justify-center gap-3">
+        <div ref={agendaDayRef} className="mt-8 flex justify-center gap-3">
           {agendaData.map((ag, i) => (
             <button
               key={i}
@@ -358,7 +396,7 @@ function Talks({ embedded = false }) {
 
         {/* Timetable List */}
         <div className="mt-8 rounded-2xl border border-gold/30 bg-black/40 p-6 backdrop-blur-md">
-          <div className="flex flex-col gap-4">
+          <div ref={agendaContentRef} className="flex flex-col gap-4">
             {agendaData[activeDay].sessions.map((sess, idx) => (
               <div
                 key={idx}
@@ -383,7 +421,7 @@ function Talks({ embedded = false }) {
       {/* Talk Detail Modal */}
       {selectedTalk && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="relative max-h-[90vh] w-full max-w-[650px] overflow-y-auto rounded-2xl border border-gold/40 bg-[#0a0a0a] p-6 text-gold shadow-[0_0_50px_rgba(225,157,0,0.2)] md:p-8">
+          <div ref={modalRef} className="relative max-h-[90vh] w-full max-w-[650px] overflow-y-auto rounded-2xl border border-gold/40 bg-[#0a0a0a] p-6 text-gold shadow-[0_0_50px_rgba(225,157,0,0.2)] md:p-8" style={{ opacity: 0 }}>
             <button
               onClick={() => setSelectedTalk(null)}
               className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-full border border-gold/30 text-lg text-gold hover:bg-gold hover:text-black"

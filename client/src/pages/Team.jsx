@@ -39,11 +39,8 @@ function Team({ embedded = false }) {
   const titleRef = useRef(null)
   const navRef = useRef(false)
   const touchStart = useRef({ x: 0, y: 0 })
-<<<<<<< HEAD
   const activeIndexRef = useRef(0)
-=======
   const members = activeGroup === 'committee' ? teamMembers : webTeamMembers
->>>>>>> e53ba71490c5674bbfea6ce0524a9db7dc083be1
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
