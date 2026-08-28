@@ -19,8 +19,8 @@ function App() {
     <>
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       <Routes>
-        <Route path="/" element={<Navigate to="/home" replace />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Navigate to="/" replace />} />
+        <Route path="/" element={<Home />} />
         <Route path="/daksha" element={<Daksha />} />
         <Route path="/team" element={<Team />} />
         <Route path="/competitions" element={<Competitions />} />

@@ -42,13 +42,37 @@
 }
 
 @layer base {
+  /* Scrollbar styles for WebKit browsers (Chrome, Safari, Edge, Opera, Brave) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%, #E19D00 100%);
+    border-radius: 9999px;
+    min-height: 350px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #D49B00 0%, #FFF0B8 45%, #BF8700 65%, #C28700 79%, #FFAE00 92%, #FFAE00 100%);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000000;
+  }
+
   body {
     background: #000;
   }
 }
 
 @utility text-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -56,7 +80,7 @@
 }
 
 .text-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -64,5 +88,5 @@
 }
 
 .bg-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
 }
