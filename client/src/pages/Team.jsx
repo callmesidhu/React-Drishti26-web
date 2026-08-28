@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
   { id: 1, name: 'Ananya', role: 'President' },
@@ -39,14 +40,24 @@ function Team({ embedded = false }) {
   const titleRef = useRef(null)
   const navRef = useRef(false)
   const touchStart = useRef({ x: 0, y: 0 })
+  const activeIndexRef = useRef(0)
   const members = activeGroup === 'committee' ? teamMembers : webTeamMembers
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
     navRef.current = true
     setTimeout(() => { navRef.current = false }, 500)
-    setActiveIndex((prev) => (prev + dir + TOTAL) % TOTAL)
+    setActiveIndex((prev) => {
+      const next = prev + dir
+      if (next < 0) return 0
+      if (next >= TOTAL) return TOTAL - 1
+      return next
+    })
   }, [])
+
+  useEffect(() => {
+    activeIndexRef.current = activeIndex
+  }, [activeIndex])
 
   useEffect(() => {
     const el = titleRef.current
@@ -120,10 +131,14 @@ function Team({ embedded = false }) {
 
     const handleWheel = (e) => {
       if (!isInView()) return
-      e.preventDefault()
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
-      if (delta > 0) navigate(1)
-      else if (delta < 0) navigate(-1)
+      if (delta > 0 && activeIndexRef.current < TOTAL - 1) {
+        e.preventDefault()
+        navigate(1)
+      } else if (delta < 0 && activeIndexRef.current > 0) {
+        e.preventDefault()
+        navigate(-1)
+      }
     }
 
     const handleTouchStart = (e) => {
@@ -136,7 +151,11 @@ function Team({ embedded = false }) {
       const dx = e.changedTouches[0].clientX - touchStart.current.x
       const dy = e.changedTouches[0].clientY - touchStart.current.y
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
-        navigate(dx < 0 ? 1 : -1)
+        if (dx < 0 && activeIndexRef.current < TOTAL - 1) {
+          navigate(1)
+        } else if (dx > 0 && activeIndexRef.current > 0) {
+          navigate(-1)
+        }
       }
     }
 
@@ -290,6 +309,8 @@ function Team({ embedded = false }) {
       <p className="text-center text-xs uppercase tracking-[4px] text-white/30">
         Scroll or swipe to explore
       </p>
+
+      <Footer />
     </div>
   )
 }

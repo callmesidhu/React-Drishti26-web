@@ -1,8 +1,57 @@
+import { useEffect, useRef } from 'react'
+import gsap from 'gsap'
+
 function Backdrop() {
+  const gradientRef = useRef(null)
+  const gridRef = useRef(null)
+  const linesRef = useRef(null)
+  const cornersRef = useRef([])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.to(gradientRef.current, {
+        opacity: 0.5,
+        duration: 4,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: -1,
+      })
+
+      gsap.to(gridRef.current, {
+        y: 30,
+        duration: 20,
+        ease: 'none',
+        yoyo: true,
+        repeat: -1,
+      })
+
+      if (linesRef.current) {
+        const lines = linesRef.current.children
+        gsap.fromTo(lines[0], { y: -50 }, { y: 50, duration: 15, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+        gsap.fromTo(lines[1], { y: 50 }, { y: -50, duration: 18, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+      }
+
+      cornersRef.current.forEach((corner, i) => {
+        if (corner) {
+          gsap.to(corner, {
+            opacity: 0.2,
+            duration: 2 + i * 0.5,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: -1,
+          })
+        }
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
+
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[#050505]">
       <div
-        className="absolute inset-0 opacity-80"
+        ref={gradientRef}
+        className="absolute inset-0"
         style={{
           background: `
             radial-gradient(45% 40% at 20% 10%, rgba(212, 175, 55, 0.14), transparent 70%),
@@ -13,7 +62,7 @@ function Backdrop() {
         }}
       />
 
-      <svg className="absolute inset-0 h-full w-full opacity-[0.14] mix-blend-screen" xmlns="http://www.w3.org/2000/svg">
+      <svg ref={gridRef} className="absolute inset-0 h-full w-full opacity-[0.14] mix-blend-screen" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="brutalist-grid" width="60" height="60" patternUnits="userSpaceOnUse">
             <path d="M 60 0 L 0 0 0 60" fill="none" stroke="currentColor" strokeWidth="0.75" className="text-gold" />
@@ -23,15 +72,15 @@ function Backdrop() {
         <rect width="100%" height="100%" fill="url(#brutalist-grid)" />
       </svg>
 
-      <div className="absolute inset-0 opacity-25">
+      <div ref={linesRef} className="absolute inset-0 opacity-25">
         <div className="absolute -top-40 left-1/4 h-[800px] w-[1px] rotate-[35deg] bg-gradient-to-b from-transparent via-gold/40 to-transparent" />
         <div className="absolute top-1/3 -right-20 h-[1000px] w-[1px] -rotate-[35deg] bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
       </div>
 
-      <div className="absolute top-6 left-6 h-8 w-8 border-l-2 border-t-2 border-gold/40" />
-      <div className="absolute top-6 right-6 h-8 w-8 border-r-2 border-t-2 border-gold/40" />
-      <div className="absolute bottom-6 left-6 h-8 w-8 border-l-2 border-b-2 border-gold/40" />
-      <div className="absolute bottom-6 right-6 h-8 w-8 border-r-2 border-b-2 border-gold/40" />
+      <div ref={(el) => { cornersRef.current[0] = el }} className="absolute top-6 left-6 h-8 w-8 border-l-2 border-t-2 border-gold/40" />
+      <div ref={(el) => { cornersRef.current[1] = el }} className="absolute top-6 right-6 h-8 w-8 border-r-2 border-t-2 border-gold/40" />
+      <div ref={(el) => { cornersRef.current[2] = el }} className="absolute bottom-6 left-6 h-8 w-8 border-l-2 border-b-2 border-gold/40" />
+      <div ref={(el) => { cornersRef.current[3] = el }} className="absolute bottom-6 right-6 h-8 w-8 border-r-2 border-b-2 border-gold/40" />
 
       <svg className="absolute inset-0 h-full w-full opacity-[0.06] mix-blend-overlay">
         <filter id="grain">
