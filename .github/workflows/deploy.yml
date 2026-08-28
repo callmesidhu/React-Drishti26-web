@@ -32,5 +32,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
           source: "client/dist/*"
-          target: "~/Drishti26/client/dist"
+          target: "~/Webadmin"
           strip_components: 2
