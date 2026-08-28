@@ -48,6 +48,7 @@ function Daksha() {
   const eventH2Refs = useRef([])
 
   useEffect(() => {
+    document.body.classList.add('theme-blue')
     applyLetterGradient(h1Ref.current, 'text-blue-gradient')
     applyLetterGradient(eventsLabelRef.current, 'text-blue-gradient')
     eventH2Refs.current.forEach((el) => applyLetterGradient(el, 'text-blue-gradient'))
@@ -90,14 +91,17 @@ function Daksha() {
       })
     })
 
-    return () => ctx.revert()
+    return () => {
+      document.body.classList.remove('theme-blue')
+      ctx.revert()
+    }
   }, [])
 
   return (
-    <div className="relative w-full text-sky-400">
+    <div className="theme-blue relative w-full text-sky-400">
       <Backdrop theme="blue" />
 
-      <Navbar activeSection="daksha" />
+      <Navbar activeSection="daksha" theme="blue" />
 
       <section ref={heroRef} className="relative min-h-svh w-full">
         <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
