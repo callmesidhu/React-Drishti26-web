@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
-import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
   { id: 1, name: 'Ananya', role: 'President' },
@@ -309,8 +308,6 @@ function Team({ embedded = false }) {
       <p className="text-center text-xs uppercase tracking-[4px] text-white/30">
         Scroll or swipe to explore
       </p>
-
-      <Footer />
     </div>
   )
 }
