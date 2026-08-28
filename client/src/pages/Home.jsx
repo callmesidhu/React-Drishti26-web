@@ -27,8 +27,6 @@ const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGA
 const workshopItems = [
   { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
   { title: "COMPETITIONS", image: categoriesPhoto, rotate: 11.17 },
-  { title: "TALKS AND PANELS", image: categoriesPhoto, rotate: -11.17 },
-  { title: "EXHIBITIONS", image: categoriesPhoto, rotate: 11.17 },
   { title: "PRO SHOWS", image: categoriesPhoto, rotate: -11.17 },
 ];
 

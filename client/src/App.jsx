@@ -8,8 +8,6 @@ import Competitions from './pages/Competitions.jsx'
 import Workshops from './pages/Workshops.jsx'
 import About from './pages/About.jsx'
 import ProShows from './pages/ProShows.jsx'
-import Exhibitions from './pages/Exhibitions.jsx'
-import Talks from './pages/Talks.jsx'
 import Home from './pages/Home.jsx'
 
 function App() {
@@ -26,8 +24,6 @@ function App() {
         <Route path="/competitions" element={<Competitions />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/proshows" element={<ProShows />} />
-        <Route path="/exhibitions" element={<Exhibitions />} />
-        <Route path="/talks" element={<Talks />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>

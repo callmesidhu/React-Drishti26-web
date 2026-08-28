@@ -7,8 +7,6 @@ const links = [
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions' },
   { label: 'Pro Shows', to: '/proshows' },
-  { label: 'Exhibitions', to: '/exhibitions' },
-  { label: 'Talks', to: '/talks' },
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team' },
   { label: 'About', to: '/about' },

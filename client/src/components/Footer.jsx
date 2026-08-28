@@ -57,8 +57,6 @@ function Footer() {
                 { name: 'Workshops', path: '/workshops' },
                 { name: 'Competitions', path: '/competitions' },
                 { name: 'Pro Shows', path: '/proshows' },
-                { name: 'Exhibitions', path: '/exhibitions' },
-                { name: 'Talks', path: '/talks' },
                 { name: 'Team', path: '/team' },
                 { name: 'About Us', path: '/about' },
               ].map((page) => (
