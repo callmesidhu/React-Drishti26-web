@@ -12,26 +12,30 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: client/package-lock.json
+      - name: Create Deployment Tarball
+        run: tar -czvf deploy.tar.gz --exclude='.git' --exclude='client/node_modules' --exclude='server/node_modules' .
 
-      - name: Install dependencies
-        working-directory: client
-        run: npm ci
-
-      - name: Build React
-        working-directory: client
-        run: npm run build
-
-      - name: Deploy files via SCP
+      - name: Copy Tarball to Server via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          source: "client/dist"
+          source: "deploy.tar.gz"
           target: "~/Drishti26"
+
+      - name: Extract and Deploy via Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: |
+            cd ~/Drishti26
+            tar -xzvf deploy.tar.gz
+            rm deploy.tar.gz
+            # Stop Apache if it is interfering with port 80 (optional but recommended if they clash)
+            sudo systemctl stop apache2 || true
+            sudo systemctl disable apache2 || true
+            # Start the Docker containers
+            docker-compose up -d --build
