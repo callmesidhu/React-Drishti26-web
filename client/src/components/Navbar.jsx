@@ -9,6 +9,7 @@ const links = [
   { label: 'Competitions', to: '/competitions' },
   { label: 'Team', to: '/team' },
   { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 function Navbar({ activeSection, theme = 'gold' }) {

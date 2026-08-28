@@ -10,6 +10,7 @@ import Team from './pages/Team.jsx'
 import Competitions from './pages/Competitions.jsx'
 import Workshops from './pages/Workshops.jsx'
 import About from './pages/About.jsx'
+import Contact from './pages/Contact.jsx'
 import ProShows from './pages/ProShows.jsx'
 import Home from './pages/Home.jsx'
 
@@ -74,6 +75,7 @@ function App() {
         <Route path="/workshops/:slug" element={<Workshops />} />
         <Route path="/proshows" element={<ProShows />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
     </>

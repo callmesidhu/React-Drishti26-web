@@ -59,6 +59,7 @@ function Footer() {
                 { name: 'Pro Shows', path: '/proshows' },
                 { name: 'Team', path: '/team' },
                 { name: 'About Us', path: '/about' },
+                { name: 'Contact', path: '/contact' },
               ].map((page) => (
                 <li key={page.name}>
                   <a href={page.path} className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
