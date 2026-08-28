@@ -13,11 +13,22 @@ gsap.registerPlugin(ScrollTrigger)
 const events = dakshaEventsData
 
 function formatDetail(line) {
-  return line
+  const formatted = line
     .replace(/^Open to:\s*/i, 'Open to — ')
     .replace(/^Evaluation:\s*/i, 'Evaluation — ')
     .replace(/^Grand Finale:\s*/i, 'Grand Finale — ')
     .replace(/•/g, '·')
+
+  if (formatted.includes(' — ')) {
+    const [label, ...rest] = formatted.split(' — ')
+    return (
+      <span>
+        <span className="font-semibold text-sky-400">{label} — </span>
+        <span className="text-white/85">{rest.join(' — ')}</span>
+      </span>
+    )
+  }
+  return <span className="text-white/85">{formatted}</span>
 }
 
 function Daksha() {
@@ -84,7 +95,7 @@ function Daksha() {
 
   return (
     <div className="relative w-full text-sky-400">
-      <Backdrop />
+      <Backdrop theme="blue" />
 
       <Navbar activeSection="daksha" />
 

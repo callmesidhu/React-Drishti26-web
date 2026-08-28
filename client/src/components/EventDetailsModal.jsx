@@ -167,16 +167,31 @@ function EventDetailsModal({ event, onClose }) {
 
             {event.details && event.details.length > 0 && (
               <div ref={detailsListRef} className="mt-6 flex flex-col gap-3">
-                {event.details.map((line, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <span className={`mt-1.5 block h-1.5 w-1.5 shrink-0 rotate-45 ${
-                      isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#e19d00]'
-                    }`} />
-                    <span className={`text-xs leading-relaxed md:text-sm ${isBlue ? 'text-sky-100/85' : 'text-white/80'}`}>
-                      {line}
-                    </span>
-                  </div>
-                ))}
+                {event.details.map((line, idx) => {
+                  const hasPrefix = line.includes(' — ')
+                  const [label, ...rest] = hasPrefix ? line.split(' — ') : [null, line]
+                  return (
+                    <div key={idx} className="flex items-start gap-3">
+                      <span
+                        className={`mt-1.5 block h-1.5 w-1.5 shrink-0 rotate-45 ${
+                          isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#e19d00]'
+                        }`}
+                      />
+                      <span className="text-xs leading-relaxed md:text-sm text-white/85">
+                        {hasPrefix ? (
+                          <>
+                            <span className={`font-semibold ${isBlue ? 'text-sky-400' : 'text-gold'}`}>
+                              {label} —{' '}
+                            </span>
+                            <span>{rest.join(' — ')}</span>
+                          </>
+                        ) : (
+                          line
+                        )}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             )}
 
