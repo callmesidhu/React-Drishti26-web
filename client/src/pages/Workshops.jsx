@@ -1,55 +1,17 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { workshopsData } from '../data/eventsData.js'
 
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const workshops = [
-  {
-    id: 1,
-    title: 'AI & Machine Learning',
-    description:
-      'Dive deep into the world of artificial intelligence and machine learning. Learn to build intelligent systems, train neural networks, and deploy ML models in real-world applications.',
-    image: '/workshops/ai-ml.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 2,
-    title: 'Web Development',
-    description:
-      'Master modern web technologies from frontend frameworks to backend architecture. Build responsive, performant web applications using the latest tools and best practices.',
-    image: '/workshops/web-dev.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Cloud Computing',
-    description:
-      'Explore cloud infrastructure, deployment strategies, and DevOps practices. Learn to architect scalable applications on AWS, Azure, or Google Cloud platforms.',
-    image: '/workshops/cloud.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 4,
-    title: 'Cybersecurity',
-    description:
-      'Understand ethical hacking, penetration testing, and security auditing. Protect systems from threats and vulnerabilities with hands-on security techniques.',
-    image: '/workshops/cyber.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 5,
-    title: 'Blockchain & Web3',
-    description:
-      'Explore decentralized applications, smart contracts, and the future of the internet. Build on Ethereum and understand the fundamentals of blockchain technology.',
-    image: '/workshops/blockchain.jpg',
-    registerUrl: '#',
-  },
-]
+const workshops = workshopsData
 
 const TOTAL = workshops.length
 
@@ -90,7 +52,24 @@ function getFanOpenTransform(stackPosition) {
 }
 
 function Workshops() {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0)
+  const activeIndexRef = useRef(0)
+  const busyRef = useRef(false)
+  const scrollTriggerRef = useRef(null)
+
+  const selectedModalEvent = slug ? workshops.find((w) => w.slug === slug) : null
+
+  useEffect(() => {
+    if (slug) {
+      const idx = workshops.findIndex((w) => w.slug === slug)
+      if (idx !== -1) {
+        setActiveIndex(idx)
+        activeIndexRef.current = idx
+      }
+    }
+  }, [slug])
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
   const textColRef = useRef(null)
@@ -100,9 +79,6 @@ function Workshops() {
   const deckRef = useRef(null)
   const cardRefs = useRef([])
   const dotsRef = useRef([])
-  const activeIndexRef = useRef(0)
-  const busyRef = useRef(false)
-  const scrollTriggerRef = useRef(null)
 
   useEffect(() => {
     if (titleRef.current) {
@@ -312,15 +288,14 @@ function Workshops() {
             </p>
 
             <div className="flex justify-center md:justify-start">
-              <a
+              <button
                 ref={btnRef}
-                href={active.registerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)]"
+                type="button"
+                onClick={() => routerNavigate(`/workshops/${active.slug}`)}
+                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)] cursor-pointer"
               >
-                Register Now
-              </a>
+                View Details
+              </button>
             </div>
 
             <div className="mt-4 flex justify-center gap-3 md:justify-start">
@@ -363,6 +338,14 @@ function Workshops() {
       </section>
 
       <div className="h-svh" />
+
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/workshops')}
+        />
+      )}
     </div>
   )
 }

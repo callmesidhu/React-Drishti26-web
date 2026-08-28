@@ -66,9 +66,12 @@ function App() {
         <Route path="/home" element={<Navigate to="/" replace />} />
         <Route path="/" element={<Home />} />
         <Route path="/daksha" element={<Daksha />} />
+        <Route path="/daksha/:slug" element={<Daksha />} />
         <Route path="/team" element={<Team />} />
         <Route path="/competitions" element={<Competitions />} />
+        <Route path="/competitions/:slug" element={<Competitions />} />
         <Route path="/workshops" element={<Workshops />} />
+        <Route path="/workshops/:slug" element={<Workshops />} />
         <Route path="/proshows" element={<ProShows />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<Navigate to="/home" replace />} />

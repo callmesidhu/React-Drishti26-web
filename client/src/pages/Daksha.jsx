@@ -1,28 +1,16 @@
 import { useEffect, useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { dakshaEventsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const events = [
-  {
-    title: 'Shark Tank',
-    image: '/daksha/shark-tank.png',
-    alt: 'Shark Tank event',
-    guidelines: 'Shark tank guidelines',
-    registerUrl: 'https://snaptiqz.com/event/shark-tank',
-    details: [
-      'Open to: Student founders, startups in ideation/early-growth stages & registered MSMEs.',
-      'Initial Screening → Expert Panel Pitch → Grand Finale with Investors.',
-      'Pitch your startup before industry experts and investors.',
-      'Evaluation: Innovation • Market Potential • Business Model • Scalability • Investment Potential.',
-      'Grand Finale: 19 September 2026.',
-    ],
-  },
-]
+const events = dakshaEventsData
 
 function formatDetail(line) {
   return line
@@ -33,6 +21,9 @@ function formatDetail(line) {
 }
 
 function Daksha() {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
+  const selectedModalEvent = slug ? events.find((e) => e.slug === slug) : null
   const heroRef = useRef(null)
   const eventSectionRef = useRef(null)
   const eventContentRef = useRef(null)
@@ -151,21 +142,28 @@ function Daksha() {
               </div>
 
               <div className="order-3 mt-8 md:mt-0 md:col-start-1 md:row-start-2">
-                <a
+                <button
                   ref={eventBtnRef}
-                  href={event.registerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)]"
+                  type="button"
+                  onClick={() => routerNavigate(`/daksha/${event.slug}`)}
+                  className="inline-block border border-gold bg-gold/5 px-10 py-3 text-xs uppercase tracking-[3px] text-gold transition-all duration-200 hover:bg-gold hover:text-black hover:shadow-[0_0_25px_rgba(212,175,55,0.4)] cursor-pointer"
                   style={{ opacity: 0 }}
                 >
-                  Register
-                </a>
+                  View Details
+                </button>
               </div>
             </section>
           ))}
         </main>
       </section>
+
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/daksha')}
+        />
+      )}
     </div>
   )
 }

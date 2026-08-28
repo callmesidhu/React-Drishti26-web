@@ -1,39 +1,29 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { competitionsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
-const competitions = [
-  {
-    id: 1,
-    title: 'Robo Wars',
-    image: '/competitions/robo-wars.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea eget porttitor erat. Sed et magna pulvinar amet amet et ipsum. Id pellentesque netus eget porttitor. Bibendum sagittis odio non platea quis. Eget accumsan ut nulla fringilla. Ipsum tempus ut arcu quam molestie nec. Sed turpis odio neque massa pretium. Fringilla quis sapien in commodo et pretium tempor consequat lacus.',
-    registerUrl: '#',
-  },
-  {
-    id: 2,
-    title: 'Hackathon',
-    image: '/competitions/hackathon.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea eget porttitor erat. Sed et magna pulvinar amet amet et ipsum.',
-    registerUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Paper Presentation',
-    image: '/competitions/paper.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea.',
-    registerUrl: '#',
-  },
-]
-
 function Competitions({ embedded = false }) {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0)
-  const active = competitions[activeIndex]
+  const competitions = competitionsData
+  const active = competitions[activeIndex] || competitions[0]
+
+  // Find modal event if slug is present in URL
+  const selectedModalEvent = slug ? competitions.find((c) => c.slug === slug) : null
+
+  // If URL has slug on initial load, sync activeIndex
+  useEffect(() => {
+    if (slug) {
+      const idx = competitions.findIndex((c) => c.slug === slug)
+      if (idx !== -1) setActiveIndex(idx)
+    }
+  }, [slug])
   const carouselRef = useRef(null)
   const pageRef = useRef(null)
   const detailRef = useRef(null)
@@ -245,15 +235,14 @@ function Competitions({ embedded = false }) {
               {active.description}
             </p>
 
-            <a
+            <button
               ref={registerBtnRef}
-              href={active.registerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm"
+              type="button"
+              onClick={() => routerNavigate(`/competitions/${active.slug}`)}
+              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm cursor-pointer"
               style={{ borderRadius: '50px' }}
             >
-              Register
+              View Details
               <svg
                 ref={arrowRef}
                 width="18"
@@ -268,10 +257,18 @@ function Competitions({ embedded = false }) {
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
-            </a>
+            </button>
           </div>
         </section>
       </div>
+
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/competitions')}
+        />
+      )}
     </div>
   )
 }
