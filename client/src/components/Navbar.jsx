@@ -13,6 +13,8 @@ const links = [
 
 function Navbar({ activeSection }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [visible, setVisible] = useState(true)
+  const lastScrollY = useRef(0)
   const location = useLocation()
   const navigate = useNavigate()
   const navRef = useRef(null)
@@ -32,6 +34,37 @@ function Navbar({ activeSection }) {
       tl.fromTo(linkEls, { y: -20, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.05, duration: 0.4 }, '-=0.2')
     }
   }, [])
+
+  // Auto-hide on scroll down, show on scroll up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      if (menuOpen) return
+
+      if (currentScrollY < 50) {
+        setVisible(true)
+      } else if (currentScrollY > lastScrollY.current + 8) {
+        // Scrolling DOWN -> Hide
+        setVisible(false)
+      } else if (currentScrollY < lastScrollY.current - 8) {
+        // Scrolling UP -> Show
+        setVisible(true)
+      }
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (!navRef.current) return
+    gsap.to(navRef.current, {
+      y: visible ? 0 : -90,
+      duration: 0.35,
+      ease: 'power2.out',
+    })
+  }, [visible])
 
   useEffect(() => {
     if (menuOpen) {
