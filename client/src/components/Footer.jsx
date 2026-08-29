@@ -8,7 +8,6 @@ function Footer() {
   const footerRef = useRef(null)
   const columnsRef = useRef([])
   const copyrightRef = useRef(null)
-  const socialsRef = useRef([])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -18,12 +17,7 @@ function Footer() {
       })
 
       gsap.fromTo(copyrightRef.current, { opacity: 0 }, {
-        opacity: 1, duration: 0.5, delay: 0.5,
-        scrollTrigger: { trigger: footerRef.current, start: 'top 85%' },
-      })
-
-      gsap.fromTo(socialsRef.current, { y: 10, opacity: 0 }, {
-        y: 0, opacity: 1, stagger: 0.08, duration: 0.4, ease: 'power2.out', delay: 0.6,
+        opacity: 1, duration: 0.5, delay: 0.3,
         scrollTrigger: { trigger: footerRef.current, start: 'top 85%' },
       })
     })
@@ -31,103 +25,108 @@ function Footer() {
     return () => ctx.revert()
   }, [])
 
+  const socials = [
+    { name: 'Instagram', href: 'https://instagram.com', label: 'Instagram' },
+    { name: 'LinkedIn', href: 'https://linkedin.com', label: 'LinkedIn' },
+    { name: 'X', href: 'https://x.com', label: 'X' },
+  ]
+
   return (
-    <footer ref={footerRef} className="relative bg-[#1a1a1a] border-t border-white/10">
-      <div className="mx-auto max-w-[1400px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div ref={(el) => { columnsRef.current[0] = el }} style={{ opacity: 0 }}>
-            <img className="block h-10 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" />
-            <p className="mt-4 max-w-[280px] text-sm leading-relaxed text-white/40">
-              Lorem ipsum dolor sit amet consectetur. Pulvinar amet nunc acu mauris lectus mauris enim feugiat.
-              Blandit in nulla non. Morbi et aliquam egestas enim in eget ris pharetra. Massa justo sad fermentum odio.
-            </p>
-          </div>
-
-          <div ref={(el) => { columnsRef.current[1] = el }} style={{ opacity: 0 }}>
-            <h4
-              className="text-sm font-bold uppercase tracking-[3px] text-white"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
-            >
-              Pages
-            </h4>
-            <ul className="mt-4 flex flex-col gap-3">
-              {[
-                { name: 'Home', path: '/home' },
-                { name: 'Daksha', path: '/daksha' },
-                { name: 'Workshops', path: '/workshops' },
-                { name: 'Competitions', path: '/competitions' },
-                { name: 'Pro Shows', path: '/proshows' },
-                { name: 'Team', path: '/team' },
-                { name: 'About Us', path: '/about' },
-                { name: 'Contact', path: '/contact' },
-              ].map((page) => (
-                <li key={page.name}>
-                  <a href={page.path} className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
-                    {page.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }}>
-            <h4
-              className="text-sm font-bold uppercase tracking-[3px] text-white"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
-            >
-              Contact
-            </h4>
-            <ul className="mt-4 flex flex-col gap-3">
-              <li>
-                <a href="mailto:drishti@cet.ac.in" className="text-sm text-white/40 transition-colors duration-200 hover:text-gold">
-                  drishti@cet.ac.in
-                </a>
-              </li>
-              <li className="text-sm text-white/40">
-                <span className="text-white/60">Karun Tony :</span> +91 99958541611
-              </li>
-              <li className="text-sm text-white/40">
-                <span className="text-white/60">Karun Tony :</span> +91 99958541611
-              </li>
-            </ul>
-          </div>
-
-          <div ref={(el) => { columnsRef.current[3] = el }} style={{ opacity: 0 }}>
-            <h4
-              className="text-sm font-bold uppercase tracking-[3px] text-white"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
-            >
-              Location
-            </h4>
-            <div className="mt-4 overflow-hidden rounded-lg border border-white/10">
-              <img
-                src="https://maps.googleapis.com/maps/api/staticmap?center=College+of+Engineering+Trivandrum&zoom=15&size=400x200&maptype=roadmap&markers=color:gold%7CCollege+of+Engineering+Trivandrum&key=&style=feature:all|element:labels.text.fill|color:0x8ec3b9&style=feature:all|element:labels.text.stroke|color:0x1a3646&style=feature:administrative.country|element:geometry.stroke|color:0x4b6878&style=feature:landscape|element:all|color:0x1a1a1a&style=feature:poi|element:all|color:0x1a1a1a&style=feature:road|element:all|color:0x2a2a2a&style=feature:water|element:all|color:0x0e1626"
-                alt="College of Engineering Trivandrum"
-                className="block w-full object-cover"
-                onError={(e) => { e.target.style.display = 'none' }}
-              />
+    <footer
+      ref={footerRef}
+      className="relative overflow-hidden bg-[#050505] text-black"
+    >
+      <div className="mx-auto max-w-[1600px] px-5 pb-0 pt-8 lg:px-8">
+        <div className="flex min-h-[220px] flex-col justify-between">
+          <div className="grid gap-8 pb-8 md:grid-cols-[1fr_1fr_1fr_1fr] lg:gap-12">
+            <div ref={(el) => { columnsRef.current[0] = el }} style={{ opacity: 0 }}>
+              <div className="space-y-3 text-white/80">
+                <h4
+                  className="text-[11px] font-bold uppercase tracking-[4px] text-white/80"
+                  style={{ fontFamily: "'Clash Display', sans-serif" }}
+                >
+                  Pages
+                </h4>
+                <ul className="space-y-2 text-[15px] font-light">
+                  {[
+                    { name: 'Home', path: '/home' },
+                    { name: 'Daksha', path: '/daksha' },
+                    { name: 'Workshops', path: '/workshops' },
+                    { name: 'Competitions', path: '/competitions' },
+                    { name: 'Pro Shows', path: '/proshows' },
+                    { name: 'Team', path: '/team' },
+                    { name: 'About Us', path: '/about' },
+                    { name: 'Contact', path: '/contact' },
+                  ].map((page) => (
+                    <li key={page.name}>
+                      <a href={page.path} className="text-white/80 transition-colors duration-200 hover:text-white">
+                        {page.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <p className="mt-3 text-xs text-white/30">College of Engineering Trivandrum</p>
+
+            <div ref={(el) => { columnsRef.current[1] = el }} style={{ opacity: 0 }}>
+              <div className="space-y-3 text-white/80">
+                <h4
+                  className="text-[11px] font-bold uppercase tracking-[4px] text-white/80"
+                  style={{ fontFamily: "'Clash Display', sans-serif" }}
+                >
+                  Contact
+                </h4>
+                <div className="space-y-2 text-[15px] font-light">
+                  <a href="mailto:drishti@cet.ac.in" className="block text-white/80 transition-colors duration-200 hover:text-white">
+                    drishti@cet.ac.in
+                  </a>
+                  <p className="text-white/80">Gautam KJ: +91 85905 40376</p>
+                  <p className="text-white/80">Convenor, Drishti'26</p>
+                </div>
+              </div>
+            </div>
+
+            <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }}>
+              <div className="space-y-3 text-white/80">
+                <h4
+                  className="text-[11px] font-bold uppercase tracking-[4px] text-white/80"
+                  style={{ fontFamily: "'Clash Display', sans-serif" }}
+                >
+                  Location
+                </h4>
+               
+                <a href="https://maps.google.com/?q=College+of+Engineering+Trivandrum" target="_blank" rel="noreferrer" className="mt-3 block overflow-hidden rounded-md border border-white/20">
+                   <p className="text-[15px] font-light text-white/80">College of Engineering Trivandrum</p>
+                </a>
+              </div>
+            </div>
+
+            <div ref={(el) => { columnsRef.current[3] = el }} style={{ opacity: 0 }}>
+          
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-white/5">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between px-[clamp(16px,4vw,40px)] py-6">
-          <p ref={copyrightRef} className="text-xs text-white/30" style={{ opacity: 0 }}>© 2026 Drishti. All rights reserved.</p>
-          <div className="flex gap-4">
-            {['Instagram', 'LinkedIn', 'Twitter'].map((social, i) => (
-              <a
-                key={social}
-                ref={(el) => { socialsRef.current[i] = el }}
-                href="#"
-                className="text-xs text-white/30 transition-colors duration-200 hover:text-gold"
-                style={{ opacity: 0 }}
-              >
-                {social}
-              </a>
-            ))}
-          </div>
+      <div className="relative overflow-hidden border-t border-black/40 bg-[#050505]">
+        <div className="mx-auto max-w-[1600px] px-0">
+          <div
+            className="relative h-[180px] w-full overflow-hidden sm:h-[200px] md:h-[220px] lg:h-[260px] xl:h-[295px]"
+            style={{
+              backgroundImage: "url('/home/footer.jpg.jpeg')",
+              backgroundSize: '100% 100%',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+        </div>
+      </div>
+
+      <div className="bg-[#050505]">
+        <div className="mx-auto max-w-[220px] px-2 py-2 text-center">
+          <p ref={copyrightRef} className="text-[8px] uppercase tracking-[1.5px] text-[#d8a52a]" style={{ opacity: 0 }}>
+            © 2026 DRISHTI. ALL RIGHTS RESERVED.
+          </p>
         </div>
       </div>
     </footer>
