@@ -272,6 +272,7 @@ function Home() {
           <video
             className="w-full max-w-[900px] self-center object-cover"
             controls
+            loop
             playsInline
             preload="metadata"
           >
