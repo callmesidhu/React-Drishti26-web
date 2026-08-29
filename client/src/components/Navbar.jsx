@@ -1,101 +1,221 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import gsap from 'gsap'
 
 const links = [
-  { label: 'Workshops', to: '/workshops' },
-  { label: 'Competitions', to: '/competitions', scrollTo: 'competitions-section' },
+  { label: 'Home', to: '/home' },
   { label: 'Daksha', to: '/daksha' },
-  { label: 'Team', to: '/team', scrollTo: 'team-section' },
-  { label: 'About', to: '/about', scrollTo: 'about-section' },
+  { label: 'Workshops', to: '/workshops' },
+  { label: 'Competitions', to: '/competitions' },
+  { label: 'Team', to: '/team' },
+  { label: 'About', to: '/about' },
+  { label: 'Contact', to: '/contact' },
 ]
 
-function Navbar({ activeSection }) {
+function Navbar({ activeSection, theme = 'gold' }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const lastScrollY = useRef(0)
+  const hideTimerRef = useRef(null)
+  const isHoveredRef = useRef(false)
   const location = useLocation()
   const navigate = useNavigate()
+  const navRef = useRef(null)
+  const logoRef = useRef(null)
+  const desktopLinksRef = useRef(null)
+  const mobileOverlayRef = useRef(null)
+  const mobileLinksRef = useRef([])
+  const hamburgerRef = useRef(null)
+  const barsRef = useRef([])
+
+  const isBlue = theme === 'blue' || activeSection?.toLowerCase() === 'daksha' || location.pathname.startsWith('/daksha')
+
+  useEffect(() => {
+    // Initial state: hidden off-screen above viewport
+    if (navRef.current) {
+      gsap.set(navRef.current, { y: -90, opacity: 1 })
+      if (logoRef.current) gsap.set(logoRef.current, { opacity: 1, scale: 1 })
+      if (desktopLinksRef.current) {
+        gsap.set(desktopLinksRef.current.children, { opacity: 1, y: 0 })
+      }
+    }
+  }, [])
+
+  // Auto-hide by default, show for 3s on scroll (both scroll down and scroll up)
+  useEffect(() => {
+    const startHideTimer = () => {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+      hideTimerRef.current = setTimeout(() => {
+        if (!isHoveredRef.current && !menuOpen) {
+          setVisible(false)
+        }
+      }, 1500)
+    }
+
+    const handleScrollActivity = () => {
+      if (menuOpen) return
+
+      // Show navbar on any scroll activity (down or up) and keep for 3s
+      setVisible(true)
+      startHideTimer()
+    }
+
+    window.addEventListener('scroll', handleScrollActivity, { passive: true })
+    window.addEventListener('wheel', handleScrollActivity, { passive: true })
+    window.addEventListener('touchmove', handleScrollActivity, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', handleScrollActivity)
+      window.removeEventListener('wheel', handleScrollActivity)
+      window.removeEventListener('touchmove', handleScrollActivity)
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    if (!navRef.current) return
+    gsap.to(navRef.current, {
+      y: visible || menuOpen ? 0 : -90,
+      duration: 0.35,
+      ease: 'power2.out',
+    })
+  }, [visible, menuOpen])
+
+  const handleMouseEnter = () => {
+    isHoveredRef.current = true
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+  }
+
+  const handleMouseLeave = () => {
+    isHoveredRef.current = false
+    if (visible && !menuOpen) {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
+      hideTimerRef.current = setTimeout(() => {
+        if (!isHoveredRef.current && !menuOpen) {
+          setVisible(false)
+        }
+      }, 3000)
+    }
+  }
+
+  useEffect(() => {
+    if (menuOpen) {
+      gsap.fromTo(mobileOverlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3 })
+      gsap.fromTo(mobileLinksRef.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, stagger: 0.06, duration: 0.4, ease: 'back.out(1.4)', delay: 0.1 })
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    const barColor = isBlue ? '#38bdf8' : '#e19d00'
+    if (menuOpen) {
+      gsap.to(barsRef.current[0], { y: 7, rotate: 45, backgroundColor: '#fff', duration: 0.3, ease: 'power2.inOut' })
+      gsap.to(barsRef.current[1], { opacity: 0, duration: 0.15 })
+      gsap.to(barsRef.current[2], { y: -7, rotate: -45, backgroundColor: '#fff', duration: 0.3, ease: 'power2.inOut' })
+    } else {
+      gsap.to(barsRef.current[0], { y: 0, rotate: 0, backgroundColor: barColor, duration: 0.3, ease: 'power2.inOut' })
+      gsap.to(barsRef.current[1], { opacity: 1, duration: 0.15, delay: 0.1 })
+      gsap.to(barsRef.current[2], { y: 0, rotate: 0, backgroundColor: barColor, duration: 0.3, ease: 'power2.inOut' })
+    }
+  }, [menuOpen, isBlue])
 
   const isActive = (link) => {
     if (activeSection) {
-      return activeSection === link.label.toLowerCase()
+      const activeClean = activeSection.toLowerCase().replace(/[^a-z0-9]/g, '')
+      const linkClean = link.label.toLowerCase().replace(/[^a-z0-9]/g, '')
+      return activeClean === linkClean
     }
     return location.pathname === link.to
   }
 
-  const handleClick = (link, e) => {
-    if (link.scrollTo) {
-      e.preventDefault()
-      setMenuOpen(false)
-      if (location.pathname === link.to) {
-        setTimeout(() => {
-          const el = document.getElementById(link.scrollTo)
-          if (el) el.scrollIntoView({ behavior: 'smooth' })
-        }, 100)
-      } else {
-        navigate(`${link.to}#${link.scrollTo}`)
-      }
-    } else if (link.label === 'Daksha' && location.pathname === '/daksha') {
-      e.preventDefault()
-      setMenuOpen(false)
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 100)
-    } else {
-      setMenuOpen(false)
-    }
+  const handleClick = () => {
+    setMenuOpen(false)
+    setVisible(false)
   }
 
   return (
     <>
-      <nav className="sticky top-0 z-50 flex items-center justify-between bg-black/80 px-[clamp(16px,4vw,40px)] py-3.5 backdrop-blur-md">
+      <nav
+        ref={navRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between border-b border-white/[0.08] bg-black/60 px-[clamp(16px,4vw,40px)] py-3.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl backdrop-saturate-150"
+      >
         <Link to="/" className="flex items-center gap-2">
-          <img className="block h-10 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" />
+          <img
+            ref={logoRef}
+            className={`block h-10 w-auto transition-all duration-300 ${
+              isBlue ? 'filter hue-rotate-[185deg] saturate-[180%] brightness-110 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]' : ''
+            }`}
+            src="/daksha/drishti-logo.png"
+            alt="Drishti logo"
+            style={{ opacity: 0 }}
+          />
         </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
+        <div ref={desktopLinksRef} className="hidden items-center gap-3 lg:gap-6 md:flex">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              onClick={(e) => handleClick(link, e)}
-              className={`text-[13px] uppercase tracking-[2px] transition-colors duration-200 ${
+              onClick={() => handleClick()}
+              className={`relative text-[11px] lg:text-[13px] uppercase tracking-[1.5px] lg:tracking-[2px] transition-colors duration-200 ${
                 isActive(link)
-                  ? 'text-gold'
-                  : 'text-white/70 hover:text-white'
+                  ? isBlue
+                    ? 'text-sky-400 font-semibold drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]'
+                    : 'text-gold font-semibold drop-shadow-[0_0_8px_rgba(225,157,0,0.6)]'
+                  : isBlue
+                    ? 'text-white/70 hover:text-sky-300'
+                    : 'text-white/70 hover:text-white'
               }`}
             >
               {link.label}
+              {isActive(link) && (
+                <span
+                  className={`absolute -bottom-1 left-0 h-[1px] w-full ${
+                    isBlue
+                      ? 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+                      : 'bg-gold shadow-[0_0_6px_rgba(225,157,0,0.6)]'
+                  }`}
+                />
+              )}
             </Link>
           ))}
         </div>
 
         <button
+          ref={hamburgerRef}
           className="flex flex-col gap-[5px] md:hidden"
           aria-label="Menu"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          <span className={`block h-[2px] w-6 transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45 bg-white' : 'bg-gold'}`} />
-          <span className={`block h-[2px] w-6 transition-all duration-300 ${menuOpen ? 'opacity-0' : 'bg-gold'}`} />
-          <span className={`block h-[2px] w-6 transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45 bg-white' : 'bg-gold'}`} />
+          <span ref={(el) => { barsRef.current[0] = el }} className={`block h-[2px] w-6 ${isBlue ? 'bg-sky-400' : 'bg-gold'}`} />
+          <span ref={(el) => { barsRef.current[1] = el }} className={`block h-[2px] w-6 ${isBlue ? 'bg-sky-400' : 'bg-gold'}`} />
+          <span ref={(el) => { barsRef.current[2] = el }} className={`block h-[2px] w-6 ${isBlue ? 'bg-sky-400' : 'bg-gold'}`} />
         </button>
       </nav>
 
       <div
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/95 backdrop-blur-md transition-all duration-300 md:hidden ${
-          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        ref={mobileOverlayRef}
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/70 backdrop-blur-2xl md:hidden ${
+          menuOpen ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
+        style={{ opacity: 0 }}
       >
         <nav className="flex flex-col items-center gap-8">
-          {links.map((link) => (
+          {links.map((link, i) => (
             <Link
               key={link.to}
+              ref={(el) => { mobileLinksRef.current[i] = el }}
               to={link.to}
-              onClick={(e) => handleClick(link, e)}
+              onClick={() => handleClick()}
               className={`text-2xl uppercase tracking-[4px] transition-colors duration-200 ${
                 isActive(link)
-                  ? 'text-gold'
+                  ? isBlue
+                    ? 'text-sky-400'
+                    : 'text-gold'
                   : 'text-white/60 hover:text-white'
               }`}
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
+              style={{ fontFamily: "'Clash Display', sans-serif", opacity: 0 }}
             >
               {link.label}
             </Link>

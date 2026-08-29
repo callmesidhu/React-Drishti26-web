@@ -1,31 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import ProShows from "./ProShows";
+import EventDetailsModal from "../components/EventDetailsModal";
+import IdeasEmblem3D from "../components/IdeasEmblem";
+import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
-// ---- Hero (Wireframe - 1) ----
+gsap.registerPlugin(ScrollTrigger);
+
 const heroBg = "/home/drishti-take-1.png";
-const heroLogo = "/home/dishti-logo.png";
 const heroLine1 = "/home/line-1.svg";
 const heroLine2 = "/home/line-2.svg";
-
-// ---- Ideas Don't Ask Permission (Wireframe - 4) ----
-const ideasEmblem = "/home/ideas-emblem.png";
 const ideasVectorLine = "/home/ideas-vector-line.svg";
-
-// ---- Event Categories (Wireframe - 6) ----
 const categoriesPhoto = "/home/categories-photo.png";
 const arrowDownRight = "/home/arrow-down-right.svg";
-
-// ---- Featured Events (Wireframe - 5) ----
 const featuredEventPoster = "/home/featured-event-poster.png";
-
-// ---- Aftermovie (Wireframe - 3) ----
 const aftermovieVideo = "/home/aftermovie.mp4";
 const aftermovieLogo = "/home/aftermovie-logo.png";
-const aftermovieLine = "/home/aftermovie-line.svg";
-
-// ---- Gallery (Wireframe - 7) ----
 const galleryImage1 = "/home/gallery-1.png";
 const galleryImage2 = "/home/gallery-2.png";
 const galleryImage3 = "/home/gallery-3.png";
@@ -34,391 +27,1027 @@ const galleryImage5 = "/home/gallery-5.png";
 
 const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
 
-// The preview follows the hovered row with an alternating tilt.
 const workshopItems = [
-  { title: "WORKSHOPS", textOffset: "left-0", image: categoriesPhoto, top: 83, left: 682, rotate: -11.17 },
-  { title: "COMPETITIONS", textOffset: "left-[70px]", image: categoriesPhoto, top: 243, left: 752, rotate: 11.17 },
-  { title: "TALKS AND PANELS", textOffset: "left-0", image: categoriesPhoto, top: 403, left: 682, rotate: -11.17 },
-  { title: "EXHIBITIONS", textOffset: "left-0", image: categoriesPhoto, top: 563, left: 752, rotate: 11.17 },
-  { title: "PRO SHOWS", textOffset: "left-0", image: categoriesPhoto, top: 723, left: 682, rotate: -11.17 },
+  { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
+  { title: "COMPETITIONS", image: categoriesPhoto, rotate: 11.17 },
+  { title: "PRO SHOWS", image: categoriesPhoto, rotate: -11.17 },
 ];
 
-// Replace `image` with each event's actual poster once you have final artwork —
-// the Figma design currently reuses the same placeholder poster for all four cards.
 const featuredEvents = [
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
-  { image: featuredEventPoster },
+  dakshaEventsData[0],
+  competitionsData[0],
+  competitionsData[1],
+  workshopsData[0],
 ];
 
 const galleryImages = [
-  { src: galleryImage1, className: "left-[511px] top-[228px] h-[543px] w-[394px]" },
-  { src: galleryImage2, className: "left-[937px] top-[105px] h-[395px] w-[287px]" },
-  { src: galleryImage3, className: "left-[190px] top-[538px] h-[395px] w-[287px]" },
-  { src: galleryImage4, className: "left-[144px] top-[303px] h-[216px] w-[287px]" },
-  { src: galleryImage5, className: "left-[939px] top-[555px] h-[216px] w-[287px]" },
+  { src: galleryImage1, className: "md:absolute md:left-[clamp(200px,35vw,511px)] md:top-[clamp(100px,15vw,228px)] md:h-[clamp(300px,37vw,543px)] md:w-[clamp(200px,27vw,394px)] w-full aspect-[394/543]" },
+  { src: galleryImage2, className: "md:absolute md:left-[clamp(500px,65vw,937px)] md:top-[clamp(50px,7vw,105px)] md:h-[clamp(200px,27vw,395px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/395]" },
+  { src: galleryImage3, className: "md:absolute md:left-[clamp(80px,13vw,190px)] md:top-[clamp(300px,37vw,538px)] md:h-[clamp(200px,27vw,395px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/395]" },
+  { src: galleryImage4, className: "md:absolute md:left-[clamp(60px,10vw,144px)] md:top-[clamp(150px,21vw,303px)] md:h-[clamp(100px,15vw,216px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/216]" },
+  { src: galleryImage5, className: "md:absolute md:left-[clamp(500px,65vw,939px)] md:top-[clamp(300px,38vw,555px)] md:h-[clamp(100px,15vw,216px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/216]" },
 ];
 
 function Home() {
   const [activeWorkshopItem, setActiveWorkshopItem] = useState("");
   const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
-  const categoryImageRef = useRef(null);
+  const [carouselStep, setCarouselStep] = useState(412);
+  const [activeModalEvent, setActiveModalEvent] = useState(null);
+  const [ideasModelGroup, setIdeasModelGroup] = useState(null);
 
-  const handleWorkshopItemClick = (title) => {
-    setActiveWorkshopItem(title);
+  const categoryImageRef = useRef(null);
+  const categoryListRef = useRef(null);
+  const itemRefs = useRef([]);
+  const carouselCardRef = useRef(null);
+  const carouselContainerRef = useRef(null);
+
+  // Refs for GSAP animations
+  const heroBgRef = useRef(null);
+  const heroLeftTextRef = useRef(null);
+  const heroRightTextRef = useRef(null);
+  const heroLine1Ref = useRef(null);
+  const heroLine2Ref = useRef(null);
+  const heroTitleRef = useRef(null);
+  const heroParticlesRef = useRef(null);
+  const ideasEmblemWrapperRef = useRef(null);
+  const ideasTitleRef = useRef(null);
+  const ideasParagraphRef = useRef(null);
+  const coreValuesRef = useRef([]);
+  const ideasVectorLineRef = useRef(null);
+  const categoryTitleRefs = useRef([]);
+  const categoryBordersRef = useRef([]);
+  const featuredHeadingRef = useRef(null);
+  const featuredParagraphRef = useRef(null);
+  const featuredCardsRef = useRef([]);
+  const aftermovieContainerRef = useRef(null);
+  const aftermovieTitleLeftRef = useRef(null);
+  const aftermovieTitleRightRef = useRef(null);
+  const aftermovieLogoRef = useRef(null);
+  const galleryImagesRef = useRef([]);
+  const ctaDrishtiRef = useRef(null);
+  const ctaTitle1Ref = useRef(null);
+  const ctaTitle2Ref = useRef(null);
+  const ctaButtonRef = useRef(null);
+  const ctaBorderRef = useRef(null);
+  const ctaParticlesRef = useRef(null);
+
+  // Split text into individual characters for animation
+  const splitText = (text, ref) => {
+    if (!ref.current) return [];
+    ref.current.innerHTML = "";
+    const chars = [];
+    text.split("").forEach((char) => {
+      const span = document.createElement("span");
+      span.textContent = char === " " ? "\u00A0" : char;
+      span.style.display = "inline-block";
+      span.style.opacity = "0";
+      ref.current.appendChild(span);
+      chars.push(span);
+    });
+    return chars;
   };
 
-  const handleCategoryEnter = (index) => setHoveredCategoryIndex(index);
+  // Create floating particles
+  const createParticles = (container, count, colors) => {
+    if (!container) return [];
+    container.innerHTML = "";
+    const particles = [];
+    for (let i = 0; i < count; i++) {
+      const particle = document.createElement("div");
+      particle.className = "absolute rounded-full pointer-events-none";
+      const size = Math.random() * 4 + 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.width = `${size}px`;
+      particle.style.height = `${size}px`;
+      particle.style.backgroundColor = color;
+      particle.style.left = `${Math.random() * 100}%`;
+      particle.style.top = `${Math.random() * 100}%`;
+      particle.style.opacity = "0";
+      container.appendChild(particle);
+      particles.push(particle);
+    }
+    return particles;
+  };
+
+  const handleWorkshopItemClick = (title, index) => {
+    setActiveWorkshopItem(title);
+    if (window.innerWidth < 768) {
+      setHoveredCategoryIndex((current) => (current === index ? null : index));
+    }
+  };
+
+  const handleCategoryInteraction = (index) => {
+    setHoveredCategoryIndex(index);
+  };
+
   const handleCategoryLeave = (index) => {
     setHoveredCategoryIndex((current) => (current === index ? null : current));
   };
 
-  // Reveal + tilt the category photo in on hover/focus, reverse it on leave/blur.
+  // Reveal + tilt the category photo
   useEffect(() => {
     const el = categoryImageRef.current;
-    if (!el) return;
+    if (!el || !categoryListRef.current) return;
+    if (window.innerWidth < 768) return;
 
     gsap.killTweensOf(el);
 
-    if (hoveredCategoryIndex !== null) {
-      const { top, left, rotate: targetRotate } = workshopItems[hoveredCategoryIndex];
-      gsap.fromTo(
-        el,
+    if (hoveredCategoryIndex !== null && itemRefs.current[hoveredCategoryIndex]) {
+      const itemEl = itemRefs.current[hoveredCategoryIndex];
+      const listRect = categoryListRef.current.getBoundingClientRect();
+      const sectionRect = categoryListRef.current.parentElement.getBoundingClientRect();
+      const itemRect = itemEl.getBoundingClientRect();
+      const arrowButtonWidth = itemEl.lastElementChild?.getBoundingClientRect().width ?? 0;
+      const imageWidth = el.getBoundingClientRect().width;
+
+      const top = itemRect.top - listRect.top + (itemRect.height / 2) - 150;
+      const preferredLeft = itemRect.left - sectionRect.left + (itemRect.width / 2) + 150;
+      const maxLeft = listRect.right - sectionRect.left - arrowButtonWidth - 24 - imageWidth;
+      const left = Math.min(preferredLeft, maxLeft);
+      const { rotate: targetRotate } = workshopItems[hoveredCategoryIndex];
+
+      gsap.fromTo(el,
         { opacity: 0, scale: 0.85, rotate: 0, top, left },
-        {
-          opacity: 1,
-          scale: 1,
-          rotate: targetRotate,
-          top,
-          left,
-          duration: 0.55,
-          ease: "power3.out",
-        },
+        { opacity: 1, scale: 1, rotate: targetRotate, top, left, duration: 0.55, ease: "power3.out" }
       );
-    } else {
+
+      // Continuous floating animation
       gsap.to(el, {
-        opacity: 0,
-        scale: 0.85,
-        rotate: 0,
-        duration: 0.35,
-        ease: "power2.in",
+        y: "+=10",
+        duration: 2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
       });
+    } else {
+      gsap.to(el, { opacity: 0, scale: 0.85, rotate: 0, duration: 0.35, ease: "power2.in" });
     }
   }, [hoveredCategoryIndex]);
 
+  // Responsive Carousel Math
+  useEffect(() => {
+    if (!carouselCardRef.current || !carouselContainerRef.current) return;
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const width = entry.borderBoxSize?.[0]?.inlineSize || entry.target.offsetWidth;
+        setCarouselStep(width + 11);
+      }
+    });
+    observer.observe(carouselCardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   const handleRegistration = (eventIndex) => {
+    setActiveModalEvent(featuredEvents[eventIndex]);
     window.dispatchEvent(
-      new CustomEvent("featured-event-registration", {
-        detail: { eventIndex },
-      }),
+      new CustomEvent("featured-event-registration", { detail: { eventIndex } })
     );
   };
 
   const moveFeatured = (direction) => {
     setFeaturedIndex((current) =>
-      Math.min(1, Math.max(0, current + direction)),
+      Math.min(featuredEvents.length - 1, Math.max(0, current + direction))
     );
   };
+
+  // ==================== GSAP ADVANCED ANIMATIONS ====================
+  useEffect(() => {
+    let ctx;
+    let timer;
+
+    timer = setTimeout(() => {
+      ctx = gsap.context(() => {
+
+        // ---- HERO ENTRANCE (post loading screen) ----
+        // Background with dramatic 3D reveal
+        gsap.fromTo(heroBgRef.current,
+          { scale: 1.5, opacity: 0, rotation: 5, rotationY: 15, filter: "blur(20px)" },
+          {
+            scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)",
+            duration: 2.5, ease: "power4.out",
+          }
+        );
+
+        // Text slide-in with skew and 3D
+        gsap.fromTo(heroLeftTextRef.current,
+          { x: -120, opacity: 0, skewX: 25, rotateY: 30 },
+          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+        );
+
+        gsap.fromTo(heroRightTextRef.current,
+          { x: 120, opacity: 0, skewX: -25, rotateY: -30 },
+          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+        );
+
+        // Lines draw with elastic easing
+        gsap.fromTo(heroLine1Ref.current,
+          { scaleX: 0, transformOrigin: "left center", opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+        );
+
+        gsap.fromTo(heroLine2Ref.current,
+          { scaleX: 0, transformOrigin: "right center", opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+        );
+
+        // Title split text animation with 3D flip
+        const heroChars = splitText("DRISHTI", heroTitleRef);
+        gsap.fromTo(heroChars,
+          { y: 100, opacity: 0, rotationX: -120, scale: 0.5 },
+          {
+            y: 0, opacity: 1, rotationX: 0, scale: 1,
+            stagger: 0.1, duration: 1, delay: 0.6,
+            ease: "back.out(2)",
+          }
+        );
+
+        // Hero parallax on scroll
+        gsap.to(heroBgRef.current, {
+          yPercent: 30,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroBgRef.current?.closest('section'),
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          }
+        });
+
+        // Hero particles
+        const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
+        heroParticles.forEach((particle, i) => {
+          gsap.fromTo(particle,
+            { opacity: 0, scale: 0, y: 50 },
+            {
+              opacity: Math.random() * 0.7 + 0.2,
+              scale: 1,
+              y: 0,
+              duration: Math.random() * 1.5 + 0.5,
+              delay: Math.random() * 1.5 + 0.5,
+              ease: "back.out(2)",
+            }
+          );
+          gsap.to(particle, {
+            y: `${(Math.random() - 0.5) * 250}`,
+            x: `${(Math.random() - 0.5) * 150}`,
+            duration: Math.random() * 8 + 8,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+          });
+        });
+
+        // ---- IDEAS DON'T ASK PERMISSION ANIMATIONS ----
+      // The 3D emblem's own intro + Y-axis rotation now lives in its own
+      // effect below (see: model entrance + rotation), gated on the GLB
+      // actually being loaded. Text below is sequenced to start only once
+      // that model animation finishes — see updated triggers below, all
+      // keyed off ideasEmblemWrapperRef instead of each element's own
+      // position, so they can't run early.
+
+      // Title with clip-path reveal
+      gsap.fromTo(ideasTitleRef.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+        {
+          clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.2, ease: "power4.inOut",
+          scrollTrigger: {
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
+            end: "top 10%",
+            scrub: 1,
+          }
+        }
+      );
+
+      // Paragraph with wave effect
+      gsap.fromTo(ideasParagraphRef.current,
+        { y: 60, opacity: 0, skewY: 5 },
+        {
+          y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out",
+          scrollTrigger: {
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Core values with stagger and rotation
+      gsap.fromTo(coreValuesRef.current,
+        { x: -60, opacity: 0, rotation: -10 },
+        {
+          x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)",
+          scrollTrigger: {
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Vector line draw with morph
+      if (ideasVectorLineRef.current) {
+        gsap.fromTo(ideasVectorLineRef.current,
+          { scaleY: 0, transformOrigin: "top center", opacity: 0 },
+          {
+            scaleY: 1, opacity: 1, duration: 1.5, ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: ideasEmblemWrapperRef.current,
+              start: "top 40%",
+              end: "top 10%",
+              scrub: 1,
+            }
+          }
+        );
+      }
+
+      // ---- EVENT CATEGORIES ANIMATIONS ----
+      categoryTitleRefs.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { x: -100, opacity: 0, skewX: 20 },
+          {
+            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.12,
+          }
+        );
+      });
+
+      // Border lines draw animation
+      categoryBordersRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { scaleX: 0, transformOrigin: "left center" },
+          {
+            scaleX: 1, duration: 0.8, ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 90%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.1,
+          }
+        );
+      });
+
+      // ---- FEATURED EVENTS ANIMATIONS ----
+      // Heading with text reveal
+      gsap.fromTo(featuredHeadingRef.current,
+        { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
+        {
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1,
+          duration: 1.2, ease: "power4.inOut",
+          scrollTrigger: {
+            trigger: featuredHeadingRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      gsap.fromTo(featuredParagraphRef.current,
+        { y: 40, opacity: 0, scale: 0.95 },
+        {
+          y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
+          scrollTrigger: {
+            trigger: featuredParagraphRef.current,
+            start: "top 90%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Cards with 3D perspective entrance
+      featuredCardsRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
+          {
+            y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 95%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.15,
+          }
+        );
+      });
+
+      // ---- AFTERMOVIE ANIMATIONS ----
+      gsap.fromTo(aftermovieContainerRef.current,
+        { scale: 0.7, opacity: 0, borderRadius: "50px" },
+        {
+          scale: 1, opacity: 1, borderRadius: "0px", duration: 1.5, ease: "power3.out",
+          scrollTrigger: {
+            trigger: aftermovieContainerRef.current,
+            start: "top 80%",
+            end: "top 40%",
+            scrub: 1,
+          }
+        }
+      );
+
+      gsap.fromTo(aftermovieTitleLeftRef.current,
+        { x: -150, opacity: 0, skewX: 30 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+          scrollTrigger: {
+            trigger: aftermovieTitleLeftRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      gsap.fromTo(aftermovieTitleRightRef.current,
+        { x: 150, opacity: 0, skewX: -30 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+          scrollTrigger: {
+            trigger: aftermovieTitleRightRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      gsap.fromTo(aftermovieLogoRef.current,
+        { scale: 0, opacity: 0, rotation: -180 },
+        {
+          scale: 1, opacity: 1, rotation: 0, duration: 1, delay: 0.4, ease: "elastic.out(1, 0.3)",
+          scrollTrigger: {
+            trigger: aftermovieLogoRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // ---- GALLERY ANIMATIONS ----
+      galleryImagesRef.current.forEach((el, i) => {
+        if (!el) return;
+        const directions = [
+          { x: -300, y: 150, rotation: -20, scale: 0.5 },
+          { x: 300, y: -120, rotation: 15, scale: 0.6 },
+          { x: -250, y: -180, rotation: -12, scale: 0.55 },
+          { x: 280, y: 120, rotation: 18, scale: 0.65 },
+          { x: -200, y: 200, rotation: -8, scale: 0.5 },
+        ];
+        const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
+
+        gsap.fromTo(el,
+          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
+          {
+            x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 95%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.15,
+          }
+        );
+
+        // Hover magnetic effect
+        el.addEventListener("mouseenter", () => {
+          gsap.to(el, { scale: 1.05, rotation: 2, duration: 0.3, ease: "power2.out" });
+        });
+        el.addEventListener("mouseleave", () => {
+          gsap.to(el, { scale: 1, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
+        });
+      });
+
+      // ---- CTA (READY TO BUILD THE FUTURE) ANIMATIONS ----
+      gsap.fromTo(ctaDrishtiRef.current,
+        { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
+        {
+          scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
+          scrollTrigger: {
+            trigger: ctaDrishtiRef.current,
+            start: "top 90%",
+            end: "top 50%",
+            scrub: 1,
+          }
+        }
+      );
+
+      // Title lines with stagger
+      gsap.fromTo(ctaTitle1Ref.current,
+        { x: -120, opacity: 0, skewX: 25 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+          scrollTrigger: {
+            trigger: ctaTitle1Ref.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      gsap.fromTo(ctaTitle2Ref.current,
+        { x: 120, opacity: 0, skewX: -25 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
+          scrollTrigger: {
+            trigger: ctaTitle2Ref.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Border line with draw + glow
+      gsap.fromTo(ctaBorderRef.current,
+        { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
+        {
+          scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
+          scrollTrigger: {
+            trigger: ctaBorderRef.current,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // Button with morph effect
+      gsap.fromTo(ctaButtonRef.current,
+        { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
+        {
+          y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
+          scrollTrigger: {
+            trigger: ctaButtonRef.current,
+            start: "top 95%",
+            toggleActions: "play none none reverse",
+          }
+        }
+      );
+
+      // CTA button glow pulse
+      gsap.to(ctaButtonRef.current, {
+        boxShadow: "0 0 60px rgba(255,193,50,0.7), inset 0 0 30px rgba(255,193,50,0.1)",
+        repeat: -1,
+        yoyo: true,
+        duration: 2.5,
+        ease: "sine.inOut",
+        scrollTrigger: {
+          trigger: ctaButtonRef.current,
+          start: "top 95%",
+          toggleActions: "play pause resume pause",
+        }
+      });
+
+      // CTA particles
+      const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
+      ctaParticles.forEach((particle, i) => {
+        gsap.fromTo(particle,
+          { opacity: 0, scale: 0, y: 50 },
+          {
+            opacity: Math.random() * 0.5 + 0.3,
+            scale: 1,
+            y: 0,
+            duration: Math.random() * 2 + 1,
+            delay: Math.random() * 2,
+            ease: "power2.out",
+          }
+        );
+        gsap.to(particle, {
+          y: `${(Math.random() - 0.5) * 150}`,
+          x: `${(Math.random() - 0.5) * 80}`,
+          duration: Math.random() * 8 + 8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
+        });
+      });
+
+      // ---- SMOOTH SCROLL SETUP ----
+      ScrollTrigger.defaults({
+        toggleActions: "play none none reverse",
+      });
+
+    });
+
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      ctx?.revert();
+    };
+  }, []);
+
+  // ---- IDEAS EMBLEM: 3D model entrance + Y-axis rotation ----
+  // Separate from the effect above because the GLB loads asynchronously
+  // (via Suspense) — this can't run until IdeasEmblem3D actually hands us
+  // the loaded model. Both the fade/scale-in and the rotation are scrubbed
+  // to the same scroll window (top 85% -> top 40% of the wrapper), so the
+  // whole thing is smooth and reversible as the user scrolls up or down.
+  // The text elements above are gated to start at "top 40%" of this same
+  // wrapper, so they can't appear until this finishes.
+  useEffect(() => {
+    const group = ideasModelGroup;
+    const trigger = ideasEmblemWrapperRef.current;
+    if (!group || !trigger) return undefined;
+
+    const entrance = { progress: 0 };
+
+    group.scale.setScalar(0);
+    group.rotation.y = 0;
+    group.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material.transparent = true;
+        child.material.opacity = 0;
+      }
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger,
+        start: "top 85%",
+        end: "top 40%",
+        scrub: 1,
+      },
+    });
+
+    timeline
+      .to(entrance, {
+        progress: 1,
+        duration: 1,
+        ease: "power2.out",
+        onUpdate: () => {
+          group.scale.setScalar(entrance.progress);
+          group.traverse((child) => {
+            if (child.isMesh && child.material) {
+              child.material.opacity = entrance.progress;
+            }
+          });
+        },
+      })
+      .to(
+        group.rotation,
+        { y: Math.PI * 2, duration: 1, ease: "none" },
+        "<0.1",
+      );
+
+    return () => {
+      timeline.scrollTrigger?.kill();
+      timeline.kill();
+    };
+  }, [ideasModelGroup]);
 
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
       <Navbar />
 
-      {/* ============ HERO (Wireframe - 1) ============ */}
+      {/* ============ HERO ============ */}
       <section
-        className="relative h-[1024px] w-full overflow-hidden bg-white"
+        className="relative h-[clamp(600px,71vw,1024px)] w-full overflow-hidden bg-white flex flex-col justify-center items-center"
         aria-labelledby="drishti-title"
       >
         <img
-          className="absolute left-0 top-0 h-full w-full object-cover"
+          ref={heroBgRef}
+          className="absolute left-0 top-0 h-full w-full object-cover opacity-0"
           alt=""
           aria-hidden="true"
           src={heroBg}
         />
-        <div className="absolute left-11 top-[512px] font-['Space_Grotesk-Regular',Helvetica] text-base font-normal leading-[normal] tracking-[0] text-white opacity-60">
+
+        {/* Floating particles container */}
+        <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
+
+        <div
+          ref={heroLeftTextRef}
+          className="absolute top-[clamp(300px,35vw,512px)] left-[clamp(20px,3vw,44px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
+        >
           FEST UNLIKE ANY OTHER
         </div>
         <img
-          className="absolute left-0 top-[542px] h-0.5 w-[413px]"
+          ref={heroLine1Ref}
+          className="hidden md:block absolute left-0 top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,413px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine1}
         />
         <img
-          className="absolute left-[1032px] top-[542px] h-0.5 w-[408px]"
+          ref={heroLine2Ref}
+          className="hidden md:block absolute right-[clamp(0px,10vw,200px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,408px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine2}
         />
-        <div className="absolute left-[1222px] top-[512px] text-right font-['Space_Grotesk-Regular',Helvetica] text-base font-normal leading-[normal] tracking-[0] text-white opacity-60">
+        <div
+          ref={heroRightTextRef}
+          className="absolute top-[clamp(300px,35vw,512px)] right-[clamp(20px,3vw,44px)] text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
+        >
           REWIND AND REJOICE
         </div>
         <h1
+          ref={heroTitleRef}
           id="drishti-title"
-          className="absolute left-[calc(50%_-_319px)] top-[736px] font-['Bietro_DEMO-Regular',Helvetica] text-[180px] font-normal leading-[normal] tracking-[0] text-white"
+          className="absolute top-[clamp(450px,51vw,736px)] font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(80px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white z-20"
+          style={{ perspective: "1000px" }}
         >
-          DRISHTI
         </h1>
       </section>
 
-      {/* ============ IDEAS DON'T ASK PERMISSION (Wireframe - 4) ============ */}
+      {/* ============ IDEAS DON'T ASK PERMISSION ============ */}
       <section
-        className="relative h-[1639px] w-full overflow-hidden bg-black"
+        className="relative min-h-[clamp(800px,113vw,1639px)] py-20 w-full overflow-hidden bg-black flex flex-col md:flex-row items-center justify-center gap-10"
         aria-labelledby="hero-title"
       >
         <div
-          className="absolute bottom-[130px] left-[-197px] h-[395px] w-[608px] rotate-[18.51deg] rounded-[303.78px/197.65px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
+          className="absolute bottom-[10%] left-[-10%] h-[25%] w-[40%] rotate-[18.51deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
           aria-hidden="true"
         />
         <div
-          className="absolute left-[935px] top-[216px] h-[527px] w-[810px] rotate-[-6.92deg] rounded-[405px/263.5px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
+          className="absolute left-[65%] top-[15%] h-[32%] w-[56%] rotate-[-6.92deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
           aria-hidden="true"
         />
-        <div
-          className="absolute left-[315px] top-[1052px] h-[527px] w-[810px] rotate-[-6.92deg] rounded-[405px/263.5px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute bottom-[125px] left-[1026px] h-[250px] w-96 rotate-[18.51deg] rounded-[192.19px/125.04px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
-          aria-hidden="true"
-        />
-        <div
-          id="hero-title"
-          className="absolute left-[189px] top-[849px] w-[1062px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-8xl font-normal leading-[96px] tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]"
-        >
-          IDEAS DON&apos;T ASK PERMISSION
+
+        <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,71px)] relative flex flex-col items-center">
+          <aside
+            className="md:absolute md:left-[5%] md:top-0 flex md:flex-col items-center md:items-start gap-[26px] opacity-50 flex-wrap justify-center z-10 mb-10 md:mb-0"
+            aria-label="Core values"
+          >
+            <ul className="m-0 flex md:flex-col flex-row flex-wrap justify-center gap-[clamp(10px,1.8vw,26px)] p-0 list-none">
+              {coreValues.map((value, index) => (
+                <li
+                  ref={(el) => { coreValuesRef.current[index] = el }}
+                  className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(14px,1.5vw,22px)] font-normal leading-none tracking-[0] text-white opacity-0"
+                  key={value}
+                >
+                  {value}
+                </li>
+              ))}
+            </ul>
+          </aside>
+
+          <img
+            ref={ideasVectorLineRef}
+            className="hidden md:block absolute left-[20%] top-0 h-[263px] w-0.5 z-10"
+            alt=""
+            aria-hidden="true"
+            src={ideasVectorLine}
+          />
+
+          <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
+            <div
+              ref={ideasEmblemWrapperRef}
+              className="w-[clamp(200px,29vw,421px)] aspect-[0.83]"
+            >
+              <IdeasEmblem3D className="h-full w-full" onModelReady={setIdeasModelGroup} />
+            </div>
+          </div>
+
+          <div
+            ref={ideasTitleRef}
+            id="hero-title"
+            className="w-full max-w-[1062px] text-center bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(48px,6.6vw,96px)] font-normal leading-[1.2] tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] relative z-10 opacity-0"
+          >
+            IDEAS DON&apos;T ASK PERMISSION
+          </div>
+
+          <p
+            ref={ideasParagraphRef}
+            className="mt-[clamp(40px,10vw,150px)] w-full max-w-[1019px] text-center font-['Space_Grotesk-Regular',Helvetica] text-[clamp(16px,1.6vw,24px)] font-normal leading-[1.4] tracking-[0] text-white relative z-10 opacity-0"
+          >
+            Lorem ipsum dolor sit amet consectetur. Leo in velit tristique morbi
+            facilisi facilisis vestibulum in. Odio rutrum eu nisi tempor sit vel.
+            Sed dignissim viverra interdum nunc at diam turpis. Integer odio risus
+            aliquam maecenas porttitor.
+          </p>
         </div>
-        <aside
-          className="absolute left-24 top-[378px] flex w-[186px] flex-col items-start gap-[26px] opacity-50"
-          aria-label="Core values"
-        >
-          <ul className="m-0 flex w-full list-none flex-col gap-[26px] p-0">
-            {coreValues.map((value, index) => (
-              <li
-                className={`relative self-stretch font-['Space_Grotesk-Regular',Helvetica] text-[22px] font-normal leading-[22px] tracking-[0] text-white ${
-                  index === 0 ? "mt-[-1px]" : ""
-                }`}
-                key={value}
-              >
-                {value}
-              </li>
-            ))}
-          </ul>
-        </aside>
-        <img
-          className="absolute left-[71px] top-[353px] h-[263px] w-0.5"
-          alt=""
-          aria-hidden="true"
-          src={ideasVectorLine}
-        />
-        <img
-          className="absolute left-[507px] top-[226px] h-[506px] w-[421px] aspect-[0.83]"
-          alt="Gold geometric innovation emblem"
-          src={ideasEmblem}
-        />
-        <p className="absolute bottom-[373px] left-[210px] w-[1019px] text-center font-['Space_Grotesk-Regular',Helvetica] text-2xl font-normal leading-[33.6px] tracking-[0] text-white">
-          Lorem ipsum dolor sit amet consectetur. Leo in velit tristique morbi
-          facilisi facilisis vestibulum in. Odio rutrum eu nisi tempor sit vel.
-          Sed dignissim viverra interdum nunc at diam turpis. Integer odio risus
-          aliquam maecenas porttitor.
-        </p>
       </section>
 
-      {/* ============ EVENT CATEGORIES (Wireframe - 6) ============ */}
-      <section className="relative h-[1800px] w-full bg-black" aria-label="Event categories">
+      {/* ============ EVENT CATEGORIES ============ */}
+      <section className="relative min-h-[clamp(600px,86vw,1250px)] w-full bg-black flex items-center justify-center py-20 overflow-hidden" aria-label="Event categories">
         <div
-          className="absolute left-[calc(50.00%_-_610px)] top-[248px] flex w-[1220px] flex-col items-start gap-[47px]"
+          ref={categoryListRef}
+          className="relative flex w-full max-w-[1440px] px-[clamp(20px,5vw,71px)] flex-col items-start gap-[clamp(20px,3.2vw,47px)] z-10"
           aria-label="Available event categories"
         >
           {workshopItems.map((item, index) => (
             <div
               key={item.title}
-              className="relative h-[113px] w-full self-stretch border-b border-white"
-              onMouseEnter={() => handleCategoryEnter(index)}
+              ref={(el) => {
+                itemRefs.current[index] = el;
+                categoryTitleRefs.current[index] = el;
+              }}
+              className="relative min-h-[clamp(80px,7.8vw,113px)] w-full self-stretch border-b border-white flex items-center justify-between group opacity-0"
+              onMouseEnter={() => handleCategoryInteraction(index)}
               onMouseLeave={() => handleCategoryLeave(index)}
-              onFocus={() => handleCategoryEnter(index)}
-              onBlur={() => handleCategoryLeave(index)}
+              onFocus={() => window.innerWidth >= 768 && handleCategoryInteraction(index)}
+              onBlur={() => window.innerWidth >= 768 && handleCategoryLeave(index)}
             >
               <button
                 type="button"
-                className={`all-unset absolute ${item.textOffset} top-9 z-10 block w-[1062px] cursor-pointer bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-left font-['Bietro_DEMO-Regular',Helvetica] text-[64px] font-normal leading-[64px] tracking-[0] text-transparent [-webkit-text-fill-color:transparent] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white`}
-                onClick={() => handleWorkshopItemClick(item.title)}
+                className={`all-unset text-left z-10 cursor-pointer bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,4.4vw,64px)] font-normal leading-[normal] tracking-[0] text-transparent [-webkit-background-clip:text] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-transform duration-300 ${hoveredCategoryIndex === index ? '-translate-x-4 md:-translate-x-8' : ''}`}
+                onClick={() => handleWorkshopItemClick(item.title, index)}
                 aria-pressed={activeWorkshopItem === item.title}
               >
                 {item.title}
               </button>
               <button
                 type="button"
-                className="all-unset absolute left-[1104px] top-2 z-10 block h-[104px] w-[104px] cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                onClick={() => handleWorkshopItemClick(item.title)}
+                className="all-unset z-10 flex h-[clamp(40px,7.2vw,104px)] w-[clamp(40px,7.2vw,104px)] cursor-pointer items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 hover:scale-125 hover:rotate-45"
+                onClick={() => handleWorkshopItemClick(item.title, index)}
                 aria-label={`View ${item.title.toLowerCase()}`}
                 aria-pressed={activeWorkshopItem === item.title}
               >
                 <img
-                  className="absolute left-[22.16%] top-[22.16%] h-[77.84%] w-[77.84%]"
+                  className="h-[77.84%] w-[77.84%] transition-transform duration-300"
                   alt=""
                   aria-hidden="true"
                   src={arrowDownRight}
                 />
               </button>
             </div>
-            
           ))}
-          <h2 className="mt-4 w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[64px] font-normal leading-[64px] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
-            GRAB YOUR DRISH-TEES!!
-          </h2>
-          <video
-            className="w-full max-w-[900px] self-center object-cover"
-            controls
-            loop
-            playsInline
-            preload="metadata"
-          >
-            <source src="/home/drishtee.mp4" type="video/mp4" />
-          </video>
         </div>
         <img
           ref={categoryImageRef}
-          className="pointer-events-none absolute h-[443px] w-[358px] object-cover opacity-0"
-          alt={
-            hoveredCategoryIndex !== null
-              ? `${workshopItems[hoveredCategoryIndex].title} preview`
-              : ""
-          }
+          className="pointer-events-none absolute hidden h-[clamp(250px,30vw,443px)] w-[clamp(200px,24vw,358px)] object-cover opacity-0 z-20 shadow-2xl md:block"
+          alt={hoveredCategoryIndex !== null ? `${workshopItems[hoveredCategoryIndex].title} preview` : ""}
           aria-hidden={hoveredCategoryIndex === null}
           src={workshopItems[hoveredCategoryIndex ?? 0].image}
         />
-
-
       </section>
 
+      {/* ============ PRO SHOWS ============ */}
+      <section id="proshows" className="relative w-full bg-black">
+        <ProShows embedded={true} />
+      </section>
 
-
-
-      
-
-      {/* ============ FEATURED EVENTS (Wireframe - 5) ============ */}
+      {/* ============ FEATURED EVENTS ============ */}
       <section
-        className="relative h-[1250px] w-full overflow-hidden bg-black"
+        className="relative min-h-[clamp(800px,86vw,1250px)] w-full overflow-hidden bg-black py-20 flex flex-col justify-center"
         aria-labelledby="featured-events-heading"
       >
         <div
-          className="absolute left-[-197px] top-[130px] h-[395px] w-[608px] rotate-[18.51deg] rounded-[303.78px/197.65px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
+          className="absolute left-[-10%] top-[10%] h-[30%] w-[40%] rotate-[18.51deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
           aria-hidden="true"
         />
         <div
-          className="absolute left-[895px] top-[292px] h-[527px] w-[810px] rotate-[-6.92deg] rounded-[405px/263.5px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
+          className="absolute left-[60%] top-[20%] h-[40%] w-[56%] rotate-[-6.92deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
           aria-hidden="true"
         />
-        <div
-          className="absolute left-[137px] top-[1023px] h-[527px] w-[595px] rotate-[-6.92deg] rounded-[297.65px/263.5px] bg-[#d9d9d9] opacity-[0.24] blur-[208.1px]"
-          aria-hidden="true"
-        />
-        <h2
-          id="featured-events-heading"
-          className="absolute left-[107px] top-[205px] w-[1062px] bg-[linear-gradient(143deg,rgba(255,255,255,0.3)_0%,rgba(255,255,255,1)_45%,rgba(255,255,255,0.3)_100%)] bg-clip-text text-8xl font-normal leading-[96px] tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] font-['Bietro_DEMO-Regular',Helvetica]"
-        >
-          FEATURED EVENTS
-        </h2>
-        <p className="absolute left-[107px] top-[313px] whitespace-nowrap font-['Space_Grotesk-Regular',Helvetica] text-[22px] font-normal leading-[30.8px] tracking-[0] text-white">
-          Lorem ipsum dolor sit amet consectetur.
-        </p>
-        <button
-          type="button"
-          className="absolute left-[48px] top-[680px] z-10 flex h-12 w-12 rotate-90 items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30"
-          onClick={() => moveFeatured(-1)}
-          disabled={featuredIndex === 0}
-          aria-label="Previous featured events"
-        >
-          <img className="h-6 w-6" src={arrowDownRight} alt="" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="absolute right-[48px] top-[680px] z-10 flex h-12 w-12 -rotate-90 items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30"
-          onClick={() => moveFeatured(1)}
-          disabled={featuredIndex === featuredEvents.length - 1}
-          aria-label="Next featured events"
-        >
-          <img className="h-6 w-6" src={arrowDownRight} alt="" aria-hidden="true" />
-        </button>
-        <div className="absolute left-[107px] top-[403px] w-[calc(100%-107px)] overflow-hidden">
-          <div
-            className="flex w-max items-center gap-[11px] transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${featuredIndex * 412}px)` }}
-          >
-          {featuredEvents.map((event, index) => (
-            <article
-              key={index}
-              className="relative h-[569px] w-[401px] shrink-0 overflow-hidden border border-solid border-white"
+
+        <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,107px)] mx-auto relative z-10 flex flex-col gap-[clamp(20px,7.5vw,108px)]">
+          <div>
+            <h2
+              ref={featuredHeadingRef}
+              id="featured-events-heading"
+              className="bg-[linear-gradient(143deg,rgba(255,255,255,0.3)_0%,rgba(255,255,255,1)_45%,rgba(255,255,255,0.3)_100%)] bg-clip-text text-[clamp(48px,6.6vw,96px)] font-normal leading-[1.2] tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] font-['Bietro_DEMO-Regular',Helvetica] opacity-0"
             >
-              <img
-                className="absolute left-0 top-0 h-[501px] w-[401px] object-cover"
-                alt={`Featured event ${index + 1}`}
-                src={event.image}
-              />
+              FEATURED EVENTS
+            </h2>
+            <p
+              ref={featuredParagraphRef}
+              className="mt-[clamp(10px,2vw,30px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(16px,1.5vw,22px)] font-normal leading-[1.4] tracking-[0] text-white opacity-0"
+            >
+              Lorem ipsum dolor sit amet consectetur.
+            </p>
+          </div>
+
+          <div className="relative w-full">
+            <div className="overflow-hidden w-full" ref={carouselContainerRef}>
+              <div
+                className="flex w-max items-center gap-[11px] transition-transform duration-500 ease-out"
+                style={{ transform: `translateX(-${featuredIndex * carouselStep}px)` }}
+              >
+                {featuredEvents.map((event, index) => (
+                  <article
+                    key={index}
+                    ref={(el) => {
+                      if (index === 0) carouselCardRef.current = el;
+                      featuredCardsRef.current[index] = el;
+                    }}
+                    className="relative h-[clamp(400px,39.5vw,569px)] w-[clamp(280px,27.8vw,401px)] shrink-0 overflow-hidden border border-solid border-white opacity-0 group cursor-pointer"
+                    style={{ perspective: "1000px" }}
+                    onMouseEnter={(e) => {
+                      gsap.to(e.currentTarget, {
+                        rotateY: 5,
+                        rotateX: 3,
+                        scale: 1.02,
+                        boxShadow: "0 25px 50px rgba(225,157,0,0.3)",
+                        duration: 0.4,
+                        ease: "power2.out",
+                      });
+                    }}
+                    onMouseLeave={(e) => {
+                      gsap.to(e.currentTarget, {
+                        rotateY: 0,
+                        rotateX: 0,
+                        scale: 1,
+                        boxShadow: "0 0px 0px rgba(225,157,0,0)",
+                        duration: 0.6,
+                        ease: "elastic.out(1, 0.3)",
+                      });
+                    }}
+                  >
+                    <img
+                      className="absolute left-0 top-0 h-[calc(100%-68px)] w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      alt={`Featured event ${index + 1}`}
+                      src={event.image}
+                    />
+                    <button
+                      type="button"
+                      className="absolute bottom-0 left-0 flex h-[68px] w-full cursor-pointer items-center justify-between px-[13px] text-left border-t border-white bg-black/50 backdrop-blur-sm transition-all duration-300 hover:bg-gold/30 hover:border-gold"
+                      aria-label={`View details for featured event ${index + 1}`}
+                      onClick={() => handleRegistration(index)}
+                    >
+                      <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(18px,2vw,28px)] font-normal leading-8 tracking-[0] text-white transition-colors duration-300 group-hover:text-gold">
+                        VIEW DETAILS
+                      </span>
+                      <img
+                        className="h-[clamp(20px,2.2vw,32px)] w-[clamp(20px,2.2vw,32px)] -rotate-90 transition-all duration-300 group-hover:rotate-0 group-hover:scale-125"
+                        alt=""
+                        aria-hidden="true"
+                        src={arrowDownRight}
+                      />
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="absolute inset-y-0 -left-4 -right-4 flex items-center justify-between pointer-events-none z-20 md:-left-[70px] md:-right-[70px]">
               <button
                 type="button"
-                className="absolute left-px top-[501px] flex h-[68px] w-[397px] cursor-pointer items-center justify-between px-[13px] text-left"
-                aria-label={`Register now for featured event ${index + 1}`}
-                onClick={() => handleRegistration(index)}
+                className="flex h-12 w-12 rotate-[135deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/30 hover:border-gold hover:scale-110 hover:rotate-[180deg]"
+                onClick={() => moveFeatured(-1)}
+                disabled={featuredIndex === 0}
+                aria-label="Previous featured events"
               >
-                <span className="font-['Space_Grotesk-Regular',Helvetica] text-[32px] font-normal leading-8 tracking-[0] text-white">
-                  REGISTER NOW
-                </span>
-                <img
-                  className="h-8 w-8 -rotate-90"
-                  alt=""
-                  aria-hidden="true"
-                  src={arrowDownRight}
-                />
+                <img className="h-6 w-6" src={arrowDownRight} alt="" aria-hidden="true" />
               </button>
-            </article>
-          ))}
+              <button
+                type="button"
+                className="flex h-12 w-12 -rotate-[45deg] items-center justify-center border border-white disabled:cursor-not-allowed disabled:opacity-30 pointer-events-auto bg-black/50 transition-all duration-300 hover:bg-gold/30 hover:border-gold hover:scale-110 hover:rotate-0"
+                onClick={() => moveFeatured(1)}
+                disabled={featuredIndex === featuredEvents.length - 1}
+                aria-label="Next featured events"
+              >
+                <img className="h-6 w-6" src={arrowDownRight} alt="" aria-hidden="true" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ============ AFTERMOVIE (Wireframe - 3) ============ */}
-      <section className="relative h-[1024px] w-full bg-black">
-        <div className="absolute left-1/2 top-1/2 h-[999px] w-[1415px] -translate-x-1/2 -translate-y-1/2 overflow-hidden">
-          <video
-            className="absolute left-0 top-0 h-full w-full object-cover opacity-80"
-            src={aftermovieVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-label="Drishti '24 aftermovie"
-          />
-          <img
-            className="pointer-events-none absolute left-[10px] top-[898px] h-px w-[1375px]"
-            alt=""
-            aria-hidden="true"
-            src={aftermovieLine}
-          />
-          <p className="pointer-events-none absolute left-[55px] top-[925px] whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[58px] leading-[normal] text-white">
-            DRISHTI &lsquo;24
-          </p>
-          <p className="pointer-events-none absolute left-[1205px] top-[925px] whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[58px] leading-[normal] text-white">
-            AFTERMOVIE
-          </p>
+      {/* ============ AFTERMOVIE ============ */}
+      <section className="relative min-h-[clamp(600px,71vw,1024px)] w-full bg-black flex items-center justify-center overflow-hidden">
+        <div className="relative w-full max-w-[1415px] flex flex-col items-center justify-center px-[clamp(20px,4vw,60px)]">
+          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 flex flex-col justify-end opacity-0 overflow-hidden">
+            <video
+              className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
+              src={aftermovieVideo}
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-label="Drishti '24 aftermovie"
+            />
+            <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,2vw,24px)] pb-[clamp(10px,2vw,24px)] px-[clamp(16px,3vw,48px)] pointer-events-none">
+              <div className="flex items-center justify-between">
+                <p
+                  ref={aftermovieTitleLeftRef}
+                  className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0 opacity-0"
+                >
+                  DRISHTI &lsquo;24
+                </p>
+                <img
+                  ref={aftermovieLogoRef}
+                  className="pointer-events-none h-[clamp(32px,4vw,45px)] w-auto object-cover absolute left-1/2 -translate-x-1/2 opacity-0"
+                  alt="Drishti"
+                  src={aftermovieLogo}
+                />
+                <p
+                  ref={aftermovieTitleRightRef}
+                  className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0 opacity-0"
+                >
+                  AFTERMOVIE
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <img
-          className="pointer-events-none absolute left-[709px] top-[943px] h-[45px] w-[47px] object-cover"
-          alt="Drishti"
-          src={aftermovieLogo}
-        />
       </section>
 
-      {/* ============ GALLERY (Wireframe - 7) ============ */}
-      <section className="relative h-[1024px] w-full bg-black" aria-label="Event gallery">
-        <div className="absolute left-1/2 top-1/2 h-[999px] w-[1415px] -translate-x-1/2 -translate-y-1/2 overflow-hidden">
+      {/* ============ GALLERY ============ */}
+      <section className="relative min-h-[clamp(600px,71vw,1024px)] w-full bg-black flex items-center justify-center" aria-label="Event gallery">
+        <div className="relative w-full max-w-[1415px] min-h-[600px] md:h-[999px] flex flex-col md:block items-center gap-4 py-10 px-[20px] overflow-hidden">
           {galleryImages.map((image, index) => (
             <img
               key={index}
-              className={`absolute ${image.className} object-cover opacity-80`}
+              ref={(el) => { galleryImagesRef.current[index] = el }}
+              className={`${image.className} object-cover opacity-0 rounded-lg md:rounded-none cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(225,157,0,0.4)]`}
               alt={`Gallery photo ${index + 1}`}
               src={image.src}
             />
@@ -426,29 +1055,55 @@ function Home() {
         </div>
       </section>
 
-      {/* ============ READY TO BUILD THE FUTURE? (Wireframe - 8) ============ */}
+      {/* ============ READY TO BUILD THE FUTURE? ============ */}
       <section
-        className="relative flex h-[1404px] w-full flex-col items-center bg-black"
+        className="relative flex min-h-[clamp(800px,97vw,1404px)] py-[clamp(100px,14vw,201px)] w-full flex-col items-center bg-black px-4 overflow-hidden"
         aria-label="Registration call to action"
       >
-        <p className="mt-[201px] font-['Bietro_DEMO-Regular',Helvetica] text-[156px] leading-none text-white">
+        {/* CTA particles */}
+        <div ref={ctaParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0" />
+
+        <p
+          ref={ctaDrishtiRef}
+          className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,10.8vw,156px)] leading-none text-white text-center opacity-0 relative z-10"
+        >
           DRISHTI
         </p>
-        <div className="mt-[98px] w-[715px] text-center font-['Clash_Display-Medium',Helvetica] text-[72px] leading-[normal] tracking-[1.44px] text-white">
-          <p className="m-0">READY TO BUILD</p>
-          <p className="m-0">THE FUTURE?</p>
+        <div className="mt-[clamp(40px,6.8vw,98px)] w-full max-w-[715px] text-center overflow-hidden relative z-10">
+          <p
+            ref={ctaTitle1Ref}
+            className="m-0 font-['Clash_Display-Medium',Helvetica] text-[clamp(40px,5vw,72px)] leading-[normal] tracking-[1.44px] text-white opacity-0"
+          >
+            READY TO BUILD
+          </p>
+          <p
+            ref={ctaTitle2Ref}
+            className="m-0 font-['Clash_Display-Medium',Helvetica] text-[clamp(40px,5vw,72px)] leading-[normal] tracking-[1.44px] text-white opacity-0"
+          >
+            THE FUTURE?
+          </p>
         </div>
+        <div ref={ctaBorderRef} className="w-full max-w-[514px] h-[2px] bg-[#ffc132] mt-[clamp(40px,6.3vw,91px)] relative z-10" style={{ transformOrigin: "center", boxShadow: "0 0 0px rgba(255,193,50,0)" }} />
         <a
+          ref={ctaButtonRef}
           href="#register"
-          className="mt-[91px] flex h-[103px] w-[514px] items-center justify-center rounded-[50px] border-2 border-solid border-[#ffc132] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+          className="mt-8 flex h-[clamp(60px,7vw,103px)] w-full max-w-[514px] items-center justify-center rounded-[50px] border-2 border-solid border-[#ffc132] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-all duration-300 hover:bg-[#ffc132]/10 hover:scale-105 active:scale-95 opacity-0 relative z-10"
         >
-          <span className="bg-gradient-to-b from-[#ffc746] via-[52.404%] via-[#ffd779] to-[#8d6200] bg-clip-text text-center font-['Clash_Display-Medium',Helvetica] text-[40px] leading-[normal] text-transparent">
+          <span className="bg-gradient-to-b from-[#ffc746] via-[52.404%] via-[#ffd779] to-[#8d6200] bg-clip-text text-center font-['Clash_Display-Medium',Helvetica] text-[clamp(24px,2.7vw,40px)] leading-[normal] text-transparent">
             Register Now
           </span>
         </a>
       </section>
 
       <Footer />
+
+      {/* View Details Popup Modal */}
+      {activeModalEvent && (
+        <EventDetailsModal
+          event={activeModalEvent}
+          onClose={() => setActiveModalEvent(null)}
+        />
+      )}
     </main>
   );
 }

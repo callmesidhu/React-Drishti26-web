@@ -1,65 +1,67 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { competitionsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
-const competitions = [
-  {
-    id: 1,
-    title: 'Robo Wars',
-    image: '/competitions/robo-wars.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea eget porttitor erat. Sed et magna pulvinar amet amet et ipsum. Id pellentesque netus eget porttitor. Bibendum sagittis odio non platea quis. Eget accumsan ut nulla fringilla. Ipsum tempus ut arcu quam molestie nec. Sed turpis odio neque massa pretium. Fringilla quis sapien in commodo et pretium tempor consequat lacus.',
-    registerUrl: '#',
-  },
-  {
-    id: 2,
-    title: 'Hackathon',
-    image: '/competitions/hackathon.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea eget porttitor erat. Sed et magna pulvinar amet amet et ipsum.',
-    registerUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Paper Presentation',
-    image: '/competitions/paper.jpg',
-    description:
-      'Lorem ipsum dolor sit amet consectetur. Dis in sapien tortor nullam morbi sed ac dui. Purus commodo a id senectus egestas posuere pellentesque. Aliquet quis sem molestie viverra platea.',
-    registerUrl: '#',
-  },
-]
-
 function Competitions({ embedded = false }) {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0)
-  const active = competitions[activeIndex]
+  const competitions = competitionsData
+  const active = competitions[activeIndex] || competitions[0]
+
+  // Find modal event if slug is present in URL
+  const selectedModalEvent = slug ? competitions.find((c) => c.slug === slug) : null
+
+  // If URL has slug on initial load, sync activeIndex
+  useEffect(() => {
+    if (slug) {
+      const idx = competitions.findIndex((c) => c.slug === slug)
+      if (idx !== -1) setActiveIndex(idx)
+    }
+  }, [slug])
   const carouselRef = useRef(null)
   const pageRef = useRef(null)
   const detailRef = useRef(null)
   const activeRef = useRef(activeIndex)
   const navRef = useRef(false)
-
-  // Letter-gradient refs
   const h1Ref = useRef(null)
   const h2Ref = useRef(null)
+  const sidebarItemsRef = useRef([])
+  const registerBtnRef = useRef(null)
+  const arrowRef = useRef(null)
+  const sparkleRef = useRef(null)
 
-  // Apply letter gradient to static h1 once on mount
   useEffect(() => {
     if (!h1Ref.current) return
-    // The h1 contains a <span> with the text and a sparkle child span.
-    // We only split the text node (first child text content), not the sparkle.
     const textSpan = h1Ref.current.querySelector('.competitions-text')
     if (textSpan) applyLetterGradient(textSpan)
   }, [])
 
-  // Re-apply letter gradient to h2 whenever activeIndex changes
   useEffect(() => {
     if (!h2Ref.current) return
-    // Reset and re-apply on each index change
     h2Ref.current.textContent = competitions[activeIndex].title
     applyLetterGradient(h2Ref.current)
   }, [activeIndex])
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(h1Ref.current, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 })
+      gsap.fromTo(sidebarItemsRef.current, { x: -40, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power2.out', delay: 0.3 })
+      gsap.fromTo(detailRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.5 })
+
+      if (sparkleRef.current) {
+        gsap.to(sparkleRef.current, { rotation: 360, duration: 20, ease: 'none', repeat: -1 })
+        gsap.to(sparkleRef.current, { scale: 1.1, duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
@@ -125,12 +127,24 @@ function Competitions({ embedded = false }) {
 
   useEffect(() => {
     if (!detailRef.current) return
-    gsap.fromTo(
-      detailRef.current.children,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08 }
-    )
+    gsap.fromTo(detailRef.current.children, { opacity: 0, y: 20 }, {
+      opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08,
+    })
   }, [activeIndex])
+
+  useEffect(() => {
+    if (registerBtnRef.current) {
+      const btn = registerBtnRef.current
+      const handleEnter = () => gsap.to(arrowRef.current, { x: 5, duration: 0.3, ease: 'power2.out' })
+      const handleLeave = () => gsap.to(arrowRef.current, { x: 0, duration: 0.3, ease: 'power2.out' })
+      btn.addEventListener('mouseenter', handleEnter)
+      btn.addEventListener('mouseleave', handleLeave)
+      return () => {
+        btn.removeEventListener('mouseenter', handleEnter)
+        btn.removeEventListener('mouseleave', handleLeave)
+      }
+    }
+  }, [])
 
   return (
     <div ref={pageRef} className={`relative min-h-svh w-full touch-none ${embedded ? 'bg-transparent' : ''}`}>
@@ -145,7 +159,9 @@ function Competitions({ embedded = false }) {
           {competitions.map((comp, i) => (
             <div
               key={comp.id}
+              ref={(el) => { sidebarItemsRef.current[i] = el }}
               className="w-full"
+              style={{ opacity: 0 }}
             >
               <div
                 className={`group flex h-[70px] w-full items-stretch text-left transition-all duration-300 md:h-[180px] ${
@@ -174,7 +190,7 @@ function Competitions({ embedded = false }) {
                       }`}
                       style={{
                         writingMode: 'horizontal-tb',
-                        fontFamily: "'Clash Display', sans-serif",
+                        fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif",
                       }}
                     >
                       {comp.title}
@@ -190,16 +206,17 @@ function Competitions({ embedded = false }) {
           <div className="relative mb-2">
             <h1
               ref={h1Ref}
-              className="text-[clamp(36px,8vw,110px)] font-bold leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
+              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
             >
               <span className="relative inline-block">
-                    <span className="relative z-10 competitions-text">Competitions</span>
+                    <span className="relative z-10 competitions-text">COMPETITIONS</span>
                     <img
+                      ref={sparkleRef}
                       src="/workshops/shine.svg"
                       alt=""
                       aria-hidden="true"
-                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none"
+                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
                     />
               </span>
             </h1>
@@ -208,8 +225,8 @@ function Competitions({ embedded = false }) {
           <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
             <h2
               ref={h2Ref}
-              className="text-[clamp(24px,5vw,44px)] font-bold"
-              style={{ fontFamily: "'Clash Display', sans-serif" }}
+              className="text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
             >
               {active.title}
             </h2>
@@ -218,15 +235,16 @@ function Competitions({ embedded = false }) {
               {active.description}
             </p>
 
-            <a
-              href={active.registerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm"
+            <button
+              ref={registerBtnRef}
+              type="button"
+              onClick={() => routerNavigate(`/competitions/${active.slug}`)}
+              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm cursor-pointer"
               style={{ borderRadius: '50px' }}
             >
-              Register
+              View Details
               <svg
+                ref={arrowRef}
                 width="18"
                 height="18"
                 viewBox="0 0 24 24"
@@ -239,10 +257,18 @@ function Competitions({ embedded = false }) {
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
-            </a>
+            </button>
           </div>
         </section>
       </div>
+
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/competitions')}
+        />
+      )}
     </div>
   )
 }

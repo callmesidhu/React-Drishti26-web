@@ -1,71 +1,23 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
-import Competitions from './Competitions.jsx'
+import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import { workshopsData } from '../data/eventsData.js'
+
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const workshops = [
-  {
-    id: 1,
-    title: 'AI & Machine Learning',
-    description:
-      'Dive deep into the world of artificial intelligence and machine learning. Learn to build intelligent systems, train neural networks, and deploy ML models in real-world applications.',
-    image: '/workshops/ai-ml.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 2,
-    title: 'Web Development',
-    description:
-      'Master modern web technologies from frontend frameworks to backend architecture. Build responsive, performant web applications using the latest tools and best practices.',
-    image: '/workshops/web-dev.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 3,
-    title: 'Cloud Computing',
-    description:
-      'Explore cloud infrastructure, deployment strategies, and DevOps practices. Learn to architect scalable applications on AWS, Azure, or Google Cloud platforms.',
-    image: '/workshops/cloud.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 4,
-    title: 'Cybersecurity',
-    description:
-      'Understand ethical hacking, penetration testing, and security auditing. Protect systems from threats and vulnerabilities with hands-on security techniques.',
-    image: '/workshops/cyber.jpg',
-    registerUrl: '#',
-  },
-  {
-    id: 5,
-    title: 'Blockchain & Web3',
-    description:
-      'Explore decentralized applications, smart contracts, and the future of the internet. Build on Ethereum and understand the fundamentals of blockchain technology.',
-    image: '/workshops/blockchain.jpg',
-    registerUrl: '#',
-  },
-]
+const workshops = workshopsData
 
 const TOTAL = workshops.length
 
-// Every card shares the same transform-origin (near its bottom-left corner),
-// so animating `rotate` alone makes the whole set pivot open/closed like a
-// hand of cards, with each layer's far edge peeking further up-and-right as
-// its angle increases. This one pivot is what produces the fan in every
-// per-card state below (closed / open / resting stack). The *whole deck*
-// additionally carries its own group-level tilt during the intro (see
-// DECK_TILT_DEG below) to match the diagonal composition in the reference.
 const CARD_PIVOT = '18% 100%'
 const DECK_TILT_DEG = -18
 
-// Resting deck: the tight, mostly-closed stack the cards live in once
-// they've settled into their final layout spot (and between scroll steps).
 function getStackTransform(stackPosition) {
   return {
     y: stackPosition * 6,
@@ -77,7 +29,6 @@ function getStackTransform(stackPosition) {
   }
 }
 
-// Fully closed: every card exactly stacked, no fan yet. Starting pose.
 function getClosedTransform(stackPosition) {
   return {
     y: 0,
@@ -89,7 +40,6 @@ function getClosedTransform(stackPosition) {
   }
 }
 
-// Fully open: wide fan, used only for the center-of-screen intro moment.
 function getFanOpenTransform(stackPosition) {
   return {
     y: stackPosition * 2,
@@ -102,8 +52,24 @@ function getFanOpenTransform(stackPosition) {
 }
 
 function Workshops() {
+  const { slug } = useParams()
+  const routerNavigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0)
-  const location = useLocation()
+  const activeIndexRef = useRef(0)
+  const busyRef = useRef(false)
+  const scrollTriggerRef = useRef(null)
+
+  const selectedModalEvent = slug ? workshops.find((w) => w.slug === slug) : null
+
+  useEffect(() => {
+    if (slug) {
+      const idx = workshops.findIndex((w) => w.slug === slug)
+      if (idx !== -1) {
+        setActiveIndex(idx)
+        activeIndexRef.current = idx
+      }
+    }
+  }, [slug])
   const wrapperRef = useRef(null)
   const sectionRef = useRef(null)
   const textColRef = useRef(null)
@@ -113,12 +79,7 @@ function Workshops() {
   const deckRef = useRef(null)
   const cardRefs = useRef([])
   const dotsRef = useRef([])
-  const activeIndexRef = useRef(0)
-  const busyRef = useRef(false)
-  const competitionsSectionRef = useRef(null)
-  const scrollTriggerRef = useRef(null)
 
-  // Keep the title DOM-owned so React does not replace its letter spans.
   useEffect(() => {
     if (titleRef.current) {
       titleRef.current.textContent = workshops[activeIndex].title
@@ -126,44 +87,18 @@ function Workshops() {
     }
   }, [activeIndex])
 
-  useEffect(() => {
-    if (location.hash === '#competitions-section') {
-      const el = document.getElementById('competitions-section')
-      if (el) {
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth' })
-        }, 500)
-      }
-    }
-  }, [location])
-
-  // ---- Deck intro --------------------------------------------------------
-  // tilted + closed (exact viewport center, no text)
-  //   -> fan open, still tilted, still centered, still no text
-  //   -> fan closes back into a resting stack, still tilted + centered
-  //   -> deck straightens (tilt -> 0) while it slides to its laid-out spot
-  //   -> text fades in
-  //
-  // The deck is temporarily pulled into `position: fixed` so it can be
-  // placed at the *exact* center of the viewport regardless of the grid
-  // layout, then handed back to normal flow once it arrives at its natural
-  // spot. Its wrapper keeps the grid cell's footprint the whole time so
-  // nothing else in the layout reflows while the deck is detached.
   useLayoutEffect(() => {
     const cards = cardRefs.current
     const deck = deckRef.current
     const textCol = textColRef.current
     if (!cards.length || !deck || !textCol) return
 
-    // Natural (laid-out) position/size, captured before we detach the deck.
     const rect = deck.getBoundingClientRect()
     const natural = { top: rect.top, left: rect.left, width: rect.width, height: rect.height }
 
     document.body.style.overflow = 'hidden'
     gsap.set(textCol, { opacity: 0 })
 
-    // Freeze the deck exactly where it is, then switch it to fixed
-    // positioning so it can be moved to the true viewport center.
     gsap.set(deck, {
       position: 'fixed',
       top: 0,
@@ -184,7 +119,6 @@ function Workshops() {
     const tl = gsap.timeline({
       defaults: { ease: 'power3.out' },
       onComplete: () => {
-        // Hand the deck back to normal flow, exactly at its natural spot.
         gsap.set(deck, { clearProps: 'position,top,left,width,height,x,y,rotate' })
         document.body.style.overflow = ''
         setupScroll()
@@ -192,7 +126,6 @@ function Workshops() {
       },
     })
 
-    // Fan open about the shared pivot — centered + tilted, no text yet
     tl.to(cards, {
       y: (i) => getFanOpenTransform(i).y,
       z: (i) => getFanOpenTransform(i).z,
@@ -203,7 +136,6 @@ function Workshops() {
       stagger: 0.05,
     })
 
-    // Fan closed back into the resting stack — still centered + tilted
     tl.to(
       cards,
       {
@@ -219,8 +151,6 @@ function Workshops() {
       '+=0.1'
     )
 
-    // Now it reads as one deck: straighten the tilt and slide to the
-    // natural, laid-out spot in the same motion.
     tl.to(deck, {
       x: natural.left,
       y: natural.top,
@@ -229,7 +159,6 @@ function Workshops() {
       ease: 'power3.inOut',
     })
 
-    // Only once the deck has arrived does the workshop text appear
     tl.to(
       textCol,
       { opacity: 1, duration: 0.5, ease: 'power2.out' },
@@ -240,38 +169,8 @@ function Workshops() {
       tl.kill()
       document.body.style.overflow = ''
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // ---- Competitions section parallax reveal (unchanged) ----
-  useEffect(() => {
-    const competitionsSection = competitionsSectionRef.current
-    if (!wrapperRef.current) return
-
-    const ctx = gsap.context(() => {
-      if (competitionsSection) {
-        gsap.fromTo(
-          competitionsSection,
-          { y: '100vh' },
-          {
-            y: 0,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: wrapperRef.current,
-              start: 'top top',
-              end: () => `+=${window.innerHeight}`,
-              scrub: true,
-              pin: false,
-            },
-          }
-        )
-      }
-    }, wrapperRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  // ---- Card-cycle ScrollTrigger, wired up once the intro finishes ----
   function setupScroll() {
     const section = sectionRef.current
     if (!section || scrollTriggerRef.current) return
@@ -301,9 +200,6 @@ function Workshops() {
     }
   }, [])
 
-  // Cycles the deck to `newIndex`: the outgoing front card fans back to the
-  // rear of the pile (about the same pivot), every other card steps one
-  // place closer to front.
   function transitionTo(newIndex) {
     if (busyRef.current || newIndex === activeIndexRef.current) return
     busyRef.current = true
@@ -317,8 +213,6 @@ function Workshops() {
       const el = cardRefs.current[i]
       if (!el) return
 
-      // zIndex jumps immediately so the newly-promoted front card renders
-      // above the one fanning back behind it right from the start of the move.
       gsap.set(el, { zIndex: target.zIndex })
       gsap.to(el, {
         y: target.y,
@@ -373,8 +267,6 @@ function Workshops() {
         className="relative flex h-svh w-full items-center overflow-hidden px-[clamp(16px,4vw,40px)]"
       >
         <div className="mx-auto grid w-full max-w-[1200px] items-center gap-10 md:grid-cols-2 md:gap-16">
-          {/* Text content: hidden until the intro finishes, then below the
-              deck on mobile / left of it on desktop */}
           <div
             ref={textColRef}
             className="order-2 flex flex-col gap-6 text-center md:order-1 md:text-left"
@@ -383,7 +275,8 @@ function Workshops() {
 
             <h1
               ref={titleRef}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight font-display drop-shadow-[0_0_25px_rgba(225,157,0,0.35)]"
+              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
             >
             </h1>
 
@@ -395,18 +288,16 @@ function Workshops() {
             </p>
 
             <div className="flex justify-center md:justify-start">
-              <a
+              <button
                 ref={btnRef}
-                href={active.registerUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)]"
+                type="button"
+                onClick={() => routerNavigate(`/workshops/${active.slug}`)}
+                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)] cursor-pointer"
               >
-                Register Now
-              </a>
+                View Details
+              </button>
             </div>
 
-            {/* Dots */}
             <div className="mt-4 flex justify-center gap-3 md:justify-start">
               {workshops.map((ws, i) => (
                 <button
@@ -423,9 +314,6 @@ function Workshops() {
             </div>
           </div>
 
-          {/* Right/top: the card deck. Sizing lives on this wrapper (not on
-              deckRef) so the grid cell keeps its footprint even while
-              deckRef is temporarily `position: fixed` during the intro. */}
           <div className="order-1 flex items-center justify-center md:order-2">
             <div className="relative aspect-[4/5] w-full max-w-[250px] md:max-w-[360px]">
               <div ref={deckRef} className="absolute inset-0" style={{ perspective: '1600px' }}>
@@ -449,9 +337,15 @@ function Workshops() {
         </div>
       </section>
 
-      <div ref={competitionsSectionRef} id="competitions-section" className="relative w-full min-h-svh">
-        <Competitions embedded />
-      </div>
+      <div className="h-svh" />
+
+      {/* View Details Popup Modal */}
+      {selectedModalEvent && (
+        <EventDetailsModal
+          event={selectedModalEvent}
+          onClose={() => routerNavigate('/workshops')}
+        />
+      )}
     </div>
   )
 }

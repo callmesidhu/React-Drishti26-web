@@ -38,17 +38,75 @@
 @theme {
   --color-gold: #e19d00;
   --color-ink: #0b0b0b;
-  --font-display: "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bietro DEMO-Regular", "Bietro DEMO", "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+  --font-bietro: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
 
 @layer base {
+  /* Scrollbar styles for WebKit browsers (Chrome, Safari, Edge, Opera, Brave) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #000000;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%, #E19D00 100%);
+    border-radius: 9999px;
+    min-height: 350px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #D49B00 0%, #FFF0B8 45%, #BF8700 65%, #C28700 79%, #FFAE00 92%, #FFAE00 100%);
+  }
+
+  body.theme-blue ::-webkit-scrollbar-thumb,
+  html.theme-blue ::-webkit-scrollbar-thumb,
+  .theme-blue::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%, #0055ff 100%);
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+  }
+
+  body.theme-blue ::-webkit-scrollbar-thumb:hover,
+  html.theme-blue ::-webkit-scrollbar-thumb:hover,
+  .theme-blue::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #0066ff 0%, #cffafe 45%, #0ea5e9 65%, #0284c7 79%, #38bdf8 92%, #0066ff 100%);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #000000;
+  }
+
   body {
     background: #000;
+  }
+
+  html.lenis, html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    pointer-events: none;
   }
 }
 
 @utility text-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -56,7 +114,7 @@
 }
 
 .text-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -64,5 +122,37 @@
 }
 
 .bg-gold-gradient {
-  background: linear-gradient(106.52deg, #B78000 16.14%, #FFDB86 30.12%, #A27200 52.87%, #A77500 69.54%, #E19D00 97.12%), linear-gradient(180deg, #E19D00 0%, #FFC132 41.66%, #875E01 78.37%, #3A2801 100%);
+  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%);
+}
+
+@utility text-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+}
+
+@utility font-bietro {
+  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+}
+
+.font-bietro {
+  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+}
+
+.remove-black {
+  mix-blend-mode: screen;
 }
