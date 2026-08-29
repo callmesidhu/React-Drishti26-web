@@ -4,9 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 const links = [
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions', scrollTo: 'competitions-section' },
-  { label: 'Pro Shows', to: '/proshows' },
-  { label: 'Exhibitions', to: '/exhibitions' },
-  { label: 'Talks', to: '/talks' },
   { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team', scrollTo: 'team-section' },
   { label: 'About', to: '/about', scrollTo: 'about-section' },
@@ -19,9 +16,7 @@ function Navbar({ activeSection }) {
 
   const isActive = (link) => {
     if (activeSection) {
-      const activeClean = activeSection.toLowerCase().replace(/[^a-z0-9]/g, '')
-      const linkClean = link.label.toLowerCase().replace(/[^a-z0-9]/g, '')
-      return activeClean === linkClean
+      return activeSection === link.label.toLowerCase()
     }
     return location.pathname === link.to
   }
@@ -56,13 +51,13 @@ function Navbar({ activeSection }) {
           <img className="block h-10 w-auto" src="/daksha/drishti-logo.png" alt="Drishti logo" />
         </Link>
 
-        <div className="hidden items-center gap-3 lg:gap-6 md:flex">
+        <div className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
               onClick={(e) => handleClick(link, e)}
-              className={`text-[11px] lg:text-[13px] uppercase tracking-[1.5px] lg:tracking-[2px] transition-colors duration-200 ${
+              className={`text-[13px] uppercase tracking-[2px] transition-colors duration-200 ${
                 isActive(link)
                   ? 'text-gold'
                   : 'text-white/70 hover:text-white'

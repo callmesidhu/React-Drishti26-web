@@ -2,8 +2,37 @@
 
 @font-face {
   font-family: "SportenPerson";
-  src: url("/sportenperson.otf") format("opentype");
-  font-weight: 400 700;
+  src: url("/fonts/sportenperson.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Bietro DEMO-Regular";
+  src: url("/fonts/Bietro DEMO.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Clash Display-Medium";
+  src: url("/fonts/ClashDisplay-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Mango Grotesque-SemiBold";
+  src: url("/fonts/MangoGrotesque-SemiBold-BF6a47cba8b4c2a.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Space Grotesk-Regular";
+  src: url("/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
 }
 
 @theme {

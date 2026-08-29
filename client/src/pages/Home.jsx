@@ -264,7 +264,11 @@ function Home() {
                 />
               </button>
             </div>
+            
           ))}
+          <h2 align="center" className="mt-4 font-['Bietro_DEMO-Regular',Helvetica] text-[64px] font-normal leading-[64px] tracking-[0] text-gold">
+            GRAB YOUR DRISH-TEES!!
+          </h2>
         </div>
         <img
           ref={categoryImageRef}
@@ -277,7 +281,14 @@ function Home() {
           aria-hidden={hoveredCategoryIndex === null}
           src={workshopItems[hoveredCategoryIndex ?? 0].image}
         />
+
+
       </section>
+
+
+
+
+      
 
       {/* ============ FEATURED EVENTS (Wireframe - 5) ============ */}
       <section
