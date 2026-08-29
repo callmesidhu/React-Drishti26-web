@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
@@ -16,7 +16,6 @@ const heroLine2 = "/home/line-2.svg";
 const ideasVectorLine = "/home/ideas-vector-line.svg";
 const categoriesPhoto = "/home/categories-photo.png";
 const arrowDownRight = "/home/arrow-down-right.svg";
-const featuredEventPoster = "/home/featured-event-poster.png";
 const aftermovieVideo = "/home/aftermovie.mp4";
 const aftermovieLogo = "/home/aftermovie-logo.png";
 const galleryImage1 = "/home/gallery-1.png";
@@ -56,6 +55,10 @@ function Home() {
   const [activeModalEvent, setActiveModalEvent] = useState(null);
   const [ideasModelGroup, setIdeasModelGroup] = useState(null);
 
+  const handleModelReady = useCallback((group) => {
+  setIdeasModelGroup(group);
+}, []);
+
   const categoryImageRef = useRef(null);
   const categoryListRef = useRef(null);
   const itemRefs = useRef([]);
@@ -70,6 +73,7 @@ function Home() {
   const heroLine2Ref = useRef(null);
   const heroTitleRef = useRef(null);
   const heroParticlesRef = useRef(null);
+  const ideasSectionRef = useRef(null);
   const ideasEmblemWrapperRef = useRef(null);
   const ideasTitleRef = useRef(null);
   const ideasParagraphRef = useRef(null);
@@ -92,7 +96,6 @@ function Home() {
   const ctaBorderRef = useRef(null);
   const ctaParticlesRef = useRef(null);
 
-  // Split text into individual characters for animation
   const splitText = (text, ref) => {
     if (!ref.current) return [];
     ref.current.innerHTML = "";
@@ -108,7 +111,6 @@ function Home() {
     return chars;
   };
 
-  // Create floating particles
   const createParticles = (container, count, colors) => {
     if (!container) return [];
     container.innerHTML = "";
@@ -145,7 +147,6 @@ function Home() {
     setHoveredCategoryIndex((current) => (current === index ? null : current));
   };
 
-  // Reveal + tilt the category photo
   useEffect(() => {
     const el = categoryImageRef.current;
     if (!el || !categoryListRef.current) return;
@@ -172,7 +173,6 @@ function Home() {
         { opacity: 1, scale: 1, rotate: targetRotate, top, left, duration: 0.55, ease: "power3.out" }
       );
 
-      // Continuous floating animation
       gsap.to(el, {
         y: "+=10",
         duration: 2,
@@ -185,7 +185,6 @@ function Home() {
     }
   }, [hoveredCategoryIndex]);
 
-  // Responsive Carousel Math
   useEffect(() => {
     if (!carouselCardRef.current || !carouselContainerRef.current) return;
     const observer = new ResizeObserver((entries) => {
@@ -211,25 +210,19 @@ function Home() {
     );
   };
 
-  // ==================== GSAP ADVANCED ANIMATIONS ====================
+  // GSAP Animations
   useEffect(() => {
     let ctx;
     let timer;
 
     timer = setTimeout(() => {
       ctx = gsap.context(() => {
-
-        // ---- HERO ENTRANCE (post loading screen) ----
-        // Background with dramatic 3D reveal
+        // Hero entrance
         gsap.fromTo(heroBgRef.current,
           { scale: 1.5, opacity: 0, rotation: 5, rotationY: 15, filter: "blur(20px)" },
-          {
-            scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)",
-            duration: 2.5, ease: "power4.out",
-          }
+          { scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)", duration: 2.5, ease: "power4.out" }
         );
 
-        // Text slide-in with skew and 3D
         gsap.fromTo(heroLeftTextRef.current,
           { x: -120, opacity: 0, skewX: 25, rotateY: 30 },
           { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
@@ -240,7 +233,6 @@ function Home() {
           { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
         );
 
-        // Lines draw with elastic easing
         gsap.fromTo(heroLine1Ref.current,
           { scaleX: 0, transformOrigin: "left center", opacity: 0 },
           { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
@@ -251,18 +243,12 @@ function Home() {
           { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
         );
 
-        // Title split text animation with 3D flip
         const heroChars = splitText("DRISHTI", heroTitleRef);
         gsap.fromTo(heroChars,
           { y: 100, opacity: 0, rotationX: -120, scale: 0.5 },
-          {
-            y: 0, opacity: 1, rotationX: 0, scale: 1,
-            stagger: 0.1, duration: 1, delay: 0.6,
-            ease: "back.out(2)",
-          }
+          { y: 0, opacity: 1, rotationX: 0, scale: 1, stagger: 0.1, duration: 1, delay: 0.6, ease: "back.out(2)" }
         );
 
-        // Hero parallax on scroll
         gsap.to(heroBgRef.current, {
           yPercent: 30,
           ease: "none",
@@ -274,19 +260,11 @@ function Home() {
           }
         });
 
-        // Hero particles
         const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
-        heroParticles.forEach((particle, i) => {
+        heroParticles.forEach((particle) => {
           gsap.fromTo(particle,
             { opacity: 0, scale: 0, y: 50 },
-            {
-              opacity: Math.random() * 0.7 + 0.2,
-              scale: 1,
-              y: 0,
-              duration: Math.random() * 1.5 + 0.5,
-              delay: Math.random() * 1.5 + 0.5,
-              ease: "back.out(2)",
-            }
+            { opacity: Math.random() * 0.7 + 0.2, scale: 1, y: 0, duration: Math.random() * 1.5 + 0.5, delay: Math.random() * 1.5 + 0.5, ease: "back.out(2)" }
           );
           gsap.to(particle, {
             y: `${(Math.random() - 0.5) * 250}`,
@@ -298,342 +276,165 @@ function Home() {
           });
         });
 
-        // ---- IDEAS DON'T ASK PERMISSION ANIMATIONS ----
-      // The 3D emblem's own intro + Y-axis rotation now lives in its own
-      // effect below (see: model entrance + rotation), gated on the GLB
-      // actually being loaded. Text below is sequenced to start only once
-      // that model animation finishes — see updated triggers below, all
-      // keyed off ideasEmblemWrapperRef instead of each element's own
-      // position, so they can't run early.
-
-      // Title with clip-path reveal
-      gsap.fromTo(ideasTitleRef.current,
-        { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-        {
-          clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.2, ease: "power4.inOut",
-          scrollTrigger: {
-            trigger: ideasEmblemWrapperRef.current,
-            start: "top 40%",
-            end: "top 10%",
-            scrub: 1,
-          }
-        }
-      );
-
-      // Paragraph with wave effect
-      gsap.fromTo(ideasParagraphRef.current,
-        { y: 60, opacity: 0, skewY: 5 },
-        {
-          y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: {
-            trigger: ideasEmblemWrapperRef.current,
-            start: "top 40%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Core values with stagger and rotation
-      gsap.fromTo(coreValuesRef.current,
-        { x: -60, opacity: 0, rotation: -10 },
-        {
-          x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)",
-          scrollTrigger: {
-            trigger: ideasEmblemWrapperRef.current,
-            start: "top 40%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Vector line draw with morph
-      if (ideasVectorLineRef.current) {
-        gsap.fromTo(ideasVectorLineRef.current,
-          { scaleY: 0, transformOrigin: "top center", opacity: 0 },
-          {
-            scaleY: 1, opacity: 1, duration: 1.5, ease: "power2.inOut",
-            scrollTrigger: {
-              trigger: ideasEmblemWrapperRef.current,
-              start: "top 40%",
-              end: "top 10%",
-              scrub: 1,
+        // Event Categories
+        categoryTitleRefs.current.forEach((el, i) => {
+          if (!el) return;
+          gsap.fromTo(el,
+            { x: -100, opacity: 0, skewX: 20 },
+            {
+              x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+              scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
+              delay: i * 0.12,
             }
+          );
+        });
+
+        categoryBordersRef.current.forEach((el, i) => {
+          if (!el) return;
+          gsap.fromTo(el,
+            { scaleX: 0, transformOrigin: "left center" },
+            {
+              scaleX: 1, duration: 0.8, ease: "power2.inOut",
+              scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" },
+              delay: i * 0.1,
+            }
+          );
+        });
+
+        // Featured Events
+        gsap.fromTo(featuredHeadingRef.current,
+          { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
+          {
+            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, duration: 1.2, ease: "power4.inOut",
+            scrollTrigger: { trigger: featuredHeadingRef.current, start: "top 85%", toggleActions: "play none none reverse" }
           }
         );
-      }
 
-      // ---- EVENT CATEGORIES ANIMATIONS ----
-      categoryTitleRefs.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.fromTo(el,
-          { x: -100, opacity: 0, skewX: 20 },
+        gsap.fromTo(featuredParagraphRef.current,
+          { y: 40, opacity: 0, scale: 0.95 },
+          {
+            y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
+            scrollTrigger: { trigger: featuredParagraphRef.current, start: "top 90%", toggleActions: "play none none reverse" }
+          }
+        );
+
+        featuredCardsRef.current.forEach((el, i) => {
+          if (!el) return;
+          gsap.fromTo(el,
+            { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
+            {
+              y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
+              scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
+              delay: i * 0.15,
+            }
+          );
+        });
+
+        // Aftermovie
+        gsap.fromTo(aftermovieContainerRef.current,
+          { scale: 0.7, opacity: 0, borderRadius: "50px" },
+          {
+            scale: 1, opacity: 1, borderRadius: "0px", duration: 1.5, ease: "power3.out",
+            scrollTrigger: { trigger: aftermovieContainerRef.current, start: "top 80%", end: "top 40%", scrub: 1 }
+          }
+        );
+
+        gsap.fromTo(aftermovieTitleLeftRef.current,
+          { x: -150, opacity: 0, skewX: 30 },
           {
             x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
-            },
-            delay: i * 0.12,
+            scrollTrigger: { trigger: aftermovieTitleLeftRef.current, start: "top 85%", toggleActions: "play none none reverse" }
           }
         );
-      });
 
-      // Border lines draw animation
-      categoryBordersRef.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.fromTo(el,
-          { scaleX: 0, transformOrigin: "left center" },
+        gsap.fromTo(aftermovieTitleRightRef.current,
+          { x: 150, opacity: 0, skewX: -30 },
           {
-            scaleX: 1, duration: 0.8, ease: "power2.inOut",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none reverse",
-            },
-            delay: i * 0.1,
+            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+            scrollTrigger: { trigger: aftermovieTitleRightRef.current, start: "top 85%", toggleActions: "play none none reverse" }
           }
         );
-      });
 
-      // ---- FEATURED EVENTS ANIMATIONS ----
-      // Heading with text reveal
-      gsap.fromTo(featuredHeadingRef.current,
-        { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
-        {
-          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1,
-          duration: 1.2, ease: "power4.inOut",
-          scrollTrigger: {
-            trigger: featuredHeadingRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      gsap.fromTo(featuredParagraphRef.current,
-        { y: 40, opacity: 0, scale: 0.95 },
-        {
-          y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
-          scrollTrigger: {
-            trigger: featuredParagraphRef.current,
-            start: "top 90%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Cards with 3D perspective entrance
-      featuredCardsRef.current.forEach((el, i) => {
-        if (!el) return;
-        gsap.fromTo(el,
-          { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
+        gsap.fromTo(aftermovieLogoRef.current,
+          { scale: 0, opacity: 0, rotation: -180 },
           {
-            y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 95%",
-              toggleActions: "play none none reverse",
-            },
-            delay: i * 0.15,
-          }
-        );
-      });
-
-      // ---- AFTERMOVIE ANIMATIONS ----
-      gsap.fromTo(aftermovieContainerRef.current,
-        { scale: 0.7, opacity: 0, borderRadius: "50px" },
-        {
-          scale: 1, opacity: 1, borderRadius: "0px", duration: 1.5, ease: "power3.out",
-          scrollTrigger: {
-            trigger: aftermovieContainerRef.current,
-            start: "top 80%",
-            end: "top 40%",
-            scrub: 1,
-          }
-        }
-      );
-
-      gsap.fromTo(aftermovieTitleLeftRef.current,
-        { x: -150, opacity: 0, skewX: 30 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-          scrollTrigger: {
-            trigger: aftermovieTitleLeftRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      gsap.fromTo(aftermovieTitleRightRef.current,
-        { x: 150, opacity: 0, skewX: -30 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-          scrollTrigger: {
-            trigger: aftermovieTitleRightRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      gsap.fromTo(aftermovieLogoRef.current,
-        { scale: 0, opacity: 0, rotation: -180 },
-        {
-          scale: 1, opacity: 1, rotation: 0, duration: 1, delay: 0.4, ease: "elastic.out(1, 0.3)",
-          scrollTrigger: {
-            trigger: aftermovieLogoRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // ---- GALLERY ANIMATIONS ----
-      galleryImagesRef.current.forEach((el, i) => {
-        if (!el) return;
-        const directions = [
-          { x: -300, y: 150, rotation: -20, scale: 0.5 },
-          { x: 300, y: -120, rotation: 15, scale: 0.6 },
-          { x: -250, y: -180, rotation: -12, scale: 0.55 },
-          { x: 280, y: 120, rotation: 18, scale: 0.65 },
-          { x: -200, y: 200, rotation: -8, scale: 0.5 },
-        ];
-        const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
-
-        gsap.fromTo(el,
-          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
-          {
-            x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 95%",
-              toggleActions: "play none none reverse",
-            },
-            delay: i * 0.15,
+            scale: 1, opacity: 1, rotation: 0, duration: 1, delay: 0.4, ease: "elastic.out(1, 0.3)",
+            scrollTrigger: { trigger: aftermovieLogoRef.current, start: "top 85%", toggleActions: "play none none reverse" }
           }
         );
 
-        // Hover magnetic effect
-        el.addEventListener("mouseenter", () => {
-          gsap.to(el, { scale: 1.05, rotation: 2, duration: 0.3, ease: "power2.out" });
+        // Gallery
+        galleryImagesRef.current.forEach((el, i) => {
+          if (!el) return;
+          const directions = [
+            { x: -300, y: 150, rotation: -20, scale: 0.5 },
+            { x: 300, y: -120, rotation: 15, scale: 0.6 },
+            { x: -250, y: -180, rotation: -12, scale: 0.55 },
+            { x: 280, y: 120, rotation: 18, scale: 0.65 },
+            { x: -200, y: 200, rotation: -8, scale: 0.5 },
+          ];
+          const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
+
+          gsap.fromTo(el,
+            { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
+            {
+              x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
+              scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
+              delay: i * 0.15,
+            }
+          );
         });
-        el.addEventListener("mouseleave", () => {
-          gsap.to(el, { scale: 1, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-        });
-      });
 
-      // ---- CTA (READY TO BUILD THE FUTURE) ANIMATIONS ----
-      gsap.fromTo(ctaDrishtiRef.current,
-        { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
-        {
-          scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
-          scrollTrigger: {
-            trigger: ctaDrishtiRef.current,
-            start: "top 90%",
-            end: "top 50%",
-            scrub: 1,
-          }
-        }
-      );
-
-      // Title lines with stagger
-      gsap.fromTo(ctaTitle1Ref.current,
-        { x: -120, opacity: 0, skewX: 25 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-          scrollTrigger: {
-            trigger: ctaTitle1Ref.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      gsap.fromTo(ctaTitle2Ref.current,
-        { x: 120, opacity: 0, skewX: -25 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
-          scrollTrigger: {
-            trigger: ctaTitle2Ref.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Border line with draw + glow
-      gsap.fromTo(ctaBorderRef.current,
-        { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
-        {
-          scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
-          scrollTrigger: {
-            trigger: ctaBorderRef.current,
-            start: "top 85%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // Button with morph effect
-      gsap.fromTo(ctaButtonRef.current,
-        { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
-        {
-          y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
-          scrollTrigger: {
-            trigger: ctaButtonRef.current,
-            start: "top 95%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-
-      // CTA button glow pulse
-      gsap.to(ctaButtonRef.current, {
-        boxShadow: "0 0 60px rgba(255,193,50,0.7), inset 0 0 30px rgba(255,193,50,0.1)",
-        repeat: -1,
-        yoyo: true,
-        duration: 2.5,
-        ease: "sine.inOut",
-        scrollTrigger: {
-          trigger: ctaButtonRef.current,
-          start: "top 95%",
-          toggleActions: "play pause resume pause",
-        }
-      });
-
-      // CTA particles
-      const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
-      ctaParticles.forEach((particle, i) => {
-        gsap.fromTo(particle,
-          { opacity: 0, scale: 0, y: 50 },
+        // CTA
+        gsap.fromTo(ctaDrishtiRef.current,
+          { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
           {
-            opacity: Math.random() * 0.5 + 0.3,
-            scale: 1,
-            y: 0,
-            duration: Math.random() * 2 + 1,
-            delay: Math.random() * 2,
-            ease: "power2.out",
+            scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
+            scrollTrigger: { trigger: ctaDrishtiRef.current, start: "top 90%", end: "top 50%", scrub: 1 }
           }
         );
-        gsap.to(particle, {
-          y: `${(Math.random() - 0.5) * 150}`,
-          x: `${(Math.random() - 0.5) * 80}`,
-          duration: Math.random() * 8 + 8,
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
+
+        gsap.fromTo(ctaTitle1Ref.current,
+          { x: -120, opacity: 0, skewX: 25 },
+          {
+            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+            scrollTrigger: { trigger: ctaTitle1Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
+          }
+        );
+
+        gsap.fromTo(ctaTitle2Ref.current,
+          { x: 120, opacity: 0, skewX: -25 },
+          {
+            x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
+            scrollTrigger: { trigger: ctaTitle2Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
+          }
+        );
+
+        gsap.fromTo(ctaBorderRef.current,
+          { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
+          {
+            scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
+            scrollTrigger: { trigger: ctaBorderRef.current, start: "top 85%", toggleActions: "play none none reverse" }
+          }
+        );
+
+        gsap.fromTo(ctaButtonRef.current,
+          { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
+          {
+            y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
+            scrollTrigger: { trigger: ctaButtonRef.current, start: "top 95%", toggleActions: "play none none reverse" }
+          }
+        );
+
+        const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
+        ctaParticles.forEach((particle) => {
+          gsap.fromTo(particle,
+            { opacity: 0, scale: 0, y: 50 },
+            { opacity: Math.random() * 0.5 + 0.3, scale: 1, y: 0, duration: Math.random() * 2 + 1, delay: Math.random() * 2, ease: "power2.out" }
+          );
         });
+
       });
-
-      // ---- SMOOTH SCROLL SETUP ----
-      ScrollTrigger.defaults({
-        toggleActions: "play none none reverse",
-      });
-
-    });
-
     }, 100);
 
     return () => {
@@ -642,64 +443,47 @@ function Home() {
     };
   }, []);
 
-  // ---- IDEAS EMBLEM: 3D model entrance + Y-axis rotation ----
-  // Separate from the effect above because the GLB loads asynchronously
-  // (via Suspense) — this can't run until IdeasEmblem3D actually hands us
-  // the loaded model. Both the fade/scale-in and the rotation are scrubbed
-  // to the same scroll window (top 85% -> top 40% of the wrapper), so the
-  // whole thing is smooth and reversible as the user scrolls up or down.
-  // The text elements above are gated to start at "top 40%" of this same
-  // wrapper, so they can't appear until this finishes.
+  // ---- IDEAS SECTION SCRUBBED SCROLL ANIMATION (Method A) ----
   useEffect(() => {
-    const group = ideasModelGroup;
-    const trigger = ideasEmblemWrapperRef.current;
-    if (!group || !trigger) return undefined;
+  const group = ideasModelGroup;
+  const section = ideasSectionRef.current;
+  if (!group || !section) return;
 
-    const entrance = { progress: 0 };
+  group.rotation.set(0, 0, 0);
 
-    group.scale.setScalar(0);
-    group.rotation.y = 0;
-    group.traverse((child) => {
-      if (child.isMesh && child.material) {
-        child.material.transparent = true;
-        child.material.opacity = 0;
-      }
-    });
+  const st = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: "top top",
+      end: "+=120%",
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+    },
+  });
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger,
-        start: "top 85%",
-        end: "top 40%",
-        scrub: 1,
-      },
-    });
+  st.to(group.rotation, {
+    z: Math.PI * 2,
+    ease: "none",
+  })
+  .fromTo(
+    ideasTitleRef.current,
+    { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+    { clipPath: "inset(0 0% 0 0)", opacity: 1, ease: "power2.out" },
+    "<0.1"
+  )
+  .fromTo(
+    ideasParagraphRef.current,
+    { y: 50, opacity: 0 },
+    { y: 0, opacity: 1, ease: "power2.out" },
+    "<0.2"
+  );
 
-    timeline
-      .to(entrance, {
-        progress: 1,
-        duration: 1,
-        ease: "power2.out",
-        onUpdate: () => {
-          group.scale.setScalar(entrance.progress);
-          group.traverse((child) => {
-            if (child.isMesh && child.material) {
-              child.material.opacity = entrance.progress;
-            }
-          });
-        },
-      })
-      .to(
-        group.rotation,
-        { y: Math.PI * 2, duration: 1, ease: "none" },
-        "<0.1",
-      );
-
-    return () => {
-      timeline.scrollTrigger?.kill();
-      timeline.kill();
-    };
-  }, [ideasModelGroup]);
+  return () => {
+    st.scrollTrigger?.kill();
+    st.kill();
+  };
+}, [ideasModelGroup]);
 
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
@@ -718,7 +502,6 @@ function Home() {
           src={heroBg}
         />
 
-        {/* Floating particles container */}
         <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
 
         <div
@@ -756,9 +539,10 @@ function Home() {
         </h1>
       </section>
 
-      {/* ============ IDEAS DON'T ASK PERMISSION ============ */}
+      {/* ============ IDEAS DON'T ASK PERMISSION (SCRUBBED 360 ROTATION) ============ */}
       <section
-        className="relative min-h-[clamp(800px,113vw,1639px)] py-20 w-full overflow-hidden bg-black flex flex-col md:flex-row items-center justify-center gap-10"
+        ref={ideasSectionRef}
+        className="relative min-h-screen py-20 w-full overflow-hidden bg-black flex flex-col md:flex-row items-center justify-center gap-10"
         aria-labelledby="hero-title"
       >
         <div
@@ -797,12 +581,15 @@ function Home() {
           />
 
           <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
-            <div
+          <div
               ref={ideasEmblemWrapperRef}
-              className="w-[clamp(200px,29vw,421px)] aspect-[0.83]"
+              className="w-[clamp(220px,30vw,420px)] h-[clamp(220px,30vw,420px)] relative"
             >
-              <IdeasEmblem3D className="h-full w-full" onModelReady={setIdeasModelGroup} />
-            </div>
+              <IdeasEmblem3D 
+                className="w-full h-full" 
+                onModelReady={handleModelReady} 
+              />
+          </div>
           </div>
 
           <div
@@ -1060,7 +847,6 @@ function Home() {
         className="relative flex min-h-[clamp(800px,97vw,1404px)] py-[clamp(100px,14vw,201px)] w-full flex-col items-center bg-black px-4 overflow-hidden"
         aria-label="Registration call to action"
       >
-        {/* CTA particles */}
         <div ref={ctaParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0" />
 
         <p
@@ -1097,7 +883,6 @@ function Home() {
 
       <Footer />
 
-      {/* View Details Popup Modal */}
       {activeModalEvent && (
         <EventDetailsModal
           event={activeModalEvent}
