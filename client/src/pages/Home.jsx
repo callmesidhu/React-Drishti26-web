@@ -877,8 +877,16 @@ function Home() {
           aria-hidden={hoveredCategoryIndex === null}
           src={workshopItems[hoveredCategoryIndex ?? 0].image}
         />
+      </section>
 
-        <div className="mt-8 flex w-full max-w-[1440px] flex-col items-center gap-6 px-[clamp(20px,5vw,71px)]">
+      {/* ============ PRO SHOWS ============ */}
+      <section id="proshows" className="relative w-full bg-black">
+        <ProShows embedded={true} />
+      </section>
+
+      {/* ============ DRISH-TEES ============ */}
+      <section className="relative w-full bg-black py-20">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-[clamp(20px,5vw,71px)]">
           <h2 className="w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,5vw,64px)] font-normal leading-[1.1] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
             GRAB YOUR DRISH-TEES!!
           </h2>
@@ -893,11 +901,6 @@ function Home() {
             aria-label="Drishtees promotional video"
           />
         </div>
-      </section>
-
-      {/* ============ PRO SHOWS ============ */}
-      <section id="proshows" className="relative w-full bg-black">
-        <ProShows embedded={true} />
       </section>
 
       {/* ============ FEATURED EVENTS ============ */}
