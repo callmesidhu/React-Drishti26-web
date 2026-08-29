@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProShows from "./ProShows";
 import EventDetailsModal from "../components/EventDetailsModal";
+import IdeasEmblem3D from "../components/IdeasEmblem";
 import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
 const heroBg = "/home/drishti-take-1.png";
 const heroLine1 = "/home/line-1.svg";
 const heroLine2 = "/home/line-2.svg";
-const ideasEmblem = "/home/ideas-emblem.png";
 const ideasVectorLine = "/home/ideas-vector-line.svg";
 const categoriesPhoto = "/home/categories-photo.png";
 const arrowDownRight = "/home/arrow-down-right.svg";
@@ -54,6 +54,7 @@ function Home() {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [carouselStep, setCarouselStep] = useState(412);
   const [activeModalEvent, setActiveModalEvent] = useState(null);
+  const [ideasModelGroup, setIdeasModelGroup] = useState(null);
 
   const categoryImageRef = useRef(null);
   const categoryListRef = useRef(null);
@@ -69,7 +70,7 @@ function Home() {
   const heroLine2Ref = useRef(null);
   const heroTitleRef = useRef(null);
   const heroParticlesRef = useRef(null);
-  const ideasEmblemRef = useRef(null);
+  const ideasEmblemWrapperRef = useRef(null);
   const ideasTitleRef = useRef(null);
   const ideasParagraphRef = useRef(null);
   const coreValuesRef = useRef([]);
@@ -298,33 +299,12 @@ function Home() {
         });
 
         // ---- IDEAS DON'T ASK PERMISSION ANIMATIONS ----
-      // Emblem with magnetic effect
-      gsap.fromTo(ideasEmblemRef.current,
-        { scale: 0, rotation: -180, opacity: 0 },
-        {
-          scale: 1, rotation: 0, opacity: 1, duration: 1.5, ease: "elastic.out(1, 0.3)",
-          scrollTrigger: {
-            trigger: ideasEmblemRef.current,
-            start: "top 85%",
-            end: "top 40%",
-            scrub: 1,
-          }
-        }
-      );
-
-      // Continuous emblem rotation
-      gsap.to(ideasEmblemRef.current, {
-        rotation: 360,
-        duration: 20,
-        repeat: -1,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ideasEmblemRef.current,
-          start: "top bottom",
-          end: "bottom top",
-          toggleActions: "play pause resume pause",
-        }
-      });
+      // The 3D emblem's own intro + Y-axis rotation now lives in its own
+      // effect below (see: model entrance + rotation), gated on the GLB
+      // actually being loaded. Text below is sequenced to start only once
+      // that model animation finishes — see updated triggers below, all
+      // keyed off ideasEmblemWrapperRef instead of each element's own
+      // position, so they can't run early.
 
       // Title with clip-path reveal
       gsap.fromTo(ideasTitleRef.current,
@@ -332,9 +312,9 @@ function Home() {
         {
           clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1.2, ease: "power4.inOut",
           scrollTrigger: {
-            trigger: ideasTitleRef.current,
-            start: "top 85%",
-            end: "top 50%",
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
+            end: "top 10%",
             scrub: 1,
           }
         }
@@ -346,8 +326,8 @@ function Home() {
         {
           y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out",
           scrollTrigger: {
-            trigger: ideasParagraphRef.current,
-            start: "top 90%",
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
             toggleActions: "play none none reverse",
           }
         }
@@ -359,8 +339,8 @@ function Home() {
         {
           x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)",
           scrollTrigger: {
-            trigger: coreValuesRef.current[0],
-            start: "top 80%",
+            trigger: ideasEmblemWrapperRef.current,
+            start: "top 40%",
             toggleActions: "play none none reverse",
           }
         }
@@ -373,9 +353,9 @@ function Home() {
           {
             scaleY: 1, opacity: 1, duration: 1.5, ease: "power2.inOut",
             scrollTrigger: {
-              trigger: ideasVectorLineRef.current,
-              start: "top 70%",
-              end: "bottom 30%",
+              trigger: ideasEmblemWrapperRef.current,
+              start: "top 40%",
+              end: "top 10%",
               scrub: 1,
             }
           }
@@ -662,6 +642,65 @@ function Home() {
     };
   }, []);
 
+  // ---- IDEAS EMBLEM: 3D model entrance + Y-axis rotation ----
+  // Separate from the effect above because the GLB loads asynchronously
+  // (via Suspense) — this can't run until IdeasEmblem3D actually hands us
+  // the loaded model. Both the fade/scale-in and the rotation are scrubbed
+  // to the same scroll window (top 85% -> top 40% of the wrapper), so the
+  // whole thing is smooth and reversible as the user scrolls up or down.
+  // The text elements above are gated to start at "top 40%" of this same
+  // wrapper, so they can't appear until this finishes.
+  useEffect(() => {
+    const group = ideasModelGroup;
+    const trigger = ideasEmblemWrapperRef.current;
+    if (!group || !trigger) return undefined;
+
+    const entrance = { progress: 0 };
+
+    group.scale.setScalar(0);
+    group.rotation.y = 0;
+    group.traverse((child) => {
+      if (child.isMesh && child.material) {
+        child.material.transparent = true;
+        child.material.opacity = 0;
+      }
+    });
+
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger,
+        start: "top 85%",
+        end: "top 40%",
+        scrub: 1,
+      },
+    });
+
+    timeline
+      .to(entrance, {
+        progress: 1,
+        duration: 1,
+        ease: "power2.out",
+        onUpdate: () => {
+          group.scale.setScalar(entrance.progress);
+          group.traverse((child) => {
+            if (child.isMesh && child.material) {
+              child.material.opacity = entrance.progress;
+            }
+          });
+        },
+      })
+      .to(
+        group.rotation,
+        { y: Math.PI * 2, duration: 1, ease: "none" },
+        "<0.1",
+      );
+
+    return () => {
+      timeline.scrollTrigger?.kill();
+      timeline.kill();
+    };
+  }, [ideasModelGroup]);
+
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
       <Navbar />
@@ -758,18 +797,12 @@ function Home() {
           />
 
           <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
-            <img
-              ref={ideasEmblemRef}
-              className="w-[clamp(200px,29vw,421px)] aspect-[0.83] opacity-0 cursor-pointer"
-              alt="Gold geometric innovation emblem"
-              src={ideasEmblem}
-              onMouseEnter={(e) => {
-                gsap.to(e.target, { scale: 1.1, rotation: 10, duration: 0.3, ease: "power2.out" });
-              }}
-              onMouseLeave={(e) => {
-                gsap.to(e.target, { scale: 1, rotation: 0, duration: 0.5, ease: "elastic.out(1, 0.3)" });
-              }}
-            />
+            <div
+              ref={ideasEmblemWrapperRef}
+              className="w-[clamp(200px,29vw,421px)] aspect-[0.83]"
+            >
+              <IdeasEmblem3D className="h-full w-full" onModelReady={setIdeasModelGroup} />
+            </div>
           </div>
 
           <div
