@@ -7,6 +7,7 @@ import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 // Register ScrollTrigger plugin
+// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
 // Imports for desktop landscape grid and mobile portrait version
@@ -57,9 +58,9 @@ function ProShowsPage({ embedded = false }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Set Initial States
-      gsap.set([headerRef.current, artistRef.current, faqSectionRef.current], { 
-        opacity: 0, 
-        y: 20 
+      gsap.set([headerRef.current, artistRef.current, faqSectionRef.current], {
+        opacity: 0,
+        y: 20,
       })
 
       gsap.set(cardWrapperRef.current, {
@@ -238,6 +239,16 @@ function ProShowsPage({ embedded = false }) {
               />
             ))}
           </div>
+          {/* Golden Spangles */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <div
+                key={i}
+                ref={(el) => { particlesRef.current[i] = el }}
+                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
+              />
+            ))}
+          </div>
 
           {/* 3D Stage Perspective Wrapper: Scaled down slightly for laptop viewports */}
           <div className="perspective-[1400px] z-10 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[780px]">
@@ -292,6 +303,7 @@ function ProShowsPage({ embedded = false }) {
         </main>
 
         {/* Artist Name */}
+        {/* Artist Name */}
         <div 
           ref={artistRef}
           className="z-10 text-center opacity-0"
@@ -307,7 +319,7 @@ function ProShowsPage({ embedded = false }) {
 
       {/* FAQ Section */}
       <section ref={faqSectionRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
-        <h2 
+        <h2
           style={{ fontFamily: "'Clash Display', sans-serif" }}
           className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
         >
