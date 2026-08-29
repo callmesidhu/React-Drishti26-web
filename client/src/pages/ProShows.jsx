@@ -7,10 +7,12 @@ import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 // Register ScrollTrigger plugin
+// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
-// Import image via relative path
-import ProShow from '/proshow/proshow.png'
+// Imports for desktop landscape grid and mobile portrait version
+import ProShowGrid from '/proshow/proshowgrid.jpeg'
+import ProShowMobile from '/proshow/proshow.png'
 
 const artistName = 'Shaan Rahman'
 
@@ -55,19 +57,18 @@ function ProShowsPage({ embedded = false }) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Set Initial States
-      gsap.set([headerRef.current, artistRef.current, faqSectionRef.current], { 
-        opacity: 0, 
-        y: 30 
+      // Set Initial States
+      gsap.set([headerRef.current, artistRef.current, faqSectionRef.current], {
+        opacity: 0,
+        y: 20,
       })
 
-      // Card start state: Flat on the ground, off to the side, scaled down
       gsap.set(cardWrapperRef.current, {
         rotationX: 90,
         rotationY: 28,
         rotationZ: 0,
-        x: 120,
-        y: 240,
+        x: 100,
+        y: 200,
         z: -180,
         scale: 0.65,
         opacity: 0,
@@ -77,49 +78,44 @@ function ProShowsPage({ embedded = false }) {
       gsap.set(shadowRef.current, { opacity: 0, scale: 0.7, x: 100 })
       gsap.set(glowRef.current, { opacity: 0, scale: 0.4 })
 
-      // Particles setup
       particlesRef.current.forEach((particle) => {
         if (!particle) return
         gsap.set(particle, {
-          x: (Math.random() - 0.5) * 450,
-          y: gsap.utils.random(-180, 180),
+          x: (Math.random() - 0.5) * 500,
+          y: gsap.utils.random(-150, 150),
           scale: gsap.utils.random(0.3, 1.2),
           opacity: 0,
         })
       })
 
-      // 2. Create ScrollTrigger Timeline tied directly to user scroll position
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: pinWrapperRef.current,
           start: 'top top',
-          end: '+=300%', // Adjust scroll distance (higher = slower, more deliberate scroll feel)
+          end: '+=300%',
           pin: true,
-          scrub: 1, // Smooth scrubbing effect
+          scrub: 1,
           anticipatePin: 1,
         },
       })
 
-      // STEP 1: Card & Shadow appear flat on ground as user starts scrolling
       scrollTl.to([cardWrapperRef.current, shadowRef.current], {
         opacity: 1,
         duration: 1,
         ease: 'power1.out',
       })
 
-      // STEP 2: Golden spangles burst and fade in
       scrollTl.to(
         particlesRef.current,
         {
           opacity: (i) => gsap.utils.random(0.4, 0.95),
-          y: '-=120',
+          y: '-=100',
           stagger: 0.02,
           duration: 1,
         },
         '<=0.2'
       )
 
-      // STEP 3: Card lifts up from the floor to screen center
       scrollTl.to(
         cardWrapperRef.current,
         {
@@ -136,7 +132,6 @@ function ProShowsPage({ embedded = false }) {
         '>'
       )
 
-      // STEP 4: Shadow fades out as card leaves the floor
       scrollTl.to(
         shadowRef.current,
         {
@@ -147,7 +142,6 @@ function ProShowsPage({ embedded = false }) {
         '<=1'
       )
 
-      // STEP 5: Card performs 180° flip to reveal image
       scrollTl.to(
         cardInnerRef.current,
         {
@@ -158,18 +152,16 @@ function ProShowsPage({ embedded = false }) {
         '>'
       )
 
-      // STEP 6: Glow blooms behind card
       scrollTl.to(
         glowRef.current,
         {
           opacity: 1,
-          scale: 1.3,
+          scale: 1.2,
           duration: 1.5,
         },
         '<=1.5'
       )
 
-      // STEP 7: Header, Artist Name, and Guidelines fade in at the end of flip
       scrollTl
         .to(
           headerRef.current,
@@ -208,33 +200,33 @@ function ProShowsPage({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="proshows" />}
 
-      {/* Pinned Scroll Section */}
-      <div ref={pinWrapperRef} className="relative w-full min-h-screen flex flex-col items-center justify-between py-8 overflow-hidden">
+      {/* Pinned Scroll Section with explicit Navbar clearance */}
+      <div ref={pinWrapperRef} className="relative w-full h-screen flex flex-col items-center justify-between pt-24 lg:pt-28 pb-6 overflow-hidden">
         
-        {/* Page Header */}
-        <header ref={headerRef} className="z-10 px-[clamp(16px,4vw,40px)] pt-4 text-center opacity-0">
+        {/* Page Header (Cleared from Navbar overlap) */}
+        <header ref={headerRef} className="z-10 px-[clamp(16px,4vw,40px)] text-center opacity-0">
           <h1
             ref={h1Ref}
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(36px,7vw,80px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+            className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
           >
             Pro Show
           </h1>
         </header>
 
         {/* 3D Stage Area */}
-        <main ref={stageAreaRef} className="relative w-full max-w-[1200px] flex flex-col items-center justify-center min-h-[580px]">
+        <main ref={stageAreaRef} className="relative w-full max-w-[1200px] px-4 my-auto flex flex-col items-center justify-center">
           
           {/* Ambient Glow */}
           <div
             ref={glowRef}
-            className="pointer-events-none absolute h-[500px] w-[500px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl opacity-0"
+            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl opacity-0"
           />
 
           {/* Ground Shadow */}
           <div
             ref={shadowRef}
-            className="pointer-events-none absolute bottom-4 h-[70px] w-[340px] rounded-[100%] bg-black/95 blur-xl opacity-0"
+            className="pointer-events-none absolute bottom-2 h-[50px] w-[300px] lg:w-[550px] rounded-[100%] bg-black/95 blur-xl opacity-0"
           />
 
           {/* Golden Spangles */}
@@ -247,9 +239,19 @@ function ProShowsPage({ embedded = false }) {
               />
             ))}
           </div>
+          {/* Golden Spangles */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <div
+                key={i}
+                ref={(el) => { particlesRef.current[i] = el }}
+                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
+              />
+            ))}
+          </div>
 
-          {/* 3D Stage Perspective Wrapper */}
-          <div className="perspective-[1400px] z-10 w-full max-w-[340px] sm:max-w-[380px]">
+          {/* 3D Stage Perspective Wrapper: Scaled down slightly for laptop viewports */}
+          <div className="perspective-[1400px] z-10 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[780px]">
             <div
               ref={cardWrapperRef}
               className="transform-style-3d relative w-full rounded-2xl opacity-0"
@@ -257,7 +259,7 @@ function ProShowsPage({ embedded = false }) {
               {/* Flip Container */}
               <div
                 ref={cardInnerRef}
-                className="transform-style-3d relative h-[520px] w-full rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)]"
+                className="transform-style-3d relative w-full h-[460px] sm:h-[500px] lg:h-auto lg:aspect-[16/9] rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)]"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* BACK OF CARD: Metallic Gold */}
@@ -271,7 +273,7 @@ function ProShowsPage({ embedded = false }) {
                   }}
                 />
 
-                {/* FRONT OF CARD: Revealed Image */}
+                {/* FRONT OF CARD: Revealed Responsive Image */}
                 <div 
                   className="absolute inset-0 rounded-2xl overflow-hidden bg-[#080808] border border-gold/30"
                   style={{ 
@@ -281,10 +283,18 @@ function ProShowsPage({ embedded = false }) {
                     willChange: 'transform'
                   }}
                 >
+                  {/* Laptop Viewport (proshowgrid.jpeg) */}
                   <img
-                    src={ProShow}
-                    alt="ProShow Poster"
-                    className="h-full w-full object-cover rounded-2xl block relative z-10"
+                    src={ProShowGrid}
+                    alt="Shaan Rahman Live in Concert - Desktop"
+                    className="hidden lg:block h-full w-full object-cover rounded-2xl relative z-10"
+                  />
+                  
+                  {/* Mobile/Tablet Viewport (proshow.png) */}
+                  <img
+                    src={ProShowMobile}
+                    alt="Shaan Rahman Live in Concert - Mobile"
+                    className="block lg:hidden h-full w-full object-cover rounded-2xl relative z-10"
                   />
                 </div>
               </div>
@@ -293,22 +303,23 @@ function ProShowsPage({ embedded = false }) {
         </main>
 
         {/* Artist Name */}
+        {/* Artist Name */}
         <div 
           ref={artistRef}
-          className="z-10 text-center opacity-0 pb-4"
+          className="z-10 text-center opacity-0"
         >
           <h2
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(28px,5vw,56px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
+            className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
           >
             {artistName}
           </h2>
         </div>
       </div>
 
-      {/* FAQ Section (Follows below after unpinning) */}
+      {/* FAQ Section */}
       <section ref={faqSectionRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
-        <h2 
+        <h2
           style={{ fontFamily: "'Clash Display', sans-serif" }}
           className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
         >
