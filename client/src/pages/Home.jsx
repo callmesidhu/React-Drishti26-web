@@ -227,9 +227,9 @@ function Home() {
       </section>
 
       {/* ============ EVENT CATEGORIES (Wireframe - 6) ============ */}
-      <section className="relative h-[1250px] w-full bg-black" aria-label="Event categories">
+      <section className="relative h-[1800px] w-full bg-black" aria-label="Event categories">
         <div
-          className="absolute left-[calc(50.00%_-_610px)] top-[calc(50.00%_-_377px)] flex w-[1220px] flex-col items-start gap-[47px]"
+          className="absolute left-[calc(50.00%_-_610px)] top-[248px] flex w-[1220px] flex-col items-start gap-[47px]"
           aria-label="Available event categories"
         >
           {workshopItems.map((item, index) => (
@@ -266,9 +266,17 @@ function Home() {
             </div>
             
           ))}
-          <h2 align="center" className="mt-4 font-['Bietro_DEMO-Regular',Helvetica] text-[64px] font-normal leading-[64px] tracking-[0] text-gold">
+          <h2 className="mt-4 w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[64px] font-normal leading-[64px] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
             GRAB YOUR DRISH-TEES!!
           </h2>
+          <video
+            className="w-full max-w-[900px] self-center object-cover"
+            controls
+            playsInline
+            preload="metadata"
+          >
+            <source src="/home/drishtee.mp4" type="video/mp4" />
+          </video>
         </div>
         <img
           ref={categoryImageRef}
