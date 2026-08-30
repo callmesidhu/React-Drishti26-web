@@ -4,12 +4,12 @@ import gsap from 'gsap'
 
 const links = [
   { label: 'Home', to: '/home' },
-  { label: 'Daksha', to: '/daksha' },
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions' },
+  { label: 'Pro Shows', to: '/proshows' },
+  { label: 'Daksha', to: '/daksha' },
   { label: 'Team', to: '/team' },
   { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
 ]
 
 function Navbar({ activeSection, theme = 'gold' }) {
