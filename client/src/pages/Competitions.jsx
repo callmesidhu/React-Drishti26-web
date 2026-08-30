@@ -152,10 +152,10 @@ function Competitions({ embedded = false }) {
       {!embedded && <Navbar activeSection="competitions" />}
 
       <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-between items-center px-4 pt-16 pb-4 md:flex-row md:justify-center md:gap-12 md:px-[clamp(16px,4vw,40px)] md:py-0">
-        {/* Desktop Sidebar (Hidden on Mobile) */}
+        {/* Desktop Sidebar - Exact Original Design */}
         <aside
           ref={carouselRef}
-          className="hidden md:flex w-full flex-col justify-center gap-4 md:w-[35%]"
+          className="hidden md:flex w-full flex-col justify-center gap-3 md:w-[35%] md:gap-4"
         >
           {competitions.map((comp, i) => (
             <div
@@ -164,33 +164,33 @@ function Competitions({ embedded = false }) {
               className="w-full"
               style={{ opacity: 0 }}
             >
-              <button
-                type="button"
-                className={`group flex h-[120px] lg:h-[135px] w-full items-stretch text-left transition-all duration-300 cursor-pointer ${
+              <div
+                className={`group flex h-[70px] w-full items-stretch text-left transition-all duration-300 md:h-[180px] cursor-pointer ${
                   i === activeIndex ? 'border-gold' : 'border-transparent opacity-40 hover:opacity-75'
                 }`}
                 onClick={() => setActiveIndex(i)}
               >
                 <div
                   className={`w-1 flex-shrink-0 transition-all duration-300 ${
-                    i === activeIndex ? 'bg-gold shadow-[0_0_10px_#e19d00]' : 'bg-white/10'
+                    i === activeIndex ? 'bg-gold' : 'bg-white/10'
                   }`}
                 />
                 <div
                   className={`flex-1 overflow-hidden border border-l-0 transition-all duration-300 ${
                     i === activeIndex
-                      ? 'border-gold/40 bg-[#11111190]'
+                      ? 'border-gold/40 bg-[#11111180]'
                       : 'border-white/5 bg-[#0a0a0a60]'
                   }`}
                 >
                   <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-4 ${
-                    i === activeIndex ? 'bg-[#1a1a1a70]' : 'bg-[#11111140]'
+                    i === activeIndex ? 'bg-[#1a1a1a60]' : 'bg-[#11111140]'
                   }`}>
                     <span
-                      className={`text-sm font-semibold uppercase tracking-wider transition-colors duration-300 ${
-                        i === activeIndex ? 'text-gold' : 'text-white/40'
+                      className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-300 md:text-sm ${
+                        i === activeIndex ? 'text-gold' : 'text-white/30'
                       }`}
                       style={{
+                        writingMode: 'horizontal-tb',
                         fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif",
                       }}
                     >
@@ -198,15 +198,15 @@ function Competitions({ embedded = false }) {
                     </span>
                   </div>
                 </div>
-              </button>
+              </div>
             </div>
           ))}
         </aside>
 
-        {/* Main Content Area (Desktop + Mobile Full-Height Showcase) */}
-        <section className="flex flex-1 flex-col justify-between items-center text-center w-full h-full md:justify-center md:items-start md:text-left md:pl-4 py-2 md:py-0">
-          {/* Top Header */}
-          <div className="relative pt-1 md:pt-0 md:mb-4 w-full flex flex-col items-center md:items-start">
+        {/* Content Section: Original on Laptop, Full-Height Card on Mobile */}
+        <section className="flex flex-1 flex-col justify-between md:justify-center items-center md:items-start text-center md:text-left w-full h-full md:h-auto md:pl-4 py-2 md:py-0">
+          {/* Header */}
+          <div className="relative pt-1 md:pt-0 mb-0 md:mb-2 w-full flex flex-col items-center md:items-start">
             <p className="text-[10px] md:hidden uppercase tracking-[5px] text-gold/70 mb-1">
               Event 0{activeIndex + 1} of 0{competitions.length}
             </p>
@@ -222,16 +222,16 @@ function Competitions({ embedded = false }) {
                   src="/workshops/shine.svg"
                   alt=""
                   aria-hidden="true"
-                  className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(44px,8vw,120px)] max-w-none mix-blend-screen"
+                  className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(44px,8vw,120px)] md:w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
                 />
               </span>
             </h1>
           </div>
 
-          {/* Full-Height Event Card Container */}
+          {/* Details: Exact Original on Laptop, Responsive Full-Height Card on Mobile */}
           <div
             ref={detailRef}
-            className="relative flex-1 w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between items-center md:items-start my-2 md:my-0 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 bg-gradient-to-b from-black/80 via-black/60 to-black/90 md:bg-transparent backdrop-blur-2xl md:backdrop-blur-none shadow-[0_0_50px_rgba(225,157,0,0.15)] md:shadow-none min-h-[330px] sm:min-h-[400px]"
+            className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-gradient-to-b from-black/80 via-black/60 to-black/90 md:bg-transparent backdrop-blur-2xl md:backdrop-blur-none shadow-[0_0_50px_rgba(225,157,0,0.15)] md:shadow-none min-h-[330px] md:min-h-0"
           >
             {/* Mobile Luminous Corner Reticles */}
             <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
@@ -239,7 +239,7 @@ function Competitions({ embedded = false }) {
             <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
             <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
 
-            {/* Top Tag & Title */}
+            {/* Mobile Event Tag & Title */}
             <div className="flex flex-col items-center md:items-start w-full">
               <span className="md:hidden inline-block px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-[9px] font-mono uppercase tracking-[2.5px] text-gold mb-3">
                 CET Technical Fest
@@ -247,7 +247,7 @@ function Competitions({ embedded = false }) {
 
               <h2
                 ref={h2Ref}
-                className="text-[clamp(24px,6.5vw,46px)] font-bold uppercase tracking-wide text-center md:text-left"
+                className="text-[clamp(24px,6.5vw,46px)] md:text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide text-center md:text-left"
                 style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
               >
                 {active.title}
@@ -255,23 +255,24 @@ function Competitions({ embedded = false }) {
             </div>
 
             {/* Description */}
-            <p className="my-auto py-3 max-w-[550px] text-xs sm:text-sm leading-relaxed text-white/80 md:text-[15px] text-center md:text-left">
+            <p className="my-auto py-3 md:my-0 md:py-0 md:mt-4 md:mt-5 max-w-[550px] text-xs sm:text-sm md:text-[15px] leading-relaxed text-white/80 md:text-white/60 text-center md:text-left">
               {active.description}
             </p>
 
             {/* CTA Button */}
-            <div className="w-full flex justify-center md:justify-start">
+            <div className="w-full md:w-auto flex justify-center md:justify-start md:mt-8">
               <button
                 ref={registerBtnRef}
                 type="button"
                 onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-                className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-3 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2.5px] text-black shadow-[0_0_25px_rgba(225,157,0,0.45)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,219,134,0.7)] cursor-pointer"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
+                style={{ borderRadius: '50px' }}
               >
                 View Details
                 <svg
                   ref={arrowRef}
-                  width="16"
-                  height="16"
+                  width="18"
+                  height="18"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
