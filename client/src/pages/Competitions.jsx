@@ -151,7 +151,7 @@ function Competitions({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="competitions" />}
 
-      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-center items-center gap-6 px-[clamp(16px,4vw,40px)] pt-16 md:flex-row md:gap-12">
+      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-between items-center px-4 pt-16 pb-4 md:flex-row md:justify-center md:gap-12 md:px-[clamp(16px,4vw,40px)] md:py-0">
         {/* Desktop Sidebar (Hidden on Mobile) */}
         <aside
           ref={carouselRef}
@@ -203,15 +203,16 @@ function Competitions({ embedded = false }) {
           ))}
         </aside>
 
-        {/* Main Content Area (Desktop + Mobile Showcase) */}
-        <section className="flex flex-1 flex-col justify-center items-center md:items-start text-center md:text-left w-full md:pl-4">
-          <div className="relative mb-2 md:mb-4">
-            <p className="text-[10px] md:hidden uppercase tracking-[4px] text-gold/60 mb-1">
-              Event 0{activeIndex + 1} / 0{competitions.length}
+        {/* Main Content Area (Desktop + Mobile Full-Height Showcase) */}
+        <section className="flex flex-1 flex-col justify-between items-center text-center w-full h-full md:justify-center md:items-start md:text-left md:pl-4 py-2 md:py-0">
+          {/* Top Header */}
+          <div className="relative pt-1 md:pt-0 md:mb-4 w-full flex flex-col items-center md:items-start">
+            <p className="text-[10px] md:hidden uppercase tracking-[5px] text-gold/70 mb-1">
+              Event 0{activeIndex + 1} of 0{competitions.length}
             </p>
             <h1
               ref={h1Ref}
-              className="text-[clamp(34px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
+              className="text-[clamp(32px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
             >
               <span className="relative inline-block">
@@ -227,70 +228,81 @@ function Competitions({ embedded = false }) {
             </h1>
           </div>
 
-          {/* Event Content Container */}
+          {/* Full-Height Event Card Container */}
           <div
             ref={detailRef}
-            className="relative w-full max-w-[580px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col items-center md:items-start mt-2 md:mt-4 p-6 md:p-0 rounded-2xl md:rounded-none border md:border-0 border-gold/20 bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none shadow-[0_0_40px_rgba(0,0,0,0.5)] md:shadow-none"
+            className="relative flex-1 w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between items-center md:items-start my-2 md:my-0 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 bg-gradient-to-b from-black/80 via-black/60 to-black/90 md:bg-transparent backdrop-blur-2xl md:backdrop-blur-none shadow-[0_0_50px_rgba(225,157,0,0.15)] md:shadow-none min-h-[330px] sm:min-h-[400px]"
           >
-            {/* Mobile Reticle Corners */}
-            <span className="md:hidden absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-gold shadow-[0_0_8px_#e19d00]" />
-            <span className="md:hidden absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-gold shadow-[0_0_8px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-gold shadow-[0_0_8px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-gold shadow-[0_0_8px_#e19d00]" />
+            {/* Mobile Luminous Corner Reticles */}
+            <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
+            <span className="md:hidden absolute -top-1.5 -right-1.5 h-4 w-4 border-t-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
+            <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
+            <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
 
-            <h2
-              ref={h2Ref}
-              className="text-[clamp(22px,5.5vw,44px)] font-bold uppercase tracking-wide"
-              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-            >
-              {active.title}
-            </h2>
+            {/* Top Tag & Title */}
+            <div className="flex flex-col items-center md:items-start w-full">
+              <span className="md:hidden inline-block px-3 py-1 rounded-full border border-gold/40 bg-gold/10 text-[9px] font-mono uppercase tracking-[2.5px] text-gold mb-3">
+                CET Technical Fest
+              </span>
 
-            <p className="mt-3 md:mt-5 max-w-[550px] text-xs leading-relaxed text-white/70 md:text-[15px]">
+              <h2
+                ref={h2Ref}
+                className="text-[clamp(24px,6.5vw,46px)] font-bold uppercase tracking-wide text-center md:text-left"
+                style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+              >
+                {active.title}
+              </h2>
+            </div>
+
+            {/* Description */}
+            <p className="my-auto py-3 max-w-[550px] text-xs sm:text-sm leading-relaxed text-white/80 md:text-[15px] text-center md:text-left">
               {active.description}
             </p>
 
-            <button
-              ref={registerBtnRef}
-              type="button"
-              onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-              className="mt-6 md:mt-8 inline-flex items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-3 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
-            >
-              View Details
-              <svg
-                ref={arrowRef}
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {/* CTA Button */}
+            <div className="w-full flex justify-center md:justify-start">
+              <button
+                ref={registerBtnRef}
+                type="button"
+                onClick={() => routerNavigate(`/competitions/${active.slug}`)}
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-3 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2.5px] text-black shadow-[0_0_25px_rgba(225,157,0,0.45)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_40px_rgba(255,219,134,0.7)] cursor-pointer"
               >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </button>
+                View Details
+                <svg
+                  ref={arrowRef}
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Mobile Bottom Navigation Controls */}
-          <div className="flex md:hidden items-center justify-between w-full max-w-[340px] mt-6 px-2">
+          <div className="flex md:hidden items-center justify-between w-full max-w-[360px] pt-1 pb-1 px-4">
             <button
               type="button"
               onClick={() => navigate(-1)}
               disabled={activeIndex === 0}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === 0
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/50 text-gold hover:border-gold hover:bg-gold/10'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
               }`}
               aria-label="Previous competition"
             >
               ←
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               {competitions.map((_, i) => (
                 <button
                   key={i}
@@ -298,7 +310,7 @@ function Competitions({ embedded = false }) {
                   onClick={() => setActiveIndex(i)}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     i === activeIndex
-                      ? 'w-7 bg-gold shadow-[0_0_10px_#e19d00]'
+                      ? 'w-8 bg-gold shadow-[0_0_12px_#e19d00]'
                       : 'w-2 bg-white/20 hover:bg-white/40'
                   }`}
                   aria-label={`Go to competition ${i + 1}`}
@@ -310,10 +322,10 @@ function Competitions({ embedded = false }) {
               type="button"
               onClick={() => navigate(1)}
               disabled={activeIndex === competitions.length - 1}
-              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer ${
+              className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === competitions.length - 1
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/50 text-gold hover:border-gold hover:bg-gold/10'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
               }`}
               aria-label="Next competition"
             >
