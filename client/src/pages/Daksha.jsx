@@ -161,7 +161,7 @@ function Daksha() {
                   ref={eventBtnRef}
                   type="button"
                   onClick={() => routerNavigate(`/daksha/${event.slug}`)}
-                  className="inline-block border border-sky-300/80 bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#0ea5e9] px-8 py-2.5 text-xs font-black uppercase tracking-[3px] text-black shadow-[0_0_22px_rgba(56,189,248,0.6)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(56,189,248,0.9)] cursor-pointer"
+                  className="inline-block border border-sky-300/80 bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#0ea5e9] px-8 py-2.5 text-xs font-black uppercase tracking-[3px] text-black transition-all duration-300 hover:brightness-110 cursor-pointer"
                   style={{ opacity: 0 }}
                 >
                   View Details
