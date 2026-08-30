@@ -151,22 +151,22 @@ function Competitions({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="competitions" />}
 
-      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-center items-center gap-4 px-[clamp(16px,4vw,40px)] pt-14 pb-4 md:flex-row md:gap-12 md:pt-16 md:pb-0">
-        {/* Mobile Horizontal Tabs & Desktop Vertical Aside */}
+      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-center items-center gap-6 px-[clamp(16px,4vw,40px)] pt-16 md:flex-row md:gap-12">
+        {/* Desktop Sidebar (Hidden on Mobile) */}
         <aside
           ref={carouselRef}
-          className="flex w-full flex-row md:flex-col justify-center md:justify-center gap-2 md:gap-4 md:w-[35%] overflow-x-auto md:overflow-visible pb-1 md:pb-0"
+          className="hidden md:flex w-full flex-col justify-center gap-4 md:w-[35%]"
         >
           {competitions.map((comp, i) => (
             <div
               key={comp.id}
               ref={(el) => { sidebarItemsRef.current[i] = el }}
-              className="flex-1 md:flex-initial md:w-full min-w-0"
+              className="w-full"
               style={{ opacity: 0 }}
             >
               <button
                 type="button"
-                className={`group flex h-[44px] md:h-[120px] lg:h-[135px] w-full items-stretch text-left transition-all duration-300 cursor-pointer ${
+                className={`group flex h-[120px] lg:h-[135px] w-full items-stretch text-left transition-all duration-300 cursor-pointer ${
                   i === activeIndex ? 'border-gold' : 'border-transparent opacity-40 hover:opacity-75'
                 }`}
                 onClick={() => setActiveIndex(i)}
@@ -183,11 +183,11 @@ function Competitions({ embedded = false }) {
                       : 'border-white/5 bg-[#0a0a0a60]'
                   }`}
                 >
-                  <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-2 md:px-4 ${
+                  <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-4 ${
                     i === activeIndex ? 'bg-[#1a1a1a70]' : 'bg-[#11111140]'
                   }`}>
                     <span
-                      className={`text-[11px] md:text-sm font-semibold uppercase tracking-wider transition-colors duration-300 truncate text-center ${
+                      className={`text-sm font-semibold uppercase tracking-wider transition-colors duration-300 ${
                         i === activeIndex ? 'text-gold' : 'text-white/40'
                       }`}
                       style={{
@@ -203,11 +203,15 @@ function Competitions({ embedded = false }) {
           ))}
         </aside>
 
-        <section className="flex flex-1 flex-col justify-center items-center md:items-start text-center md:text-left md:pl-4">
-          <div className="relative mb-1 md:mb-2">
+        {/* Main Content Area (Desktop + Mobile Showcase) */}
+        <section className="flex flex-1 flex-col justify-center items-center md:items-start text-center md:text-left w-full md:pl-4">
+          <div className="relative mb-2 md:mb-4">
+            <p className="text-[10px] md:hidden uppercase tracking-[4px] text-gold/60 mb-1">
+              Event 0{activeIndex + 1} / 0{competitions.length}
+            </p>
             <h1
               ref={h1Ref}
-              className="text-[clamp(32px,7vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
+              className="text-[clamp(34px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
             >
               <span className="relative inline-block">
@@ -223,16 +227,26 @@ function Competitions({ embedded = false }) {
             </h1>
           </div>
 
-          <div ref={detailRef} className="mt-2 md:mt-6 md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col items-center md:items-start">
+          {/* Event Content Container */}
+          <div
+            ref={detailRef}
+            className="relative w-full max-w-[580px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col items-center md:items-start mt-2 md:mt-4 p-6 md:p-0 rounded-2xl md:rounded-none border md:border-0 border-gold/20 bg-black/40 md:bg-transparent backdrop-blur-md md:backdrop-blur-none shadow-[0_0_40px_rgba(0,0,0,0.5)] md:shadow-none"
+          >
+            {/* Mobile Reticle Corners */}
+            <span className="md:hidden absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-gold shadow-[0_0_8px_#e19d00]" />
+            <span className="md:hidden absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-gold shadow-[0_0_8px_#e19d00]" />
+            <span className="md:hidden absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-gold shadow-[0_0_8px_#e19d00]" />
+            <span className="md:hidden absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-gold shadow-[0_0_8px_#e19d00]" />
+
             <h2
               ref={h2Ref}
-              className="text-[clamp(20px,4.5vw,44px)] font-bold uppercase tracking-wide"
+              className="text-[clamp(22px,5.5vw,44px)] font-bold uppercase tracking-wide"
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
             >
               {active.title}
             </h2>
 
-            <p className="mt-2 md:mt-5 max-w-[550px] text-xs leading-relaxed text-white/70 md:text-[15px]">
+            <p className="mt-3 md:mt-5 max-w-[550px] text-xs leading-relaxed text-white/70 md:text-[15px]">
               {active.description}
             </p>
 
@@ -240,7 +254,7 @@ function Competitions({ embedded = false }) {
               ref={registerBtnRef}
               type="button"
               onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-              className="mt-4 md:mt-8 inline-flex items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-6 py-2.5 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
+              className="mt-6 md:mt-8 inline-flex items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-3 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
             >
               View Details
               <svg
@@ -257,6 +271,53 @@ function Competitions({ embedded = false }) {
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
               </svg>
+            </button>
+          </div>
+
+          {/* Mobile Bottom Navigation Controls */}
+          <div className="flex md:hidden items-center justify-between w-full max-w-[340px] mt-6 px-2">
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              disabled={activeIndex === 0}
+              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer ${
+                activeIndex === 0
+                  ? 'border-white/10 text-white/20'
+                  : 'border-gold/50 text-gold hover:border-gold hover:bg-gold/10'
+              }`}
+              aria-label="Previous competition"
+            >
+              ←
+            </button>
+
+            <div className="flex items-center gap-2">
+              {competitions.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveIndex(i)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === activeIndex
+                      ? 'w-7 bg-gold shadow-[0_0_10px_#e19d00]'
+                      : 'w-2 bg-white/20 hover:bg-white/40'
+                  }`}
+                  aria-label={`Go to competition ${i + 1}`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => navigate(1)}
+              disabled={activeIndex === competitions.length - 1}
+              className={`flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-200 cursor-pointer ${
+                activeIndex === competitions.length - 1
+                  ? 'border-white/10 text-white/20'
+                  : 'border-gold/50 text-gold hover:border-gold hover:bg-gold/10'
+              }`}
+              aria-label="Next competition"
+            >
+              →
             </button>
           </div>
         </section>
