@@ -252,43 +252,73 @@ function Team({ embedded = false }) {
           className="relative flex items-center justify-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {members.map((member, index) => (
-            <div
-              key={member.id}
-              className="absolute cursor-pointer"
-              style={{
-                ...getCardTransform(index),
-                transition: 'transform 0.5s ease-out, opacity 0.5s ease-out, z-index 0s',
-              }}
-              onClick={() => setActiveIndex(index)}
-            >
+          {members.map((member, index) => {
+            const diff = shortestDiff(activeIndex, index)
+            const isLeft = diff < 0
+            const isCenter = diff === 0
+
+            return (
               <div
-                className="card-inner relative flex items-center justify-center overflow-hidden rounded-md"
+                key={member.id}
+                className="absolute cursor-pointer"
                 style={{
-                  height: '350px',
-                  width: '260px',
-                  background: index === activeIndex ? '#111' : '#1a1a1a',
-                  border: index === activeIndex ? '1px solid rgba(225,157,0,0.5)' : '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: index === activeIndex
-                    ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(225,157,0,0.2)'
-                    : '0 10px 30px rgba(0,0,0,0.4)',
+                  ...getCardTransform(index),
+                  transition: 'transform 0.5s ease-out, opacity 0.5s ease-out, z-index 0s',
                 }}
+                onClick={() => setActiveIndex(index)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10" />
-                <div className="absolute top-0 right-4 flex h-full items-center">
-                  <span
-                    className="text-2xl font-bold uppercase tracking-wider text-white/20"
-                    style={{ writingMode: 'vertical-lr', textOrientation: 'mixed', fontFamily: "'Clash Display', sans-serif" }}
+                <div
+                  className="card-inner relative flex items-center justify-center overflow-hidden rounded-md transition-all duration-300"
+                  style={{
+                    height: '350px',
+                    width: '260px',
+                    background: isCenter ? '#111' : '#1a1a1a',
+                    border: isCenter ? '1px solid rgba(225,157,0,0.5)' : '1px solid rgba(255,255,255,0.1)',
+                    boxShadow: isCenter
+                      ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(225,157,0,0.2)'
+                      : '0 10px 30px rgba(0,0,0,0.4)',
+                  }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10" />
+
+                  {/* Vertical Name: Left on Left Cards, Right on Right & Center Cards */}
+                  <div
+                    className={`absolute top-0 flex h-full items-center transition-all duration-300 ${
+                      isLeft ? 'left-4' : 'right-4'
+                    }`}
                   >
-                    {member.name}
-                  </span>
-                </div>
-                <div className="absolute bottom-5 left-5">
-                  <p className="text-[10px] uppercase tracking-[3px] text-gold/80">{member.role}</p>
+                    <span
+                      className={`text-2xl font-bold uppercase tracking-wider transition-colors duration-300 ${
+                        isCenter ? 'text-white/35 font-extrabold' : 'text-white/20'
+                      }`}
+                      style={{
+                        writingMode: 'vertical-lr',
+                        textOrientation: 'mixed',
+                        fontFamily: "'Clash Display', sans-serif",
+                      }}
+                    >
+                      {member.name}
+                    </span>
+                  </div>
+
+                  {/* Role Title */}
+                  <div
+                    className={`absolute bottom-5 transition-all duration-300 ${
+                      isLeft ? 'right-4 text-right' : 'left-5 text-left'
+                    }`}
+                  >
+                    <p
+                      className={`text-[10px] uppercase tracking-[3px] transition-colors duration-300 ${
+                        isCenter ? 'text-gold font-semibold' : 'text-gold/60'
+                      }`}
+                    >
+                      {member.role}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
 
