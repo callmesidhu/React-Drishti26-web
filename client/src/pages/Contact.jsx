@@ -123,7 +123,7 @@ function Contact() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href="tel:+918590540376"
-                  className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-5 py-2 text-xs font-semibold uppercase tracking-wider text-gold transition-all duration-200 hover:bg-gold hover:text-black"
+                  className="inline-flex items-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_15px_rgba(225,157,0,0.35)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_25px_rgba(255,219,134,0.6)] cursor-pointer"
                 >
                   <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -134,7 +134,7 @@ function Contact() {
                   href="https://wa.me/918590540376"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white/80 transition-all duration-200 hover:border-gold hover:text-gold"
+                  className="inline-flex items-center gap-2 rounded-none border border-gold/40 bg-gold/10 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-gold transition-all duration-300 hover:border-gold hover:bg-gold/20 hover:text-white hover:shadow-[0_0_20px_rgba(225,157,0,0.3)] cursor-pointer"
                 >
                   WhatsApp
                 </a>
@@ -247,11 +247,11 @@ function Contact() {
                 href={MAP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-gold bg-gold px-6 py-2.5 text-xs font-bold uppercase tracking-[2px] text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.4)]"
+                className="inline-flex items-center justify-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-3 text-xs font-bold uppercase tracking-[2.5px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
               >
                 Open in Google Maps
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
             </div>
