@@ -279,17 +279,17 @@ function Team({ embedded = false }) {
                     />
                   )}
 
-                  {/* Vertical Name: Left on Left Cards, Right on Right & Center Cards */}
+                  {/* Vertical Name: Left on Left 2 Cards, Right on Right 2 & Center Cards */}
                   <div
                     className={`absolute top-0 flex h-full items-center pointer-events-none z-10 ${
-                      isLeft ? 'left-3 sm:left-4' : 'right-3 sm:right-4'
+                      isLeft ? 'left-4 sm:left-5' : 'right-4 sm:right-5'
                     }`}
                   >
                     <span
-                      className={`text-4xl md:text-5xl font-black uppercase tracking-widest select-none ${
+                      className={`text-4xl sm:text-5xl font-black uppercase tracking-widest select-none ${
                         isCenter
                           ? 'text-black/85 drop-shadow-[0_2px_8px_rgba(255,255,255,0.4)]'
-                          : 'text-zinc-700/65'
+                          : 'text-zinc-800/80'
                       }`}
                       style={{
                         writingMode: 'vertical-lr',
@@ -303,10 +303,10 @@ function Team({ embedded = false }) {
 
                   {/* Bottom Role Banner for Active Card */}
                   {isCenter && (
-                    <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end bg-gradient-to-t from-black/95 via-black/50 to-transparent pt-14 pb-5 px-3">
+                    <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end bg-gradient-to-t from-black/95 via-black/40 to-transparent pt-16 pb-6 px-3">
                       <p
                         className="text-center text-sm md:text-base font-black uppercase tracking-[3px] text-[#FFDB86] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
-                        style={{ fontFamily: "'Bietro DEMO-Regular', sans-serif" }}
+                        style={{ fontFamily: "'Space Grotesk', sans-serif" }}
                       >
                         {member.role}
                       </p>
