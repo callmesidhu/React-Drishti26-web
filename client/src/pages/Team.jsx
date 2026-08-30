@@ -196,8 +196,8 @@ function Team({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="team" />}
 
-      {/* Header matching other page titles */}
-      <header className="px-[clamp(16px,4vw,40px)] pt-4 pb-1 text-center z-10">
+      {/* Header matching other page titles with metallic gold toggle */}
+      <header className="px-[clamp(16px,4vw,40px)] pt-3 pb-1 text-center z-10 flex flex-col items-center">
         <h1
           ref={titleRef}
           className="text-[clamp(32px,6vw,72px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
@@ -205,6 +205,39 @@ function Team({ embedded = false }) {
         >
           MEET THE TEAM
         </h1>
+
+        {/* Metallic Gold Pill Switch Toggle */}
+        <div
+          className="mt-3 relative inline-flex items-center rounded-full border border-gold/50 bg-black/80 p-1 shadow-[0_4px_20px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-md"
+          role="group"
+          aria-label="Team category selection"
+        >
+          {[
+            { id: 'committee', label: 'COMMITTEE' },
+            { id: 'web', label: 'WEB TEAM' },
+          ].map((group) => {
+            const isSelected = activeGroup === group.id
+            return (
+              <button
+                key={group.id}
+                type="button"
+                aria-pressed={isSelected}
+                onClick={() => {
+                  setActiveGroup(group.id)
+                  setActiveIndex(0)
+                }}
+                className={`relative z-10 cursor-pointer rounded-full px-6 py-1.5 text-[11px] font-black uppercase tracking-[2.5px] transition-all duration-300 sm:px-8 sm:text-xs ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] text-black shadow-[0_2px_12px_rgba(225,157,0,0.35)]'
+                    : 'text-gold/75 hover:text-gold'
+                }`}
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+              >
+                {group.label}
+              </button>
+            )
+          })}
+        </div>
       </header>
 
       {/* 3D Stage Container */}
