@@ -159,7 +159,7 @@ function Team({ embedded = false }) {
 
     if (absDiff === 0) {
       return {
-        transform: 'translateX(0) translateZ(80px) rotateY(0deg) scale(1)',
+        transform: 'translateX(0px) translateY(0px) translateZ(80px) rotateY(0deg) scale(1)',
         zIndex: 10,
         opacity: 1,
       }
@@ -174,14 +174,16 @@ function Team({ embedded = false }) {
       }
     }
 
-    const angle = sign * -28 // In 3D carousel, left cards face right and right cards face left
-    const translateX = sign === 1 ? (absDiff === 1 ? 210 : 380) : (absDiff === 1 ? -210 : -380)
-    const translateZ = absDiff === 1 ? -40 : -110
-    const scale = absDiff === 1 ? 0.94 : 0.88
+    // Exact card positions and angles matching the reference 3D fan
+    const translateX = sign === 1 ? (absDiff === 1 ? 320 : 590) : (absDiff === 1 ? -320 : -590)
+    const translateY = absDiff === 1 ? 16 : 38
+    const translateZ = absDiff === 1 ? -50 : -130
+    const rotateY = sign === 1 ? (absDiff === 1 ? -34 : -48) : (absDiff === 1 ? 34 : 48)
+    const scale = absDiff === 1 ? 0.95 : 0.88
     const zIndex = 10 - absDiff
 
     return {
-      transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${angle}deg) scale(${scale})`,
+      transform: `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`,
       zIndex,
       opacity: 1,
     }
@@ -230,10 +232,10 @@ function Team({ embedded = false }) {
       <div
         ref={containerRef}
         className="relative flex flex-1 items-center justify-center overflow-hidden touch-none my-auto w-full"
-        style={{ perspective: '1100px' }}
+        style={{ perspective: '900px' }}
       >
         {/* Curved 3D Stage Horizon Floor */}
-        <div className="pointer-events-none absolute bottom-[-40px] left-1/2 -translate-x-1/2 w-[160%] max-w-[1500px] h-[220px] rounded-[100%] bg-gradient-to-b from-[#1c1c20] via-[#101013] to-[#050505] border-t border-white/10 shadow-[0_-25px_60px_rgba(0,0,0,0.9)]" />
+        <div className="pointer-events-none absolute bottom-[-40px] left-1/2 -translate-x-1/2 w-[180%] max-w-[1700px] h-[260px] rounded-[100%] bg-gradient-to-b from-[#242429] via-[#121215] to-[#050505] border-t border-white/10 shadow-[0_-30px_70px_rgba(0,0,0,0.95)]" />
 
         {/* 3D Card Stack */}
         <div
