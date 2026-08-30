@@ -86,7 +86,7 @@ function Footer() {
               </div>
             </div>
 
-            <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }}>
+            <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }} className="md:col-span-2">
               <div className="space-y-3 text-white/80">
                 <h4
                   className="text-[11px] font-bold uppercase tracking-[4px] text-white/80"
@@ -94,15 +94,36 @@ function Footer() {
                 >
                   Location
                 </h4>
-               
-                <a href="https://maps.google.com/?q=College+of+Engineering+Trivandrum" target="_blank" rel="noreferrer" className="mt-3 block overflow-hidden rounded-md border border-white/20">
-                   <p className="text-[15px] font-light text-white/80">College of Engineering Trivandrum</p>
+
+                <div className="relative mt-2 overflow-hidden rounded-lg border border-white/20 transition-all duration-300 hover:border-gold/60 max-w-[360px]">
+                  <iframe
+                    title="CET Mini Map"
+                    src="https://maps.google.com/maps?q=8.5458513,76.9063407&t=k&z=16&ie=UTF8&iwloc=&output=embed"
+                    width="100%"
+                    height="140"
+                    className="block w-full border-0"
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <a
+                    href="https://www.google.com/maps/place/College+of+Engineering+Trivandrum+(CET)/@8.5458513,76.9037658,17z/data=!3m1!4b1!4m6!3m5!1s0x3b05bec79541c519:0x98324eb5aafb3778!8m2!3d8.5458513!4d76.9063407!16zL20vMDVtcTdz"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="absolute inset-0 z-10 block cursor-pointer"
+                    aria-label="Open College of Engineering Trivandrum in Google Maps"
+                  />
+                </div>
+
+                <a
+                  href="https://www.google.com/maps/place/College+of+Engineering+Trivandrum+(CET)/@8.5458513,76.9037658,17z/data=!3m1!4b1!4m6!3m5!1s0x3b05bec79541c519:0x98324eb5aafb3778!8m2!3d8.5458513!4d76.9063407!16zL20vMDVtcTdz"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-block text-[14px] font-light text-white/80 transition-colors duration-200 hover:text-gold"
+                >
+                  College of Engineering Trivandrum (CET) ↗
                 </a>
               </div>
-            </div>
-
-            <div ref={(el) => { columnsRef.current[3] = el }} style={{ opacity: 0 }}>
-          
             </div>
           </div>
         </div>
