@@ -205,20 +205,20 @@ function Team({ embedded = false }) {
   }, [activeIndex])
 
   return (
-    <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
+    <div className={`relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-between pt-16 pb-4 select-none touch-none ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="team" />}
 
-      <header className="px-[clamp(16px,4vw,40px)] pb-4 pt-[clamp(32px,6vw,64px)] text-center">
+      <header className="px-[clamp(16px,4vw,40px)] pb-1 pt-2 text-center">
         <h1
           ref={titleRef}
-          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
+          className="text-[clamp(32px,6vw,72px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           MEET THE TEAM
         </h1>
 
-        <div className="mt-8 inline-flex overflow-hidden rounded-full border border-gold/60" role="group" aria-label="Team selection">
+        <div className="mt-4 inline-flex overflow-hidden rounded-full border border-gold/60" role="group" aria-label="Team selection">
           {[
             { id: 'committee', label: 'Committee' },
             { id: 'web', label: 'Web Team' },
@@ -230,9 +230,9 @@ function Team({ embedded = false }) {
                 type="button"
                 aria-pressed={isSelected}
                 onClick={() => setActiveGroup(group.id)}
-                className={`px-6 py-2.5 text-xs font-semibold uppercase tracking-[2px] transition-colors duration-300 md:px-8 ${
+                className={`px-6 py-2 text-xs font-semibold uppercase tracking-[2px] transition-colors duration-300 md:px-8 cursor-pointer ${
                   isSelected
-                    ? 'bg-gold-gradient text-black'
+                    ? 'bg-gold-gradient text-black font-bold'
                     : 'bg-black text-gold hover:bg-gold/10'
                 }`}
               >
@@ -245,7 +245,7 @@ function Team({ embedded = false }) {
 
       <div
         ref={containerRef}
-        className="relative flex h-[70vh] items-center justify-center overflow-hidden touch-none"
+        className="relative flex flex-1 items-center justify-center overflow-hidden touch-none my-auto"
         style={{ perspective: '1200px' }}
       >
         <div
@@ -265,19 +265,19 @@ function Team({ embedded = false }) {
               <div
                 className="card-inner relative flex items-center justify-center overflow-hidden rounded-md"
                 style={{
-                  height: '420px',
-                  width: '300px',
+                  height: '350px',
+                  width: '260px',
                   background: index === activeIndex ? '#111' : '#1a1a1a',
-                  border: index === activeIndex ? '1px solid rgba(225,157,0,0.4)' : '1px solid rgba(255,255,255,0.1)',
+                  border: index === activeIndex ? '1px solid rgba(225,157,0,0.5)' : '1px solid rgba(255,255,255,0.1)',
                   boxShadow: index === activeIndex
-                    ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(225,157,0,0.1)'
+                    ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(225,157,0,0.2)'
                     : '0 10px 30px rgba(0,0,0,0.4)',
                 }}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10" />
                 <div className="absolute top-0 right-4 flex h-full items-center">
                   <span
-                    className="text-3xl font-bold uppercase tracking-wider text-white/15"
+                    className="text-2xl font-bold uppercase tracking-wider text-white/20"
                     style={{ writingMode: 'vertical-lr', textOrientation: 'mixed', fontFamily: "'Clash Display', sans-serif" }}
                   >
                     {member.name}
@@ -292,22 +292,23 @@ function Team({ embedded = false }) {
         </div>
       </div>
 
-      <div className="mt-8 flex items-center justify-center gap-2 pb-12">
-        {members.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === activeIndex ? 'w-8 bg-gold' : 'w-1.5 bg-white/20 hover:bg-white/40'
-            }`}
-            aria-label={`Go to team member ${index + 1}`}
-          />
-        ))}
+      <div className="flex flex-col items-center justify-center gap-2 pb-2">
+        <div className="flex items-center justify-center gap-2">
+          {members.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                index === activeIndex ? 'w-8 bg-gold' : 'w-1.5 bg-white/20 hover:bg-white/40'
+              }`}
+              aria-label={`Go to team member ${index + 1}`}
+            />
+          ))}
+        </div>
+        <p className="text-center text-[10px] uppercase tracking-[4px] text-white/30">
+          Scroll or swipe to explore
+        </p>
       </div>
-
-      <p className="text-center text-xs uppercase tracking-[4px] text-white/30">
-        Scroll or swipe to explore
-      </p>
     </div>
   )
 }

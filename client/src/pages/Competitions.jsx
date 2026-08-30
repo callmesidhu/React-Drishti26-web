@@ -147,14 +147,14 @@ function Competitions({ embedded = false }) {
   }, [])
 
   return (
-    <div ref={pageRef} className={`relative min-h-svh w-full touch-none ${embedded ? 'bg-transparent' : ''}`}>
+    <div ref={pageRef} className={`relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-center select-none touch-none ${embedded ? 'bg-transparent' : ''}`}>
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="competitions" />}
 
-      <div className="mx-auto flex min-h-[calc(100vh-60px)] max-w-[1400px] flex-col gap-6 px-[clamp(16px,4vw,40px)] py-8 md:flex-row md:gap-12 md:py-10">
+      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col items-center justify-center gap-6 px-[clamp(16px,4vw,40px)] pt-16 md:flex-row md:gap-12">
         <aside
           ref={carouselRef}
-          className="flex w-full flex-col gap-3 md:w-[35%] md:gap-4"
+          className="flex w-full flex-col justify-center gap-3 md:w-[35%] md:gap-4"
         >
           {competitions.map((comp, i) => (
             <div
@@ -164,14 +164,14 @@ function Competitions({ embedded = false }) {
               style={{ opacity: 0 }}
             >
               <div
-                className={`group flex h-[70px] w-full items-stretch text-left transition-all duration-300 md:h-[180px] ${
-                  i === activeIndex ? 'border-gold' : 'border-transparent opacity-40'
+                className={`group flex h-[64px] w-full items-stretch text-left transition-all duration-300 md:h-[120px] lg:h-[140px] cursor-pointer ${
+                  i === activeIndex ? 'border-gold' : 'border-transparent opacity-40 hover:opacity-75'
                 }`}
                 onClick={() => setActiveIndex(i)}
               >
                 <div
                   className={`w-1 flex-shrink-0 transition-all duration-300 ${
-                    i === activeIndex ? 'bg-gold' : 'bg-white/10'
+                    i === activeIndex ? 'bg-gold shadow-[0_0_10px_#e19d00]' : 'bg-white/10'
                   }`}
                 />
                 <div
@@ -202,7 +202,7 @@ function Competitions({ embedded = false }) {
           ))}
         </aside>
 
-        <section className="flex flex-1 flex-col justify-center md:pl-4">
+        <section className="flex flex-1 flex-col justify-center items-start md:pl-4">
           <div className="relative mb-2">
             <h1
               ref={h1Ref}
