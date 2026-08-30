@@ -24,7 +24,7 @@ const galleryImage3 = "/home/gallery-3.png";
 const galleryImage4 = "/home/gallery-4.png";
 const galleryImage5 = "/home/gallery-5.png";
 
-const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
+const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLENCE", "LEGACY"];
 
 const workshopItems = [
   { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
@@ -512,14 +512,14 @@ function Home() {
         </div>
         <img
           ref={heroLine1Ref}
-          className="hidden md:block absolute left-0 top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,413px)] z-20"
+          className="hidden md:block absolute left-[clamp(20px,3vw,44px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(160px,19vw,270px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine1}
         />
         <img
           ref={heroLine2Ref}
-          className="hidden md:block absolute right-[clamp(0px,10vw,200px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(150px,28vw,408px)] z-20"
+          className="hidden md:block absolute right-[clamp(20px,3vw,44px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(160px,19vw,270px)] z-20"
           alt=""
           aria-hidden="true"
           src={heroLine2}

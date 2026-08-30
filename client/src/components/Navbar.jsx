@@ -152,7 +152,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
           />
         </Link>
 
-        <div ref={desktopLinksRef} className="hidden items-center gap-3 lg:gap-6 md:flex">
+        <div ref={desktopLinksRef} className="hidden items-center gap-3 lg:gap-6 lg:flex">
           {links.map((link) => (
             <Link
               key={link.to}
@@ -184,7 +184,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
 
         <button
           ref={hamburgerRef}
-          className="flex flex-col gap-[5px] md:hidden"
+          className="flex flex-col gap-[5px] lg:hidden"
           aria-label="Menu"
           onClick={() => setMenuOpen(!menuOpen)}
         >
@@ -196,7 +196,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
 
       <div
         ref={mobileOverlayRef}
-        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/70 backdrop-blur-2xl md:hidden ${
+        className={`fixed inset-0 z-40 flex flex-col items-center justify-center bg-black/70 backdrop-blur-2xl lg:hidden ${
           menuOpen ? 'pointer-events-auto' : 'pointer-events-none'
         }`}
         style={{ opacity: 0 }}
