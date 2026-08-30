@@ -151,20 +151,22 @@ function Competitions({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="competitions" />}
 
-      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col items-center justify-center gap-6 px-[clamp(16px,4vw,40px)] pt-16 md:flex-row md:gap-12">
+      <div className="mx-auto flex h-full max-w-[1400px] w-full flex-col justify-center items-center gap-4 px-[clamp(16px,4vw,40px)] pt-14 pb-4 md:flex-row md:gap-12 md:pt-16 md:pb-0">
+        {/* Mobile Horizontal Tabs & Desktop Vertical Aside */}
         <aside
           ref={carouselRef}
-          className="flex w-full flex-col justify-center gap-3 md:w-[35%] md:gap-4"
+          className="flex w-full flex-row md:flex-col justify-center md:justify-center gap-2 md:gap-4 md:w-[35%] overflow-x-auto md:overflow-visible pb-1 md:pb-0"
         >
           {competitions.map((comp, i) => (
             <div
               key={comp.id}
               ref={(el) => { sidebarItemsRef.current[i] = el }}
-              className="w-full"
+              className="flex-1 md:flex-initial md:w-full min-w-0"
               style={{ opacity: 0 }}
             >
-              <div
-                className={`group flex h-[64px] w-full items-stretch text-left transition-all duration-300 md:h-[120px] lg:h-[140px] cursor-pointer ${
+              <button
+                type="button"
+                className={`group flex h-[44px] md:h-[120px] lg:h-[135px] w-full items-stretch text-left transition-all duration-300 cursor-pointer ${
                   i === activeIndex ? 'border-gold' : 'border-transparent opacity-40 hover:opacity-75'
                 }`}
                 onClick={() => setActiveIndex(i)}
@@ -177,19 +179,18 @@ function Competitions({ embedded = false }) {
                 <div
                   className={`flex-1 overflow-hidden border border-l-0 transition-all duration-300 ${
                     i === activeIndex
-                      ? 'border-gold/40 bg-[#11111180]'
+                      ? 'border-gold/40 bg-[#11111190]'
                       : 'border-white/5 bg-[#0a0a0a60]'
                   }`}
                 >
-                  <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-4 ${
-                    i === activeIndex ? 'bg-[#1a1a1a60]' : 'bg-[#11111140]'
+                  <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-2 md:px-4 ${
+                    i === activeIndex ? 'bg-[#1a1a1a70]' : 'bg-[#11111140]'
                   }`}>
                     <span
-                      className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-300 md:text-sm ${
-                        i === activeIndex ? 'text-gold' : 'text-white/30'
+                      className={`text-[11px] md:text-sm font-semibold uppercase tracking-wider transition-colors duration-300 truncate text-center ${
+                        i === activeIndex ? 'text-gold' : 'text-white/40'
                       }`}
                       style={{
-                        writingMode: 'horizontal-tb',
                         fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif",
                       }}
                     >
@@ -197,41 +198,41 @@ function Competitions({ embedded = false }) {
                     </span>
                   </div>
                 </div>
-              </div>
+              </button>
             </div>
           ))}
         </aside>
 
-        <section className="flex flex-1 flex-col justify-center items-start md:pl-4">
-          <div className="relative mb-2">
+        <section className="flex flex-1 flex-col justify-center items-center md:items-start text-center md:text-left md:pl-4">
+          <div className="relative mb-1 md:mb-2">
             <h1
               ref={h1Ref}
-              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
+              className="text-[clamp(32px,7vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
             >
               <span className="relative inline-block">
-                    <span className="relative z-10 competitions-text">COMPETITIONS</span>
-                    <img
-                      ref={sparkleRef}
-                      src="/workshops/shine.svg"
-                      alt=""
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
-                    />
+                <span className="relative z-10 competitions-text">COMPETITIONS</span>
+                <img
+                  ref={sparkleRef}
+                  src="/workshops/shine.svg"
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(44px,8vw,120px)] max-w-none mix-blend-screen"
+                />
               </span>
             </h1>
           </div>
 
-          <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
+          <div ref={detailRef} className="mt-2 md:mt-6 md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col items-center md:items-start">
             <h2
               ref={h2Ref}
-              className="text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide"
+              className="text-[clamp(20px,4.5vw,44px)] font-bold uppercase tracking-wide"
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
             >
               {active.title}
             </h2>
 
-            <p className="mt-4 max-w-[550px] text-sm leading-relaxed text-white/60 md:mt-5 md:text-[15px]">
+            <p className="mt-2 md:mt-5 max-w-[550px] text-xs leading-relaxed text-white/70 md:text-[15px]">
               {active.description}
             </p>
 
@@ -239,14 +240,13 @@ function Competitions({ embedded = false }) {
               ref={registerBtnRef}
               type="button"
               onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm cursor-pointer"
-              style={{ borderRadius: '50px' }}
+              className="mt-4 md:mt-8 inline-flex items-center gap-2.5 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-6 py-2.5 md:px-8 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
             >
               View Details
               <svg
                 ref={arrowRef}
-                width="18"
-                height="18"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

@@ -283,23 +283,23 @@ function Workshops() {
         ref={sectionRef}
         className="relative flex h-full w-full items-center justify-center overflow-hidden px-[clamp(16px,4vw,40px)] pt-16"
       >
-        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-10 md:grid-cols-2 md:gap-16">
+        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-6 md:grid-cols-2 md:gap-16">
           <div
             ref={textColRef}
-            className="order-2 flex flex-col gap-6 text-center md:order-1 md:text-left"
+            className="order-2 flex flex-col gap-3 md:gap-6 text-center md:order-1 md:text-left items-center md:items-start"
           >
-            <p className="text-[11px] uppercase tracking-[5px] text-gold/60">Drishti 2026</p>
+            <p className="text-[10px] md:text-[11px] uppercase tracking-[5px] text-gold/60">Drishti 2026</p>
 
             <h1
               ref={titleRef}
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
+              className="text-[clamp(28px,5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
             >
             </h1>
 
             <p
               ref={descRef}
-              className="text-[clamp(14px,1.6vw,17px)] leading-[1.7] text-white/70"
+              className="text-xs md:text-[clamp(14px,1.6vw,17px)] leading-[1.6] text-white/70 max-w-[480px]"
             >
               {active.description}
             </p>
@@ -309,7 +309,7 @@ function Workshops() {
                 ref={btnRef}
                 type="button"
                 onClick={() => routerNavigate(`/workshops/${active.slug}`)}
-                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)] cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-2.5 md:px-10 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
               >
                 View Details
               </button>
