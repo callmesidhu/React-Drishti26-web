@@ -213,7 +213,7 @@ function Team({ embedded = false }) {
           aria-label="Team category selection"
         >
           {[
-            { id: 'committee', label: 'COMMITTEE' },
+            { id: 'committee', label: 'CORE TEAM' },
             { id: 'web', label: 'WEB TEAM' },
           ].map((group) => {
             const isSelected = activeGroup === group.id

@@ -265,7 +265,7 @@ function Competitions({ embedded = false }) {
                 ref={registerBtnRef}
                 type="button"
                 onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
                 style={{ borderRadius: '50px' }}
               >
                 View Details
