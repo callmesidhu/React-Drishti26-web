@@ -147,11 +147,11 @@ function Daksha() {
                 </ul>
               </div>
 
-              <div ref={eventImageRef} className="relative order-2 mt-4 md:mt-0 w-full max-w-[240px] md:max-w-[300px] mx-auto border border-gold/40 bg-black/40 p-2 backdrop-blur-sm md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(225,157,0,0.2)]" style={{ opacity: 0 }}>
-                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-gold shadow-[0_0_10px_#e19d00]" />
-                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-gold shadow-[0_0_10px_#e19d00]" />
-                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-gold shadow-[0_0_10px_#e19d00]" />
-                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-gold shadow-[0_0_10px_#e19d00]" />
+              <div ref={eventImageRef} className="relative order-2 mt-4 md:mt-0 w-full max-w-[240px] md:max-w-[300px] mx-auto border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.25)]" style={{ opacity: 0 }}>
+                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
+                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
 
                 <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
               </div>
@@ -161,7 +161,7 @@ function Daksha() {
                   ref={eventBtnRef}
                   type="button"
                   onClick={() => routerNavigate(`/daksha/${event.slug}`)}
-                  className="inline-block border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-8 py-2.5 text-xs font-bold uppercase tracking-[3px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
+                  className="inline-block border border-sky-300/80 bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#0ea5e9] px-8 py-2.5 text-xs font-black uppercase tracking-[3px] text-black shadow-[0_0_22px_rgba(56,189,248,0.6)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(56,189,248,0.9)] cursor-pointer"
                   style={{ opacity: 0 }}
                 >
                   View Details
