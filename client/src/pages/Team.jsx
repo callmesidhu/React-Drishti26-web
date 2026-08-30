@@ -196,14 +196,14 @@ function Team({ embedded = false }) {
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="team" />}
 
-      {/* Header matching exact Figma reference: Meet The Team */}
+      {/* Header matching other page titles */}
       <header className="px-[clamp(16px,4vw,40px)] pt-4 pb-1 text-center z-10">
         <h1
           ref={titleRef}
-          className="text-[clamp(36px,5.5vw,64px)] font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] drop-shadow-[0_2px_15px_rgba(225,157,0,0.3)]"
-          style={{ fontFamily: "'Space Grotesk', 'Inter', system-ui, sans-serif" }}
+          className="text-[clamp(32px,6vw,72px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
-          Meet The Team
+          MEET THE TEAM
         </h1>
       </header>
 
