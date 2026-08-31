@@ -51,14 +51,29 @@ function App() {
     }
   }, [])
 
-  // Smooth reset to top on page navigation
+  // Smooth reset to top on page navigation and refresh ScrollTrigger
   useEffect(() => {
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true })
     } else {
       window.scrollTo(0, 0)
     }
+    const raf = requestAnimationFrame(() => {
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
+    })
+    return () => cancelAnimationFrame(raf)
   }, [location.pathname])
+
+  useEffect(() => {
+    if (!loading) {
+      const raf = requestAnimationFrame(() => {
+        ScrollTrigger.sort()
+        ScrollTrigger.refresh()
+      })
+      return () => cancelAnimationFrame(raf)
+    }
+  }, [loading])
 
   return (
     <>

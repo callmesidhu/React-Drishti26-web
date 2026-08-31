@@ -7,7 +7,6 @@ import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 // Register ScrollTrigger plugin
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
 // Imports for desktop landscape grid and mobile portrait version
@@ -65,18 +64,18 @@ function ProShowsPage({ embedded = false }) {
 
       gsap.set(cardWrapperRef.current, {
         rotationX: 90,
-        rotationY: 28,
+        rotationY: 0,
         rotationZ: 0,
-        x: 100,
-        y: 200,
-        z: -180,
-        scale: 0.65,
-        opacity: 0,
+        x: 0,
+        y: 60,
+        z: -100,
+        scale: 0.75,
+        opacity: 1,
       })
 
       gsap.set(cardInnerRef.current, { rotationY: 0 })
-      gsap.set(shadowRef.current, { opacity: 0, scale: 0.7, x: 100 })
-      gsap.set(glowRef.current, { opacity: 0, scale: 0.4 })
+      gsap.set(shadowRef.current, { opacity: 0.8, scale: 0.7, x: 0 })
+      gsap.set(glowRef.current, { opacity: 0.3, scale: 0.6 })
 
       particlesRef.current.forEach((particle) => {
         if (!particle) return
@@ -84,7 +83,7 @@ function ProShowsPage({ embedded = false }) {
           x: (Math.random() - 0.5) * 500,
           y: gsap.utils.random(-150, 150),
           scale: gsap.utils.random(0.3, 1.2),
-          opacity: 0,
+          opacity: gsap.utils.random(0.4, 0.95),
         })
       })
 
@@ -99,21 +98,14 @@ function ProShowsPage({ embedded = false }) {
         },
       })
 
-      scrollTl.to([cardWrapperRef.current, shadowRef.current], {
-        opacity: 1,
-        duration: 1,
-        ease: 'power1.out',
-      })
-
       scrollTl.to(
         particlesRef.current,
         {
-          opacity: (i) => gsap.utils.random(0.4, 0.95),
           y: '-=100',
           stagger: 0.02,
           duration: 1,
         },
-        '<=0.2'
+        0
       )
 
       scrollTl.to(
@@ -129,7 +121,7 @@ function ProShowsPage({ embedded = false }) {
           duration: 3,
           ease: 'power2.inOut',
         },
-        '>'
+        0
       )
 
       scrollTl.to(
@@ -139,7 +131,7 @@ function ProShowsPage({ embedded = false }) {
           scale: 0.2,
           duration: 2,
         },
-        '<=1'
+        1
       )
 
       scrollTl.to(
@@ -190,9 +182,20 @@ function ProShowsPage({ embedded = false }) {
           },
           '<+0.2'
         )
+
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
     }, pinWrapperRef)
 
-    return () => ctx.revert()
+    const refreshRaf = requestAnimationFrame(() => {
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
+    })
+
+    return () => {
+      cancelAnimationFrame(refreshRaf)
+      ctx.revert()
+    }
   }, [])
 
   return (
@@ -220,13 +223,13 @@ function ProShowsPage({ embedded = false }) {
           {/* Ambient Glow */}
           <div
             ref={glowRef}
-            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl opacity-0"
+            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl"
           />
 
           {/* Ground Shadow */}
           <div
             ref={shadowRef}
-            className="pointer-events-none absolute bottom-2 h-[50px] w-[300px] lg:w-[550px] rounded-[100%] bg-black/95 blur-xl opacity-0"
+            className="pointer-events-none absolute bottom-2 h-[50px] w-[300px] lg:w-[550px] rounded-[100%] bg-black/95 blur-xl"
           />
 
           {/* Golden Spangles */}
@@ -235,17 +238,7 @@ function ProShowsPage({ embedded = false }) {
               <div
                 key={i}
                 ref={(el) => { particlesRef.current[i] = el }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
-              />
-            ))}
-          </div>
-          {/* Golden Spangles */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            {Array.from({ length: 16 }).map((_, i) => (
-              <div
-                key={i}
-                ref={(el) => { particlesRef.current[i] = el }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
+                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00]"
               />
             ))}
           </div>
@@ -254,7 +247,7 @@ function ProShowsPage({ embedded = false }) {
           <div className="perspective-[1400px] z-10 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[780px]">
             <div
               ref={cardWrapperRef}
-              className="transform-style-3d relative w-full rounded-2xl opacity-0"
+              className="transform-style-3d relative w-full rounded-2xl"
             >
               {/* Flip Container */}
               <div

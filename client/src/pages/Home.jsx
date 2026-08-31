@@ -219,220 +219,246 @@ function Home() {
 
   // GSAP Animations
   useEffect(() => {
-    let ctx;
-    let timer;
+    const ctx = gsap.context(() => {
+      // Hero entrance
+      gsap.fromTo(heroBgRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: "power2.out" }
+      );
 
-    timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        // Hero entrance
-        gsap.fromTo(heroBgRef.current,
-          { opacity: 0 },
-          { opacity: 1, duration: 1.2, ease: "power2.out" }
+      gsap.fromTo(heroLeftTextRef.current,
+        { x: -40, opacity: 0 },
+        { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
+      );
+
+      gsap.fromTo(heroRightTextRef.current,
+        { x: 40, opacity: 0 },
+        { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
+      );
+
+      gsap.fromTo(heroLine1Ref.current,
+        { scaleX: 0, transformOrigin: "left center", opacity: 0 },
+        { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
+      );
+
+      gsap.fromTo(heroLine2Ref.current,
+        { scaleX: 0, transformOrigin: "right center", opacity: 0 },
+        { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
+      );
+
+      const heroChars = splitText("DRISHTI", heroTitleRef);
+      gsap.fromTo(heroChars,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.05, duration: 0.8, delay: 0.2, ease: "power3.out" }
+      );
+
+      // --- Particles in Hero ---
+      const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
+      heroParticles.forEach((particle) => {
+        gsap.fromTo(particle,
+          { opacity: 0, scale: 0, y: 50 },
+          { opacity: Math.random() * 0.7 + 0.2, scale: 1, y: 0, duration: Math.random() * 1.5 + 0.5, delay: Math.random() * 1.5 + 0.5, ease: "back.out(2)" }
         );
-
-        gsap.fromTo(heroLeftTextRef.current,
-          { x: -40, opacity: 0 },
-          { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
-        );
-
-        gsap.fromTo(heroRightTextRef.current,
-          { x: 40, opacity: 0 },
-          { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
-        );
-
-        gsap.fromTo(heroLine1Ref.current,
-          { scaleX: 0, transformOrigin: "left center", opacity: 0 },
-          { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
-        );
-
-        gsap.fromTo(heroLine2Ref.current,
-          { scaleX: 0, transformOrigin: "right center", opacity: 0 },
-          { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
-        );
-
-        const heroChars = splitText("DRISHTI", heroTitleRef);
-        gsap.fromTo(heroChars,
-          { y: 50, opacity: 0 },
-          { y: 0, opacity: 1, stagger: 0.05, duration: 0.8, delay: 0.2, ease: "power3.out" }
-        );
-
-        // --- Particles in Hero ---
-        const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
-        heroParticles.forEach((particle) => {
-          gsap.fromTo(particle,
-            { opacity: 0, scale: 0, y: 50 },
-            { opacity: Math.random() * 0.7 + 0.2, scale: 1, y: 0, duration: Math.random() * 1.5 + 0.5, delay: Math.random() * 1.5 + 0.5, ease: "back.out(2)" }
-          );
-          gsap.to(particle, {
-            y: `${(Math.random() - 0.5) * 250}`,
-            x: `${(Math.random() - 0.5) * 150}`,
-            duration: Math.random() * 8 + 8,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-          });
+        gsap.to(particle, {
+          y: `${(Math.random() - 0.5) * 250}`,
+          x: `${(Math.random() - 0.5) * 150}`,
+          duration: Math.random() * 8 + 8,
+          repeat: -1,
+          yoyo: true,
+          ease: "sine.inOut",
         });
-
-        // --- Fast Upward Text & Particle Parallax on Scroll ---
-        const heroSection = heroSectionRef.current;
-        if (heroSection) {
-          // DRISHTI title moves up fast on scroll
-          gsap.to(heroTitleRef.current, {
-            y: -260,
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-
-          // Left text ("Fest unlike any other") and line move up fast on scroll
-          gsap.to([heroLeftTextRef.current, heroLine1Ref.current], {
-            y: -220,
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-
-          // Right text ("Rewind and rejoice") and line move up fast on scroll
-          gsap.to([heroRightTextRef.current, heroLine2Ref.current], {
-            y: -220,
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-
-          // Particles float up on scroll
-          gsap.to(heroParticlesRef.current, {
-            yPercent: -50,
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "bottom top",
-              scrub: true,
-            },
-          });
-        }
-
-
-
-        // Featured Events
-        gsap.fromTo(featuredHeadingRef.current,
-          { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
-          {
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, duration: 1.2, ease: "power4.inOut",
-            scrollTrigger: { trigger: featuredHeadingRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(featuredParagraphRef.current,
-          { y: 40, opacity: 0, scale: 0.95 },
-          {
-            y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
-            scrollTrigger: { trigger: featuredParagraphRef.current, start: "top 90%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        featuredCardsRef.current.forEach((el, i) => {
-          if (!el) return;
-          gsap.fromTo(el,
-            { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
-            {
-              y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
-              scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
-              delay: i * 0.15,
-            }
-          );
-        });
-
-
-        // Gallery
-        galleryImagesRef.current.forEach((el, i) => {
-          if (!el) return;
-          const directions = [
-            { x: -300, y: 150, rotation: -20, scale: 0.5 },
-            { x: 300, y: -120, rotation: 15, scale: 0.6 },
-            { x: -250, y: -180, rotation: -12, scale: 0.55 },
-            { x: 280, y: 120, rotation: 18, scale: 0.65 },
-            { x: -200, y: 200, rotation: -8, scale: 0.5 },
-          ];
-          const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
-
-          gsap.fromTo(el,
-            { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
-            {
-              x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
-              scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
-              delay: i * 0.15,
-            }
-          );
-        });
-
-        // CTA
-        gsap.fromTo(ctaDrishtiRef.current,
-          { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
-          {
-            scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
-            scrollTrigger: { trigger: ctaDrishtiRef.current, start: "top 90%", end: "top 50%", scrub: 1 }
-          }
-        );
-
-        gsap.fromTo(ctaTitle1Ref.current,
-          { x: -120, opacity: 0, skewX: 25 },
-          {
-            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-            scrollTrigger: { trigger: ctaTitle1Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(ctaTitle2Ref.current,
-          { x: 120, opacity: 0, skewX: -25 },
-          {
-            x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
-            scrollTrigger: { trigger: ctaTitle2Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(ctaBorderRef.current,
-          { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
-          {
-            scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
-            scrollTrigger: { trigger: ctaBorderRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(ctaButtonRef.current,
-          { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
-          {
-            y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
-            scrollTrigger: { trigger: ctaButtonRef.current, start: "top 95%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
-        ctaParticles.forEach((particle) => {
-          gsap.fromTo(particle,
-            { opacity: 0, scale: 0, y: 50 },
-            { opacity: Math.random() * 0.5 + 0.3, scale: 1, y: 0, duration: Math.random() * 2 + 1, delay: Math.random() * 2, ease: "power2.out" }
-          );
-        });
-
       });
-    }, 100);
+
+      // --- Fast Upward Text & Particle Parallax on Scroll ---
+      const heroSection = heroSectionRef.current;
+      if (heroSection) {
+        // DRISHTI title moves up fast on scroll
+        gsap.to(heroTitleRef.current, {
+          y: -260,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroSection,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Left text ("Fest unlike any other") and line move up fast on scroll
+        gsap.to([heroLeftTextRef.current, heroLine1Ref.current], {
+          y: -220,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroSection,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Right text ("Rewind and rejoice") and line move up fast on scroll
+        gsap.to([heroRightTextRef.current, heroLine2Ref.current], {
+          y: -220,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroSection,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+
+        // Particles float up on scroll
+        gsap.to(heroParticlesRef.current, {
+          yPercent: -50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: heroSection,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      }
+
+      // Aftermovie Pin Sequence
+      const aftermovieTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: aftermovieSectionRef.current,
+          start: "top top",
+          end: "+=1500",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+        }
+      });
+
+      gsap.set(aftermovieContainerRef.current, { y: "100vh" });
+
+      aftermovieTl
+        .to(aftermovieContainerRef.current, {
+          y: "0vh",
+          ease: "power2.out",
+          duration: 1
+        })
+        .to(aftermovieContainerRef.current, {
+          y: "0vh",
+          duration: 1.5,
+          ease: "none"
+        });
+
+      // Featured Events
+      gsap.fromTo(featuredHeadingRef.current,
+        { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)", opacity: 0 },
+        {
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", opacity: 1, duration: 1.2, ease: "power4.inOut",
+          scrollTrigger: { trigger: featuredHeadingRef.current, start: "top 85%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      gsap.fromTo(featuredParagraphRef.current,
+        { y: 40, opacity: 0, scale: 0.95 },
+        {
+          y: 0, opacity: 1, scale: 1, duration: 0.8, delay: 0.3, ease: "power3.out",
+          scrollTrigger: { trigger: featuredParagraphRef.current, start: "top 90%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      featuredCardsRef.current.forEach((el, i) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          { y: 150, opacity: 0, rotateY: 45, scale: 0.8 },
+          {
+            y: 0, opacity: 1, rotateY: 0, scale: 1, duration: 1, ease: "power4.out",
+            scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
+            delay: i * 0.15,
+          }
+        );
+      });
+
+      // Gallery
+      galleryImagesRef.current.forEach((el, i) => {
+        if (!el) return;
+        const directions = [
+          { x: -300, y: 150, rotation: -20, scale: 0.5 },
+          { x: 300, y: -120, rotation: 15, scale: 0.6 },
+          { x: -250, y: -180, rotation: -12, scale: 0.55 },
+          { x: 280, y: 120, rotation: 18, scale: 0.65 },
+          { x: -200, y: 200, rotation: -8, scale: 0.5 },
+        ];
+        const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
+
+        gsap.fromTo(el,
+          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
+          {
+            x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
+            scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
+            delay: i * 0.15,
+          }
+        );
+      });
+
+      // CTA
+      gsap.fromTo(ctaDrishtiRef.current,
+        { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
+        {
+          scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
+          scrollTrigger: { trigger: ctaDrishtiRef.current, start: "top 90%", end: "top 50%", scrub: 1 }
+        }
+      );
+
+      gsap.fromTo(ctaTitle1Ref.current,
+        { x: -120, opacity: 0, skewX: 25 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
+          scrollTrigger: { trigger: ctaTitle1Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      gsap.fromTo(ctaTitle2Ref.current,
+        { x: 120, opacity: 0, skewX: -25 },
+        {
+          x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
+          scrollTrigger: { trigger: ctaTitle2Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      gsap.fromTo(ctaBorderRef.current,
+        { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
+        {
+          scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
+          scrollTrigger: { trigger: ctaBorderRef.current, start: "top 85%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      gsap.fromTo(ctaButtonRef.current,
+        { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
+        {
+          y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
+          scrollTrigger: { trigger: ctaButtonRef.current, start: "top 95%", toggleActions: "play none none reverse" }
+        }
+      );
+
+      const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
+      ctaParticles.forEach((particle) => {
+        gsap.fromTo(particle,
+          { opacity: 0, scale: 0, y: 50 },
+          { opacity: Math.random() * 0.5 + 0.3, scale: 1, y: 0, duration: Math.random() * 2 + 1, delay: Math.random() * 2, ease: "power2.out" }
+        );
+      });
+
+      // Synchronize all triggers in DOM order
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    });
+
+    const refreshRaf = requestAnimationFrame(() => {
+      ScrollTrigger.sort();
+      ScrollTrigger.refresh();
+    });
 
     return () => {
-      clearTimeout(timer);
+      cancelAnimationFrame(refreshRaf);
       ctx?.revert();
     };
   }, []);
@@ -819,8 +845,8 @@ function Home() {
           }}
         />
 
-        <div className="relative w-[90%] md:w-[80%] max-w-[1100px] flex flex-col items-center justify-center px-[clamp(10px,2vw,30px)] z-10">
-          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 overflow-hidden rounded-none p-[1px] md:p-[2px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)]">
+        <div className="relative w-[92%] md:w-[84%] lg:w-[76%] max-w-[1020px] flex flex-col items-center justify-center px-[clamp(10px,2vw,24px)] z-10">
+          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] overflow-hidden rounded-none p-[1px] md:p-[2px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)]">
             <div className="relative w-full h-full flex flex-col justify-end bg-black rounded-none overflow-hidden">
               <video
                 className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
@@ -831,23 +857,23 @@ function Home() {
                 playsInline
                 aria-label="Drishti '24 aftermovie"
               />
-              <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,2vw,24px)] pb-[clamp(10px,2vw,24px)] px-[clamp(16px,3vw,48px)] pointer-events-none">
+              <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,1.8vw,22px)] pb-[clamp(10px,1.8vw,22px)] px-[clamp(16px,3vw,44px)] pointer-events-none">
                 <div className="flex items-center justify-between">
                   <p
                     ref={aftermovieTitleLeftRef}
-                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0"
+                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(30px,4.8vw,60px)] leading-[normal] text-white m-0"
                   >
                     DRISHTI &lsquo;24
                   </p>
                   <img
                     ref={aftermovieLogoRef}
-                    className="pointer-events-none h-[clamp(32px,4vw,45px)] w-auto object-cover absolute left-1/2 -translate-x-1/2"
+                    className="pointer-events-none h-[clamp(30px,3.8vw,46px)] w-auto object-cover absolute left-1/2 -translate-x-1/2"
                     alt="Drishti"
                     src={aftermovieLogo}
                   />
                   <p
                     ref={aftermovieTitleRightRef}
-                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0"
+                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(30px,4.8vw,60px)] leading-[normal] text-white m-0"
                   >
                     AFTERMOVIE
                   </p>
@@ -859,7 +885,7 @@ function Home() {
       </section>
 
       {/* ============ PRO SHOWS ============ */}
-      <section id="proshows" className="relative w-full bg-black">
+      <section id="proshows" className="relative w-full bg-black overflow-hidden">
         <ProShows embedded={true} />
       </section>
 
