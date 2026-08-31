@@ -1,8 +1,8 @@
 export default function DrishTees() {
   return (
     <section className="relative w-full overflow-visible py-10 sm:py-12 lg:py-16 xl:py-20">
-      <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10">
-        <div className="relative mt-4 grid items-end gap-4 lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
+      <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10 overflow-visible">
+        <div className="relative mt-4 grid items-end gap-4 overflow-visible lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
             <img
               src="/home/tshirt-base.png"
@@ -29,9 +29,9 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute right-0 z-0 h-[150%] w-[110%] max-w-[none] object-cover object-right opacity-95"
+              className="pointer-events-none absolute right-0 z-0 h-[185%] w-[110%] max-w-[none] object-cover object-right opacity-95"
               style={{ 
-                top: '-15%',
+                top: '-25%',
                 transform: 'scaleX(1)',
                 maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
                 WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)'
