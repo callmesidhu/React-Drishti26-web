@@ -27,6 +27,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
 
   const isHome = location.pathname === '/' || location.pathname === '/home' || activeSection?.toLowerCase() === 'home'
   const isBlue = theme === 'blue' || activeSection?.toLowerCase() === 'daksha' || location.pathname.startsWith('/daksha')
+  const logoSrc = isBlue ? '/daksha/daksha-frame.png' : '/daksha/drishti-logo.png'
 
   // Automatically close menu when location changes
   useEffect(() => {
@@ -218,11 +219,11 @@ function Navbar({ activeSection, theme = 'gold' }) {
         <Link to="/" onClick={handleLinkClick} className="flex items-center gap-2">
           <img
             ref={logoRef}
-            className={`block h-10 w-auto transition-all duration-300 ${
+            className={`block h-12 w-auto transition-all duration-300 ${
               isBlue ? 'filter hue-rotate-[185deg] saturate-[180%] brightness-110 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]' : ''
             }`}
-            src="/daksha/drishti-logo.png"
-            alt="Drishti logo"
+            src={logoSrc}
+            alt={isBlue ? 'Daksha logo' : 'Drishti logo'}
           />
         </Link>
 
