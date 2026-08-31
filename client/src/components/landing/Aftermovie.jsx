@@ -14,41 +14,48 @@ export default function Aftermovie() {
   const aftermovieTitleRightRef = useRef(null);
   const aftermovieLogoRef = useRef(null);
   const aftermovieGridRef = useRef(null);
+  const aftermovieVideoRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Aftermovie Pin Sequence
+      gsap.set(aftermovieContainerRef.current, { y: "18vh", opacity: 0 });
+      gsap.set(aftermovieVideoRef.current, { opacity: 0, scale: 1.08 });
+
       const aftermovieTl = gsap.timeline({
         scrollTrigger: {
           trigger: aftermovieSectionRef.current,
-          start: "top top",
-          end: "+=1500",
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
+          start: "top 78%",
+          end: "bottom top",
+          scrub: 0.8,
         }
       });
-
-      gsap.set(aftermovieContainerRef.current, { y: "100vh" });
 
       aftermovieTl
         .to(aftermovieContainerRef.current, {
           y: "0vh",
+          opacity: 1,
           ease: "power2.out",
-          duration: 1
+          duration: 0.7
         })
+        .to(aftermovieVideoRef.current, {
+          opacity: 1,
+          scale: 1,
+          duration: 0.7,
+          ease: "power2.out"
+        }, 0)
         .to(aftermovieContainerRef.current, {
-          y: "0vh",
-          duration: 1.5,
-          ease: "none"
-        });
+          y: "-10vh",
+          opacity: 0.2,
+          duration: 0.9,
+          ease: "power2.inOut"
+        }, ">=0.7");
     });
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={aftermovieSectionRef} className="relative h-[100svh] min-h-[600px] w-full bg-black flex items-center justify-center overflow-hidden">
+    <section ref={aftermovieSectionRef} className="relative h-[130svh] min-h-[700px] w-full bg-black flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <img 
         ref={aftermovieGridRef}
@@ -66,7 +73,8 @@ export default function Aftermovie() {
         <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] overflow-hidden rounded-none p-[1px] md:p-[2px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(212,175,55,1)_92%)]">
           <div className="relative w-full h-full flex flex-col justify-end bg-black rounded-none overflow-hidden">
             <video
-              className="absolute left-0 top-0 h-full w-full object-cover opacity-70 scale-110"
+              ref={aftermovieVideoRef}
+              className="absolute left-0 top-0 h-full w-full object-cover opacity-0 scale-110"
               src={aftermovieVideo}
               autoPlay
               muted
