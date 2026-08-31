@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const aftermovieVideo = "/home/aftermovie.mp4";
+const aftermovieVideo = "/home/aftermovie.webm";
 const aftermovieLogo = "/home/aftermovie-logo.png";
 
 export default function Aftermovie() {
@@ -52,7 +52,7 @@ export default function Aftermovie() {
       {/* Background Image */}
       <img 
         ref={aftermovieGridRef}
-        src="/home/damu.png"
+        src="/home/damu.webp"
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover pointer-events-none opacity-50"

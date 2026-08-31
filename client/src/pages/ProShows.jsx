@@ -10,8 +10,8 @@ import { applyLetterGradient } from '../utils/letterGradient.js'
 gsap.registerPlugin(ScrollTrigger)
 
 // Imports for desktop landscape grid and mobile portrait version
-import ProShowGrid from '/proshow/proshowgrid.jpeg'
-import ProShowMobile from '/proshow/proshow.png'
+import ProShowGrid from '/proshow/proshowgrid.webp'
+import ProShowMobile from '/proshow/proshow.webp'
 
 const artistName = 'Shaan Rahman'
 

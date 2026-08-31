@@ -7,7 +7,7 @@ export default function DrishTees() {
         </h2>
         <video
           className="w-full max-w-[900px] self-center rounded-xl border border-white/15 object-cover shadow-[0_0_30px_rgba(212,175,55,0.2)]"
-          src="/home/drishtee.mp4"
+          src="/home/drishtee.webm"
           autoPlay
           muted
           loop
