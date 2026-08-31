@@ -29,8 +29,9 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 z-0 h-[100%] w-[100%] max-w-[none] object-cover object-right opacity-95"
+              className="pointer-events-none absolute right-0 z-0 h-[140%] w-[100%] max-w-[none] object-cover object-right opacity-95"
               style={{ 
+                top: '-10%',
                 transform: 'scaleX(0.995)',
                 maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
                 WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)'
