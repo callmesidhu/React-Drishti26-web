@@ -227,10 +227,10 @@ function Competitions({ embedded = false }) {
             className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-transparent min-h-[330px] md:min-h-0"
           >
             {/* Mobile Luminous Corner Reticles */}
-            <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -top-1.5 -right-1.5 h-4 w-4 border-t-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
+            <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -top-1.5 -right-1.5 h-4 w-4 border-t-2 border-r-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#D4AF37]" />
 
             {/* Mobile Event Tag & Title */}
             <div className="flex flex-col items-center md:items-start w-full">
@@ -258,7 +258,7 @@ function Competitions({ embedded = false }) {
                 ref={registerBtnRef}
                 type="button"
                 onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#D4AF37] px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
                 style={{ borderRadius: '50px' }}
               >
                 View Details
@@ -289,7 +289,7 @@ function Competitions({ embedded = false }) {
               className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === 0
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)]'
               }`}
               aria-label="Previous competition"
             >
@@ -304,7 +304,7 @@ function Competitions({ embedded = false }) {
                   onClick={() => setActiveIndex(i)}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     i === activeIndex
-                      ? 'w-8 bg-gold shadow-[0_0_12px_#e19d00]'
+                      ? 'w-8 bg-gold shadow-[0_0_12px_#D4AF37]'
                       : 'w-2 bg-white/20 hover:bg-white/40'
                   }`}
                   aria-label={`Go to competition ${i + 1}`}
@@ -319,7 +319,7 @@ function Competitions({ embedded = false }) {
               className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === competitions.length - 1
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)]'
               }`}
               aria-label="Next competition"
             >

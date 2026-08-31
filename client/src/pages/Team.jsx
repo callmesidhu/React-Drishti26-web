@@ -243,7 +243,7 @@ function Team({ embedded = false }) {
                 }}
                 className={`relative z-10 cursor-pointer rounded-full px-3.5 sm:px-7 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-[1.5px] sm:tracking-[2.5px] transition-all duration-300 ${
                   isSelected
-                    ? 'bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] text-black shadow-[0_2px_12px_rgba(225,157,0,0.35)]'
+                    ? 'bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] text-black shadow-[0_2px_12px_rgba(212,175,55,0.35)]'
                     : 'text-gold/75 hover:text-gold'
                 }`}
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
@@ -286,7 +286,7 @@ function Team({ embedded = false }) {
                 <div
                   className={`card-inner relative flex flex-col justify-between overflow-hidden rounded-[20px] transition-all duration-300 ${
                     isCenter
-                      ? 'bg-[#D6D9DE] border border-white/40 shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_50px_rgba(225,157,0,0.25)]'
+                      ? 'bg-[#D6D9DE] border border-white/40 shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_50px_rgba(212,175,55,0.25)]'
                       : 'bg-[#D6D9DE] border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.7)]'
                   }`}
                   style={{

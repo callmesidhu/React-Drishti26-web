@@ -97,7 +97,7 @@ function EventDetailsModal({ event, onClose }) {
         className={`fixed top-4 right-4 sm:top-6 sm:right-6 z-[110] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border bg-black/80 transition-all duration-300 hover:scale-110 hover:text-black cursor-pointer ${
           isBlue
             ? 'border-sky-400/40 text-sky-400 hover:border-sky-400 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)]'
-            : 'border-gold/40 text-gold hover:border-gold hover:bg-gold hover:shadow-[0_0_20px_rgba(225,157,0,0.6)]'
+            : 'border-gold/40 text-gold hover:border-gold hover:bg-gold hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]'
         }`}
       >
         <svg
@@ -188,7 +188,7 @@ function EventDetailsModal({ event, onClose }) {
                     <div key={idx} className="flex items-start gap-3">
                       <span
                         className={`mt-1.5 block h-1.5 w-1.5 shrink-0 rotate-45 ${
-                          isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#e19d00]'
+                          isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#D4AF37]'
                         }`}
                       />
                       <span className="text-xs leading-relaxed md:text-sm text-white/85">
@@ -218,7 +218,7 @@ function EventDetailsModal({ event, onClose }) {
                 className={`inline-block rounded-none border bg-transparent px-10 py-3.5 text-xs font-bold uppercase tracking-[4px] transition-all duration-300 hover:text-black ${
                   isBlue
                     ? 'border-sky-400 text-sky-400 hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]'
-                    : 'border-gold text-gold hover:bg-gold hover:shadow-[0_0_30px_rgba(225,157,0,0.6)]'
+                    : 'border-gold text-gold hover:bg-gold hover:shadow-[0_0_30px_rgba(212,175,55,0.6)]'
                 }`}
               >
                 REGISTER
@@ -231,21 +231,21 @@ function EventDetailsModal({ event, onClose }) {
             <div className="relative aspect-[4/5] w-full max-w-[340px] p-2">
               {/* Luminous Corner Brackets */}
               <span className={`pointer-events-none absolute -top-1.5 -left-1.5 h-6 w-6 border-t-2 border-l-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -top-1.5 -right-1.5 h-6 w-6 border-t-2 border-r-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -bottom-1.5 -left-1.5 h-6 w-6 border-b-2 border-l-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -bottom-1.5 -right-1.5 h-6 w-6 border-b-2 border-r-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
 
               {/* Poster Box */}
               <div className={`relative h-full w-full overflow-hidden border bg-black/60 ${
-                isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 shadow-[0_0_50px_rgba(225,157,0,0.25)]'
+                isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 shadow-[0_0_50px_rgba(212,175,55,0.25)]'
               }`}>
                 <img
                   ref={posterRef}

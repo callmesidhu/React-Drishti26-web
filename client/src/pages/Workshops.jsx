@@ -263,10 +263,10 @@ function Workshops() {
       dotsRef.current.forEach((dot, i) => {
         if (!dot) return
         if (i === newIndex) {
-          dot.classList.add('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(225,157,0,0.6)]')
+          dot.classList.add('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(212,175,55,0.6)]')
           dot.classList.remove('w-3', 'bg-gold/30')
         } else {
-          dot.classList.remove('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(225,157,0,0.6)]')
+          dot.classList.remove('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(212,175,55,0.6)]')
           dot.classList.add('w-3', 'bg-gold/30')
         }
       })
@@ -312,7 +312,7 @@ function Workshops() {
                 ref={btnRef}
                 type="button"
                 onClick={() => routerNavigate(`/workshops/${active.slug}`)}
-                className="inline-flex items-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-2.5 md:px-10 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#D4AF37] px-7 py-2.5 md:px-10 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
               >
                 View Details
               </button>
@@ -326,7 +326,7 @@ function Workshops() {
                   onClick={() => transitionTo(i)}
                   className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
                     i === 0
-                      ? 'w-10 bg-gold shadow-[0_0_12px_rgba(225,157,0,0.6)]'
+                      ? 'w-10 bg-gold shadow-[0_0_12px_rgba(212,175,55,0.6)]'
                       : 'w-3 bg-gold/30 hover:bg-gold/60'
                   }`}
                   aria-label={`Go to workshop ${i + 1}`}

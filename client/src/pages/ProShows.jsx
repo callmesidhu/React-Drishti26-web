@@ -211,7 +211,7 @@ function ProShowsPage({ embedded = false }) {
           <h1
             ref={h1Ref}
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+            className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(212,175,55,0.35)]"
           >
             Pro Show
           </h1>
@@ -223,7 +223,7 @@ function ProShowsPage({ embedded = false }) {
           {/* Ambient Glow */}
           <div
             ref={glowRef}
-            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl"
+            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl"
           />
 
           {/* Ground Shadow */}
@@ -238,7 +238,7 @@ function ProShowsPage({ embedded = false }) {
               <div
                 key={i}
                 ref={(el) => { particlesRef.current[i] = el }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00]"
+                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#D4AF37]"
               />
             ))}
           </div>
@@ -303,7 +303,7 @@ function ProShowsPage({ embedded = false }) {
         >
           <h2
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
+            className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]"
           >
             {artistName}
           </h2>
@@ -326,7 +326,7 @@ function ProShowsPage({ embedded = false }) {
                 key={i}
                 className={`overflow-hidden rounded-xl border backdrop-blur-md transition-all duration-400 ease-out ${
                   isOpen
-                    ? 'border-[#FFDB86]/60 bg-black/75 shadow-[0_4px_25px_rgba(225,157,0,0.15)]'
+                    ? 'border-[#FFDB86]/60 bg-black/75 shadow-[0_4px_25px_rgba(212,175,55,0.15)]'
                     : 'border-gold/20 bg-black/40 hover:border-gold/40 hover:bg-black/55'
                 }`}
               >

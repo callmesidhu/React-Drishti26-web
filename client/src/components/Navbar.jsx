@@ -173,7 +173,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
 
   // Animate Hamburger Icon into X and back
   useEffect(() => {
-    const barColor = isBlue ? '#38bdf8' : '#e19d00'
+    const barColor = isBlue ? '#38bdf8' : '#D4AF37'
     if (barsRef.current[0] && barsRef.current[1] && barsRef.current[2]) {
       gsap.killTweensOf(barsRef.current)
       if (menuOpen) {
@@ -236,7 +236,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
                 isActive(link)
                   ? isBlue
                     ? 'text-sky-400 font-semibold drop-shadow-[0_0_8px_rgba(56,189,248,0.6)]'
-                    : 'text-gold font-semibold drop-shadow-[0_0_8px_rgba(225,157,0,0.6)]'
+                    : 'text-gold font-semibold drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]'
                   : isBlue
                     ? 'text-white/70 hover:text-sky-300'
                     : 'text-white/70 hover:text-white'
@@ -248,7 +248,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
                   className={`absolute -bottom-1 left-0 h-[1px] w-full ${
                     isBlue
                       ? 'bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]'
-                      : 'bg-gold shadow-[0_0_6px_rgba(225,157,0,0.6)]'
+                      : 'bg-gold shadow-[0_0_6px_rgba(212,175,55,0.6)]'
                   }`}
                 />
               )}
@@ -298,7 +298,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
                 isActive(link)
                   ? isBlue
                     ? 'text-sky-400 font-semibold drop-shadow-[0_0_12px_rgba(56,189,248,0.6)] scale-105'
-                    : 'text-gold font-semibold drop-shadow-[0_0_12px_rgba(225,157,0,0.6)] scale-105'
+                    : 'text-gold font-semibold drop-shadow-[0_0_12px_rgba(212,175,55,0.6)] scale-105'
                   : 'text-white/70 hover:text-white hover:scale-105'
               }`}
               style={{ fontFamily: "'Space Grotesk', sans-serif" }}
