@@ -26,10 +26,10 @@ function Footer() {
   }, [])
 
   const socials = [
-    { name: 'YouTube', href: 'https://youtube.com', label: 'YouTube' },
-    { name: 'LinkedIn', href: 'https://linkedin.com', label: 'LinkedIn' },
-    { name: 'Instagram', href: 'https://instagram.com', label: 'Instagram' },
-  ]
+    { name: 'YouTube', href: 'https://www.youtube.com/@DrishtiCET', label: 'YouTube' },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/company/drishticet', label: 'LinkedIn' },
+    { name: 'Instagram', href: 'https://www.instagram.com/drishticet', label: 'Instagram' },    
+    { name: 'Facebook', href: 'https://www.facebook.com/drishticet/', label: 'Facebook' },  ]
 
   const SocialIcon = ({ name }) => {
     const icons = {
@@ -46,6 +46,11 @@ function Footer() {
       Instagram: (
         <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
           <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5A3.95 3.95 0 0 0 7.75 20.2h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5A3.95 3.95 0 0 0 16.25 3.8h-8.5Zm8.97 2.45a1.12 1.12 0 1 1 0 2.24 1.12 1.12 0 0 1 0-2.24ZM12 6.5A5.5 5.5 0 1 1 12 17.5 5.5 5.5 0 0 1 12 6.5Zm0 1.8A3.7 3.7 0 1 0 12 16.7a3.7 3.7 0 0 0 0-7.4Z" />
+        </svg>
+      ),
+      Facebook: (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+          <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V7.2c0-.9.3-1.6 1.7-1.6H16V2.7c-.3-.1-1.3-.2-2.5-.2-2.5 0-4.2 1.5-4.2 4.4V10.8H7v3.2h2.3v8h4.2Z" />
         </svg>
       ),
     }
