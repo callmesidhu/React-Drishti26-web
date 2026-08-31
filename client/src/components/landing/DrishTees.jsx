@@ -30,7 +30,11 @@ export default function DrishTees() {
               alt=""
               aria-hidden="true"
               className="pointer-events-none absolute inset-y-0 right-0 z-0 h-[100%] w-[100%] max-w-[none] object-cover object-right opacity-95"
-              style={{ transform: 'scaleX(0.995)' }}
+              style={{ 
+                transform: 'scaleX(0.995)',
+                maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)'
+              }}
             />
 
             <div className="relative z-10 flex w-full max-w-[560px] flex-col items-start justify-center px-2 text-left lg:px-0 lg:pr-10">
