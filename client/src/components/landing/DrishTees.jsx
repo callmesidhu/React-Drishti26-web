@@ -13,12 +13,13 @@ export default function DrishTees() {
               alt=""
               aria-hidden="true"
               className="absolute bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain"
+              style={{ animation: 'float-base 8s ease-in-out infinite' }}
             />
             <img
               src="/home/tshirt-front.png"
               alt="Drishti T-shirt"
               className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain"
-              style={{ transform: 'translateY(-80px)', animation: 'float 7s ease-in-out infinite' }}
+              style={{ transform: 'translateY(-80px)', animation: 'float-shirt 7s ease-in-out infinite' }}
             />
           </div>
 
@@ -44,8 +45,13 @@ export default function DrishTees() {
 }
 
 <style>{`
-  @keyframes float {
+  @keyframes float-shirt {
     0%, 100% { transform: translateY(-80px); }
-    50% { transform: translateY(-92px); }
+    50% { transform: translateY(-110px); }
+  }
+
+  @keyframes float-base {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
   }
 `}</style>
