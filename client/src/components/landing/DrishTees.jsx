@@ -9,13 +9,13 @@ export default function DrishTees() {
               alt=""
               aria-hidden="true"
               className="absolute bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain"
-              style={{ animation: 'float-base 8s ease-in-out infinite' }}
+              style={{ animation: 'float-base 7s ease-in-out infinite' }}
             />
             <img
               src="/home/tshirt-front.png"
               alt="Drishti T-shirt"
               className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain"
-              style={{ transform: 'translateY(-80px)', animation: 'float-shirt 7s ease-in-out infinite' }}
+              style={{ transform: 'translateY(-80px)', animation: 'float-shirt 6.5s ease-in-out infinite' }}
             />
           </div>
 
@@ -34,7 +34,9 @@ export default function DrishTees() {
               </h2>
 
               <p className="mt-4 max-w-[460px] text-[0.9rem] leading-relaxed text-[#f3e7c9]/90 sm:text-[1rem] lg:text-[1.08rem]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                The future is never built by wiping away what came before; it is a living palimpsest, layering fresh innovation directly over the blueprints of our history. Beneath every modern advancement lies the raw backbone of human effort—much like the skull and spine in our design, reminding us of the organic roots that anchor everything we create. In this world, nanobots act as microscopic problem-solvers, replacing the inorganic environment around us while keeping human spirit and touch completely intact. These micro-architects pull together, adapt to any situation, and build solutions in places standard hands just can’t reach.
+                <br /><br />
+                That dynamic is the exact heartbeat of our student-led community at CET. The nanobots are a mirror for us: individual students coming together to continuously assemble, solve, and rewrite the legacy of our campus day by day. We are the ones venturing into unexplored spaces to drive real change. It takes a sharp clarity—a true Drishti—to look past the surface and catch sight of these tiny engines of progress working like a momentary glitch in reality, revealing the precise mechanical craft that connects our past effort to our future.
               </p>
             </div>
           </div>
@@ -47,11 +49,11 @@ export default function DrishTees() {
 <style>{`
   @keyframes float-shirt {
     0%, 100% { transform: translateY(-80px); }
-    50% { transform: translateY(-110px); }
+    50% { transform: translateY(-100px); }
   }
 
   @keyframes float-base {
     0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
+    50% { transform: translateY(-10px); }
   }
 `}</style>
