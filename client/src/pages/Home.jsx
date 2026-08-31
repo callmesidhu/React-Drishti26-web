@@ -253,16 +253,79 @@ function Home() {
           { y: 0, opacity: 1, rotationX: 0, scale: 1, stagger: 0.1, duration: 1, delay: 0.6, ease: "back.out(2)" }
         );
 
-        gsap.to(heroBgRef.current, {
-          yPercent: 8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: heroBgRef.current?.closest('section'),
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          }
-        });
+        // --- Multi-layer Hero Parallax on Scroll ---
+        const heroSection = heroSectionRef.current;
+        if (heroSection) {
+          // 1. Background image moves down slowly with depth zoom and subtle dimming
+          gsap.to(heroBgRef.current, {
+            yPercent: 18,
+            scale: 1.12,
+            filter: "brightness(0.4) blur(3px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: 1,
+            },
+          });
+
+          // 2. Main title floats up with 3D perspective and fades
+          gsap.to(heroTitleRef.current, {
+            y: -140,
+            scale: 1.1,
+            opacity: 0,
+            filter: "blur(6px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "70% top",
+              scrub: 1,
+            },
+          });
+
+          // 3. Left tagline and line glide left & fade out
+          gsap.to([heroLeftTextRef.current, heroLine1Ref.current], {
+            x: -70,
+            opacity: 0,
+            filter: "blur(4px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "50% top",
+              scrub: 1,
+            },
+          });
+
+          // 4. Right tagline and line glide right & fade out
+          gsap.to([heroRightTextRef.current, heroLine2Ref.current], {
+            x: 70,
+            opacity: 0,
+            filter: "blur(4px)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "50% top",
+              scrub: 1,
+            },
+          });
+
+          // 5. Foreground particles rush upwards for dramatic depth
+          gsap.to(heroParticlesRef.current, {
+            yPercent: -45,
+            opacity: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "80% top",
+              scrub: 1,
+            },
+          });
+        }
 
         const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
         heroParticles.forEach((particle) => {
@@ -615,7 +678,7 @@ function Home() {
       >
         <img
           ref={heroBgRef}
-          className="absolute -inset-[10%] h-[120%] w-[120%] max-w-none object-cover opacity-0 pointer-events-none"
+          className="absolute -inset-[15%] h-[130%] w-[130%] max-w-none object-cover opacity-0 pointer-events-none"
           alt=""
           aria-hidden="true"
           src={heroBg}

@@ -60,7 +60,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
         if (!isHoveredRef.current && !menuOpen) {
           setVisible(false)
         }
-      }, 1500)
+      }, 3000)
     }
 
     const handleScrollActivity = () => {
