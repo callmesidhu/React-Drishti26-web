@@ -12,12 +12,13 @@ export default function DrishTees() {
               src="/home/tshirt-base.png"
               alt=""
               aria-hidden="true"
-              className="absolute bottom-0 left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain opacity-100"
+              className="absolute bottom-[-8px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain"
             />
             <img
               src="/home/tshirt-front.png"
               alt="Drishti T-shirt"
-              className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain drop-shadow-[0_16px_38px_rgba(0,0,0,0.82)]"
+              className="relative z-10 h-[78%] w-auto max-w-[520px] translate-y-[-18px] object-contain motion-safe:animate-[float_6s_ease-in-out_infinite]"
+              style={{ animation: 'float 6s ease-in-out infinite' }}
             />
           </div>
 
@@ -26,7 +27,7 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-[-15%] z-0 h-full w-[130%] max-w-[860px] object-cover object-left opacity-95"
+              className="pointer-events-none absolute inset-y-0 right-[-18%] z-0 h-full w-[128%] max-w-[900px] object-cover object-left opacity-95"
             />
 
             <div className="relative z-10 w-full max-w-[580px] px-2 text-center lg:px-0 lg:pr-10 lg:text-left">
@@ -40,3 +41,10 @@ export default function DrishTees() {
     </section>
   );
 }
+
+<style>{`
+  @keyframes float {
+    0%, 100% { transform: translateY(-18px); }
+    50% { transform: translateY(-28px); }
+  }
+`}</style>
