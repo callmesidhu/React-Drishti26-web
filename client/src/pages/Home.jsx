@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Navbar from "../components/Navbar";
@@ -12,7 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 const heroBg = "/home/drishti-take-1.png";
 const heroLine1 = "/home/line-1.svg";
 const heroLine2 = "/home/line-2.svg";
-const ideasVectorLine = "/home/ideas-vector-line.svg";
 const categoriesPhoto = "/home/categories-photo.png";
 const arrowDownRight = "/home/arrow-down-right.svg";
 const aftermovieVideo = "/home/aftermovie.mp4";
@@ -57,7 +56,7 @@ function Home() {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [carouselStep, setCarouselStep] = useState(412);
   const [activeModalEvent, setActiveModalEvent] = useState(null);
-  const [introDone, setIntroDone] = useState(false);
+  const [activeCoreValueIndex, setActiveCoreValueIndex] = useState(0);
 
   const categoryImageRef = useRef(null);
   const categoryListRef = useRef(null);
@@ -74,15 +73,17 @@ function Home() {
   const heroTitleRef = useRef(null);
   const heroParticlesRef = useRef(null);
   const heroSectionRef = useRef(null);
-  const introOverlayRef = useRef(null);
-  const introTitleRef = useRef(null);
   const ideasSectionRef = useRef(null);
+  const ideasContainerRef = useRef(null);
   const ideasEmblemWrapperRef = useRef(null);
-  const ideasVideoRef = useRef(null);
+  const ideasLineFillRef = useRef(null);
+  const ideasImageRef = useRef(null);
   const ideasTitleRef = useRef(null);
   const ideasParagraphRef = useRef(null);
+  const ideasRightTextRef = useRef(null);
   const coreValuesRef = useRef([]);
   const ideasVectorLineRef = useRef(null);
+  const mobileCoreWrapperRef = useRef(null);
   const categoryTitleRefs = useRef([]);
   const categoryBordersRef = useRef([]);
   const featuredHeadingRef = useRef(null);
@@ -223,110 +224,37 @@ function Home() {
       ctx = gsap.context(() => {
         // Hero entrance
         gsap.fromTo(heroBgRef.current,
-          { scale: 1.3, opacity: 0, rotation: 3, rotationY: 8, filter: "blur(20px)" },
-          { scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)", duration: 2.5, ease: "power4.out" }
+          { opacity: 0 },
+          { opacity: 1, duration: 1.2, ease: "power2.out" }
         );
 
         gsap.fromTo(heroLeftTextRef.current,
-          { x: -120, opacity: 0, skewX: 25, rotateY: 30 },
-          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+          { x: -40, opacity: 0 },
+          { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
         );
 
         gsap.fromTo(heroRightTextRef.current,
-          { x: 120, opacity: 0, skewX: -25, rotateY: -30 },
-          { x: 0, opacity: 0.6, skewX: 0, rotateY: 0, duration: 1.2, delay: 0.8, ease: "elastic.out(1, 0.5)" }
+          { x: 40, opacity: 0 },
+          { x: 0, opacity: 0.7, duration: 1, delay: 0.3, ease: "power3.out" }
         );
 
         gsap.fromTo(heroLine1Ref.current,
           { scaleX: 0, transformOrigin: "left center", opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+          { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
         );
 
         gsap.fromTo(heroLine2Ref.current,
           { scaleX: 0, transformOrigin: "right center", opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 1.5, delay: 1, ease: "elastic.out(1, 0.3)" }
+          { scaleX: 1, opacity: 0.6, duration: 1, delay: 0.5, ease: "power3.out" }
         );
 
         const heroChars = splitText("DRISHTI", heroTitleRef);
         gsap.fromTo(heroChars,
-          { y: 100, opacity: 0, rotationX: -120, scale: 0.5 },
-          { y: 0, opacity: 1, rotationX: 0, scale: 1, stagger: 0.1, duration: 1, delay: 0.6, ease: "back.out(2)" }
+          { y: 50, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.05, duration: 0.8, delay: 0.2, ease: "power3.out" }
         );
 
-        // --- Multi-layer Hero Parallax on Scroll ---
-        const heroSection = heroSectionRef.current;
-        if (heroSection) {
-          // 1. Background image moves down slowly with depth zoom and subtle dimming
-          gsap.to(heroBgRef.current, {
-            yPercent: 18,
-            scale: 1.12,
-            filter: "brightness(0.4) blur(3px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "bottom top",
-              scrub: 1,
-            },
-          });
-
-          // 2. Main title floats up with 3D perspective and fades
-          gsap.to(heroTitleRef.current, {
-            y: -140,
-            scale: 1.1,
-            opacity: 0,
-            filter: "blur(6px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "70% top",
-              scrub: 1,
-            },
-          });
-
-          // 3. Left tagline and line glide left & fade out
-          gsap.to([heroLeftTextRef.current, heroLine1Ref.current], {
-            x: -70,
-            opacity: 0,
-            filter: "blur(4px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "50% top",
-              scrub: 1,
-            },
-          });
-
-          // 4. Right tagline and line glide right & fade out
-          gsap.to([heroRightTextRef.current, heroLine2Ref.current], {
-            x: 70,
-            opacity: 0,
-            filter: "blur(4px)",
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "50% top",
-              scrub: 1,
-            },
-          });
-
-          // 5. Foreground particles rush upwards for dramatic depth
-          gsap.to(heroParticlesRef.current, {
-            yPercent: -45,
-            opacity: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: heroSection,
-              start: "top top",
-              end: "80% top",
-              scrub: 1,
-            },
-          });
-        }
-
+        // --- Particles in Hero ---
         const heroParticles = createParticles(heroParticlesRef.current, 40, ["#e19d00", "#ffffff", "#ffd700"]);
         heroParticles.forEach((particle) => {
           gsap.fromTo(particle,
@@ -342,6 +270,58 @@ function Home() {
             ease: "sine.inOut",
           });
         });
+
+        // --- Fast Upward Text & Particle Parallax on Scroll ---
+        const heroSection = heroSectionRef.current;
+        if (heroSection) {
+          // DRISHTI title moves up fast on scroll
+          gsap.to(heroTitleRef.current, {
+            y: -260,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          // Left text ("Fest unlike any other") and line move up fast on scroll
+          gsap.to([heroLeftTextRef.current, heroLine1Ref.current], {
+            y: -220,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          // Right text ("Rewind and rejoice") and line move up fast on scroll
+          gsap.to([heroRightTextRef.current, heroLine2Ref.current], {
+            y: -220,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+
+          // Particles float up on scroll
+          gsap.to(heroParticlesRef.current, {
+            yPercent: -50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
 
         // Event Categories
         categoryTitleRefs.current.forEach((el, i) => {
@@ -510,164 +490,173 @@ function Home() {
     };
   }, []);
 
-  // ---- Intro curtain: DRISHTI fades in on black, then crossfades into hero ----
-  // Deliberately simple and time-based (no ScrollTrigger, no dependency on
-  // anything else finishing first) — fires once on mount. Its fade-out
-  // overlaps the existing hero entrance above, which already starts
-  // fading the hero content in on its own 100ms-delayed timer, producing
-  // the crossfade without the two sequences needing to be tightly chained.
-  useEffect(() => {
-    if (!introTitleRef.current || !introOverlayRef.current) return undefined;
 
-    const timeline = gsap.timeline({
-      onComplete: () => setIntroDone(true),
+
+
+  const handleCoreValueClick = (index) => {
+    setActiveCoreValueIndex(index);
+    const section = ideasSectionRef.current;
+    if (!section) return;
+    const st = ScrollTrigger.getAll().find((s) => s.vars?.id === "ideas-scroll-trigger" || s.trigger === section);
+    if (st) {
+      const targetScroll = st.start + (st.end - st.start) * (index / (coreValues.length - 1));
+      if (window.lenis) {
+        window.lenis.scrollTo(targetScroll, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: targetScroll, behavior: "smooth" });
+      }
+    }
+  };
+
+  const handleEmblemMouseMove = (e) => {
+    if (!ideasEmblemWrapperRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    gsap.to(ideasEmblemWrapperRef.current, {
+      rotateY: x * 18,
+      rotateX: -y * 18,
+      duration: 0.5,
+      ease: "power2.out",
     });
+  };
 
-    timeline
-      .to(introTitleRef.current, { opacity: 1, duration: 0.7, ease: "power2.out" })
-      .to(introTitleRef.current, { opacity: 1, duration: 0.6 }) // hold
-      .to(introOverlayRef.current, { opacity: 0, duration: 0.8, ease: "power2.inOut" });
+  const handleEmblemMouseLeave = () => {
+    if (!ideasEmblemWrapperRef.current) return;
+    gsap.to(ideasEmblemWrapperRef.current, {
+      rotateY: 0,
+      rotateX: 0,
+      duration: 0.8,
+      ease: "power2.out",
+    });
+  };
 
-    return () => timeline.kill();
-  }, []);
-
-  // ---- Hero background: hover warp ----
-  // A CSS-transform-based tilt/scale that tracks the cursor, giving a
-  // "warping" feel without a real pixel-displacement shader. Uses
-  // gsap.quickTo, which is built specifically for smoothly interpolating
-  // high-frequency updates like mousemove without creating a new tween on
-  // every event.
+  // ---- IDEAS SECTION: Scroll-Driven Frame Rendering & Interactive Pin ----
   useEffect(() => {
-    const section = heroSectionRef.current;
-    const bg = heroBgRef.current;
-    if (!section || !bg) return undefined;
+    const section = ideasSectionRef.current;
+    const img = ideasImageRef.current;
+    if (!section || !img) return undefined;
 
-    section.style.perspective = "1000px";
+    // Preload images to avoid flickering during fast scrolling
+    const preloadedImages = [];
+    for (let i = 1; i <= 150; i++) {
+      const preload = new Image();
+      preload.src = `/3dlogo/ezgif-frame-${String(i).padStart(3, '0')}.jpg`;
+      preloadedImages.push(preload);
+    }
 
-    const setRotateX = gsap.quickTo(bg, "rotationX", { duration: 0.6, ease: "power3.out" });
-    const setRotateY = gsap.quickTo(bg, "rotationY", { duration: 0.6, ease: "power3.out" });
-    const setScale = gsap.quickTo(bg, "scale", { duration: 0.6, ease: "power3.out" });
+    let ctx = gsap.context(() => {
+      const lineFill = ideasLineFillRef.current;
+      const title = ideasTitleRef.current;
+      const paragraph = ideasParagraphRef.current;
+      const emblem = ideasEmblemWrapperRef.current;
+      const coreEls = coreValuesRef.current;
+      const rightText = ideasRightTextRef.current;
+      const vectorLine = ideasVectorLineRef.current;
+      const mobileCoreWrapper = mobileCoreWrapperRef.current;
 
-    const handleMouseMove = (event) => {
-      const rect = section.getBoundingClientRect();
-      const normalizedX = (event.clientX - rect.left) / rect.width - 0.5; // -0.5 -> 0.5
-      const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
-      setRotateX(normalizedY * -5);
-      setRotateY(normalizedX * 5);
-      setScale(1.04);
-    };
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          id: "ideas-scroll-trigger",
+          trigger: section,
+          start: "top top",
+          end: "+=180%",
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.5,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const p = self.progress;
+            
+            // Map progress to frame index 1 to 150
+            const frameIndex = Math.max(1, Math.min(150, Math.round(p * 149) + 1));
+            const frameStr = String(frameIndex).padStart(3, '0');
+            if (img) {
+              img.src = `/3dlogo/ezgif-frame-${frameStr}.jpg`;
+            }
 
-    const handleMouseLeave = () => {
-      setRotateX(0);
-      setRotateY(0);
-      setScale(1);
-    };
-
-    section.addEventListener("mousemove", handleMouseMove);
-    section.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      section.removeEventListener("mousemove", handleMouseMove);
-      section.removeEventListener("mouseleave", handleMouseLeave);
-    };
-  }, []);
-
-  // ---- IDEAS SECTION: video reveal + text sequence ----
-  // Non-scrub, deliberately: video.currentTime scrubbing on a compressed
-  // MP4 has to decode forward from the nearest keyframe on every seek,
-  // which causes stutter — the same class of problem as tonight's canvas
-  // glitching. A plain "played once when scrolled into view" is far more
-  // reliable. Uses IntersectionObserver (no ScrollTrigger, no pinning) —
-  // fires once, then plays the video through, then reveals all the text
-  // in one chained sequence once the video ends.
-  useEffect(() => {
-    const trigger = ideasEmblemWrapperRef.current;
-    const video = ideasVideoRef.current;
-    if (!trigger || !video) return undefined;
-
-    let hasPlayed = false;
-
-    const playSequence = () => {
-      if (hasPlayed) return;
-      hasPlayed = true;
-
-      const revealText = () => {
-        gsap
-          .timeline()
-          .fromTo(
-            ideasTitleRef.current,
-            { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-            { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1, ease: "power4.inOut" },
-          )
-          .fromTo(
-            coreValuesRef.current,
-            { x: -60, opacity: 0, rotation: -10 },
-            { x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)" },
-            "<0.15",
-          )
-          .fromTo(
-            ideasVectorLineRef.current,
-            { scaleY: 0, transformOrigin: "top center", opacity: 0 },
-            { scaleY: 1, opacity: 1, duration: 0.8, ease: "power2.inOut" },
-            "<",
-          )
-          .fromTo(
-            ideasParagraphRef.current,
-            { y: 60, opacity: 0, skewY: 5 },
-            { y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out" },
-            "<0.2",
-          );
-      };
-
-      gsap.to(video, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-        onComplete: () => {
-          video.play().catch(() => {
-            // Autoplay can be blocked even when muted, in rare cases —
-            // fall back to revealing the text anyway rather than getting
-            // stuck waiting on a video that will never play.
-            revealText();
-          });
+            const idx = Math.min(coreValues.length - 1, Math.floor(p * coreValues.length));
+            setActiveCoreValueIndex(idx);
+          },
         },
       });
 
-      video.addEventListener("ended", revealText, { once: true });
+      // Emblem starts very large and slightly shifted down (to center it on desktop), scales and moves to its final position
+      tl.fromTo(
+        emblem,
+        { scale: 2.5, opacity: 1, y: window.innerWidth < 768 ? 0 : "10vh" },
+        { scale: 1, opacity: 1, y: 0, ease: "power2.inOut", duration: 0.35 },
+        0.46 // starts at ~frame 70
+      );
+
+      // Text elements start invisible and fade in slightly after scaling begins
+      tl.fromTo(
+        coreEls,
+        { x: -25, opacity: 0 },
+        { x: 0, opacity: 0.6, stagger: 0.04, duration: 0.25, ease: "power2.out" },
+        0.56
+      );
+
+      if (mobileCoreWrapper) {
+        tl.fromTo(
+          mobileCoreWrapper,
+          { y: -15, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.25, ease: "power2.out" },
+          0.56
+        );
+      }
+
+      if (rightText) {
+        tl.fromTo(
+          rightText,
+          { x: 25, opacity: 0 },
+          { x: 0, opacity: 0.4, duration: 0.25, ease: "power2.out" },
+          0.56
+        );
+      }
+
+      if (vectorLine) {
+        tl.fromTo(
+          vectorLine,
+          { opacity: 0 },
+          { opacity: 1, ease: "power2.out", duration: 0.25 },
+          0.56
+        );
+      }
+
+      tl.fromTo(
+        title,
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, ease: "power2.out", duration: 0.35 },
+        0.56
+      );
+
+      if (paragraph) {
+        tl.fromTo(
+          paragraph,
+          { opacity: 0, y: 15 },
+          { opacity: 0.75, y: 0, ease: "power2.out", duration: 0.35 },
+          0.56
+        );
+      }
+
+      if (lineFill) {
+        tl.fromTo(
+          lineFill,
+          { height: "0%" },
+          { height: "100%", ease: "none", duration: 0.44 },
+          0.56
+        );
+      }
+    }, section);
+
+    return () => {
+      ctx?.revert();
     };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting) {
-          playSequence();
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 },
-    );
-
-    observer.observe(trigger);
-
-    return () => observer.disconnect();
   }, []);
 
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
-      {/* ============ INTRO CURTAIN ============ */}
-      {!introDone && (
-        <div
-          ref={introOverlayRef}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
-        >
-          <span
-            ref={introTitleRef}
-            className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(48px,10vw,140px)] font-normal leading-[normal] tracking-[0] text-white opacity-0"
-          >
-            DRISHTI
-          </span>
-        </div>
-      )}
-
       <Navbar />
 
       {/* ============ HERO ============ */}
@@ -678,7 +667,7 @@ function Home() {
       >
         <img
           ref={heroBgRef}
-          className="absolute -inset-[15%] h-[130%] w-[130%] max-w-none object-cover opacity-0 pointer-events-none"
+          className="absolute inset-0 h-full w-full object-cover opacity-0 pointer-events-none"
           alt=""
           aria-hidden="true"
           src={heroBg}
@@ -691,119 +680,181 @@ function Home() {
           aria-hidden="true"
         />
 
+        {/* Floating particles */}
         <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
 
-        {/* Bottom-anchored content block: guarantees the title stays within
-           the viewport regardless of screen aspect ratio, instead of the
-           old vw-based absolute positioning that overshot on wide/short
-           laptop screens. */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-end pb-[clamp(60px,10vh,140px)]">
-          <div className="flex flex-wrap items-center justify-between gap-4 px-[clamp(20px,3vw,44px)] pb-[clamp(24px,4vh,48px)]">
-            <div className="flex items-center gap-4">
-              <div
-                ref={heroLeftTextRef}
-                className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 whitespace-nowrap"
-              >
-                FEST UNLIKE ANY OTHER
-              </div>
-              <img
-                ref={heroLine1Ref}
-                className="hidden md:block h-0.5 w-[clamp(120px,20vw,300px)]"
-                alt=""
-                aria-hidden="true"
-                src={heroLine1}
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <img
-                ref={heroLine2Ref}
-                className="hidden md:block h-0.5 w-[clamp(120px,20vw,300px)]"
-                alt=""
-                aria-hidden="true"
-                src={heroLine2}
-              />
-              <div
-                ref={heroRightTextRef}
-                className="text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 whitespace-nowrap"
-              >
-                REWIND AND REJOICE
-              </div>
-            </div>
+        {/* Left tagline & line */}
+        <div className="absolute left-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 flex flex-col items-start gap-2">
+          <div
+            ref={heroLeftTextRef}
+            className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"
+          >
+            FEST UNLIKE ANY OTHER
           </div>
-          <h1
-            ref={heroTitleRef}
-            id="drishti-title"
-            className="w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(56px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white"
-          >
-          </h1>
-        </div>
-      </section>
-
-      {/* ============ IDEAS DON'T ASK PERMISSION (SCRUBBED 360 ROTATION) ============ */}
-      <section
-        ref={ideasSectionRef}
-        className="relative min-h-screen py-20 w-full overflow-hidden bg-black flex flex-col md:flex-row items-center justify-center gap-10"
-        aria-labelledby="hero-title"
-      >
-        <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,71px)] relative flex flex-col items-center">
-          <aside
-            className="md:absolute md:left-[5%] md:top-0 flex md:flex-col items-center md:items-start gap-[26px] opacity-50 flex-wrap justify-center z-10 mb-10 md:mb-0"
-            aria-label="Core values"
-          >
-            <ul className="m-0 flex md:flex-col flex-row flex-wrap justify-center gap-[clamp(10px,1.8vw,26px)] p-0 list-none">
-              {coreValues.map((value, index) => (
-                <li
-                  ref={(el) => { coreValuesRef.current[index] = el }}
-                  className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(14px,1.5vw,22px)] font-normal leading-none tracking-[0] text-white opacity-0"
-                  key={value}
-                >
-                  {value}
-                </li>
-              ))}
-            </ul>
-          </aside>
-
           <img
-            ref={ideasVectorLineRef}
-            className="hidden md:block absolute left-[20%] top-0 h-[263px] w-0.5 z-10"
+            ref={heroLine1Ref}
+            className="hidden md:block h-0.5 w-[clamp(160px,22vw,320px)] opacity-0"
             alt=""
             aria-hidden="true"
-            src={ideasVectorLine}
+            src={heroLine1}
           />
+        </div>
 
-          <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
+        {/* Right tagline & line */}
+        <div className="absolute right-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 flex flex-col items-end gap-2">
+          <div
+            ref={heroRightTextRef}
+            className="text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"
+          >
+            REWIND AND REJOICE
+          </div>
+          <img
+            ref={heroLine2Ref}
+            className="hidden md:block h-0.5 w-[clamp(160px,22vw,320px)] opacity-0"
+            alt=""
+            aria-hidden="true"
+            src={heroLine2}
+          />
+        </div>
+
+        {/* Centered DRISHTI Title */}
+        <h1
+          ref={heroTitleRef}
+          id="drishti-title"
+          className="absolute bottom-6 md:bottom-10 left-0 w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,13vw,190px)] font-normal leading-none tracking-[0] text-white z-20"
+        >
+        </h1>
+      </section>
+
+      {/* ============ IDEAS DON'T ASK PERMISSION (PINNED SCROLL REVEAL) ============ */}
+      <section
+        ref={ideasSectionRef}
+        className="relative h-[100svh] min-h-[600px] max-h-[1080px] w-full overflow-hidden bg-black flex flex-col items-center justify-between py-6 md:py-10 z-20"
+        aria-labelledby="hero-title"
+      >
+        <div className="relative w-full max-w-[1440px] h-full flex flex-col justify-center md:justify-between items-center px-4 sm:px-8 md:px-12 z-10 gap-10 md:gap-0">
+          
+          {/* Top / Center Composition: Left Core Values, Center Emblem, Right Details */}
+          <div 
+            ref={ideasContainerRef}
+            className="w-full md:flex-1 flex flex-col md:flex-row items-center justify-center relative md:my-auto py-2 gap-10 md:gap-0"
+          >
+            {/* Left Column: Core Values & Glowing Progress Line (Desktop) */}
+            <div className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-[2%] lg:left-[5%] top-1/2 -translate-y-1/2 z-20">
+              <ul className="m-0 flex flex-col items-start gap-4 lg:gap-5 p-0 list-none" aria-label="Core values">
+                {coreValues.map((value, index) => {
+                  const isActive = activeCoreValueIndex === index;
+                  return (
+                    <li
+                      key={value}
+                      ref={(el) => { coreValuesRef.current[index] = el }}
+                      onClick={() => handleCoreValueClick(index)}
+                      className="group flex items-center gap-3 cursor-pointer transition-all duration-300 select-none"
+                    >
+                      {/* Glowing indicator pill */}
+                      <span
+                        className={`inline-block h-1.5 rounded-full transition-all duration-300 ${
+                          isActive
+                            ? "w-5 bg-[#FFDB86] shadow-[0_0_10px_#FFDB86]"
+                            : "w-1.5 bg-white/20 group-hover:bg-white/50"
+                        }`}
+                      />
+                      <span
+                        className={`font-['Space_Grotesk-Regular',Helvetica] text-[clamp(12px,1.2vw,17px)] font-medium tracking-[0.15em] transition-all duration-300 ${
+                          isActive
+                            ? "text-[#FFDB86] scale-105 drop-shadow-[0_0_12px_rgba(255,219,134,0.7)]"
+                            : "text-white/40 group-hover:text-white/75"
+                        }`}
+                      >
+                        {value}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              {/* Vertical Laser Divider Line */}
+              <div 
+                ref={ideasVectorLineRef}
+                className="h-[clamp(180px,26vh,260px)] w-[1.5px] bg-white/15 relative overflow-hidden rounded-full ml-2"
+              >
+                <div 
+                  ref={ideasLineFillRef}
+                  className="w-full bg-gradient-to-b from-[#B78000] via-[#FFDB86] to-[#E19D00] shadow-[0_0_8px_#FFDB86] rounded-full"
+                  style={{ height: "0%" }}
+                />
+              </div>
+            </div>
+
+            {/* Mobile Core Values Bar */}
+            <div ref={mobileCoreWrapperRef} className="flex md:hidden relative justify-center items-center gap-1.5 px-2 z-20 flex-wrap opacity-0">
+              {coreValues.map((value, index) => {
+                const isActive = activeCoreValueIndex === index;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => handleCoreValueClick(index)}
+                    className={`px-2.5 py-0.5 rounded-full text-[10px] tracking-wider transition-all duration-300 border ${
+                      isActive
+                        ? "bg-[#FFDB86]/15 border-[#FFDB86] text-[#FFDB86] shadow-[0_0_8px_rgba(255,219,134,0.4)]"
+                        : "bg-black/40 border-white/10 text-white/40"
+                    }`}
+                  >
+                    {value}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Center Emblem with Interactive Mouse Parallax */}
             <div
-              ref={ideasEmblemWrapperRef}
-              className="w-[clamp(360px,54vw,780px)] relative"
+              className="relative flex items-center justify-center [perspective:1000px]"
+              onMouseMove={handleEmblemMouseMove}
+              onMouseLeave={handleEmblemMouseLeave}
             >
-              <video
-                ref={ideasVideoRef}
-                className="w-full h-auto opacity-0"
-                src="/home/ideas-emblem-reveal.mp4"
-                muted
-                playsInline
-                preload="auto"
-              />
+              <div
+                ref={ideasEmblemWrapperRef}
+                className="relative w-[65vw] md:w-[clamp(280px,36vw,500px)] aspect-square flex items-center justify-center transition-transform duration-200 ease-out"
+              >
+                <img
+                  ref={ideasImageRef}
+                  className="w-full h-full object-contain pointer-events-none select-none mix-blend-screen opacity-100"
+                  src="/3dlogo/ezgif-frame-001.jpg"
+                  alt="Drishti Emblem"
+                />
+              </div>
+            </div>
+
+            {/* Right Column: Festival Emblem Badge / Coordinates (Desktop Balance) */}
+            <div 
+              ref={ideasRightTextRef}
+              className="hidden lg:flex flex-col items-end gap-1.5 absolute right-[3%] lg:right-[6%] top-1/2 -translate-y-1/2 z-20 pointer-events-none opacity-40 font-mono text-[11px] tracking-widest text-white/70"
+            >
+              <span className="text-[#FFDB86]/80 font-bold">DRISHTI // 2026</span>
+              <span>10° 32&apos; N, 76° 13&apos; E</span>
+              <span className="text-[10px] text-white/40 mt-2">SCROLL TO REVEAL</span>
             </div>
           </div>
 
-          <div
-            ref={ideasTitleRef}
-            id="hero-title"
-            className="w-full max-w-[1062px] text-center bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(48px,6.6vw,96px)] font-normal leading-[1.2] tracking-[0] text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] relative z-10 opacity-0"
-          >
-            IDEAS DON&apos;T ASK PERMISSION
+          {/* Bottom Title & Narrative */}
+          <div className="w-full flex flex-col items-center justify-center text-center gap-2 md:gap-3 z-10 md:mt-auto pb-2">
+            <h2
+              ref={ideasTitleRef}
+              id="hero-title"
+              className="w-full max-w-[1100px] text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(28px,4.8vw,76px)] font-normal leading-[1.05] tracking-[0.01em] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] drop-shadow-[0_4px_24px_rgba(183,128,0,0.25)] select-none uppercase"
+            >
+              IDEAS DON&apos;T ASK PERMISSION
+            </h2>
+
+            <p
+              ref={ideasParagraphRef}
+              className="w-full max-w-[760px] text-center font-['Space_Grotesk-Regular',Helvetica] text-[clamp(12px,1.1vw,16px)] font-normal leading-[1.45] tracking-[0.02em] text-white/60 px-4 select-none"
+            >
+              Where bold imagination breaks through boundaries. Witness the clash of intellect, artistry, and engineering prowess at Drishti 2026.
+            </p>
           </div>
 
-          <p
-            ref={ideasParagraphRef}
-            className="mt-[clamp(40px,10vw,150px)] w-full max-w-[1019px] text-center font-['Space_Grotesk-Regular',Helvetica] text-[clamp(16px,1.6vw,24px)] font-normal leading-[1.4] tracking-[0] text-white relative z-10 opacity-0"
-          >
-            Lorem ipsum dolor sit amet consectetur. Leo in velit tristique morbi
-            facilisi facilisis vestibulum in. Odio rutrum eu nisi tempor sit vel.
-            Sed dignissim viverra interdum nunc at diam turpis. Integer odio risus
-            aliquam maecenas porttitor.
-          </p>
         </div>
       </section>
 

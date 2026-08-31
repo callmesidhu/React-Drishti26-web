@@ -231,7 +231,7 @@ function Competitions({ embedded = false }) {
           {/* Details: Exact Original on Laptop, Responsive Full-Height Card on Mobile */}
           <div
             ref={detailRef}
-            className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-gradient-to-b from-black/80 via-black/60 to-black/90 md:bg-transparent backdrop-blur-2xl md:backdrop-blur-none shadow-[0_0_50px_rgba(225,157,0,0.15)] md:shadow-none min-h-[330px] md:min-h-0"
+            className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-transparent min-h-[330px] md:min-h-0"
           >
             {/* Mobile Luminous Corner Reticles */}
             <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
