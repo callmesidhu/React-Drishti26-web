@@ -89,10 +89,12 @@ function Home() {
   const featuredHeadingRef = useRef(null);
   const featuredParagraphRef = useRef(null);
   const featuredCardsRef = useRef([]);
+  const aftermovieSectionRef = useRef(null);
   const aftermovieContainerRef = useRef(null);
   const aftermovieTitleLeftRef = useRef(null);
   const aftermovieTitleRightRef = useRef(null);
   const aftermovieLogoRef = useRef(null);
+  const aftermovieGridRef = useRef(null);
   const galleryImagesRef = useRef([]);
   const ctaDrishtiRef = useRef(null);
   const ctaTitle1Ref = useRef(null);
@@ -323,30 +325,7 @@ function Home() {
           });
         }
 
-        // Event Categories
-        categoryTitleRefs.current.forEach((el, i) => {
-          if (!el) return;
-          gsap.fromTo(el,
-            { x: -100, opacity: 0, skewX: 20 },
-            {
-              x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-              scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" },
-              delay: i * 0.12,
-            }
-          );
-        });
 
-        categoryBordersRef.current.forEach((el, i) => {
-          if (!el) return;
-          gsap.fromTo(el,
-            { scaleX: 0, transformOrigin: "left center" },
-            {
-              scaleX: 1, duration: 0.8, ease: "power2.inOut",
-              scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" },
-              delay: i * 0.1,
-            }
-          );
-        });
 
         // Featured Events
         gsap.fromTo(featuredHeadingRef.current,
@@ -377,38 +356,6 @@ function Home() {
           );
         });
 
-        // Aftermovie
-        gsap.fromTo(aftermovieContainerRef.current,
-          { scale: 0.7, opacity: 0, borderRadius: "50px" },
-          {
-            scale: 1, opacity: 1, borderRadius: "0px", duration: 1.5, ease: "power3.out",
-            scrollTrigger: { trigger: aftermovieContainerRef.current, start: "top 80%", end: "top 40%", scrub: 1 }
-          }
-        );
-
-        gsap.fromTo(aftermovieTitleLeftRef.current,
-          { x: -150, opacity: 0, skewX: 30 },
-          {
-            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-            scrollTrigger: { trigger: aftermovieTitleLeftRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(aftermovieTitleRightRef.current,
-          { x: 150, opacity: 0, skewX: -30 },
-          {
-            x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-            scrollTrigger: { trigger: aftermovieTitleRightRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
-
-        gsap.fromTo(aftermovieLogoRef.current,
-          { scale: 0, opacity: 0, rotation: -180 },
-          {
-            scale: 1, opacity: 1, rotation: 0, duration: 1, delay: 0.4, ease: "elastic.out(1, 0.3)",
-            scrollTrigger: { trigger: aftermovieLogoRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-          }
-        );
 
         // Gallery
         galleryImagesRef.current.forEach((el, i) => {
@@ -858,6 +805,83 @@ function Home() {
         </div>
       </section>
 
+      {/* ============ AFTERMOVIE ============ */}
+      <section ref={aftermovieSectionRef} className="relative h-[100svh] min-h-[600px] w-full bg-black flex items-center justify-center overflow-hidden">
+        {/* Static Gold Gradient Grid Background */}
+        <div 
+          ref={aftermovieGridRef}
+          className="absolute inset-0 pointer-events-none opacity-40 bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)]"
+          style={{
+            WebkitMaskImage: `linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px)`,
+            WebkitMaskSize: '60px 60px',
+            maskImage: `linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px)`,
+            maskSize: '60px 60px',
+          }}
+        />
+
+        <div className="relative w-[90%] md:w-[80%] max-w-[1100px] flex flex-col items-center justify-center px-[clamp(10px,2vw,30px)] z-10">
+          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 overflow-hidden rounded-none p-[1px] md:p-[2px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)]">
+            <div className="relative w-full h-full flex flex-col justify-end bg-black rounded-none overflow-hidden">
+              <video
+                className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
+                src={aftermovieVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-label="Drishti '24 aftermovie"
+              />
+              <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,2vw,24px)] pb-[clamp(10px,2vw,24px)] px-[clamp(16px,3vw,48px)] pointer-events-none">
+                <div className="flex items-center justify-between">
+                  <p
+                    ref={aftermovieTitleLeftRef}
+                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0"
+                  >
+                    DRISHTI &lsquo;24
+                  </p>
+                  <img
+                    ref={aftermovieLogoRef}
+                    className="pointer-events-none h-[clamp(32px,4vw,45px)] w-auto object-cover absolute left-1/2 -translate-x-1/2"
+                    alt="Drishti"
+                    src={aftermovieLogo}
+                  />
+                  <p
+                    ref={aftermovieTitleRightRef}
+                    className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0"
+                  >
+                    AFTERMOVIE
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PRO SHOWS ============ */}
+      <section id="proshows" className="relative w-full bg-black">
+        <ProShows embedded={true} />
+      </section>
+
+      {/* ============ DRISH-TEES ============ */}
+      <section className="relative w-full bg-black py-20">
+        <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-[clamp(20px,5vw,71px)]">
+          <h2 className="w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,5vw,64px)] font-normal leading-[1.1] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
+            GRAB YOUR DRISH-TEES!!
+          </h2>
+          <video
+            className="w-full max-w-[900px] self-center rounded-xl border border-white/15 object-cover shadow-[0_0_30px_rgba(225,157,0,0.2)]"
+            src="/home/drishtee.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Drishtees promotional video"
+          />
+        </div>
+      </section>
+
       {/* ============ EVENT CATEGORIES ============ */}
       <section className="relative min-h-[clamp(600px,86vw,1250px)] w-full bg-black flex items-center justify-center py-20 overflow-hidden" aria-label="Event categories">
         <div
@@ -872,7 +896,7 @@ function Home() {
                 itemRefs.current[index] = el;
                 categoryTitleRefs.current[index] = el;
               }}
-              className="relative min-h-[clamp(80px,7.8vw,113px)] w-full self-stretch border-b border-white flex items-center justify-between group opacity-0"
+              className="relative min-h-[clamp(80px,7.8vw,113px)] w-full self-stretch border-b border-white flex items-center justify-between group"
               onMouseEnter={() => handleCategoryInteraction(index)}
               onMouseLeave={() => handleCategoryLeave(index)}
               onFocus={() => window.innerWidth >= 768 && handleCategoryInteraction(index)}
@@ -910,30 +934,6 @@ function Home() {
           aria-hidden={hoveredCategoryIndex === null}
           src={workshopItems[hoveredCategoryIndex ?? 0].image}
         />
-      </section>
-
-      {/* ============ PRO SHOWS ============ */}
-      <section id="proshows" className="relative w-full bg-black">
-        <ProShows embedded={true} />
-      </section>
-
-      {/* ============ DRISH-TEES ============ */}
-      <section className="relative w-full bg-black py-20">
-        <div className="mx-auto flex w-full max-w-[1440px] flex-col items-center gap-6 px-[clamp(20px,5vw,71px)]">
-          <h2 className="w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,5vw,64px)] font-normal leading-[1.1] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
-            GRAB YOUR DRISH-TEES!!
-          </h2>
-          <video
-            className="w-full max-w-[900px] self-center rounded-xl border border-white/15 object-cover shadow-[0_0_30px_rgba(225,157,0,0.2)]"
-            src="/home/drishtee.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Drishtees promotional video"
-          />
-        </div>
       </section>
 
       {/* ============ FEATURED EVENTS ============ */}
@@ -1048,45 +1048,6 @@ function Home() {
               >
                 <img className="h-6 w-6" src={arrowDownRight} alt="" aria-hidden="true" />
               </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ AFTERMOVIE ============ */}
-      <section className="relative min-h-[clamp(600px,71vw,1024px)] w-full bg-black flex items-center justify-center overflow-hidden">
-        <div className="relative w-full max-w-[1415px] flex flex-col items-center justify-center px-[clamp(20px,4vw,60px)]">
-          <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] mb-8 flex flex-col justify-end opacity-0 overflow-hidden">
-            <video
-              className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
-              src={aftermovieVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              aria-label="Drishti '24 aftermovie"
-            />
-            <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,2vw,24px)] pb-[clamp(10px,2vw,24px)] px-[clamp(16px,3vw,48px)] pointer-events-none">
-              <div className="flex items-center justify-between">
-                <p
-                  ref={aftermovieTitleLeftRef}
-                  className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0 opacity-0"
-                >
-                  DRISHTI &lsquo;24
-                </p>
-                <img
-                  ref={aftermovieLogoRef}
-                  className="pointer-events-none h-[clamp(32px,4vw,45px)] w-auto object-cover absolute left-1/2 -translate-x-1/2 opacity-0"
-                  alt="Drishti"
-                  src={aftermovieLogo}
-                />
-                <p
-                  ref={aftermovieTitleRightRef}
-                  className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(32px,5vw,58px)] leading-[normal] text-white m-0 opacity-0"
-                >
-                  AFTERMOVIE
-                </p>
-              </div>
             </div>
           </div>
         </div>
