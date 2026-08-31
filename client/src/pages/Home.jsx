@@ -610,7 +610,7 @@ function Home() {
       {/* ============ HERO ============ */}
       <section
         ref={heroSectionRef}
-        className="relative h-[100svh] max-h-[1024px] min-h-[560px] w-full overflow-hidden bg-white"
+        className="relative h-[100svh] max-h-[1024px] min-h-[560px] w-full overflow-hidden bg-black"
         aria-labelledby="drishti-title"
       >
         <img
