@@ -16,6 +16,8 @@ const featuredEvents = [
 
 export default function FeaturedEvents({ onEventClick }) {
   const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const [hasManuallyNavigated, setHasManuallyNavigated] = useState(false);
 
   const featuredHeadingRef = useRef(null);
   const featuredParagraphRef = useRef(null);
@@ -39,6 +41,16 @@ export default function FeaturedEvents({ onEventClick }) {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    if (isAutoScrollPaused || hasManuallyNavigated) return;
+    
+    const interval = setInterval(() => {
+      moveFeatured(1);
+    }, 1500);
+    
+    return () => clearInterval(interval);
+  }, [isAutoScrollPaused, hasManuallyNavigated]);
 
   return (
     <section
@@ -73,7 +85,10 @@ export default function FeaturedEvents({ onEventClick }) {
             <button
               type="button"
               className="flex h-14 w-14 rotate-[135deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:border-[#D4AF37] hover:scale-110 hover:rotate-[180deg]"
-              onClick={() => moveFeatured(-1)}
+              onClick={() => {
+                moveFeatured(-1);
+                setHasManuallyNavigated(true);
+              }}
               aria-label="Previous featured event"
             >
               <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
@@ -81,7 +96,10 @@ export default function FeaturedEvents({ onEventClick }) {
             <button
               type="button"
               className="flex h-14 w-14 -rotate-[45deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:border-[#D4AF37] hover:scale-110 hover:rotate-0"
-              onClick={() => moveFeatured(1)}
+              onClick={() => {
+                moveFeatured(1);
+                setHasManuallyNavigated(true);
+              }}
               aria-label="Next featured event"
             >
               <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
@@ -93,6 +111,8 @@ export default function FeaturedEvents({ onEventClick }) {
         <div 
           ref={containerRef}
           className="relative w-full lg:w-[60%] flex-1 h-[50vh] lg:h-[80vh] flex items-center justify-center [perspective:1200px]"
+          onMouseEnter={() => setIsAutoScrollPaused(true)}
+          onMouseLeave={() => setIsAutoScrollPaused(false)}
         >
           {featuredEvents.map((event, index) => {
             // Calculate distance from center (with wrapping logic for smooth carousel)
@@ -107,9 +127,9 @@ export default function FeaturedEvents({ onEventClick }) {
             
             // 3D positioning
             const translateX = diff * (window.innerWidth < 1024 ? 120 : 300); 
-            const translateZ = isActive ? 0 : -300 - (absDiff * 200);
-            const rotateY = isActive ? 0 : diff > 0 ? -45 : 45;
-            const opacity = isActive ? 1 : Math.max(0, 1 - (absDiff * 0.5));
+            const translateZ = isActive ? 0 : -150 - (absDiff * 150);
+            const rotateY = isActive ? 0 : diff > 0 ? -30 : 30;
+            const opacity = isActive ? 1 : Math.max(0, 1 - (absDiff * 0.3));
             const zIndex = 100 - absDiff;
 
             return (
@@ -125,8 +145,12 @@ export default function FeaturedEvents({ onEventClick }) {
                   backgroundColor: "#050505"
                 }}
                 onClick={() => {
-                  if (isActive) onEventClick(index);
-                  else setFeaturedIndex(index);
+                  if (isActive) {
+                    onEventClick(index);
+                  } else {
+                    setFeaturedIndex(index);
+                    setHasManuallyNavigated(true);
+                  }
                 }}
                 onMouseEnter={(e) => {
                   if (isActive) {
@@ -145,14 +169,14 @@ export default function FeaturedEvents({ onEventClick }) {
                   alt={`Featured event ${index + 1}`}
                   src={event.image || "https://placehold.co/600x800/111/fff?text=EVENT"}
                   style={{
-                    filter: isActive ? "grayscale(0) brightness(1)" : "grayscale(1) brightness(0.3)",
+                    filter: isActive ? "grayscale(0) brightness(1)" : "grayscale(0.6) brightness(0.6)",
                     transition: "filter 0.8s ease"
                   }}
                 />
 
                 {/* Solid overlay for inactive cards */}
                 {!isActive && (
-                  <div className="absolute inset-0 bg-black/50" />
+                  <div className="absolute inset-0 bg-black/20" />
                 )}
 
                 {/* Sharp UI overlay for active card */}
