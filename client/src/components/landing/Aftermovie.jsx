@@ -49,23 +49,24 @@ export default function Aftermovie() {
 
   return (
     <section ref={aftermovieSectionRef} className="relative h-[100svh] min-h-[600px] w-full bg-black flex items-center justify-center overflow-hidden">
-      {/* Static Gold Gradient Grid Background */}
-      <div 
+      {/* Background Image */}
+      <img 
         ref={aftermovieGridRef}
-        className="absolute inset-0 pointer-events-none opacity-40 bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(212,175,55,1)_92%)]"
+        src="/home/damu.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover pointer-events-none opacity-50"
         style={{
-          WebkitMaskImage: `linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px)`,
-          WebkitMaskSize: '60px 60px',
-          maskImage: `linear-gradient(black 1px, transparent 1px), linear-gradient(90deg, black 1px, transparent 1px)`,
-          maskSize: '60px 60px',
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)"
         }}
       />
 
-      <div className="relative w-[92%] md:w-[84%] lg:w-[76%] max-w-[1020px] flex flex-col items-center justify-center px-[clamp(10px,2vw,24px)] z-10">
+      <div className="relative w-[92%] md:w-[84%] lg:w-[100%] max-w-[1050px] flex flex-col items-center justify-center px-[clamp(10px,2vw,24px)] z-10">
         <div ref={aftermovieContainerRef} className="relative w-full aspect-[1415/850] overflow-hidden rounded-none p-[1px] md:p-[2px] bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(212,175,55,1)_92%)]">
           <div className="relative w-full h-full flex flex-col justify-end bg-black rounded-none overflow-hidden">
             <video
-              className="absolute left-0 top-0 h-full w-full object-cover opacity-80 scale-110"
+              className="absolute left-0 top-0 h-full w-full object-cover opacity-70 scale-110"
               src={aftermovieVideo}
               autoPlay
               muted
