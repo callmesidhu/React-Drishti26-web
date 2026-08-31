@@ -177,6 +177,7 @@ function Workshops() {
     let lastTime = 0
 
     const handleWheel = (e) => {
+      if (slug || e.target.closest('[data-lenis-prevent]')) return
       e.preventDefault()
       const now = Date.now()
       if (now - lastTime < 450) return
@@ -193,10 +194,12 @@ function Workshops() {
     }
 
     const handleTouchStart = (e) => {
+      if (slug || e.target.closest('[data-lenis-prevent]')) return
       touchStartY = e.touches[0].clientY
     }
 
     const handleTouchEnd = (e) => {
+      if (slug || e.target.closest('[data-lenis-prevent]')) return
       const dy = e.changedTouches[0].clientY - touchStartY
       if (Math.abs(dy) > 30) {
         if (dy < 0) {

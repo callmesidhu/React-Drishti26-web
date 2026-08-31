@@ -56,7 +56,7 @@
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #E19D00 92%, #E19D00 100%);
     border-radius: 9999px;
-    min-height: 350px;
+    min-height: 48px;
   }
 
   ::-webkit-scrollbar-thumb:hover {

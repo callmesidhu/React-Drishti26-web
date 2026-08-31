@@ -30,6 +30,7 @@ function App() {
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1.5,
+      prevent: (node) => node.hasAttribute('data-lenis-prevent') || node.closest?.('[data-lenis-prevent]') != null,
     })
 
     // Synchronize Lenis with GSAP ScrollTrigger

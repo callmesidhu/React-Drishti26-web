@@ -13,6 +13,16 @@ const teamMembers = [
   { id: 7, name: 'Vikram', role: 'Marketing Head', image: '/team/rahul.jpg' },
 ]
 
+const dakshaTeamMembers = [
+  { id: 1, name: 'Abhiram', role: 'Daksha Lead', image: '/team/rahul.jpg' },
+  { id: 2, name: 'Keerthana', role: 'Event Coordinator', image: '/team/anjali.jpg' },
+  { id: 3, name: 'Madhav', role: 'Technical Lead', image: '/team/rahul.jpg' },
+  { id: 4, name: 'Diya', role: 'Operations Lead', image: '/team/anjali.jpg' },
+  { id: 5, name: 'Karthik', role: 'Design & Media', image: '/team/rahul.jpg' },
+  { id: 6, name: 'Varsha', role: 'Logistics Head', image: '/team/anjali.jpg' },
+  { id: 7, name: 'Naveen', role: 'Public Relations', image: '/team/rahul.jpg' },
+]
+
 const webTeamMembers = [
   { id: 1, name: 'Sidharth', role: 'Lead Developer', image: '/team/rahul.jpg' },
   { id: 2, name: 'Adithya', role: 'Frontend Lead', image: '/team/anjali.jpg' },
@@ -23,12 +33,10 @@ const webTeamMembers = [
   { id: 7, name: 'Devika', role: 'QA & Systems', image: '/team/anjali.jpg' },
 ]
 
-const TOTAL = teamMembers.length
-
-function shortestDiff(from, to) {
+function shortestDiff(from, to, total) {
   let d = to - from
-  if (d > TOTAL / 2) d -= TOTAL
-  if (d < -TOTAL / 2) d += TOTAL
+  if (d > total / 2) d -= total
+  if (d < -total / 2) d += total
   return d
 }
 
@@ -40,7 +48,13 @@ function Team({ embedded = false }) {
   const navRef = useRef(false)
   const touchStart = useRef({ x: 0, y: 0 })
   const activeIndexRef = useRef(0)
-  const members = activeGroup === 'committee' ? teamMembers : webTeamMembers
+  const members =
+    activeGroup === 'committee'
+      ? teamMembers
+      : activeGroup === 'web'
+        ? webTeamMembers
+        : dakshaTeamMembers
+  const total = members.length
 
   const navigate = useCallback((dir) => {
     if (navRef.current) return
@@ -49,10 +63,10 @@ function Team({ embedded = false }) {
     setActiveIndex((prev) => {
       const next = prev + dir
       if (next < 0) return 0
-      if (next >= TOTAL) return TOTAL - 1
+      if (next >= total) return total - 1
       return next
     })
-  }, [])
+  }, [total])
 
   useEffect(() => {
     activeIndexRef.current = activeIndex
@@ -114,7 +128,7 @@ function Team({ embedded = false }) {
     const handleWheel = (e) => {
       if (!isInView()) return
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
-      if (delta > 0 && activeIndexRef.current < TOTAL - 1) {
+      if (delta > 0 && activeIndexRef.current < total - 1) {
         e.preventDefault()
         navigate(1)
       } else if (delta < 0 && activeIndexRef.current > 0) {
@@ -133,7 +147,7 @@ function Team({ embedded = false }) {
       const dx = e.changedTouches[0].clientX - touchStart.current.x
       const dy = e.changedTouches[0].clientY - touchStart.current.y
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
-        if (dx < 0 && activeIndexRef.current < TOTAL - 1) {
+        if (dx < 0 && activeIndexRef.current < total - 1) {
           navigate(1)
         } else if (dx > 0 && activeIndexRef.current > 0) {
           navigate(-1)
@@ -150,10 +164,10 @@ function Team({ embedded = false }) {
       el.removeEventListener('touchstart', handleTouchStart)
       el.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [navigate])
+  }, [navigate, total])
 
   const getCardTransform = useCallback((index) => {
-    const diff = shortestDiff(activeIndex, index)
+    const diff = shortestDiff(activeIndex, index, total)
     const absDiff = Math.abs(diff)
     const sign = diff === 0 ? 0 : diff > 0 ? 1 : -1
 
@@ -189,7 +203,7 @@ function Team({ embedded = false }) {
       zIndex,
       opacity: 1,
     }
-  }, [activeIndex])
+  }, [activeIndex, total])
 
   return (
     <div className={`relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-between pt-16 pb-6 select-none touch-none ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
@@ -215,6 +229,7 @@ function Team({ embedded = false }) {
           {[
             { id: 'committee', label: 'CORE TEAM' },
             { id: 'web', label: 'WEB TEAM' },
+            { id: 'daksha', label: 'DAKSHA TEAM' },
           ].map((group) => {
             const isSelected = activeGroup === group.id
             return (
@@ -226,7 +241,7 @@ function Team({ embedded = false }) {
                   setActiveGroup(group.id)
                   setActiveIndex(0)
                 }}
-                className={`relative z-10 cursor-pointer rounded-full px-6 py-1.5 text-[11px] font-black uppercase tracking-[2.5px] transition-all duration-300 sm:px-8 sm:text-xs ${
+                className={`relative z-10 cursor-pointer rounded-full px-3.5 sm:px-7 py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-[1.5px] sm:tracking-[2.5px] transition-all duration-300 ${
                   isSelected
                     ? 'bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] text-black shadow-[0_2px_12px_rgba(225,157,0,0.35)]'
                     : 'text-gold/75 hover:text-gold'

@@ -73,10 +73,15 @@ function EventDetailsModal({ event, onClose }) {
   return (
     <div
       ref={overlayRef}
+      data-lenis-prevent="true"
+      onWheel={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
+      onTouchEnd={(e) => e.stopPropagation()}
       onClick={(e) => {
         if (e.target === overlayRef.current) handleClose()
       }}
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/90 px-4 py-8 backdrop-blur-2xl"
+      className="fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden bg-black/90 p-4 sm:p-6 md:p-8 backdrop-blur-2xl touch-pan-y overscroll-contain"
       style={{
         backgroundImage: isBlue
           ? 'linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px)'
@@ -89,7 +94,7 @@ function EventDetailsModal({ event, onClose }) {
         type="button"
         onClick={handleClose}
         aria-label="Close details"
-        className={`fixed top-6 right-6 z-[110] flex h-12 w-12 items-center justify-center rounded-full border bg-black/80 transition-all duration-300 hover:scale-110 hover:text-black ${
+        className={`fixed top-4 right-4 sm:top-6 sm:right-6 z-[110] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border bg-black/80 transition-all duration-300 hover:scale-110 hover:text-black cursor-pointer ${
           isBlue
             ? 'border-sky-400/40 text-sky-400 hover:border-sky-400 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)]'
             : 'border-gold/40 text-gold hover:border-gold hover:bg-gold hover:shadow-[0_0_20px_rgba(225,157,0,0.6)]'
@@ -97,7 +102,7 @@ function EventDetailsModal({ event, onClose }) {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-5 w-5 sm:h-6 sm:w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -107,13 +112,22 @@ function EventDetailsModal({ event, onClose }) {
         </svg>
       </button>
 
-      {/* Main Container */}
+      {/* Inner Centering Wrapper */}
       <div
-        ref={containerRef}
-        className={`relative my-auto w-full max-w-[1100px] rounded-2xl border bg-black/75 p-6 shadow-[0_0_80px_rgba(0,0,0,0.95)] backdrop-blur-xl md:p-10 ${
-          isBlue ? 'border-sky-500/20' : 'border-gold/20'
-        }`}
+        data-lenis-prevent="true"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) handleClose()
+        }}
+        className="flex min-h-full w-full items-center justify-center py-6 sm:py-10"
       >
+        {/* Main Container */}
+        <div
+          ref={containerRef}
+          data-lenis-prevent="true"
+          className={`relative w-full max-w-[1100px] rounded-2xl border bg-black/75 p-6 shadow-[0_0_80px_rgba(0,0,0,0.95)] backdrop-blur-xl md:p-10 ${
+            isBlue ? 'border-sky-500/20' : 'border-gold/20'
+          }`}
+        >
         {/* Top Centered Header */}
         <div className="mb-8 flex flex-col items-center justify-center text-center">
           <h2
@@ -245,7 +259,8 @@ function EventDetailsModal({ event, onClose }) {
         </div>
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 export default EventDetailsModal

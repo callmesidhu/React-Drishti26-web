@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProShows from "./ProShows";
 import EventDetailsModal from "../components/EventDetailsModal";
+import DomeGallery from "../components/DomeGallery";
 import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -42,12 +43,18 @@ const featuredEvents = [
   workshopsData[0],
 ];
 
-const galleryImages = [
-  { src: galleryImage1, className: "md:absolute md:left-[clamp(200px,35vw,511px)] md:top-[clamp(100px,15vw,228px)] md:h-[clamp(300px,37vw,543px)] md:w-[clamp(200px,27vw,394px)] w-full aspect-[394/543]" },
-  { src: galleryImage2, className: "md:absolute md:left-[clamp(500px,65vw,937px)] md:top-[clamp(50px,7vw,105px)] md:h-[clamp(200px,27vw,395px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/395]" },
-  { src: galleryImage3, className: "md:absolute md:left-[clamp(80px,13vw,190px)] md:top-[clamp(300px,37vw,538px)] md:h-[clamp(200px,27vw,395px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/395]" },
-  { src: galleryImage4, className: "md:absolute md:left-[clamp(60px,10vw,144px)] md:top-[clamp(150px,21vw,303px)] md:h-[clamp(100px,15vw,216px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/216]" },
-  { src: galleryImage5, className: "md:absolute md:left-[clamp(500px,65vw,939px)] md:top-[clamp(300px,38vw,555px)] md:h-[clamp(100px,15vw,216px)] md:w-[clamp(150px,20vw,287px)] w-full aspect-[287/216]" },
+const drishtiGalleryImages = [
+  { src: galleryImage1, alt: "Drishti Festival Stage & Atmosphere" },
+  { src: galleryImage2, alt: "Tech Innovation & Robotics" },
+  { src: galleryImage3, alt: "Atmosphere & Future Tech" },
+  { src: galleryImage4, alt: "Workshops & Tech Sessions" },
+  { src: galleryImage5, alt: "Pro Shows Musical Night" },
+  { src: categoriesPhoto, alt: "Drishti '26 Competitions" },
+  { src: "/home/aftermovie-bg.png", alt: "Festival Lights & Crowds" },
+  { src: "/home/featured-event-poster.png", alt: "Featured Events & Keynotes" },
+  { src: "/proshow/proshowgrid.jpeg", alt: "Live Pro Shows Night" },
+  { src: "/daksha/shark-tank.png", alt: "Daksha Ideation & Pitch" },
+  { src: heroBg, alt: "Drishti '26 Horizon" },
 ];
 
 function Home() {
@@ -95,7 +102,6 @@ function Home() {
   const aftermovieTitleRightRef = useRef(null);
   const aftermovieLogoRef = useRef(null);
   const aftermovieGridRef = useRef(null);
-  const galleryImagesRef = useRef([]);
   const ctaDrishtiRef = useRef(null);
   const ctaTitle1Ref = useRef(null);
   const ctaTitle2Ref = useRef(null);
@@ -376,27 +382,7 @@ function Home() {
         );
       });
 
-      // Gallery
-      galleryImagesRef.current.forEach((el, i) => {
-        if (!el) return;
-        const directions = [
-          { x: -300, y: 150, rotation: -20, scale: 0.5 },
-          { x: 300, y: -120, rotation: 15, scale: 0.6 },
-          { x: -250, y: -180, rotation: -12, scale: 0.55 },
-          { x: 280, y: 120, rotation: 18, scale: 0.65 },
-          { x: -200, y: 200, rotation: -8, scale: 0.5 },
-        ];
-        const dir = directions[i] || { x: 0, y: 0, rotation: 0, scale: 0.5 };
 
-        gsap.fromTo(el,
-          { x: dir.x, y: dir.y, rotation: dir.rotation, opacity: 0, scale: dir.scale },
-          {
-            x: 0, y: 0, rotation: 0, opacity: 0.85, scale: 1, duration: 1.2, ease: "elastic.out(1, 0.4)",
-            scrollTrigger: { trigger: el, start: "top 95%", toggleActions: "play none none reverse" },
-            delay: i * 0.15,
-          }
-        );
-      });
 
       // CTA
       gsap.fromTo(ctaDrishtiRef.current,
@@ -657,7 +643,7 @@ function Home() {
         <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
 
         {/* Left tagline & line */}
-        <div className="absolute left-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 flex flex-col items-start gap-2">
+        <div className="absolute left-[clamp(20px,3.5vw,50px)] top-[35%] md:top-[48%] -translate-y-1/2 z-20 flex flex-col items-start gap-2">
           <div
             ref={heroLeftTextRef}
             className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"
@@ -674,7 +660,7 @@ function Home() {
         </div>
 
         {/* Right tagline & line */}
-        <div className="absolute right-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 flex flex-col items-end gap-2">
+        <div className="absolute right-[clamp(20px,3.5vw,50px)] top-[35%] md:top-[48%] -translate-y-1/2 z-20 flex flex-col items-end gap-2">
           <div
             ref={heroRightTextRef}
             className="text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"
@@ -694,7 +680,7 @@ function Home() {
         <h1
           ref={heroTitleRef}
           id="drishti-title"
-          className="absolute bottom-6 md:bottom-10 left-0 w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,13vw,190px)] font-normal leading-none tracking-[0] text-white z-20"
+          className="absolute bottom-40 md:bottom-10 left-0 w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,13vw,190px)] font-normal leading-none tracking-[0] text-white z-20"
         >
         </h1>
       </section>
@@ -1079,18 +1065,32 @@ function Home() {
         </div>
       </section>
 
-      {/* ============ GALLERY ============ */}
-      <section className="relative min-h-[clamp(600px,71vw,1024px)] w-full bg-black flex items-center justify-center" aria-label="Event gallery">
-        <div className="relative w-full max-w-[1415px] min-h-[600px] md:h-[999px] flex flex-col md:block items-center gap-4 py-10 px-[20px] overflow-hidden">
-          {galleryImages.map((image, index) => (
-            <img
-              key={index}
-              ref={(el) => { galleryImagesRef.current[index] = el }}
-              className={`${image.className} object-cover opacity-0 rounded-lg md:rounded-none cursor-pointer transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(225,157,0,0.4)]`}
-              alt={`Gallery photo ${index + 1}`}
-              src={image.src}
-            />
-          ))}
+      {/* ============ GALLERY (3D DOME GALLERY WITH PARALLAX) ============ */}
+      <section className="relative w-full bg-black flex flex-col items-center justify-center pt-16 md:pt-24 pb-8 overflow-hidden border-y border-white/5" aria-label="Event gallery">
+        {/* Title placed directly above the dome */}
+        <div className="relative z-10 text-center px-4 mb-2 md:mb-4 pointer-events-none">
+          <h2 className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,5vw,64px)] tracking-[0.05em] uppercase bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] drop-shadow-[0_4px_24px_rgba(183,128,0,0.35)] leading-tight">
+            EXPERIENCE DRISHTI
+          </h2>
+        </div>
+
+        {/* 3D Dome Gallery Container */}
+        <div className="relative w-full h-[72vh] min-h-[560px] max-h-[860px]">
+          <DomeGallery
+            images={drishtiGalleryImages}
+            fit={1}
+            minRadius={800}
+            maxVerticalRotationDeg={20}
+            segments={20}
+            grayscale={false}
+            openedImageWidth="clamp(300px, 60vw, 520px)"
+            openedImageHeight="clamp(300px, 60vw, 520px)"
+            imageBorderRadius="18px"
+            openedImageBorderRadius="24px"
+            overlayBlurColor="#000000"
+            scrollParallax={true}
+            scrollParallaxAngle={110}
+          />
         </div>
       </section>
 

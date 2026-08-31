@@ -90,7 +90,7 @@ function Competitions({ embedded = false }) {
     }
 
     const handleWheel = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
       if (delta > 0 && activeRef.current < competitions.length - 1) {
         e.preventDefault()
@@ -102,12 +102,12 @@ function Competitions({ embedded = false }) {
     }
 
     const handleTouchStart = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       el._touchY = e.touches[0].clientY
     }
 
     const handleTouchEnd = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       const dy = e.changedTouches[0].clientY - el._touchY
       if (Math.abs(dy) > 30) {
         navigate(dy < 0 ? 1 : -1)
@@ -217,13 +217,6 @@ function Competitions({ embedded = false }) {
             >
               <span className="relative inline-block">
                 <span className="relative z-10 competitions-text">COMPETITIONS</span>
-                <img
-                  ref={sparkleRef}
-                  src="/workshops/shine.svg"
-                  alt=""
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(44px,8vw,120px)] md:w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
-                />
               </span>
             </h1>
           </div>
