@@ -1,6 +1,6 @@
 export default function DrishTees() {
   return (
-    <section className="relative w-full overflow-visible bg-black py-10 sm:py-12 lg:py-16 xl:py-20">
+    <section className="relative w-full overflow-visible py-10 sm:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10">
         <div className="relative mt-4 grid items-end gap-4 lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
@@ -11,11 +11,16 @@ export default function DrishTees() {
               className="absolute bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain"
               style={{ animation: 'float-base 7s ease-in-out infinite' }}
             />
-            <img
-              src="/home/tshirt-front.png"
-              alt="Drishti T-shirt"
-              className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain"
-              style={{ transform: 'translateY(-80px)', animation: 'float-shirt 6.5s ease-in-out infinite' }}
+            <video
+              src="/home/drishtee.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Drishtee T-shirt promotional video"
+              className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain pointer-events-none"
+              style={{ transform: 'translateY(-160px)', animation: 'float-shirt 6.5s ease-in-out infinite' }}
             />
           </div>
 
@@ -46,19 +51,6 @@ export default function DrishTees() {
             </div>
           </div>
         </div>
-
-        <div className="mt-8 w-full">
-          <video
-            className="w-full max-w-[900px] self-center rounded-xl border border-white/15 object-cover shadow-[0_0_30px_rgba(212,175,55,0.2)]"
-            src="/home/drishtee.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Drishtees promotional video"
-          />
-        </div>
       </div>
     </section>
   );
@@ -66,8 +58,8 @@ export default function DrishTees() {
 
 <style>{`
   @keyframes float-shirt {
-    0%, 100% { transform: translateY(-80px); }
-    50% { transform: translateY(-100px); }
+    0%, 100% { transform: translateY(-160px); }
+    50% { transform: translateY(-190px); }
   }
 
   @keyframes float-base {
