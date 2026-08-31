@@ -24,8 +24,8 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 z-0 h-[101%] w-[102%] max-w-[none] object-cover object-right opacity-95"
-              style={{ transform: 'scaleX(1.0)' }}
+              className="pointer-events-none absolute inset-y-0 right-0 z-0 h-[100%] w-[100%] max-w-[none] object-cover object-right opacity-95"
+              style={{ transform: 'scaleX(0.995)' }}
             />
 
             <div className="relative z-10 flex w-full max-w-[560px] flex-col items-start justify-center px-2 text-left lg:px-0 lg:pr-10">
@@ -33,11 +33,16 @@ export default function DrishTees() {
                 GRAB YOUR TEES NOW!!
               </h2>
 
-              <p className="mt-4 max-w-[460px] text-[0.9rem] leading-relaxed text-[#f3e7c9]/90 sm:text-[1rem] lg:text-[1.08rem]">
-                The future is never built by wiping away what came before; it is a living palimpsest, layering fresh innovation directly over the blueprints of our history. Beneath every modern advancement lies the raw backbone of human effort—much like the skull and spine in our design, reminding us of the organic roots that anchor everything we create. In this world, nanobots act as microscopic problem-solvers, replacing the inorganic environment around us while keeping human spirit and touch completely intact. These micro-architects pull together, adapt to any situation, and build solutions in places standard hands just can’t reach.
-                <br /><br />
-                That dynamic is the exact heartbeat of our student-led community at CET. The nanobots are a mirror for us: individual students coming together to continuously assemble, solve, and rewrite the legacy of our campus day by day. We are the ones venturing into unexplored spaces to drive real change. It takes a sharp clarity—a true Drishti—to look past the surface and catch sight of these tiny engines of progress working like a momentary glitch in reality, revealing the precise mechanical craft that connects our past effort to our future.
+              <p className="mt-4 max-w-[460px] text-[0.85rem] leading-relaxed text-[#f3e7c9]/90 sm:text-[0.95rem] lg:text-[1.02rem]">
+                The future is never built by wiping away what came before. It grows by layering fresh innovation over the blueprints of our history, carrying forward the weight of human effort beneath every modern breakthrough. At CET, that same spirit lives in the way students come together, build, adapt, and keep pushing the campus forward, one idea, one solution, and one change at a time. We do not just watch the future unfold. We step into the unknown, look deeper, and turn the unseen into real progress.
               </p>
+
+              <button
+                type="button"
+                className="mt-6 inline-flex items-center justify-center rounded-full border border-[#d4af37]/70 bg-[linear-gradient(180deg,#e7c567_0%,#d4af37_45%,#b98b1b_100%)] px-8 py-2.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[#0d0d0d] shadow-[0_0_18px_rgba(212,175,55,0.28)] transition-transform duration-200 hover:scale-[1.02]"
+              >
+                Get Now
+              </button>
             </div>
           </div>
         </div>
