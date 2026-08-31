@@ -223,7 +223,7 @@ function Home() {
       ctx = gsap.context(() => {
         // Hero entrance
         gsap.fromTo(heroBgRef.current,
-          { scale: 1.5, opacity: 0, rotation: 5, rotationY: 15, filter: "blur(20px)" },
+          { scale: 1.3, opacity: 0, rotation: 3, rotationY: 8, filter: "blur(20px)" },
           { scale: 1, opacity: 1, rotation: 0, rotationY: 0, filter: "blur(0px)", duration: 2.5, ease: "power4.out" }
         );
 
@@ -254,7 +254,7 @@ function Home() {
         );
 
         gsap.to(heroBgRef.current, {
-          yPercent: 30,
+          yPercent: 8,
           ease: "none",
           scrollTrigger: {
             trigger: heroBgRef.current?.closest('section'),
@@ -489,8 +489,8 @@ function Home() {
       const rect = section.getBoundingClientRect();
       const normalizedX = (event.clientX - rect.left) / rect.width - 0.5; // -0.5 -> 0.5
       const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
-      setRotateX(normalizedY * -8);
-      setRotateY(normalizedX * 8);
+      setRotateX(normalizedY * -5);
+      setRotateY(normalizedX * 5);
       setScale(1.04);
     };
 
@@ -615,7 +615,7 @@ function Home() {
       >
         <img
           ref={heroBgRef}
-          className="absolute left-0 top-0 h-full w-full object-cover opacity-0"
+          className="absolute -inset-[10%] h-[120%] w-[120%] max-w-none object-cover opacity-0 pointer-events-none"
           alt=""
           aria-hidden="true"
           src={heroBg}
