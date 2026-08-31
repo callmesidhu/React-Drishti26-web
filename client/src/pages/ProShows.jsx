@@ -90,7 +90,7 @@ function ProShowsPage({ embedded = false }) {
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: pinWrapperRef.current,
-          start: 'top top',
+          start: 'top -5%',
           end: '+=300%',
           pin: true,
           scrub: 1,
@@ -118,8 +118,8 @@ function ProShowsPage({ embedded = false }) {
           rotationY: 0,
           rotationZ: 0,
           scale: 1,
-          duration: 3,
-          ease: 'power2.inOut',
+          duration: 1.8,
+          ease: 'sine.inOut',
         },
         0
       )
@@ -129,17 +129,18 @@ function ProShowsPage({ embedded = false }) {
         {
           opacity: 0,
           scale: 0.2,
-          duration: 2,
+          duration: 1.1,
+          ease: 'sine.inOut',
         },
-        1
+        0.9
       )
 
       scrollTl.to(
         cardInnerRef.current,
         {
           rotationY: 180,
-          duration: 3,
-          ease: 'power2.inOut',
+          duration: 1.9,
+          ease: 'sine.inOut',
         },
         '>'
       )
@@ -149,9 +150,10 @@ function ProShowsPage({ embedded = false }) {
         {
           opacity: 1,
           scale: 1.2,
-          duration: 1.5,
+          duration: 0.7,
+          ease: 'sine.out',
         },
-        '<=1.5'
+        '<=0.9'
       )
 
       scrollTl
