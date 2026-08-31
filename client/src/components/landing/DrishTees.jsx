@@ -2,10 +2,6 @@ export default function DrishTees() {
   return (
     <section className="relative w-full overflow-visible bg-black py-10 sm:py-12 lg:py-16 xl:py-20">
       <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10">
-        <h2 className="w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(212,175,55,1)_92%)] bg-clip-text text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(30px,5vw,72px)] font-normal leading-[0.95] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
-          GRAB YOUR DRISH-TEES!!
-        </h2>
-
         <div className="relative mt-4 grid items-end gap-4 lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
             <img
@@ -32,8 +28,12 @@ export default function DrishTees() {
               style={{ transform: 'scaleX(1.0)' }}
             />
 
-            <div className="relative z-10 w-full max-w-[560px] px-2 text-center lg:px-0 lg:pr-10 lg:text-left">
-              <p className="text-[0.9rem] leading-relaxed text-[#f3e7c9]/90 sm:text-[1rem] lg:text-[1.08rem]">
+            <div className="relative z-10 flex w-full max-w-[560px] flex-col items-start justify-center px-2 text-left lg:px-0 lg:pr-10">
+              <h2 className="w-full bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(212,175,55,1)_92%)] bg-clip-text font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(28px,4vw,62px)] font-normal leading-[0.9] tracking-[0] text-transparent [-webkit-text-fill-color:transparent]">
+                GRAB YOUR TEES NOW!!
+              </h2>
+
+              <p className="mt-4 max-w-[460px] text-[0.9rem] leading-relaxed text-[#f3e7c9]/90 sm:text-[1rem] lg:text-[1.08rem]">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
             </div>
