@@ -7,7 +7,6 @@ import Footer from '../components/Footer.jsx'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 // Register ScrollTrigger plugin
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
 // Imports for desktop landscape grid and mobile portrait version
@@ -65,18 +64,18 @@ function ProShowsPage({ embedded = false }) {
 
       gsap.set(cardWrapperRef.current, {
         rotationX: 90,
-        rotationY: 28,
+        rotationY: 0,
         rotationZ: 0,
-        x: 100,
-        y: 200,
-        z: -180,
-        scale: 0.65,
-        opacity: 0,
+        x: 0,
+        y: 60,
+        z: -100,
+        scale: 0.75,
+        opacity: 1,
       })
 
       gsap.set(cardInnerRef.current, { rotationY: 0 })
-      gsap.set(shadowRef.current, { opacity: 0, scale: 0.7, x: 100 })
-      gsap.set(glowRef.current, { opacity: 0, scale: 0.4 })
+      gsap.set(shadowRef.current, { opacity: 0.8, scale: 0.7, x: 0 })
+      gsap.set(glowRef.current, { opacity: 0.3, scale: 0.6 })
 
       particlesRef.current.forEach((particle) => {
         if (!particle) return
@@ -84,7 +83,7 @@ function ProShowsPage({ embedded = false }) {
           x: (Math.random() - 0.5) * 500,
           y: gsap.utils.random(-150, 150),
           scale: gsap.utils.random(0.3, 1.2),
-          opacity: 0,
+          opacity: gsap.utils.random(0.4, 0.95),
         })
       })
 
@@ -99,21 +98,14 @@ function ProShowsPage({ embedded = false }) {
         },
       })
 
-      scrollTl.to([cardWrapperRef.current, shadowRef.current], {
-        opacity: 1,
-        duration: 1,
-        ease: 'power1.out',
-      })
-
       scrollTl.to(
         particlesRef.current,
         {
-          opacity: (i) => gsap.utils.random(0.4, 0.95),
           y: '-=100',
           stagger: 0.02,
           duration: 1,
         },
-        '<=0.2'
+        0
       )
 
       scrollTl.to(
@@ -129,7 +121,7 @@ function ProShowsPage({ embedded = false }) {
           duration: 3,
           ease: 'power2.inOut',
         },
-        '>'
+        0
       )
 
       scrollTl.to(
@@ -139,7 +131,7 @@ function ProShowsPage({ embedded = false }) {
           scale: 0.2,
           duration: 2,
         },
-        '<=1'
+        1
       )
 
       scrollTl.to(
@@ -190,9 +182,20 @@ function ProShowsPage({ embedded = false }) {
           },
           '<+0.2'
         )
+
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
     }, pinWrapperRef)
 
-    return () => ctx.revert()
+    const refreshRaf = requestAnimationFrame(() => {
+      ScrollTrigger.sort()
+      ScrollTrigger.refresh()
+    })
+
+    return () => {
+      cancelAnimationFrame(refreshRaf)
+      ctx.revert()
+    }
   }, [])
 
   return (
@@ -208,7 +211,7 @@ function ProShowsPage({ embedded = false }) {
           <h1
             ref={h1Ref}
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(225,157,0,0.35)]"
+            className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight drop-shadow-[0_0_30px_rgba(212,175,55,0.35)]"
           >
             Pro Show
           </h1>
@@ -220,13 +223,13 @@ function ProShowsPage({ embedded = false }) {
           {/* Ambient Glow */}
           <div
             ref={glowRef}
-            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(225,157,0,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl opacity-0"
+            className="pointer-events-none absolute h-[400px] w-[650px] rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.35)_0%,rgba(0,0,0,0)_70%)] blur-3xl"
           />
 
           {/* Ground Shadow */}
           <div
             ref={shadowRef}
-            className="pointer-events-none absolute bottom-2 h-[50px] w-[300px] lg:w-[550px] rounded-[100%] bg-black/95 blur-xl opacity-0"
+            className="pointer-events-none absolute bottom-2 h-[50px] w-[300px] lg:w-[550px] rounded-[100%] bg-black/95 blur-xl"
           />
 
           {/* Golden Spangles */}
@@ -235,17 +238,7 @@ function ProShowsPage({ embedded = false }) {
               <div
                 key={i}
                 ref={(el) => { particlesRef.current[i] = el }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
-              />
-            ))}
-          </div>
-          {/* Golden Spangles */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-            {Array.from({ length: 16 }).map((_, i) => (
-              <div
-                key={i}
-                ref={(el) => { particlesRef.current[i] = el }}
-                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#e19d00] opacity-0"
+                className="absolute h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_12px_#D4AF37]"
               />
             ))}
           </div>
@@ -254,7 +247,7 @@ function ProShowsPage({ embedded = false }) {
           <div className="perspective-[1400px] z-10 w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[780px]">
             <div
               ref={cardWrapperRef}
-              className="transform-style-3d relative w-full rounded-2xl opacity-0"
+              className="transform-style-3d relative w-full rounded-2xl"
             >
               {/* Flip Container */}
               <div
@@ -310,7 +303,7 @@ function ProShowsPage({ embedded = false }) {
         >
           <h2
             style={{ fontFamily: "'Clash Display', sans-serif" }}
-            className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(225,157,0,0.3)]"
+            className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient drop-shadow-[0_0_20px_rgba(212,175,55,0.3)]"
           >
             {artistName}
           </h2>
@@ -326,32 +319,68 @@ function ProShowsPage({ embedded = false }) {
           ProShow Guidelines & FAQ
         </h2>
         <div className="mt-10 flex flex-col gap-4">
-          {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-xl border border-gold/20 bg-black/40 backdrop-blur-md transition-colors duration-300 hover:border-gold/40"
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="flex w-full items-center justify-between p-6 text-left"
+          {faqs.map((faq, i) => {
+            const isOpen = openFaq === i;
+            return (
+              <div
+                key={i}
+                className={`overflow-hidden rounded-xl border backdrop-blur-md transition-all duration-400 ease-out ${
+                  isOpen
+                    ? 'border-[#FFDB86]/60 bg-black/75 shadow-[0_4px_25px_rgba(212,175,55,0.15)]'
+                    : 'border-gold/20 bg-black/40 hover:border-gold/40 hover:bg-black/55'
+                }`}
               >
-                <span 
-                  style={{ fontFamily: "'Clash Display', sans-serif" }}
-                  className="text-sm font-semibold uppercase tracking-wider text-white"
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between p-5 md:p-6 text-left cursor-pointer transition-colors duration-300 select-none"
+                  aria-expanded={isOpen}
                 >
-                  {faq.q}
-                </span>
-                <span className="ml-4 text-xl text-gold">
-                  {openFaq === i ? '−' : '+'}
-                </span>
-              </button>
-              {openFaq === i && (
-                <div className="border-t border-gold/10 px-6 pb-6 pt-2 text-sm leading-relaxed text-white/60">
-                  {faq.a}
+                  <span 
+                    style={{ fontFamily: "'Clash Display', sans-serif" }}
+                    className={`text-xs md:text-sm font-semibold uppercase tracking-wider transition-colors duration-300 ${
+                      isOpen ? 'text-[#FFDB86]' : 'text-white'
+                    }`}
+                  >
+                    {faq.q}
+                  </span>
+                  <span 
+                    className={`ml-4 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen 
+                        ? 'rotate-45 border-[#FFDB86] bg-gold/20 text-[#FFDB86] shadow-[0_0_12px_rgba(255,219,134,0.4)]' 
+                        : 'rotate-0 border-gold/30 bg-black/30 text-gold hover:border-gold/60'
+                    }`}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="14" 
+                      height="14" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    >
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="border-t border-gold/10 px-5 pb-5 pt-3 md:px-6 md:pb-6 md:pt-3 text-xs md:text-sm leading-relaxed text-white/70">
+                      {faq.a}
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </section>
 

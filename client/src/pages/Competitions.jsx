@@ -90,7 +90,7 @@ function Competitions({ embedded = false }) {
     }
 
     const handleWheel = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
       if (delta > 0 && activeRef.current < competitions.length - 1) {
         e.preventDefault()
@@ -102,12 +102,12 @@ function Competitions({ embedded = false }) {
     }
 
     const handleTouchStart = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       el._touchY = e.touches[0].clientY
     }
 
     const handleTouchEnd = (e) => {
-      if (!isInView()) return
+      if (slug || e.target.closest('[data-lenis-prevent]') || !isInView()) return
       const dy = e.changedTouches[0].clientY - el._touchY
       if (Math.abs(dy) > 30) {
         navigate(dy < 0 ? 1 : -1)
@@ -217,13 +217,6 @@ function Competitions({ embedded = false }) {
             >
               <span className="relative inline-block">
                 <span className="relative z-10 competitions-text">COMPETITIONS</span>
-                <img
-                  ref={sparkleRef}
-                  src="/workshops/shine.svg"
-                  alt=""
-                  aria-hidden="true"
-                  className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(44px,8vw,120px)] md:w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
-                />
               </span>
             </h1>
           </div>
@@ -231,13 +224,13 @@ function Competitions({ embedded = false }) {
           {/* Details: Exact Original on Laptop, Responsive Full-Height Card on Mobile */}
           <div
             ref={detailRef}
-            className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-gradient-to-b from-black/80 via-black/60 to-black/90 md:bg-transparent backdrop-blur-2xl md:backdrop-blur-none shadow-[0_0_50px_rgba(225,157,0,0.15)] md:shadow-none min-h-[330px] md:min-h-0"
+            className="relative flex-1 md:flex-initial w-full max-w-[440px] md:max-w-none md:border-l-2 md:border-gold/30 md:pl-6 flex flex-col justify-between md:justify-start items-center md:items-start my-2 md:my-0 md:mt-4 p-6 sm:p-8 md:p-0 rounded-3xl md:rounded-none border md:border-0 border-gold/30 md:border-transparent bg-transparent min-h-[330px] md:min-h-0"
           >
             {/* Mobile Luminous Corner Reticles */}
-            <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -top-1.5 -right-1.5 h-4 w-4 border-t-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#e19d00]" />
-            <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#e19d00]" />
+            <span className="md:hidden absolute -top-1.5 -left-1.5 h-4 w-4 border-t-2 border-l-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -top-1.5 -right-1.5 h-4 w-4 border-t-2 border-r-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -bottom-1.5 -left-1.5 h-4 w-4 border-b-2 border-l-2 border-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="md:hidden absolute -bottom-1.5 -right-1.5 h-4 w-4 border-b-2 border-r-2 border-gold shadow-[0_0_10px_#D4AF37]" />
 
             {/* Mobile Event Tag & Title */}
             <div className="flex flex-col items-center md:items-start w-full">
@@ -265,7 +258,7 @@ function Competitions({ embedded = false }) {
                 ref={registerBtnRef}
                 type="button"
                 onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
+                className="w-full sm:w-auto inline-flex justify-center items-center gap-3 border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#D4AF37] px-6 py-3 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:px-8 md:py-3.5 md:text-sm cursor-pointer"
                 style={{ borderRadius: '50px' }}
               >
                 View Details
@@ -296,7 +289,7 @@ function Competitions({ embedded = false }) {
               className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === 0
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)]'
               }`}
               aria-label="Previous competition"
             >
@@ -311,7 +304,7 @@ function Competitions({ embedded = false }) {
                   onClick={() => setActiveIndex(i)}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     i === activeIndex
-                      ? 'w-8 bg-gold shadow-[0_0_12px_#e19d00]'
+                      ? 'w-8 bg-gold shadow-[0_0_12px_#D4AF37]'
                       : 'w-2 bg-white/20 hover:bg-white/40'
                   }`}
                   aria-label={`Go to competition ${i + 1}`}
@@ -326,7 +319,7 @@ function Competitions({ embedded = false }) {
               className={`flex h-11 w-11 items-center justify-center rounded-full border text-base transition-all duration-200 cursor-pointer ${
                 activeIndex === competitions.length - 1
                   ? 'border-white/10 text-white/20'
-                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(225,157,0,0.2)]'
+                  : 'border-gold/60 text-gold hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)]'
               }`}
               aria-label="Next competition"
             >

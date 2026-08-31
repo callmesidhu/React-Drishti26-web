@@ -337,7 +337,7 @@ function About({ embedded = false }) {
         <a
           ref={ctaBtnRef}
           href="/daksha"
-          className="mt-8 inline-flex items-center gap-3 border border-gold bg-gold px-10 py-4 text-sm font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)]"
+          className="mt-8 inline-flex items-center gap-3 border border-gold bg-gold px-10 py-4 text-sm font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]"
           style={{ borderRadius: '50px', opacity: 0 }}
         >
           Explore Events

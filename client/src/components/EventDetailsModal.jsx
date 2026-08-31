@@ -73,10 +73,15 @@ function EventDetailsModal({ event, onClose }) {
   return (
     <div
       ref={overlayRef}
+      data-lenis-prevent="true"
+      onWheel={(e) => e.stopPropagation()}
+      onTouchStart={(e) => e.stopPropagation()}
+      onTouchMove={(e) => e.stopPropagation()}
+      onTouchEnd={(e) => e.stopPropagation()}
       onClick={(e) => {
         if (e.target === overlayRef.current) handleClose()
       }}
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/90 px-4 py-8 backdrop-blur-2xl"
+      className="fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden bg-black/90 p-4 sm:p-6 md:p-8 backdrop-blur-2xl touch-pan-y overscroll-contain"
       style={{
         backgroundImage: isBlue
           ? 'linear-gradient(rgba(56, 189, 248, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.05) 1px, transparent 1px)'
@@ -89,15 +94,15 @@ function EventDetailsModal({ event, onClose }) {
         type="button"
         onClick={handleClose}
         aria-label="Close details"
-        className={`fixed top-6 right-6 z-[110] flex h-12 w-12 items-center justify-center rounded-full border bg-black/80 transition-all duration-300 hover:scale-110 hover:text-black ${
+        className={`fixed top-4 right-4 sm:top-6 sm:right-6 z-[110] flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border bg-black/80 transition-all duration-300 hover:scale-110 hover:text-black cursor-pointer ${
           isBlue
             ? 'border-sky-400/40 text-sky-400 hover:border-sky-400 hover:bg-sky-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)]'
-            : 'border-gold/40 text-gold hover:border-gold hover:bg-gold hover:shadow-[0_0_20px_rgba(225,157,0,0.6)]'
+            : 'border-gold/40 text-gold hover:border-gold hover:bg-gold hover:shadow-[0_0_20px_rgba(212,175,55,0.6)]'
         }`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
+          className="h-5 w-5 sm:h-6 sm:w-6"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -107,13 +112,22 @@ function EventDetailsModal({ event, onClose }) {
         </svg>
       </button>
 
-      {/* Main Container */}
+      {/* Inner Centering Wrapper */}
       <div
-        ref={containerRef}
-        className={`relative my-auto w-full max-w-[1100px] rounded-2xl border bg-black/75 p-6 shadow-[0_0_80px_rgba(0,0,0,0.95)] backdrop-blur-xl md:p-10 ${
-          isBlue ? 'border-sky-500/20' : 'border-gold/20'
-        }`}
+        data-lenis-prevent="true"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) handleClose()
+        }}
+        className="flex min-h-full w-full items-center justify-center py-6 sm:py-10"
       >
+        {/* Main Container */}
+        <div
+          ref={containerRef}
+          data-lenis-prevent="true"
+          className={`relative w-full max-w-[1100px] rounded-2xl border bg-black/75 p-6 shadow-[0_0_80px_rgba(0,0,0,0.95)] backdrop-blur-xl md:p-10 ${
+            isBlue ? 'border-sky-500/20' : 'border-gold/20'
+          }`}
+        >
         {/* Top Centered Header */}
         <div className="mb-8 flex flex-col items-center justify-center text-center">
           <h2
@@ -174,7 +188,7 @@ function EventDetailsModal({ event, onClose }) {
                     <div key={idx} className="flex items-start gap-3">
                       <span
                         className={`mt-1.5 block h-1.5 w-1.5 shrink-0 rotate-45 ${
-                          isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#e19d00]'
+                          isBlue ? 'bg-sky-400 shadow-[0_0_6px_#38bdf8]' : 'bg-gold shadow-[0_0_6px_#D4AF37]'
                         }`}
                       />
                       <span className="text-xs leading-relaxed md:text-sm text-white/85">
@@ -204,7 +218,7 @@ function EventDetailsModal({ event, onClose }) {
                 className={`inline-block rounded-none border bg-transparent px-10 py-3.5 text-xs font-bold uppercase tracking-[4px] transition-all duration-300 hover:text-black ${
                   isBlue
                     ? 'border-sky-400 text-sky-400 hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]'
-                    : 'border-gold text-gold hover:bg-gold hover:shadow-[0_0_30px_rgba(225,157,0,0.6)]'
+                    : 'border-gold text-gold hover:bg-gold hover:shadow-[0_0_30px_rgba(212,175,55,0.6)]'
                 }`}
               >
                 REGISTER
@@ -217,21 +231,21 @@ function EventDetailsModal({ event, onClose }) {
             <div className="relative aspect-[4/5] w-full max-w-[340px] p-2">
               {/* Luminous Corner Brackets */}
               <span className={`pointer-events-none absolute -top-1.5 -left-1.5 h-6 w-6 border-t-2 border-l-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -top-1.5 -right-1.5 h-6 w-6 border-t-2 border-r-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -bottom-1.5 -left-1.5 h-6 w-6 border-b-2 border-l-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
               <span className={`pointer-events-none absolute -bottom-1.5 -right-1.5 h-6 w-6 border-b-2 border-r-2 ${
-                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#e19d00]'
+                isBlue ? 'border-sky-400 shadow-[0_0_12px_#38bdf8]' : 'border-gold shadow-[0_0_12px_#D4AF37]'
               }`} />
 
               {/* Poster Box */}
               <div className={`relative h-full w-full overflow-hidden border bg-black/60 ${
-                isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 shadow-[0_0_50px_rgba(225,157,0,0.25)]'
+                isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 shadow-[0_0_50px_rgba(212,175,55,0.25)]'
               }`}>
                 <img
                   ref={posterRef}
@@ -245,7 +259,8 @@ function EventDetailsModal({ event, onClose }) {
         </div>
       </div>
     </div>
-  )
+  </div>
+)
 }
 
 export default EventDetailsModal
