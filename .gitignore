@@ -45,3 +45,9 @@ coverage/
 # Caches
 .cache/
 .tmp/
+
+# python
+db.sqlite3
+__pycache__/
+*.py[cod]
+api.http

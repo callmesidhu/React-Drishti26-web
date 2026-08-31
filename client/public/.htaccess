@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Disable directory listing
+  Options -Indexes
+
+  # If the requested resource is an existing file, serve it directly
+  RewriteCond %{REQUEST_FILENAME} -f
+  RewriteRule ^ - [L]
+
+  # For all other requests (routes, directory paths), send to index.html for React Router
+  RewriteRule ^ index.html [L]
+</IfModule>

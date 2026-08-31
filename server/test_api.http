@@ -1,0 +1,32 @@
+
+
+# Leaderboard
+GET http://127.0.0.1:8000/api/ambassador/leaderboard/ HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# To add points
+POST http://127.0.0.1:8000/api/ambassador/add_points/ HTTP/1.1
+content-type: application/json
+Authorization: Api-Key <api_key>
+
+{
+    "referral_code": "GEC090"
+}
+
+###
+
+
+# To add campus ambassodors
+POST http://127.0.0.1:8000/api/ambassador/add/ HTTP/1.1
+content-type: application/json
+Authorization: Api-Key <api_key>
+
+{
+    "name": "John Abraham",
+    "college": "GEC Thrissur",
+    "referral_code": "GEC090"
+}
