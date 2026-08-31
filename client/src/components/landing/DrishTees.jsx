@@ -29,12 +29,12 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute right-0 z-0 h-[185%] w-[110%] max-w-[none] object-cover object-right opacity-95"
+              className="pointer-events-none absolute right-0 z-0 h-[240%] w-[110%] max-w-[none] object-cover object-right opacity-95"
               style={{ 
-                top: '-25%',
+                top: '-40%',
                 transform: 'scaleX(1)',
-                maskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)',
-                WebkitMaskImage: 'linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%)'
+                maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%)'
               }}
             />
 
