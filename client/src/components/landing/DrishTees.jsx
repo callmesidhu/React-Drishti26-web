@@ -18,7 +18,7 @@ export default function DrishTees() {
               src="/home/tshirt-front.png"
               alt="Drishti T-shirt"
               className="relative z-10 h-[78%] w-auto max-w-[520px] object-contain"
-              style={{ transform: 'translateY(-34px)', animation: 'float 7s ease-in-out infinite' }}
+              style={{ transform: 'translateY(-80px)', animation: 'float 7s ease-in-out infinite' }}
             />
           </div>
 
@@ -27,7 +27,8 @@ export default function DrishTees() {
               src="/home/circle-half.png"
               alt=""
               aria-hidden="true"
-              className="pointer-events-none absolute inset-y-0 right-0 z-0 h-full w-auto max-w-[none] object-contain object-right opacity-95"
+              className="pointer-events-none absolute inset-y-0 right-0 z-0 h-[101%] w-[102%] max-w-[none] object-cover object-right opacity-95"
+              style={{ transform: 'scaleX(1.0)' }}
             />
 
             <div className="relative z-10 w-full max-w-[560px] px-2 text-center lg:px-0 lg:pr-10 lg:text-left">
@@ -44,7 +45,7 @@ export default function DrishTees() {
 
 <style>{`
   @keyframes float {
-    0%, 100% { transform: translateY(-34px); }
-    50% { transform: translateY(-42px); }
+    0%, 100% { transform: translateY(-80px); }
+    50% { transform: translateY(-92px); }
   }
 `}</style>
