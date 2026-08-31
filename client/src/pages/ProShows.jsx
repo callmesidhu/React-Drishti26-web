@@ -319,32 +319,68 @@ function ProShowsPage({ embedded = false }) {
           ProShow Guidelines & FAQ
         </h2>
         <div className="mt-10 flex flex-col gap-4">
-          {faqs.map((faq, i) => (
-            <div
-              key={i}
-              className="overflow-hidden rounded-xl border border-gold/20 bg-black/40 backdrop-blur-md transition-colors duration-300 hover:border-gold/40"
-            >
-              <button
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="flex w-full items-center justify-between p-6 text-left"
+          {faqs.map((faq, i) => {
+            const isOpen = openFaq === i;
+            return (
+              <div
+                key={i}
+                className={`overflow-hidden rounded-xl border backdrop-blur-md transition-all duration-400 ease-out ${
+                  isOpen
+                    ? 'border-[#FFDB86]/60 bg-black/75 shadow-[0_4px_25px_rgba(225,157,0,0.15)]'
+                    : 'border-gold/20 bg-black/40 hover:border-gold/40 hover:bg-black/55'
+                }`}
               >
-                <span 
-                  style={{ fontFamily: "'Clash Display', sans-serif" }}
-                  className="text-sm font-semibold uppercase tracking-wider text-white"
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between p-5 md:p-6 text-left cursor-pointer transition-colors duration-300 select-none"
+                  aria-expanded={isOpen}
                 >
-                  {faq.q}
-                </span>
-                <span className="ml-4 text-xl text-gold">
-                  {openFaq === i ? '−' : '+'}
-                </span>
-              </button>
-              {openFaq === i && (
-                <div className="border-t border-gold/10 px-6 pb-6 pt-2 text-sm leading-relaxed text-white/60">
-                  {faq.a}
+                  <span 
+                    style={{ fontFamily: "'Clash Display', sans-serif" }}
+                    className={`text-xs md:text-sm font-semibold uppercase tracking-wider transition-colors duration-300 ${
+                      isOpen ? 'text-[#FFDB86]' : 'text-white'
+                    }`}
+                  >
+                    {faq.q}
+                  </span>
+                  <span 
+                    className={`ml-4 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                      isOpen 
+                        ? 'rotate-45 border-[#FFDB86] bg-gold/20 text-[#FFDB86] shadow-[0_0_12px_rgba(255,219,134,0.4)]' 
+                        : 'rotate-0 border-gold/30 bg-black/30 text-gold hover:border-gold/60'
+                    }`}
+                  >
+                    <svg 
+                      xmlns="http://www.w3.org/2000/svg" 
+                      width="14" 
+                      height="14" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    >
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  className={`grid transition-[grid-template-rows,opacity] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <div className="border-t border-gold/10 px-5 pb-5 pt-3 md:px-6 md:pb-6 md:pt-3 text-xs md:text-sm leading-relaxed text-white/70">
+                      {faq.a}
+                    </div>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </section>
 

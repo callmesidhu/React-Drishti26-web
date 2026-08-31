@@ -30,11 +30,7 @@ const NOISE_BACKGROUND =
 
 const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
 
-const workshopItems = [
-  { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
-  { title: "COMPETITIONS", image: categoriesPhoto, rotate: 11.17 },
-  { title: "PRO SHOWS", image: categoriesPhoto, rotate: -11.17 },
-];
+
 
 const featuredEvents = [
   dakshaEventsData[0],
@@ -58,16 +54,11 @@ const drishtiGalleryImages = [
 ];
 
 function Home() {
-  const [activeWorkshopItem, setActiveWorkshopItem] = useState("");
-  const [hoveredCategoryIndex, setHoveredCategoryIndex] = useState(null);
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [carouselStep, setCarouselStep] = useState(412);
   const [activeModalEvent, setActiveModalEvent] = useState(null);
   const [activeCoreValueIndex, setActiveCoreValueIndex] = useState(0);
 
-  const categoryImageRef = useRef(null);
-  const categoryListRef = useRef(null);
-  const itemRefs = useRef([]);
   const carouselCardRef = useRef(null);
   const carouselContainerRef = useRef(null);
 
@@ -91,8 +82,6 @@ function Home() {
   const coreValuesRef = useRef([]);
   const ideasVectorLineRef = useRef(null);
   const mobileCoreWrapperRef = useRef(null);
-  const categoryTitleRefs = useRef([]);
-  const categoryBordersRef = useRef([]);
   const featuredHeadingRef = useRef(null);
   const featuredParagraphRef = useRef(null);
   const featuredCardsRef = useRef([]);
@@ -102,12 +91,6 @@ function Home() {
   const aftermovieTitleRightRef = useRef(null);
   const aftermovieLogoRef = useRef(null);
   const aftermovieGridRef = useRef(null);
-  const ctaDrishtiRef = useRef(null);
-  const ctaTitle1Ref = useRef(null);
-  const ctaTitle2Ref = useRef(null);
-  const ctaButtonRef = useRef(null);
-  const ctaBorderRef = useRef(null);
-  const ctaParticlesRef = useRef(null);
 
   const splitText = (text, ref) => {
     if (!ref.current) return [];
@@ -145,58 +128,7 @@ function Home() {
     return particles;
   };
 
-  const handleWorkshopItemClick = (title, index) => {
-    setActiveWorkshopItem(title);
-    if (window.innerWidth < 768) {
-      setHoveredCategoryIndex((current) => (current === index ? null : index));
-    }
-  };
 
-  const handleCategoryInteraction = (index) => {
-    setHoveredCategoryIndex(index);
-  };
-
-  const handleCategoryLeave = (index) => {
-    setHoveredCategoryIndex((current) => (current === index ? null : current));
-  };
-
-  useEffect(() => {
-    const el = categoryImageRef.current;
-    if (!el || !categoryListRef.current) return;
-    if (window.innerWidth < 768) return;
-
-    gsap.killTweensOf(el);
-
-    if (hoveredCategoryIndex !== null && itemRefs.current[hoveredCategoryIndex]) {
-      const itemEl = itemRefs.current[hoveredCategoryIndex];
-      const listRect = categoryListRef.current.getBoundingClientRect();
-      const sectionRect = categoryListRef.current.parentElement.getBoundingClientRect();
-      const itemRect = itemEl.getBoundingClientRect();
-      const arrowButtonWidth = itemEl.lastElementChild?.getBoundingClientRect().width ?? 0;
-      const imageWidth = el.getBoundingClientRect().width;
-
-      const top = itemRect.top - listRect.top + (itemRect.height / 2) - 150;
-      const preferredLeft = itemRect.left - sectionRect.left + (itemRect.width / 2) + 150;
-      const maxLeft = listRect.right - sectionRect.left - arrowButtonWidth - 24 - imageWidth;
-      const left = Math.min(preferredLeft, maxLeft);
-      const { rotate: targetRotate } = workshopItems[hoveredCategoryIndex];
-
-      gsap.fromTo(el,
-        { opacity: 0, scale: 0.85, rotate: 0, top, left },
-        { opacity: 1, scale: 1, rotate: targetRotate, top, left, duration: 0.55, ease: "power3.out" }
-      );
-
-      gsap.to(el, {
-        y: "+=10",
-        duration: 2,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
-    } else {
-      gsap.to(el, { opacity: 0, scale: 0.85, rotate: 0, duration: 0.35, ease: "power2.in" });
-    }
-  }, [hoveredCategoryIndex]);
 
   useEffect(() => {
     if (!carouselCardRef.current || !carouselContainerRef.current) return;
@@ -384,54 +316,7 @@ function Home() {
 
 
 
-      // CTA
-      gsap.fromTo(ctaDrishtiRef.current,
-        { scale: 0.2, opacity: 0, y: 150, rotation: -5 },
-        {
-          scale: 1, opacity: 1, y: 0, rotation: 0, duration: 1.5, ease: "elastic.out(1, 0.4)",
-          scrollTrigger: { trigger: ctaDrishtiRef.current, start: "top 90%", end: "top 50%", scrub: 1 }
-        }
-      );
 
-      gsap.fromTo(ctaTitle1Ref.current,
-        { x: -120, opacity: 0, skewX: 25 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, ease: "power4.out",
-          scrollTrigger: { trigger: ctaTitle1Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
-        }
-      );
-
-      gsap.fromTo(ctaTitle2Ref.current,
-        { x: 120, opacity: 0, skewX: -25 },
-        {
-          x: 0, opacity: 1, skewX: 0, duration: 1, delay: 0.2, ease: "power4.out",
-          scrollTrigger: { trigger: ctaTitle2Ref.current, start: "top 85%", toggleActions: "play none none reverse" }
-        }
-      );
-
-      gsap.fromTo(ctaBorderRef.current,
-        { scaleX: 0, boxShadow: "0 0 0px rgba(255,193,50,0)" },
-        {
-          scaleX: 1, boxShadow: "0 0 30px rgba(255,193,50,0.6)", duration: 1.5, ease: "power2.inOut",
-          scrollTrigger: { trigger: ctaBorderRef.current, start: "top 85%", toggleActions: "play none none reverse" }
-        }
-      );
-
-      gsap.fromTo(ctaButtonRef.current,
-        { y: 60, opacity: 0, scale: 0.8, borderRadius: "100px" },
-        {
-          y: 0, opacity: 1, scale: 1, borderRadius: "50px", duration: 1, ease: "elastic.out(1, 0.4)",
-          scrollTrigger: { trigger: ctaButtonRef.current, start: "top 95%", toggleActions: "play none none reverse" }
-        }
-      );
-
-      const ctaParticles = createParticles(ctaParticlesRef.current, 25, ["#e19d00", "#ffd700", "#ffffff"]);
-      ctaParticles.forEach((particle) => {
-        gsap.fromTo(particle,
-          { opacity: 0, scale: 0, y: 50 },
-          { opacity: Math.random() * 0.5 + 0.3, scale: 1, y: 0, duration: Math.random() * 2 + 1, delay: Math.random() * 2, ease: "power2.out" }
-        );
-      });
 
       // Synchronize all triggers in DOM order
       ScrollTrigger.sort();
@@ -894,59 +779,7 @@ function Home() {
         </div>
       </section>
 
-      {/* ============ EVENT CATEGORIES ============ */}
-      <section className="relative min-h-[clamp(600px,86vw,1250px)] w-full bg-black flex items-center justify-center py-20 overflow-hidden" aria-label="Event categories">
-        <div
-          ref={categoryListRef}
-          className="relative flex w-full max-w-[1440px] px-[clamp(20px,5vw,71px)] flex-col items-start gap-[clamp(20px,3.2vw,47px)] z-10"
-          aria-label="Available event categories"
-        >
-          {workshopItems.map((item, index) => (
-            <div
-              key={item.title}
-              ref={(el) => {
-                itemRefs.current[index] = el;
-                categoryTitleRefs.current[index] = el;
-              }}
-              className="relative min-h-[clamp(80px,7.8vw,113px)] w-full self-stretch border-b border-white flex items-center justify-between group"
-              onMouseEnter={() => handleCategoryInteraction(index)}
-              onMouseLeave={() => handleCategoryLeave(index)}
-              onFocus={() => window.innerWidth >= 768 && handleCategoryInteraction(index)}
-              onBlur={() => window.innerWidth >= 768 && handleCategoryLeave(index)}
-            >
-              <button
-                type="button"
-                className={`all-unset text-left z-10 cursor-pointer bg-[linear-gradient(175deg,rgba(183,128,0,1)_0%,rgba(255,219,134,1)_45%,rgba(162,114,0,1)_65%,rgba(163,114,0,1)_79%,rgba(225,157,0,1)_92%)] bg-clip-text font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(32px,4.4vw,64px)] font-normal leading-[normal] tracking-[0] text-transparent [-webkit-background-clip:text] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-transform duration-300 ${hoveredCategoryIndex === index ? '-translate-x-4 md:-translate-x-8' : ''}`}
-                onClick={() => handleWorkshopItemClick(item.title, index)}
-                aria-pressed={activeWorkshopItem === item.title}
-              >
-                {item.title}
-              </button>
-              <button
-                type="button"
-                className="all-unset z-10 flex h-[clamp(40px,7.2vw,104px)] w-[clamp(40px,7.2vw,104px)] cursor-pointer items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300 hover:scale-125 hover:rotate-45"
-                onClick={() => handleWorkshopItemClick(item.title, index)}
-                aria-label={`View ${item.title.toLowerCase()}`}
-                aria-pressed={activeWorkshopItem === item.title}
-              >
-                <img
-                  className="h-[77.84%] w-[77.84%] transition-transform duration-300"
-                  alt=""
-                  aria-hidden="true"
-                  src={arrowDownRight}
-                />
-              </button>
-            </div>
-          ))}
-        </div>
-        <img
-          ref={categoryImageRef}
-          className="pointer-events-none absolute hidden h-[clamp(250px,30vw,443px)] w-[clamp(200px,24vw,358px)] object-cover opacity-0 z-20 shadow-2xl md:block"
-          alt={hoveredCategoryIndex !== null ? `${workshopItems[hoveredCategoryIndex].title} preview` : ""}
-          aria-hidden={hoveredCategoryIndex === null}
-          src={workshopItems[hoveredCategoryIndex ?? 0].image}
-        />
-      </section>
+
 
       {/* ============ FEATURED EVENTS ============ */}
       <section
@@ -1094,44 +927,7 @@ function Home() {
         </div>
       </section>
 
-      {/* ============ READY TO BUILD THE FUTURE? ============ */}
-      <section
-        className="relative flex min-h-[clamp(800px,97vw,1404px)] py-[clamp(100px,14vw,201px)] w-full flex-col items-center bg-black px-4 overflow-hidden"
-        aria-label="Registration call to action"
-      >
-        <div ref={ctaParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-0" />
 
-        <p
-          ref={ctaDrishtiRef}
-          className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,10.8vw,156px)] leading-none text-white text-center opacity-0 relative z-10"
-        >
-          DRISHTI
-        </p>
-        <div className="mt-[clamp(40px,6.8vw,98px)] w-full max-w-[715px] text-center overflow-hidden relative z-10">
-          <p
-            ref={ctaTitle1Ref}
-            className="m-0 font-['Clash_Display-Medium',Helvetica] text-[clamp(40px,5vw,72px)] leading-[normal] tracking-[1.44px] text-white opacity-0"
-          >
-            READY TO BUILD
-          </p>
-          <p
-            ref={ctaTitle2Ref}
-            className="m-0 font-['Clash_Display-Medium',Helvetica] text-[clamp(40px,5vw,72px)] leading-[normal] tracking-[1.44px] text-white opacity-0"
-          >
-            THE FUTURE?
-          </p>
-        </div>
-        <div ref={ctaBorderRef} className="w-full max-w-[514px] h-[2px] bg-[#ffc132] mt-[clamp(40px,6.3vw,91px)] relative z-10" style={{ transformOrigin: "center", boxShadow: "0 0 0px rgba(255,193,50,0)" }} />
-        <a
-          ref={ctaButtonRef}
-          href="#register"
-          className="mt-8 flex h-[clamp(60px,7vw,103px)] w-full max-w-[514px] items-center justify-center rounded-[50px] border-2 border-solid border-[#ffc132] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white transition-all duration-300 hover:bg-[#ffc132]/10 hover:scale-105 active:scale-95 opacity-0 relative z-10"
-        >
-          <span className="bg-gradient-to-b from-[#ffc746] via-[52.404%] via-[#ffd779] to-[#8d6200] bg-clip-text text-center font-['Clash_Display-Medium',Helvetica] text-[clamp(24px,2.7vw,40px)] leading-[normal] text-transparent">
-            Register Now
-          </span>
-        </a>
-      </section>
 
       <Footer />
 
