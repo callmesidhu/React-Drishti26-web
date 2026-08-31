@@ -26,10 +26,32 @@ function Footer() {
   }, [])
 
   const socials = [
-    { name: 'Instagram', href: 'https://instagram.com', label: 'Instagram' },
+    { name: 'YouTube', href: 'https://youtube.com', label: 'YouTube' },
     { name: 'LinkedIn', href: 'https://linkedin.com', label: 'LinkedIn' },
-    { name: 'X', href: 'https://x.com', label: 'X' },
+    { name: 'Instagram', href: 'https://instagram.com', label: 'Instagram' },
   ]
+
+  const SocialIcon = ({ name }) => {
+    const icons = {
+      YouTube: (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+          <path d="M23.5 6.2a3.03 3.03 0 0 0-2.13-2.14C19.48 3.5 12 3.5 12 3.5s-7.48 0-9.37.56A3.03 3.03 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3.03 3.03 0 0 0 2.13 2.14c1.89.56 9.37.56 9.37.56s7.48 0 9.37-.56a3.03 3.03 0 0 0 2.13-2.14A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.75 15.5v-7l6.25 3.5-6.25 3.5Z" />
+        </svg>
+      ),
+      LinkedIn: (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+          <path d="M6.94 8.5A1.56 1.56 0 1 1 6.94 5.4a1.56 1.56 0 0 1 0 3.1ZM5.5 9.78h2.9V18H5.5V9.78Zm4.7 0h2.77v1.13h.04c.38-.73 1.33-1.5 2.74-1.5 2.94 0 3.48 1.93 3.48 4.43V18h-2.9v-16c0-1.13-.02-2.58-1.57-2.58-1.58 0-1.82 1.23-1.82 2.5V18h-2.9V9.78Z" />
+        </svg>
+      ),
+      Instagram: (
+        <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
+          <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2Zm0 1.8A3.95 3.95 0 0 0 3.8 7.75v8.5A3.95 3.95 0 0 0 7.75 20.2h8.5a3.95 3.95 0 0 0 3.95-3.95v-8.5A3.95 3.95 0 0 0 16.25 3.8h-8.5Zm8.97 2.45a1.12 1.12 0 1 1 0 2.24 1.12 1.12 0 0 1 0-2.24ZM12 6.5A5.5 5.5 0 1 1 12 17.5 5.5 5.5 0 0 1 12 6.5Zm0 1.8A3.7 3.7 0 1 0 12 16.7a3.7 3.7 0 0 0 0-7.4Z" />
+        </svg>
+      ),
+    }
+
+    return icons[name] || null
+  }
 
   return (
     <footer
@@ -82,6 +104,21 @@ function Footer() {
                   </a>
                   <p className="text-white/80">Gautam KJ: +91 85905 40376</p>
                   <p className="text-white/80">Convenor, Drishti'26</p>
+
+                  <div className="mt-4 flex items-center gap-3 pt-1">
+                    {socials.map((social) => (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={social.label}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white/80 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#d8a52a] hover:text-[#d8a52a]"
+                      >
+                        <SocialIcon name={social.name} />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -134,7 +171,7 @@ function Footer() {
           <div
             className="relative h-[180px] w-full overflow-hidden sm:h-[200px] md:h-[220px] lg:h-[260px] xl:h-[295px]"
             style={{
-              backgroundImage: "url('/home/footer.jpg.jpeg')",
+              backgroundImage: "url('/home/footer.jpg.webp')",
               backgroundSize: '100% 100%',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
