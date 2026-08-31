@@ -96,11 +96,6 @@ function Contact() {
           <div ref={leftColRef} className="flex flex-col justify-between gap-5 lg:col-span-5">
             {/* Convenor Card */}
             <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
-              <span className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-
               <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
                 <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
                 Convenor, Drishti&apos;26
@@ -143,11 +138,6 @@ function Contact() {
 
             {/* Email Card */}
             <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
-              <span className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-
               <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
                 <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
                 Official Email
@@ -174,11 +164,6 @@ function Contact() {
 
             {/* Venue Address Card */}
             <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
-              <span className="absolute -top-1 -left-1 h-3 w-3 border-t-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -top-1 -right-1 h-3 w-3 border-t-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-              <span className="absolute -bottom-1 -right-1 h-3 w-3 border-b-2 border-r-2 border-gold shadow-[0_0_8px_#D4AF37]" />
-
               <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
                 <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
                 Venue Location
@@ -202,12 +187,6 @@ function Contact() {
             ref={rightColRef}
             className="relative flex flex-col rounded-2xl border border-gold/30 bg-black/80 p-3 md:p-4 backdrop-blur-2xl lg:col-span-7 shadow-[0_0_60px_rgba(0,0,0,0.8)]"
           >
-            {/* Luminous Reticles */}
-            <span className="absolute -top-1.5 -left-1.5 h-6 w-6 border-t-2 border-l-2 border-gold shadow-[0_0_12px_#D4AF37]" />
-            <span className="absolute -top-1.5 -right-1.5 h-6 w-6 border-t-2 border-r-2 border-gold shadow-[0_0_12px_#D4AF37]" />
-            <span className="absolute -bottom-1.5 -left-1.5 h-6 w-6 border-b-2 border-l-2 border-gold shadow-[0_0_12px_#D4AF37]" />
-            <span className="absolute -bottom-1.5 -right-1.5 h-6 w-6 border-b-2 border-r-2 border-gold shadow-[0_0_12px_#D4AF37]" />
-
             {/* Satellite Header Bar */}
             <div className="mb-2.5 flex items-center justify-between border-b border-white/10 px-2 pb-2.5 pt-1">
               <div className="flex items-center gap-2">

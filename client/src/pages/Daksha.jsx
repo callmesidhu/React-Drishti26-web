@@ -148,12 +148,7 @@ function Daksha() {
               </div>
 
               <div ref={eventImageRef} className="relative order-2 mt-4 md:mt-0 w-full max-w-[240px] md:max-w-[300px] mx-auto border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.25)]" style={{ opacity: 0 }}>
-                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-
-                <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
+                  <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
               </div>
 
               <div className="order-3 mt-4 md:mt-0 md:col-start-1 md:row-start-2">
