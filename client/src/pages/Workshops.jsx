@@ -121,8 +121,6 @@ function Workshops() {
       onComplete: () => {
         gsap.set(deck, { clearProps: 'position,top,left,width,height,x,y,rotate' })
         document.body.style.overflow = ''
-        setupScroll()
-        ScrollTrigger.refresh()
       },
     })
 
@@ -171,32 +169,52 @@ function Workshops() {
     }
   }, [])
 
-  function setupScroll() {
-    const section = sectionRef.current
-    if (!section || scrollTriggerRef.current) return
-
-    const scrollPerCard = 400
-
-    scrollTriggerRef.current = ScrollTrigger.create({
-      trigger: section,
-      start: 'top top',
-      end: () => `+=${(TOTAL - 1) * scrollPerCard}`,
-      pin: true,
-      scrub: 1,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => {
-        const progress = self.progress
-        const newIndex = Math.min(TOTAL - 1, Math.round(progress * (TOTAL - 1)))
-        if (newIndex !== activeIndexRef.current) {
-          transitionTo(newIndex)
-        }
-      },
-    })
-  }
-
   useEffect(() => {
+    const el = wrapperRef.current
+    if (!el) return
+
+    let touchStartY = 0
+    let lastTime = 0
+
+    const handleWheel = (e) => {
+      e.preventDefault()
+      const now = Date.now()
+      if (now - lastTime < 450) return
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
+      if (delta > 20) {
+        lastTime = now
+        const next = (activeIndexRef.current + 1) % TOTAL
+        transitionTo(next)
+      } else if (delta < -20) {
+        lastTime = now
+        const prev = (activeIndexRef.current - 1 + TOTAL) % TOTAL
+        transitionTo(prev)
+      }
+    }
+
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+    }
+
+    const handleTouchEnd = (e) => {
+      const dy = e.changedTouches[0].clientY - touchStartY
+      if (Math.abs(dy) > 30) {
+        if (dy < 0) {
+          transitionTo((activeIndexRef.current + 1) % TOTAL)
+        } else {
+          transitionTo((activeIndexRef.current - 1 + TOTAL) % TOTAL)
+        }
+      }
+    }
+
+    el.addEventListener('wheel', handleWheel, { passive: false })
+    el.addEventListener('touchstart', handleTouchStart, { passive: true })
+    el.addEventListener('touchend', handleTouchEnd, { passive: true })
+
     return () => {
-      if (scrollTriggerRef.current) scrollTriggerRef.current.kill()
+      el.removeEventListener('wheel', handleWheel)
+      el.removeEventListener('touchstart', handleTouchStart)
+      el.removeEventListener('touchend', handleTouchEnd)
     }
   }, [])
 
@@ -234,7 +252,6 @@ function Workshops() {
       setActiveIndex(newIndex)
 
       descRef.current.textContent = ws.description
-      btnRef.current.href = ws.registerUrl
 
       gsap.fromTo(titleRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.3 })
       gsap.fromTo(descRef.current, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.3, delay: 0.05 })
@@ -258,31 +275,31 @@ function Workshops() {
   const active = workshops[activeIndex]
 
   return (
-    <div ref={wrapperRef} className="relative w-full">
+    <div ref={wrapperRef} className="relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-center select-none touch-none">
       <Backdrop />
       <Navbar activeSection="workshops" />
 
       <section
         ref={sectionRef}
-        className="relative flex h-svh w-full items-center overflow-hidden px-[clamp(16px,4vw,40px)]"
+        className="relative flex h-full w-full items-center justify-center overflow-hidden px-[clamp(16px,4vw,40px)] pt-16"
       >
-        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-10 md:grid-cols-2 md:gap-16">
+        <div className="mx-auto grid w-full max-w-[1200px] items-center gap-6 md:grid-cols-2 md:gap-16">
           <div
             ref={textColRef}
-            className="order-2 flex flex-col gap-6 text-center md:order-1 md:text-left"
+            className="order-2 flex flex-col gap-3 md:gap-6 text-center md:order-1 md:text-left items-center md:items-start"
           >
-            <p className="text-[11px] uppercase tracking-[5px] text-gold/60">Drishti 2026</p>
+            <p className="text-[10px] md:text-[11px] uppercase tracking-[5px] text-gold/60">Drishti 2026</p>
 
             <h1
               ref={titleRef}
               style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-              className="text-[clamp(36px,6vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
+              className="text-[clamp(28px,5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
             >
             </h1>
 
             <p
               ref={descRef}
-              className="text-[clamp(14px,1.6vw,17px)] leading-[1.7] text-white/70"
+              className="text-xs md:text-[clamp(14px,1.6vw,17px)] leading-[1.6] text-white/70 max-w-[480px]"
             >
               {active.description}
             </p>
@@ -292,7 +309,7 @@ function Workshops() {
                 ref={btnRef}
                 type="button"
                 onClick={() => routerNavigate(`/workshops/${active.slug}`)}
-                className="inline-block rounded-full border border-gold bg-gold/10 px-10 py-3 text-xs font-semibold uppercase tracking-[3px] text-gold transition-all duration-300 hover:bg-gold hover:text-black hover:shadow-[0_0_30px_rgba(225,157,0,0.5)] cursor-pointer"
+                className="inline-flex items-center gap-2 rounded-none border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#E19D00] px-7 py-2.5 md:px-10 md:py-3.5 text-xs font-bold uppercase tracking-[2px] text-black shadow-[0_0_20px_rgba(225,157,0,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] cursor-pointer"
               >
                 View Details
               </button>
@@ -303,10 +320,11 @@ function Workshops() {
                 <button
                   key={ws.id}
                   ref={(el) => { dotsRef.current[i] = el }}
-                  className={`h-3 rounded-full transition-all duration-300 ${
+                  onClick={() => transitionTo(i)}
+                  className={`h-3 rounded-full transition-all duration-300 cursor-pointer ${
                     i === 0
                       ? 'w-10 bg-gold shadow-[0_0_12px_rgba(225,157,0,0.6)]'
-                      : 'w-3 bg-gold/30'
+                      : 'w-3 bg-gold/30 hover:bg-gold/60'
                   }`}
                   aria-label={`Go to workshop ${i + 1}`}
                 />
@@ -315,13 +333,13 @@ function Workshops() {
           </div>
 
           <div className="order-1 flex items-center justify-center md:order-2">
-            <div className="relative aspect-[4/5] w-full max-w-[250px] md:max-w-[360px]">
-              <div ref={deckRef} className="absolute inset-0" style={{ perspective: '1600px' }}>
+            <div className="relative aspect-[4/5] w-full max-w-[240px] md:max-w-[340px]">
+              <div ref={deckRef} className="absolute inset-0 cursor-pointer" style={{ perspective: '1600px' }} onClick={() => transitionTo((activeIndex + 1) % TOTAL)}>
                 {workshops.map((ws, i) => (
                   <div
                     key={ws.id}
                     ref={(el) => { cardRefs.current[i] = el }}
-                    className="absolute inset-0 overflow-hidden rounded-3xl border-2 border-white/15 bg-black/60 p-2 backdrop-blur-md will-change-transform"
+                    className="absolute inset-0 overflow-hidden rounded-3xl border-2 border-white/15 bg-black/60 p-2 backdrop-blur-md will-change-transform shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
                     style={{ transformOrigin: CARD_PIVOT }}
                   >
                     <img
@@ -336,8 +354,6 @@ function Workshops() {
           </div>
         </div>
       </section>
-
-      <div className="h-svh" />
 
       {/* View Details Popup Modal */}
       {selectedModalEvent && (

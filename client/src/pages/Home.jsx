@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProShows from "./ProShows";
 import EventDetailsModal from "../components/EventDetailsModal";
-import IdeasEmblem3D from "../components/IdeasEmblem";
 import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,7 +23,12 @@ const galleryImage3 = "/home/gallery-3.png";
 const galleryImage4 = "/home/gallery-4.png";
 const galleryImage5 = "/home/gallery-5.png";
 
-const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLENCE", "LEGACY"];
+// Static grain/noise texture — pure inline SVG, no external image request,
+// so there's nothing here that can fail to load or hang.
+const NOISE_BACKGROUND =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
+const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
 
 const workshopItems = [
   { title: "WORKSHOPS", image: categoriesPhoto, rotate: -11.17 },
@@ -53,11 +57,7 @@ function Home() {
   const [featuredIndex, setFeaturedIndex] = useState(0);
   const [carouselStep, setCarouselStep] = useState(412);
   const [activeModalEvent, setActiveModalEvent] = useState(null);
-  const [ideasModelGroup, setIdeasModelGroup] = useState(null);
-
-  const handleModelReady = useCallback((group) => {
-  setIdeasModelGroup(group);
-}, []);
+  const [introDone, setIntroDone] = useState(false);
 
   const categoryImageRef = useRef(null);
   const categoryListRef = useRef(null);
@@ -73,8 +73,12 @@ function Home() {
   const heroLine2Ref = useRef(null);
   const heroTitleRef = useRef(null);
   const heroParticlesRef = useRef(null);
+  const heroSectionRef = useRef(null);
+  const introOverlayRef = useRef(null);
+  const introTitleRef = useRef(null);
   const ideasSectionRef = useRef(null);
   const ideasEmblemWrapperRef = useRef(null);
+  const ideasVideoRef = useRef(null);
   const ideasTitleRef = useRef(null);
   const ideasParagraphRef = useRef(null);
   const coreValuesRef = useRef([]);
@@ -443,55 +447,170 @@ function Home() {
     };
   }, []);
 
-  // ---- IDEAS SECTION SCRUBBED SCROLL ANIMATION (Method A) ----
+  // ---- Intro curtain: DRISHTI fades in on black, then crossfades into hero ----
+  // Deliberately simple and time-based (no ScrollTrigger, no dependency on
+  // anything else finishing first) — fires once on mount. Its fade-out
+  // overlaps the existing hero entrance above, which already starts
+  // fading the hero content in on its own 100ms-delayed timer, producing
+  // the crossfade without the two sequences needing to be tightly chained.
   useEffect(() => {
-  const group = ideasModelGroup;
-  const section = ideasSectionRef.current;
-  if (!group || !section) return;
+    if (!introTitleRef.current || !introOverlayRef.current) return undefined;
 
-  group.rotation.set(0, 0, 0);
+    const timeline = gsap.timeline({
+      onComplete: () => setIntroDone(true),
+    });
 
-  const st = gsap.timeline({
-    scrollTrigger: {
-      trigger: section,
-      start: "top top",
-      end: "+=120%",
-      scrub: 1,
-      pin: true,
-      anticipatePin: 1,
-    },
-  });
+    timeline
+      .to(introTitleRef.current, { opacity: 1, duration: 0.7, ease: "power2.out" })
+      .to(introTitleRef.current, { opacity: 1, duration: 0.6 }) // hold
+      .to(introOverlayRef.current, { opacity: 0, duration: 0.8, ease: "power2.inOut" });
 
-  st.to(group.rotation, {
-    z: Math.PI * 2,
-    ease: "none",
-  })
-  .fromTo(
-    ideasTitleRef.current,
-    { clipPath: "inset(0 100% 0 0)", opacity: 0 },
-    { clipPath: "inset(0 0% 0 0)", opacity: 1, ease: "power2.out" },
-    "<0.1"
-  )
-  .fromTo(
-    ideasParagraphRef.current,
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, ease: "power2.out" },
-    "<0.2"
-  );
+    return () => timeline.kill();
+  }, []);
 
-  return () => {
-    st.scrollTrigger?.kill();
-    st.kill();
-  };
-}, [ideasModelGroup]);
+  // ---- Hero background: hover warp ----
+  // A CSS-transform-based tilt/scale that tracks the cursor, giving a
+  // "warping" feel without a real pixel-displacement shader. Uses
+  // gsap.quickTo, which is built specifically for smoothly interpolating
+  // high-frequency updates like mousemove without creating a new tween on
+  // every event.
+  useEffect(() => {
+    const section = heroSectionRef.current;
+    const bg = heroBgRef.current;
+    if (!section || !bg) return undefined;
+
+    section.style.perspective = "1000px";
+
+    const setRotateX = gsap.quickTo(bg, "rotationX", { duration: 0.6, ease: "power3.out" });
+    const setRotateY = gsap.quickTo(bg, "rotationY", { duration: 0.6, ease: "power3.out" });
+    const setScale = gsap.quickTo(bg, "scale", { duration: 0.6, ease: "power3.out" });
+
+    const handleMouseMove = (event) => {
+      const rect = section.getBoundingClientRect();
+      const normalizedX = (event.clientX - rect.left) / rect.width - 0.5; // -0.5 -> 0.5
+      const normalizedY = (event.clientY - rect.top) / rect.height - 0.5;
+      setRotateX(normalizedY * -8);
+      setRotateY(normalizedX * 8);
+      setScale(1.04);
+    };
+
+    const handleMouseLeave = () => {
+      setRotateX(0);
+      setRotateY(0);
+      setScale(1);
+    };
+
+    section.addEventListener("mousemove", handleMouseMove);
+    section.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      section.removeEventListener("mousemove", handleMouseMove);
+      section.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
+  // ---- IDEAS SECTION: video reveal + text sequence ----
+  // Non-scrub, deliberately: video.currentTime scrubbing on a compressed
+  // MP4 has to decode forward from the nearest keyframe on every seek,
+  // which causes stutter — the same class of problem as tonight's canvas
+  // glitching. A plain "played once when scrolled into view" is far more
+  // reliable. Uses IntersectionObserver (no ScrollTrigger, no pinning) —
+  // fires once, then plays the video through, then reveals all the text
+  // in one chained sequence once the video ends.
+  useEffect(() => {
+    const trigger = ideasEmblemWrapperRef.current;
+    const video = ideasVideoRef.current;
+    if (!trigger || !video) return undefined;
+
+    let hasPlayed = false;
+
+    const playSequence = () => {
+      if (hasPlayed) return;
+      hasPlayed = true;
+
+      const revealText = () => {
+        gsap
+          .timeline()
+          .fromTo(
+            ideasTitleRef.current,
+            { clipPath: "inset(0 100% 0 0)", opacity: 0 },
+            { clipPath: "inset(0 0% 0 0)", opacity: 1, duration: 1, ease: "power4.inOut" },
+          )
+          .fromTo(
+            coreValuesRef.current,
+            { x: -60, opacity: 0, rotation: -10 },
+            { x: 0, opacity: 0.5, rotation: 0, stagger: 0.15, duration: 0.8, ease: "elastic.out(1, 0.5)" },
+            "<0.15",
+          )
+          .fromTo(
+            ideasVectorLineRef.current,
+            { scaleY: 0, transformOrigin: "top center", opacity: 0 },
+            { scaleY: 1, opacity: 1, duration: 0.8, ease: "power2.inOut" },
+            "<",
+          )
+          .fromTo(
+            ideasParagraphRef.current,
+            { y: 60, opacity: 0, skewY: 5 },
+            { y: 0, opacity: 1, skewY: 0, duration: 1, ease: "power3.out" },
+            "<0.2",
+          );
+      };
+
+      gsap.to(video, {
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        onComplete: () => {
+          video.play().catch(() => {
+            // Autoplay can be blocked even when muted, in rare cases —
+            // fall back to revealing the text anyway rather than getting
+            // stuck waiting on a video that will never play.
+            revealText();
+          });
+        },
+      });
+
+      video.addEventListener("ended", revealText, { once: true });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          playSequence();
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+
+    observer.observe(trigger);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <main className="relative w-full overflow-x-hidden bg-black">
+      {/* ============ INTRO CURTAIN ============ */}
+      {!introDone && (
+        <div
+          ref={introOverlayRef}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
+        >
+          <span
+            ref={introTitleRef}
+            className="font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(48px,10vw,140px)] font-normal leading-[normal] tracking-[0] text-white opacity-0"
+          >
+            DRISHTI
+          </span>
+        </div>
+      )}
+
       <Navbar />
 
       {/* ============ HERO ============ */}
       <section
-        className="relative h-[clamp(600px,71vw,1024px)] w-full overflow-hidden bg-white flex flex-col justify-center items-center"
+        ref={heroSectionRef}
+        className="relative h-[100svh] max-h-[1024px] min-h-[560px] w-full overflow-hidden bg-white"
         aria-labelledby="drishti-title"
       >
         <img
@@ -502,8 +621,7 @@ function Home() {
           src={heroBg}
         />
 
-        <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
-
+        {/* Visual noise/grain, purely decorative */}
         <div
           ref={heroLeftTextRef}
           className="absolute top-[clamp(300px,35vw,512px)] left-[clamp(20px,3vw,44px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
@@ -514,8 +632,9 @@ function Home() {
           ref={heroLine1Ref}
           className="hidden md:block absolute left-[clamp(20px,3vw,44px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(160px,19vw,270px)] z-20"
           alt=""
+          className="pointer-events-none absolute inset-0 z-10 opacity-[0.05] mix-blend-overlay"
+          style={{ backgroundImage: NOISE_BACKGROUND }}
           aria-hidden="true"
-          src={heroLine1}
         />
         <img
           ref={heroLine2Ref}
@@ -529,14 +648,53 @@ function Home() {
           className="absolute top-[clamp(300px,35vw,512px)] right-[clamp(20px,3vw,44px)] text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
         >
           REWIND AND REJOICE
+
+        <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
+
+        {/* Bottom-anchored content block: guarantees the title stays within
+           the viewport regardless of screen aspect ratio, instead of the
+           old vw-based absolute positioning that overshot on wide/short
+           laptop screens. */}
+        <div className="absolute inset-0 z-20 flex flex-col justify-end pb-[clamp(60px,10vh,140px)]">
+          <div className="flex flex-wrap items-center justify-between gap-4 px-[clamp(20px,3vw,44px)] pb-[clamp(24px,4vh,48px)]">
+            <div className="flex items-center gap-4">
+              <div
+                ref={heroLeftTextRef}
+                className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 whitespace-nowrap"
+              >
+                FEST UNLIKE ANY OTHER
+              </div>
+              <img
+                ref={heroLine1Ref}
+                className="hidden md:block h-0.5 w-[clamp(120px,20vw,300px)]"
+                alt=""
+                aria-hidden="true"
+                src={heroLine1}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <img
+                ref={heroLine2Ref}
+                className="hidden md:block h-0.5 w-[clamp(120px,20vw,300px)]"
+                alt=""
+                aria-hidden="true"
+                src={heroLine2}
+              />
+              <div
+                ref={heroRightTextRef}
+                className="text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 whitespace-nowrap"
+              >
+                REWIND AND REJOICE
+              </div>
+            </div>
+          </div>
+          <h1
+            ref={heroTitleRef}
+            id="drishti-title"
+            className="w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(56px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white"
+          >
+          </h1>
         </div>
-        <h1
-          ref={heroTitleRef}
-          id="drishti-title"
-          className="absolute top-[clamp(450px,51vw,736px)] font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(80px,12.5vw,180px)] font-normal leading-[normal] tracking-[0] text-white z-20"
-          style={{ perspective: "1000px" }}
-        >
-        </h1>
       </section>
 
       {/* ============ IDEAS DON'T ASK PERMISSION (SCRUBBED 360 ROTATION) ============ */}
@@ -545,15 +703,6 @@ function Home() {
         className="relative min-h-screen py-20 w-full overflow-hidden bg-black flex flex-col md:flex-row items-center justify-center gap-10"
         aria-labelledby="hero-title"
       >
-        <div
-          className="absolute bottom-[10%] left-[-10%] h-[25%] w-[40%] rotate-[18.51deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute left-[65%] top-[15%] h-[32%] w-[56%] rotate-[-6.92deg] rounded-full bg-[#d9d9d9] opacity-[0.24] blur-[clamp(100px,14vw,208.1px)]"
-          aria-hidden="true"
-        />
-
         <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,71px)] relative flex flex-col items-center">
           <aside
             className="md:absolute md:left-[5%] md:top-0 flex md:flex-col items-center md:items-start gap-[26px] opacity-50 flex-wrap justify-center z-10 mb-10 md:mb-0"
@@ -581,15 +730,19 @@ function Home() {
           />
 
           <div className="flex flex-col items-center justify-center w-full gap-10 mb-10 relative z-10">
-          <div
+            <div
               ref={ideasEmblemWrapperRef}
-              className="w-[clamp(220px,30vw,420px)] h-[clamp(220px,30vw,420px)] relative"
+              className="w-[clamp(360px,54vw,780px)] relative"
             >
-              <IdeasEmblem3D 
-                className="w-full h-full" 
-                onModelReady={handleModelReady} 
+              <video
+                ref={ideasVideoRef}
+                className="w-full h-auto opacity-0"
+                src="/home/ideas-emblem-reveal.mp4"
+                muted
+                playsInline
+                preload="auto"
               />
-          </div>
+            </div>
           </div>
 
           <div

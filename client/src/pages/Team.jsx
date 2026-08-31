@@ -4,23 +4,23 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 
 const teamMembers = [
-  { id: 1, name: 'Ananya', role: 'President' },
-  { id: 2, name: 'Rahul', role: 'Vice President' },
-  { id: 3, name: 'Priya', role: 'Secretary' },
-  { id: 4, name: 'Arjun', role: 'Treasurer' },
-  { id: 5, name: 'Sneha', role: 'Technical Head' },
-  { id: 6, name: 'Vikram', role: 'Design Head' },
-  { id: 7, name: 'Meera', role: 'Marketing Head' },
+  { id: 1, name: 'Anjali', role: 'Design Head', image: '/team/anjali.jpg' },
+  { id: 2, name: 'Rahul', role: 'President', image: '/team/rahul.jpg' },
+  { id: 3, name: 'Ananya', role: 'Vice President', image: '/team/anjali.jpg' },
+  { id: 4, name: 'Priya', role: 'Secretary', image: '/team/anjali.jpg' },
+  { id: 5, name: 'Arjun', role: 'Treasurer', image: '/team/rahul.jpg' },
+  { id: 6, name: 'Sneha', role: 'Technical Head', image: '/team/anjali.jpg' },
+  { id: 7, name: 'Vikram', role: 'Marketing Head', image: '/team/rahul.jpg' },
 ]
 
 const webTeamMembers = [
-  { id: 1, name: 'Member 1', role: 'Web Team' },
-  { id: 2, name: 'Member 2', role: 'Web Team' },
-  { id: 3, name: 'Member 3', role: 'Web Team' },
-  { id: 4, name: 'Member 4', role: 'Web Team' },
-  { id: 5, name: 'Member 5', role: 'Web Team' },
-  { id: 6, name: 'Member 6', role: 'Web Team' },
-  { id: 7, name: 'Member 7', role: 'Web Team' },
+  { id: 1, name: 'Sidharth', role: 'Lead Developer', image: '/team/rahul.jpg' },
+  { id: 2, name: 'Adithya', role: 'Frontend Lead', image: '/team/anjali.jpg' },
+  { id: 3, name: 'Aravind', role: 'Backend Lead', image: '/team/rahul.jpg' },
+  { id: 4, name: 'Nandana', role: 'UI/UX Designer', image: '/team/anjali.jpg' },
+  { id: 5, name: 'Gautam', role: 'Fullstack Dev', image: '/team/rahul.jpg' },
+  { id: 6, name: 'Rohan', role: 'Creative Motion', image: '/team/rahul.jpg' },
+  { id: 7, name: 'Devika', role: 'QA & Systems', image: '/team/anjali.jpg' },
 ]
 
 const TOTAL = teamMembers.length
@@ -103,23 +103,6 @@ function Team({ embedded = false }) {
   }, [])
 
   useEffect(() => {
-    const imgs = containerRef.current?.querySelectorAll('.card-img')
-    if (!imgs) return
-
-    gsap.set(imgs, { opacity: 1 })
-
-    const timer = setTimeout(() => {
-      imgs.forEach((img, i) => {
-        if (members[i].id !== members[activeIndex].id) {
-          gsap.to(img, { opacity: 0.85, duration: 0.4, ease: 'power2.out' })
-        }
-      })
-    }, 500)
-
-    return () => clearTimeout(timer)
-  }, [activeGroup, activeIndex, members])
-
-  useEffect(() => {
     const el = containerRef.current
     if (!el) return
 
@@ -176,7 +159,7 @@ function Team({ embedded = false }) {
 
     if (absDiff === 0) {
       return {
-        transform: 'translateX(0) translateZ(0) rotateY(0deg) scale(1)',
+        transform: 'translateX(0px) translateY(0px) translateZ(80px) rotateY(0deg) rotateX(0deg) scale(1)',
         zIndex: 10,
         opacity: 1,
       }
@@ -191,37 +174,47 @@ function Team({ embedded = false }) {
       }
     }
 
-    const angle = diff * 55
-    const translateZ = 350
-    const opacity = absDiff === 0 ? 1 : 0.7
-    const scale = absDiff === 0 ? 1 : 0.85
+    // Precise 3D concave bend angle matching target reference image
+    const translateX = sign === 1 ? (absDiff === 1 ? 300 : 560) : (absDiff === 1 ? -300 : -560)
+    const translateY = absDiff === 1 ? 16 : 40
+    const translateZ = absDiff === 1 ? -50 : -140
+    const rotateY = sign === 1 ? (absDiff === 1 ? -38 : -54) : (absDiff === 1 ? 38 : 54)
+    const rotateX = 6
+    const rotateZ = sign === 1 ? (absDiff === 1 ? 2 : 4) : (absDiff === 1 ? -2 : -4)
+    const scale = absDiff === 1 ? 0.96 : 0.88
     const zIndex = 10 - absDiff
 
     return {
-      transform: `rotateY(${angle}deg) translateZ(${translateZ}px) scale(${scale})`,
+      transform: `translateX(${translateX}px) translateY(${translateY}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) rotateZ(${rotateZ}deg) scale(${scale})`,
       zIndex,
-      opacity,
+      opacity: 1,
     }
   }, [activeIndex])
 
   return (
-    <div className={`relative min-h-svh w-full overflow-hidden ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
+    <div className={`relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-between pt-16 pb-6 select-none touch-none ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="team" />}
 
-      <header className="px-[clamp(16px,4vw,40px)] pb-4 pt-[clamp(32px,6vw,64px)] text-center">
+      {/* Header matching other page titles with metallic gold toggle */}
+      <header className="px-[clamp(16px,4vw,40px)] pt-3 pb-1 text-center z-10 flex flex-col items-center">
         <h1
           ref={titleRef}
-          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
+          className="text-[clamp(32px,6vw,72px)] font-bold uppercase leading-none tracking-tight text-gold-gradient"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           MEET THE TEAM
         </h1>
 
-        <div className="mt-8 inline-flex overflow-hidden rounded-full border border-gold/60" role="group" aria-label="Team selection">
+        {/* Metallic Gold Pill Switch Toggle */}
+        <div
+          className="mt-3 relative inline-flex items-center rounded-full border border-gold/50 bg-black/80 p-1 shadow-[0_4px_20px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.1)] backdrop-blur-md"
+          role="group"
+          aria-label="Team category selection"
+        >
           {[
-            { id: 'committee', label: 'Committee' },
-            { id: 'web', label: 'Web Team' },
+            { id: 'committee', label: 'CORE TEAM' },
+            { id: 'web', label: 'WEB TEAM' },
           ].map((group) => {
             const isSelected = activeGroup === group.id
             return (
@@ -229,12 +222,16 @@ function Team({ embedded = false }) {
                 key={group.id}
                 type="button"
                 aria-pressed={isSelected}
-                onClick={() => setActiveGroup(group.id)}
-                className={`px-6 py-2.5 text-xs font-semibold uppercase tracking-[2px] transition-colors duration-300 md:px-8 ${
+                onClick={() => {
+                  setActiveGroup(group.id)
+                  setActiveIndex(0)
+                }}
+                className={`relative z-10 cursor-pointer rounded-full px-6 py-1.5 text-[11px] font-black uppercase tracking-[2.5px] transition-all duration-300 sm:px-8 sm:text-xs ${
                   isSelected
-                    ? 'bg-gold-gradient text-black'
-                    : 'bg-black text-gold hover:bg-gold/10'
+                    ? 'bg-gradient-to-r from-[#DF9F28] via-[#FFDB86] to-[#D89720] text-black shadow-[0_2px_12px_rgba(225,157,0,0.35)]'
+                    : 'text-gold/75 hover:text-gold'
                 }`}
+                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 {group.label}
               </button>
@@ -243,71 +240,88 @@ function Team({ embedded = false }) {
         </div>
       </header>
 
+      {/* 3D Stage Container */}
       <div
         ref={containerRef}
-        className="relative flex h-[70vh] items-center justify-center overflow-hidden touch-none"
-        style={{ perspective: '1200px' }}
+        className="relative flex flex-1 items-center justify-center overflow-hidden touch-none my-auto w-full"
+        style={{ perspective: '800px' }}
       >
+        {/* Curved 3D Stage Horizon Floor */}
+        <div className="pointer-events-none absolute bottom-[-50px] left-1/2 -translate-x-1/2 w-[180%] max-w-[1700px] h-[260px] rounded-[100%] bg-gradient-to-b from-[#2a2a30] via-[#141416] to-[#050505] border-t border-white/10 shadow-[0_-30px_80px_rgba(0,0,0,0.95)]" />
+
+        {/* 3D Card Stack */}
         <div
           className="relative flex items-center justify-center"
           style={{ transformStyle: 'preserve-3d' }}
         >
-          {members.map((member, index) => (
-            <div
-              key={member.id}
-              className="absolute cursor-pointer"
-              style={{
-                ...getCardTransform(index),
-                transition: 'transform 0.5s ease-out, opacity 0.5s ease-out, z-index 0s',
-              }}
-              onClick={() => setActiveIndex(index)}
-            >
+          {members.map((member, index) => {
+            const diff = shortestDiff(activeIndex, index)
+            const isCenter = diff === 0
+
+            return (
               <div
-                className="card-inner relative flex items-center justify-center overflow-hidden rounded-md"
+                key={member.id}
+                className="absolute cursor-pointer will-change-transform select-none"
                 style={{
-                  height: '420px',
-                  width: '300px',
-                  background: index === activeIndex ? '#111' : '#1a1a1a',
-                  border: index === activeIndex ? '1px solid rgba(225,157,0,0.4)' : '1px solid rgba(255,255,255,0.1)',
-                  boxShadow: index === activeIndex
-                    ? '0 25px 60px rgba(0,0,0,0.6), 0 0 30px rgba(225,157,0,0.1)'
-                    : '0 10px 30px rgba(0,0,0,0.4)',
+                  ...getCardTransform(index),
+                  transition: 'transform 0.55s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease-out, z-index 0s',
                 }}
+                onClick={() => setActiveIndex(index)}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10" />
-                <div className="absolute top-0 right-4 flex h-full items-center">
-                  <span
-                    className="text-3xl font-bold uppercase tracking-wider text-white/15"
-                    style={{ writingMode: 'vertical-lr', textOrientation: 'mixed', fontFamily: "'Clash Display', sans-serif" }}
-                  >
-                    {member.name}
-                  </span>
-                </div>
-                <div className="absolute bottom-5 left-5">
-                  <p className="text-[10px] uppercase tracking-[3px] text-gold/80">{member.role}</p>
+                <div
+                  className={`card-inner relative flex flex-col justify-between overflow-hidden rounded-[20px] transition-all duration-300 ${
+                    isCenter
+                      ? 'bg-[#D6D9DE] border border-white/40 shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_50px_rgba(225,157,0,0.25)]'
+                      : 'bg-[#D6D9DE] border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.7)]'
+                  }`}
+                  style={{
+                    height: '420px',
+                    width: '290px',
+                  }}
+                >
+                  {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
+                  {isCenter ? (
+                    <>
+                      {/* Monochrome Portrait Photo */}
+                      {member.image && (
+                        <img
+                          src={member.image}
+                          alt={member.name}
+                          className="absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none"
+                        />
+                      )}
+
+                      {/* Large Vertical Name: On the right side over photo */}
+                      <div className="absolute top-0 right-2 sm:right-3 flex h-full items-center pointer-events-none z-10">
+                        <span
+                          className="text-5xl sm:text-6xl font-black uppercase tracking-wider text-black/85 select-none"
+                          style={{
+                            writingMode: 'vertical-lr',
+                            textOrientation: 'mixed',
+                            fontFamily: "'Clash Display', 'Inter', sans-serif",
+                          }}
+                        >
+                          {member.name}
+                        </span>
+                      </div>
+
+                      {/* Bottom Role Banner in Metallic Gold */}
+                      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end bg-gradient-to-t from-black/95 via-black/40 to-transparent pt-16 pb-6 px-3">
+                        <p
+                          className="text-center text-sm sm:text-base font-black uppercase tracking-[3px] text-[#FFDB86] drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
+                          style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                        >
+                          {member.role}
+                        </p>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </div>
-
-      <div className="mt-8 flex items-center justify-center gap-2 pb-12">
-        {members.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setActiveIndex(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === activeIndex ? 'w-8 bg-gold' : 'w-1.5 bg-white/20 hover:bg-white/40'
-            }`}
-            aria-label={`Go to team member ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      <p className="text-center text-xs uppercase tracking-[4px] text-white/30">
-        Scroll or swipe to explore
-      </p>
     </div>
   )
 }

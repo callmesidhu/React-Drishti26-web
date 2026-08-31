@@ -28,21 +28,32 @@ function Navbar({ activeSection, theme = 'gold' }) {
   const hamburgerRef = useRef(null)
   const barsRef = useRef([])
 
+  const isHome = location.pathname === '/' || location.pathname === '/home' || activeSection?.toLowerCase() === 'home'
   const isBlue = theme === 'blue' || activeSection?.toLowerCase() === 'daksha' || location.pathname.startsWith('/daksha')
 
   useEffect(() => {
-    // Initial state: hidden off-screen above viewport
+    // Initial state: on Home page hidden off-screen above viewport; on other pages always visible at top
     if (navRef.current) {
-      gsap.set(navRef.current, { y: -90, opacity: 1 })
+      if (isHome) {
+        gsap.set(navRef.current, { y: visible || menuOpen ? 0 : -90, opacity: 1 })
+      } else {
+        gsap.set(navRef.current, { y: 0, opacity: 1 })
+      }
       if (logoRef.current) gsap.set(logoRef.current, { opacity: 1, scale: 1 })
       if (desktopLinksRef.current) {
         gsap.set(desktopLinksRef.current.children, { opacity: 1, y: 0 })
       }
     }
-  }, [])
+  }, [isHome])
 
-  // Auto-hide by default, show for 3s on scroll (both scroll down and scroll up)
+  // On Home page: auto-hide by default, show for 1.5s on scroll activity.
+  // On all other pages: always show navbar, do not auto-hide.
   useEffect(() => {
+    if (!isHome) {
+      setVisible(true)
+      return
+    }
+
     const startHideTimer = () => {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
       hideTimerRef.current = setTimeout(() => {
@@ -55,7 +66,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
     const handleScrollActivity = () => {
       if (menuOpen) return
 
-      // Show navbar on any scroll activity (down or up) and keep for 3s
+      // Show navbar on any scroll activity (down or up) and keep for timer
       setVisible(true)
       startHideTimer()
     }
@@ -70,23 +81,33 @@ function Navbar({ activeSection, theme = 'gold' }) {
       window.removeEventListener('touchmove', handleScrollActivity)
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
     }
-  }, [menuOpen])
+  }, [menuOpen, isHome])
 
   useEffect(() => {
     if (!navRef.current) return
+    if (!isHome) {
+      gsap.to(navRef.current, {
+        y: 0,
+        duration: 0.35,
+        ease: 'power2.out',
+      })
+      return
+    }
     gsap.to(navRef.current, {
       y: visible || menuOpen ? 0 : -90,
       duration: 0.35,
       ease: 'power2.out',
     })
-  }, [visible, menuOpen])
+  }, [visible, menuOpen, isHome])
 
   const handleMouseEnter = () => {
+    if (!isHome) return
     isHoveredRef.current = true
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
   }
 
   const handleMouseLeave = () => {
+    if (!isHome) return
     isHoveredRef.current = false
     if (visible && !menuOpen) {
       if (hideTimerRef.current) clearTimeout(hideTimerRef.current)
