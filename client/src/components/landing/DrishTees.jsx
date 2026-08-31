@@ -46,11 +46,23 @@ export default function DrishTees() {
             </div>
           </div>
         </div>
+
+        <div className="mt-8 w-full">
+          <video
+            className="w-full max-w-[900px] self-center rounded-xl border border-white/15 object-cover shadow-[0_0_30px_rgba(212,175,55,0.2)]"
+            src="/home/drishtee.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Drishtees promotional video"
+          />
+        </div>
       </div>
     </section>
   );
 }
-
 
 <style>{`
   @keyframes float-shirt {
