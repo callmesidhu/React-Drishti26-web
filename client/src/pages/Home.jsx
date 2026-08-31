@@ -623,31 +623,10 @@ function Home() {
 
         {/* Visual noise/grain, purely decorative */}
         <div
-          ref={heroLeftTextRef}
-          className="absolute top-[clamp(300px,35vw,512px)] left-[clamp(20px,3vw,44px)] font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
-        >
-          FEST UNLIKE ANY OTHER
-        </div>
-        <img
-          ref={heroLine1Ref}
-          className="hidden md:block absolute left-[clamp(20px,3vw,44px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(160px,19vw,270px)] z-20"
-          alt=""
           className="pointer-events-none absolute inset-0 z-10 opacity-[0.05] mix-blend-overlay"
           style={{ backgroundImage: NOISE_BACKGROUND }}
           aria-hidden="true"
         />
-        <img
-          ref={heroLine2Ref}
-          className="hidden md:block absolute right-[clamp(20px,3vw,44px)] top-[clamp(320px,37vw,542px)] h-0.5 w-[clamp(160px,19vw,270px)] z-20"
-          alt=""
-          aria-hidden="true"
-          src={heroLine2}
-        />
-        <div
-          ref={heroRightTextRef}
-          className="absolute top-[clamp(300px,35vw,512px)] right-[clamp(20px,3vw,44px)] text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,16px)] font-normal leading-[normal] tracking-[0] text-white opacity-0 z-20"
-        >
-          REWIND AND REJOICE
 
         <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
 
