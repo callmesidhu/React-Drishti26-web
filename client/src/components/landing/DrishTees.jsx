@@ -49,7 +49,7 @@ export default function DrishTees() {
 
               <button
                 type="button"
-                className="mt-6 inline-flex items-center justify-center rounded-full border border-[#d4af37]/70 bg-[linear-gradient(180deg,#e7c567_0%,#d4af37_45%,#b98b1b_100%)] px-8 py-2.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[#0d0d0d] shadow-[0_0_18px_rgba(212,175,55,0.28)] transition-transform duration-200 hover:scale-[1.02]"
+                className="mt-6 inline-flex cursor-pointer items-center justify-center rounded-full border border-[#d4af37]/70 bg-[linear-gradient(180deg,#e7c567_0%,#d4af37_45%,#b98b1b_100%)] px-8 py-2.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[#0d0d0d] shadow-[0_0_18px_rgba(212,175,55,0.28)] transition-transform duration-200 hover:scale-[1.02]"
               >
                 Get Now
               </button>
