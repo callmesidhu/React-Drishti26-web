@@ -7,13 +7,20 @@ const getTimeRemaining = () => Math.max(0, EVENT_DATE.getTime() - Date.now());
 
 const formatTime = (milliseconds) => {
   const totalSeconds = Math.floor(milliseconds / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
+  const timeUnits = [hours, minutes, seconds]
+    .map((value) => String(value).padStart(2, "0"));
 
-  return [hours, minutes, seconds]
+  if (days < 1) {
+    return timeUnits.join(" : ");
+  }
+
+  return [days, ...timeUnits]
     .map((value) => String(value).padStart(2, "0"))
-    .join(":");
+    .join(" : ");
 };
 
 export default function Countdown() {
