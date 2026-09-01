@@ -1,12 +1,12 @@
 import DomeGallery from "../DomeGallery";
 
-const heroBg = "/home/drishti-take-1.png";
-const categoriesPhoto = "/home/categories-photo.png";
-const galleryImage1 = "/home/gallery-1.png";
-const galleryImage2 = "/home/gallery-2.png";
-const galleryImage3 = "/home/gallery-3.png";
-const galleryImage4 = "/home/gallery-4.png";
-const galleryImage5 = "/home/gallery-5.png";
+const heroBg = "/home/drishti-take-1.webp";
+const categoriesPhoto = "/home/gallery-1.webp";
+const galleryImage1 = "/home/gallery-1.webp";
+const galleryImage2 = "/home/gallery-2.webp";
+const galleryImage3 = "/home/gallery-3.webp";
+const galleryImage4 = "/home/gallery-4.webp";
+const galleryImage5 = "/home/gallery-5.webp";
 
 const drishtiGalleryImages = [
   { src: galleryImage1, alt: "Drishti Festival Stage & Atmosphere" },
@@ -15,10 +15,10 @@ const drishtiGalleryImages = [
   { src: galleryImage4, alt: "Workshops & Tech Sessions" },
   { src: galleryImage5, alt: "Pro Shows Musical Night" },
   { src: categoriesPhoto, alt: "Drishti '26 Competitions" },
-  { src: "/home/aftermovie-bg.png", alt: "Festival Lights & Crowds" },
-  { src: "/home/featured-event-poster.png", alt: "Featured Events & Keynotes" },
-  { src: "/proshow/proshowgrid.jpeg", alt: "Live Pro Shows Night" },
-  { src: "/daksha/shark-tank.png", alt: "Daksha Ideation & Pitch" },
+  { src: "/home/aftermovie-bg.webp", alt: "Festival Lights & Crowds" },
+  { src: "/home/featured-event-poster.webp", alt: "Featured Events & Keynotes" },
+  { src: "/proshow/proshowgrid.webp", alt: "Live Pro Shows Night" },
+  { src: "/daksha/shark-tank.webp", alt: "Daksha Ideation & Pitch" },
   { src: heroBg, alt: "Drishti '26 Horizon" },
 ];
 

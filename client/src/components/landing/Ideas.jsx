@@ -68,7 +68,7 @@ export default function Ideas() {
     const preloadedImages = [];
     for (let i = 1; i <= 150; i++) {
       const preload = new Image();
-      preload.src = `/3dlogo/ezgif-frame-${String(i).padStart(3, '0')}.jpg`;
+      preload.src = `/3dlogo/ezgif-frame-${String(i).padStart(3, '0')}.webp`;
       preloadedImages.push(preload);
     }
 
@@ -99,7 +99,7 @@ export default function Ideas() {
             const frameIndex = Math.max(1, Math.min(150, Math.round(p * 149) + 1));
             const frameStr = String(frameIndex).padStart(3, '0');
             if (img) {
-              img.src = `/3dlogo/ezgif-frame-${frameStr}.jpg`;
+              img.src = `/3dlogo/ezgif-frame-${frameStr}.webp`;
             }
 
             const idx = Math.min(coreValues.length - 1, Math.floor(p * coreValues.length));
@@ -274,7 +274,7 @@ export default function Ideas() {
               <img
                 ref={ideasImageRef}
                 className="w-full h-full object-contain pointer-events-none select-none mix-blend-screen opacity-100"
-                src="/3dlogo/ezgif-frame-001.jpg"
+                src="/3dlogo/ezgif-frame-001.webp"
                 alt="Drishti Emblem"
               />
             </div>

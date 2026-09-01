@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const heroBg = "/home/drishti-take-1.png";
+const heroBg = "/home/drishti-take-1.webp";
 const heroLine1 = "/home/line-1.svg";
 const heroLine2 = "/home/line-2.svg";
 
