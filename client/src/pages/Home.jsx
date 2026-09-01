@@ -12,6 +12,7 @@ import GallerySection from "../components/landing/GallerySection";
 import DrishTees from "../components/landing/DrishTees";
 import FeaturedEvents from "../components/landing/FeaturedEvents";
 
+
 const featuredEvents = [
   dakshaEventsData[0],
   competitionsData[0],
