@@ -6,6 +6,7 @@ import EventDetailsModal from "../components/EventDetailsModal";
 import { dakshaEventsData, competitionsData, workshopsData } from "../data/eventsData";
 
 import Hero from "../components/landing/Hero";
+import Countdown from "../components/landing/Countdown";
 import Ideas from "../components/landing/Ideas";
 import Aftermovie from "../components/landing/Aftermovie";
 import GallerySection from "../components/landing/GallerySection";
@@ -35,6 +36,7 @@ function Home() {
       <Navbar />
       
       <Hero />
+      <Countdown />
       <Ideas />
       <Aftermovie />
       
