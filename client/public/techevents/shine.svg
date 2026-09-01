@@ -1,0 +1,60 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Center bright radial glow -->
+    <radialGradient id="glowCenter" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF5" stop-opacity="1"/>
+      <stop offset="25%" stop-color="#FFDB86" stop-opacity="0.9"/>
+      <stop offset="55%" stop-color="#E19D00" stop-opacity="0.5"/>
+      <stop offset="85%" stop-color="#B78000" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#B78000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Secondary outer aura -->
+    <radialGradient id="outerAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFDB86" stop-opacity="0.5"/>
+      <stop offset="40%" stop-color="#E19D00" stop-opacity="0.25"/>
+      <stop offset="80%" stop-color="#B78000" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#E19D00" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Linear gradients for the flare spikes -->
+    <linearGradient id="spikeV" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFDB86" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#FFDB86" stop-opacity="0.75"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="65%" stop-color="#FFDB86" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#FFDB86" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="spikeH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFDB86" stop-opacity="0"/>
+      <stop offset="35%" stop-color="#FFDB86" stop-opacity="0.75"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="1"/>
+      <stop offset="65%" stop-color="#FFDB86" stop-opacity="0.75"/>
+      <stop offset="100%" stop-color="#FFDB86" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="spikeDiag" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E19D00" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFDB86" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#E19D00" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Soft Halo Glow -->
+  <circle cx="60" cy="60" r="55" fill="url(#outerAura)" />
+
+  <!-- Diagonal Rays (45 deg) -->
+  <polygon points="60,20 62.5,60 60,100 57.5,60" fill="url(#spikeDiag)" transform="rotate(45 60 60)" />
+  <polygon points="60,20 62.5,60 60,100 57.5,60" fill="url(#spikeDiag)" transform="rotate(-45 60 60)" />
+
+  <!-- Main Vertical and Horizontal Spikes -->
+  <polygon points="60,4 63.5,60 60,116 56.5,60" fill="url(#spikeV)" />
+  <polygon points="4,60 60,63.5 116,60 60,56.5" fill="url(#spikeH)" />
+
+  <!-- Core Lens Glow -->
+  <circle cx="60" cy="60" r="22" fill="url(#glowCenter)" />
+
+  <!-- Bright Core Center Star -->
+  <circle cx="60" cy="60" r="3.5" fill="#FFFFFF" opacity="0.95" />
+</svg>
