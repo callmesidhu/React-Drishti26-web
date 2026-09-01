@@ -5,6 +5,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
+const TOTAL_LOGO_FRAMES = 150;
+const FRAME_PRELOAD_WINDOW = 12;
+
+const getLogoFramePath = (frameIndex) =>
+  `/3dlogo/ezgif-frame-${String(frameIndex).padStart(3, '0')}.webp`;
 
 export default function Ideas() {
   const [activeCoreValueIndex, setActiveCoreValueIndex] = useState(0);
@@ -20,6 +25,33 @@ export default function Ideas() {
   const coreValuesRef = useRef([]);
   const ideasVectorLineRef = useRef(null);
   const mobileCoreWrapperRef = useRef(null);
+  const logoFrameCacheRef = useRef({});
+
+  const ensureLogoFrameLoaded = (frameIndex) => {
+    const safeIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, frameIndex));
+
+    if (logoFrameCacheRef.current[safeIndex]) {
+      return logoFrameCacheRef.current[safeIndex];
+    }
+
+    const image = new Image();
+    image.decoding = "async";
+    image.loading = "eager";
+    image.src = getLogoFramePath(safeIndex);
+    logoFrameCacheRef.current[safeIndex] = image;
+
+    return image;
+  };
+
+  const preloadLogoFrameRange = (frameIndex) => {
+    const safeIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, frameIndex));
+    const start = Math.max(1, safeIndex - FRAME_PRELOAD_WINDOW);
+    const end = Math.min(TOTAL_LOGO_FRAMES, safeIndex + FRAME_PRELOAD_WINDOW);
+
+    for (let i = start; i <= end; i += 1) {
+      ensureLogoFrameLoaded(i);
+    }
+  };
 
   const handleCoreValueClick = (index) => {
     setActiveCoreValueIndex(index);
@@ -64,13 +96,33 @@ export default function Ideas() {
     const img = ideasImageRef.current;
     if (!section || !img) return undefined;
 
-    // Preload images to avoid flickering during fast scrolling
-    const preloadedImages = [];
-    for (let i = 1; i <= 150; i++) {
-      const preload = new Image();
-      preload.src = `/3dlogo/ezgif-frame-${String(i).padStart(3, '0')}.webp`;
-      preloadedImages.push(preload);
-    }
+    const setFrame = (frameIndex) => {
+      const safeIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, frameIndex));
+      const currentFrame = Number(img.dataset.frame || 0);
+
+      if (currentFrame !== safeIndex) {
+        const cachedFrame = ensureLogoFrameLoaded(safeIndex);
+        img.src = cachedFrame.src || getLogoFramePath(safeIndex);
+        img.dataset.frame = String(safeIndex);
+      }
+
+      preloadLogoFrameRange(safeIndex);
+    };
+
+    const initialLoad = () => {
+      setFrame(1);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          initialLoad();
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    observer.observe(section);
 
     const ctx = gsap.context(() => {
       const lineFill = ideasLineFillRef.current;
@@ -94,13 +146,9 @@ export default function Ideas() {
           anticipatePin: 1,
           onUpdate: (self) => {
             const p = self.progress;
-            
-            // Map progress to frame index 1 to 150
-            const frameIndex = Math.max(1, Math.min(150, Math.round(p * 149) + 1));
-            const frameStr = String(frameIndex).padStart(3, '0');
-            if (img) {
-              img.src = `/3dlogo/ezgif-frame-${frameStr}.webp`;
-            }
+            const frameIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, Math.round(p * (TOTAL_LOGO_FRAMES - 1)) + 1));
+
+            setFrame(frameIndex);
 
             const idx = Math.min(coreValues.length - 1, Math.floor(p * coreValues.length));
             setActiveCoreValueIndex(idx);
@@ -177,7 +225,10 @@ export default function Ideas() {
       }
     }, section);
 
-    return () => ctx.revert();
+    return () => {
+      observer.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (
