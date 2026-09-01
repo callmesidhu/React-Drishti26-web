@@ -7,8 +7,7 @@ import './App.css'
 import LoadingScreen from './components/LoadingScreen.jsx'
 import Daksha from './pages/Daksha.jsx'
 import Team from './pages/Team.jsx'
-import Competitions from './pages/Competitions.jsx'
-import Workshops from './pages/Workshops.jsx'
+import TechEvents from './pages/techEvents.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
 import ProShows from './pages/ProShows.jsx'
@@ -85,10 +84,10 @@ function App() {
         <Route path="/daksha" element={<Daksha />} />
         <Route path="/daksha/:slug" element={<Daksha />} />
         <Route path="/team" element={<Team />} />
-        <Route path="/competitions" element={<Competitions />} />
-        <Route path="/competitions/:slug" element={<Competitions />} />
-        <Route path="/workshops" element={<Workshops />} />
-        <Route path="/workshops/:slug" element={<Workshops />} />
+        <Route path="/workshops" element={<TechEvents />} />
+        <Route path="/workshops/:slug" element={<TechEvents />} />
+        <Route path="/competitions" element={<TechEvents />} />
+        <Route path="/competitions/:slug" element={<TechEvents />} />
         <Route path="/proshows" element={<ProShows />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

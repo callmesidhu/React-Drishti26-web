@@ -1,16 +1,30 @@
 export const competitionsData = [
   {
     id: 1,
+    type: 'competition',
     slug: 'robo-wars',
     title: 'Robo Wars',
     category: 'COMPETITIONS',
+    area: 'Robotics',
     guidelinesTitle: 'ROBO WARS GUIDELINES',
-    image: '/competitions/robo-wars.jpg',
+    image: '/techevents/robowar.webp',
+    alt: 'Robo Wars poster',
     description:
       'Build and battle ferocious combat robots in an armored arena. Push your engineering and driving skills to the absolute limit in high-octane mechanical warfare.',
+    eligibility: [
+      'Open to undergraduate and postgraduate engineering students.',
+      'Teams may consist of 2 to 4 members with valid college ID proof.',
+      'Participants must be comfortable with hardware assembly and safety protocols.',
+    ],
+    guidelines: [
+      'Robot weight limit: 8kg and 15kg categories.',
+      'Each bot must pass a safety inspection before arena entry.',
+      'Judging is based on aggression, damage control, weapon reliability and strategy.',
+      'Final round will be held on 20 September 2026.',
+    ],
     details: [
       'Open to — All undergraduate and postgraduate engineering students.',
-      'Weight Category — 15kg & 30kg remote-controlled combat bots.',
+      'Weight Category — 8kg & 15kg remote-controlled combat bots.',
       'Arena Safety — Fully enclosed polycarbonate arena with hazard zones.',
       'Evaluation — Aggression · Damage · Control · Arena Hazards.',
       'Prizes — Exciting cash prizes & sponsor swags for top 3 bots.',
@@ -20,13 +34,27 @@ export const competitionsData = [
   },
   {
     id: 2,
-    slug: 'hackathon',
-    title: 'Hackathon',
+    type: 'competition',
+    slug: 'hackathon-2026',
+    title: 'Hackathon 2026',
     category: 'COMPETITIONS',
+    area: 'AI',
     guidelinesTitle: 'HACKATHON GUIDELINES',
-    image: '/competitions/hackathon.jpg',
+    image: '/techevents/ai-ml.jpg',
+    alt: 'Hackathon poster',
     description:
       'A 24-hour sprint of coding, ideation, and rapid prototyping. Solve real-world challenges across AI, Web3, FinTech, and Smart Healthcare.',
+    eligibility: [
+      'Open to teams of 2 to 4 students from recognized institutions.',
+      'Participants must bring their own laptops and required devices.',
+      'Any domain background is welcome, including engineering, design and business.',
+    ],
+    guidelines: [
+      'Abstract submission will be followed by shortlisting.',
+      'Offline hackathon duration is 24 hours with mentor support.',
+      'Projects must be demo-ready and supported by a technical presentation.',
+      'Evaluate innovation, feasibility, user experience and impact.',
+    ],
     details: [
       'Open to — Teams of 2 to 4 students from any recognized institution.',
       'Tracks — AI/ML · Web3 & DeFi · Smart Cities · HealthTech.',
@@ -39,13 +67,27 @@ export const competitionsData = [
   },
   {
     id: 3,
+    type: 'competition',
     slug: 'paper-presentation',
     title: 'Paper Presentation',
     category: 'COMPETITIONS',
+    area: 'AI',
     guidelinesTitle: 'PAPER PRESENTATION GUIDELINES',
-    image: '/competitions/paper.jpg',
+    image: '/techevents/shine.svg',
+    alt: 'Paper presentation poster',
     description:
       'Present original technical research and breakthrough engineering concepts before an esteemed jury of academicians and industry leaders.',
+    eligibility: [
+      'Individual authors or teams of up to 3 participants may submit.',
+      'Papers should be original and not previously published in a conference proceeding.',
+      'Writing should follow IEEE conference format and technical quality standards.',
+    ],
+    guidelines: [
+      'Submit a 2-page abstract before the deadline.',
+      'Selected papers will be presented in front of expert reviewers.',
+      'Final presentation includes technical explanation, results and conclusions.',
+      'Top papers may receive publication support and certificates.',
+    ],
     details: [
       'Open to — Individual researchers and teams of up to 3 authors.',
       'Format — IEEE standard two-column conference format.',
@@ -56,18 +98,256 @@ export const competitionsData = [
     ],
     registerUrl: 'https://snaptiqz.com/event/paper-presentation',
   },
+  {
+    id: 4,
+    type: 'competition',
+    slug: 'drone-challenge',
+    title: 'Drone Challenge',
+    category: 'COMPETITIONS',
+    area: 'Robotics',
+    guidelinesTitle: 'DRONE CHALLENGE GUIDELINES',
+    image: '/techevents/robosoccer.webp',
+    alt: 'Drone challenge poster',
+    description:
+      'Navigate a precision flying course, perform autonomous tasks, and showcase your drone engineering under timed conditions.',
+    eligibility: [
+      'Open to students with drone experience or electronics backgrounds.',
+      'Participants must ensure their aircraft follows safety regulations.',
+      'Maximum drone dimensions and battery configuration will be announced in the rulebook.',
+    ],
+    guidelines: [
+      'Flight rounds include obstacle avoidance, cargo transport and landing.',
+      'Teams must submit a safe flight check before qualification.',
+      'Judging focuses on accuracy, speed and control reliability.',
+      'Final event date: 21 September 2026.',
+    ],
+    details: [
+      'Open to — Engineering students interested in UAV systems and automation.',
+      'Rounds — Design check → Flight simulation → Live obstacle arena.',
+      'Evaluation — Precision · Navigation · Safety · Innovation.',
+      'Prize Pool — Cash prize and sponsor mentorship for top teams.',
+      'Date — 21 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/drone-challenge',
+  },
+  {
+    id: 5,
+    type: 'competition',
+    slug: 'capture-the-flag',
+    title: 'Capture the Flag',
+    category: 'COMPETITIONS',
+    area: 'Cybersecurity',
+    guidelinesTitle: 'CTF GUIDELINES',
+    image: '/techevents/cyber.jpg',
+    alt: 'Capture the flag poster',
+    description:
+      'Dive into ethical hacking, reverse engineering and security challenges in a competitive CTF experience designed for curious minds.',
+    eligibility: [
+      'Open to all students with an interest in web security and cyber defense.',
+      'Teams of 2 to 4 members are encouraged.',
+      'Basic Linux and networking knowledge is beneficial but not mandatory.',
+    ],
+    guidelines: [
+      'Challenges cover cryptography, forensics, web exploitation and binary analysis.',
+      'Flag format and scoring rules will be announced at the start of the round.',
+      'Use of unauthorized tools or destructive attacks is prohibited.',
+      'A top score or fastest completion time wins.',
+    ],
+    details: [
+      'Open to — Students keen on offensive security and CTF strategy.',
+      'Tracks — Web Exploitation · Forensics · Reverse Engineering · Cryptography.',
+      'Format — Time-based team-based challenge round.',
+      'Evaluation — Solved flags · Time efficiency · Technical depth.',
+      'Date — 19 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ctf',
+  },
+  {
+    id: 6,
+    type: 'competition',
+    slug: 'cad-masters',
+    title: 'CAD Masters',
+    category: 'COMPETITIONS',
+    area: 'Design',
+    guidelinesTitle: 'CAD MASTERS GUIDELINES',
+    image: '/techevents/shine.svg',
+    alt: 'CAD Masters poster',
+    description:
+      'Sketch, model and optimize engineering concepts using CAD tools and transform your design thinking into a practical product idea.',
+    eligibility: [
+      'Open to students from mechanical, civil, architecture and design disciplines.',
+      'Participants may compete individually or in teams of two.',
+      'Basic familiarity with CAD software is recommended.',
+    ],
+    guidelines: [
+      'Each round includes conceptual design, modelling and presentation.',
+      'Judging focuses on design intent, presentation, feasibility and quality.',
+      'All files must be submitted in PDF or CAD-compatible formats.',
+      'Final judging will include a live design critique panel.',
+    ],
+    details: [
+      'Open to — Students passionate about product design and engineering.',
+      'Rounds — Concept Challenge → Model Phase → Live Presentation.',
+      'Evaluation — Innovation · Feasibility · Visual Quality · Technical Accuracy.',
+      'Prize Pool — Design tools and internship opportunities.',
+      'Date — 20 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/cad-masters',
+  },
+  {
+    id: 7,
+    type: 'competition',
+    slug: 'iot-arena',
+    title: 'IoT Build Arena',
+    category: 'COMPETITIONS',
+    area: 'IoT',
+    guidelinesTitle: 'IOT BUILD ARENA GUIDELINES',
+    image: '/techevents/cloud.jpg',
+    alt: 'IoT Build Arena poster',
+    description:
+      'Build an intelligent connected system that solves a real challenge using sensors, automation and data-driven decision making.',
+    eligibility: [
+      'Open to electronics, CS and interdisciplinary teams.',
+      'Maximum team size is 4 members.',
+      'Participants must bring their own microcontroller boards and sensors.',
+    ],
+    guidelines: [
+      'Projects must run autonomously for the required task duration.',
+      'Systems are evaluated for reliability, robustness and end-user value.',
+      'Teams may use any open hardware platform under the competition rules.',
+      'Results are judged through demonstration and technical explanation.',
+    ],
+    details: [
+      'Open to — Students interested in connected devices and intelligent systems.',
+      'Challenge — Smart city, industrial monitoring or healthcare automation themes.',
+      'Evaluation — Feasibility · Connectivity · Design · Demonstration.',
+      'Prize Pool — Prototype support and innovation grants.',
+      'Date — 21 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/iot-arena',
+  },
+  {
+    id: 8,
+    type: 'competition',
+    slug: 'app-dev-sprint',
+    title: 'App Dev Sprint',
+    category: 'COMPETITIONS',
+    area: 'Web',
+    guidelinesTitle: 'APP DEV SPRINT GUIDELINES',
+    image: '/techevents/web-dev.jpg',
+    alt: 'App Dev Sprint poster',
+    description:
+      'Design, prototype and ship a compelling app in a rapid development sprint that solves a real-world challenge with user-first thinking.',
+    eligibility: [
+      'Open to students from any branch with a passion for product design and coding.',
+      'Teams of 2 to 3 members are allowed.',
+      'Participants may use any frontend or backend stack of their choice.',
+    ],
+    guidelines: [
+      'Problem statements will be released at the event start.',
+      'Judging includes code quality, product utility and user interface polish.',
+      'Demo sessions will occur after 8 hours of build time.',
+      'Top apps qualify for demo showcase and sponsor feedback.',
+    ],
+    details: [
+      'Open to — Developers and designers with interest in modern product building.',
+      'Theme — Real-world app challenges across education, health and social impact.',
+      'Evaluation — Problem solving · UX · Technical implementation · Pitch.',
+      'Prize Pool — Sponsor rewards, internships and networking sessions.',
+      'Date — 20 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/app-dev-sprint',
+  },
+  {
+    id: 9,
+    type: 'competition',
+    slug: 'robotic-soccer',
+    title: 'Robotic Soccer',
+    category: 'COMPETITIONS',
+    area: 'Robotics',
+    guidelinesTitle: 'ROBOTIC SOCCER GUIDELINES',
+    image: '/techevents/robosoccer.webp',
+    alt: 'Robotic soccer poster',
+    description:
+      'Build autonomous or remote-controlled robots that compete in a fast-paced football match under team strategy and mechanical precision.',
+    eligibility: [
+      'Open to students interested in robotics, AI and machine vision.',
+      'Team size may be up to 4 participants.',
+      'Robots must comply with maximum size and power rules.',
+    ],
+    guidelines: [
+      'Matches will be played in an indoor field with team-based strategy rounds.',
+      'Judging considers scoring efficiency, defense, speed and stability.',
+      'Robots must pass safety checks before each match.',
+      'Final rounds take place on 21 September 2026.',
+    ],
+    details: [
+      'Open to — Robotics enthusiasts across all engineering disciplines.',
+      'Rules — Autonomous or remote-controlled play on a predefined field.',
+      'Evaluation — Defense · Speed · Goal conversion · Control accuracy.',
+      'Prize Pool — Team cash rewards and technology mentorship.',
+      'Date — 21 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/robotic-soccer',
+  },
+  {
+    id: 10,
+    type: 'competition',
+    slug: 'startup-pitch',
+    title: 'Startup Pitch',
+    category: 'COMPETITIONS',
+    area: 'Business',
+    guidelinesTitle: 'STARTUP PITCH GUIDELINES',
+    image: '/techevents/shine.svg',
+    alt: 'Startup pitch poster',
+    description:
+      'Pitch an innovative startup idea to investors, faculty experts and industry leaders in a live, high-pressure business challenge.',
+    eligibility: [
+      'Open to student founders and startup teams with early-stage ideas.',
+      'Teams may include business, engineering and design students.',
+      'A one-page concept note is required for screening.',
+    ],
+    guidelines: [
+      'Pitch decks must highlight traction, problem solving and market opportunity.',
+      'Judging includes investor feedback and expert panel scoring.',
+      'Selected teams advance to final presentation rounds.',
+      'The final pitch is followed by live Q&A and feedback.',
+    ],
+    details: [
+      'Open to — Student founders, innovators and early-stage startup enthusiasts.',
+      'Evaluation — Problem identification · Innovation · Business model · Scalability.',
+      'Final Round — Investor panel, Q&A and mentorship session.',
+      'Prize Pool — Funding guidance, incubation support and awards.',
+      'Date — 19 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/startup-pitch',
+  },
 ]
 
 export const workshopsData = [
   {
     id: 1,
-    slug: 'ai-ml',
+    type: 'workshop',
+    slug: 'ai-ml-workshop',
     title: 'AI & Machine Learning',
     category: 'WORKSHOPS',
+    area: 'AI',
     guidelinesTitle: 'AI & ML WORKSHOP GUIDELINES',
-    image: '/workshops/ai-ml.jpg',
+    image: '/techevents/ai-ml.jpg',
+    alt: 'AI and machine learning poster',
     description:
       'Dive deep into the world of artificial intelligence and machine learning. Learn to build intelligent systems, train neural networks, and deploy ML models in real-world applications.',
+    eligibility: [
+      'Open to beginners and intermediate learners interested in AI.',
+      'Basic Python programming is recommended but not mandatory.',
+      'Participants should bring a laptop for hands-on exercises.',
+    ],
+    guidelines: [
+      'Sessions cover Python basics, data pipelines, neural networks and model deployment.',
+      'Each participant will build a mini project during the workshop.',
+      'Certificates are awarded to active attendees.',
+      'Workshops are scheduled across 2 days with guided labs.',
+    ],
     details: [
       'Open to — Beginners & intermediate developers interested in AI.',
       'Hands-on Lab — Python, PyTorch, Transformers, and Hugging Face.',
@@ -80,13 +360,27 @@ export const workshopsData = [
   },
   {
     id: 2,
-    slug: 'web-dev',
+    type: 'workshop',
+    slug: 'web-development-workshop',
     title: 'Web Development',
     category: 'WORKSHOPS',
+    area: 'Web',
     guidelinesTitle: 'WEB DEVELOPMENT WORKSHOP GUIDELINES',
-    image: '/workshops/web-dev.jpg',
+    image: '/techevents/web-dev.jpg',
+    alt: 'Web development workshop poster',
     description:
       'Master modern web technologies from frontend frameworks to backend architecture. Build responsive, performant web applications using the latest tools and best practices.',
+    eligibility: [
+      'Open to all college students passionate about full-stack engineering.',
+      'Basic knowledge of HTML, CSS and JavaScript is helpful.',
+      'Participants should be ready to code and deploy a sample application.',
+    ],
+    guidelines: [
+      'Hands-on project includes frontend, backend and deployment basics.',
+      'Mentors will walk through React, Node.js and UI building patterns.',
+      'You will receive guided support throughout the session.',
+      'Certification will be provided on completion.',
+    ],
     details: [
       'Open to — All college students passionate about full-stack engineering.',
       'Tech Stack — React, Next.js, TailwindCSS, Node.js & Supabase.',
@@ -99,13 +393,27 @@ export const workshopsData = [
   },
   {
     id: 3,
-    slug: 'cloud-computing',
+    type: 'workshop',
+    slug: 'cloud-computing-workshop',
     title: 'Cloud Computing',
     category: 'WORKSHOPS',
+    area: 'Cloud',
     guidelinesTitle: 'CLOUD COMPUTING WORKSHOP GUIDELINES',
-    image: '/workshops/cloud.jpg',
+    image: '/techevents/cloud.jpg',
+    alt: 'Cloud computing workshop poster',
     description:
       'Explore cloud infrastructure, deployment strategies, and DevOps practices. Learn to architect scalable applications on AWS, Azure, or Google Cloud platforms.',
+    eligibility: [
+      'Open to CS, IT and software enthusiasts aiming for cloud architecture.',
+      'Familiarity with basic Linux or programming concepts is helpful.',
+      'Laptop access is required for practical cloud labs.',
+    ],
+    guidelines: [
+      'Topics include containers, infrastructure as code and CI/CD workflows.',
+      'Live demos will cover deployments and monitoring strategies.',
+      'Participants will get practical exposure to cloud resources and stacks.',
+      'Session ends with a deployment case study and certificate.',
+    ],
     details: [
       'Open to — CS, IT, and software enthusiasts aiming for cloud architecture.',
       'Curriculum — Containerization with Docker, Kubernetes orchestration, CI/CD.',
@@ -117,13 +425,27 @@ export const workshopsData = [
   },
   {
     id: 4,
-    slug: 'cybersecurity',
-    title: 'Cybersecurity',
+    type: 'workshop',
+    slug: 'cybersecurity-workshop',
+    title: 'Cybersecurity Essentials',
     category: 'WORKSHOPS',
+    area: 'Cybersecurity',
     guidelinesTitle: 'CYBERSECURITY WORKSHOP GUIDELINES',
-    image: '/workshops/cyber.jpg',
+    image: '/techevents/cyber.jpg',
+    alt: 'Cybersecurity workshop poster',
     description:
       'Understand ethical hacking, penetration testing, and security auditing. Protect systems from threats and vulnerabilities with hands-on security techniques.',
+    eligibility: [
+      'Open to students keen on defensive and offensive security.',
+      'Basic networking and operating system basics are recommended.',
+      'Participants should be comfortable using Linux based tools.',
+    ],
+    guidelines: [
+      'Sessions cover recon, web application vulnerabilities and network analysis.',
+      'Live CTF scenarios provide guided real-world security practice.',
+      'The workshop supports both beginners and intermediate learners.',
+      'Toolkits and challenge resources are included.',
+    ],
     details: [
       'Open to — Students keen on offensive security, CTF challenges & defense.',
       'Topics — Web vulnerability assessment, network penetration, Wireshark, Burp Suite.',
@@ -135,13 +457,27 @@ export const workshopsData = [
   },
   {
     id: 5,
-    slug: 'blockchain-web3',
+    type: 'workshop',
+    slug: 'blockchain-web3-workshop',
     title: 'Blockchain & Web3',
     category: 'WORKSHOPS',
+    area: 'Blockchain',
     guidelinesTitle: 'BLOCKCHAIN & WEB3 WORKSHOP GUIDELINES',
-    image: '/workshops/blockchain.jpg',
+    image: '/techevents/blockchain.jpg',
+    alt: 'Blockchain workshop poster',
     description:
       'Explore decentralized applications, smart contracts, and the future of the internet. Build on Ethereum and understand the fundamentals of blockchain technology.',
+    eligibility: [
+      'Open to programmers interested in smart contracts and Web3 architecture.',
+      'Basic programming knowledge is preferred.',
+      'Participants should be prepared to build a smart contract demo.',
+    ],
+    guidelines: [
+      'Topics include wallets, smart contracts and decentralized app design.',
+      'Participants will deploy a sample contract on a test network.',
+      'Mentor guidance will help bridge theory and implementation.',
+      'Completion includes a portfolio-ready blockchain mini project.',
+    ],
     details: [
       'Open to — Programmers interested in smart contracts and Web3 architecture.',
       'Hands-on Lab — Solidity, Hardhat, Ethers.js, and deploying on Sepolia testnet.',
@@ -150,7 +486,173 @@ export const workshopsData = [
     ],
     registerUrl: 'https://snaptiqz.com/event/ws-blockchain',
   },
+  {
+    id: 6,
+    type: 'workshop',
+    slug: 'robotics-ros-workshop',
+    title: 'Robotics with ROS',
+    category: 'WORKSHOPS',
+    area: 'Robotics',
+    guidelinesTitle: 'ROBOTICS WITH ROS GUIDELINES',
+    image: '/techevents/robowar.webp',
+    alt: 'Robotics workshop poster',
+    description:
+      'Learn robot kinematics, sensor integration and navigation pipelines using ROS-based tools and practical simulation environments.',
+    eligibility: [
+      'Open to students from mechanical, electronics and computer science backgrounds.',
+      'Basic C++ or Python knowledge is recommended.',
+      'Participants should be comfortable with structured labs and demo coding.',
+    ],
+    guidelines: [
+      'Hands-on modules include robot simulation, transforms and sensor fusion.',
+      'Students build a simple autonomous robot framework in the lab.',
+      'Each session includes application-level problem solving and mentoring.',
+      'A workshop certificate is awarded on successful completion.',
+    ],
+    details: [
+      'Open to — Students passionate about autonomous systems and robotics.',
+      'Lab Modules — ROS basics, navigation stacks, sensors and simulation.',
+      'Takeaways — Robotics starter kit guidance and project resource pack.',
+      'Date — 21 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ws-robotics-ros',
+  },
+  {
+    id: 7,
+    type: 'workshop',
+    slug: 'iot-embedded-systems',
+    title: 'IoT & Embedded Systems',
+    category: 'WORKSHOPS',
+    area: 'IoT',
+    guidelinesTitle: 'IOT & EMBEDDED SYSTEMS GUIDELINES',
+    image: '/techevents/cloud.jpg',
+    alt: 'IoT and embedded systems poster',
+    description:
+      'Connect sensors, microcontrollers and networks to build intelligent embedded solutions for smart devices and real-world automation.',
+    eligibility: [
+      'Open to electronics and software students with a practical interest in devices.',
+      'Basic C/C++ or Arduino exposure will be helpful.',
+      'A laptop and hardware components can be requested from organizers.',
+    ],
+    guidelines: [
+      'Participants build and test sensor-driven prototypes in guided labs.',
+      'Topics include GPIO, networking, firmware logic and cloud connectivity.',
+      'The workshop includes demo-based evaluation and project guidance.',
+      'Certificates are awarded for participation and completion.',
+    ],
+    details: [
+      'Open to — Students interested in smart systems and embedded design.',
+      'Lab Focus — Microcontrollers, sensors, protocols and system integration.',
+      'Takeaways — Sensor kit access, coding notes and prototype support.',
+      'Date — 20 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ws-iot',
+  },
+  {
+    id: 8,
+    type: 'workshop',
+    slug: 'uiux-design-sprint',
+    title: 'UI/UX Design Sprint',
+    category: 'WORKSHOPS',
+    area: 'Design',
+    guidelinesTitle: 'UI/UX DESIGN SPRINT GUIDELINES',
+    image: '/techevents/shine.svg',
+    alt: 'UI UX workshop poster',
+    description:
+      'Learn design thinking, interface planning and user-focused prototyping to build intuitive digital products that look and feel great.',
+    eligibility: [
+      'Open to students from all branches interested in design and product thinking.',
+      'No prior design experience is needed.',
+      'Participants can work in teams or individually.',
+    ],
+    guidelines: [
+      'The session includes research, wireframing, prototyping and usability review.',
+      'Students will create a concept design based on a real challenge statement.',
+      'Hands-on critiques help improve interaction and visual clarity.',
+      'Portfolio-worthy outcomes are encouraged.',
+    ],
+    details: [
+      'Open to — Students passionate about product and interface design.',
+      'Tools — Figma, design systems, prototyping workflows and user flow mapping.',
+      'Takeaways — Design asset pack, feedback sheet and portfolio templates.',
+      'Date — 19 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ws-uiux',
+  },
+  {
+    id: 9,
+    type: 'workshop',
+    slug: 'data-science-bootcamp',
+    title: 'Data Science Bootcamp',
+    category: 'WORKSHOPS',
+    area: 'Data Science',
+    guidelinesTitle: 'DATA SCIENCE BOOTCAMP GUIDELINES',
+    image: '/techevents/ai-ml.jpg',
+    alt: 'Data science bootcamp poster',
+    description:
+      'Work through a hands-on data science pipeline using statistics, Python and ML models to interpret real-world data and generate decisions.',
+    eligibility: [
+      'Open to students with an interest in analytics, AI and decision science.',
+      'Basic Python will be helpful but not a hard requirement.',
+      'Participants are expected to work on guided notebooks.',
+    ],
+    guidelines: [
+      'Sessions focus on data cleaning, exploratory analysis, feature engineering and evaluation.',
+      'Participants build a prediction model on a practical dataset.',
+      'Mentors provide feedback and optimization tips throughout the session.',
+      'A certificate of participation will be issued after the bootcamp.',
+    ],
+    details: [
+      'Open to — Students curious about machine learning and data-driven decision making.',
+      'Core Skills — Python, analytics, ML fundamentals, model evaluation.',
+      'Takeaways — Dataset notebook, certificate and project starter pack.',
+      'Date — 21 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ws-data-science',
+  },
+  {
+    id: 10,
+    type: 'workshop',
+    slug: 'ar-vr-experience-lab',
+    title: 'AR/VR Experience Lab',
+    category: 'WORKSHOPS',
+    area: 'AR/VR',
+    guidelinesTitle: 'AR/VR EXPERIENCE LAB GUIDELINES',
+    image: '/techevents/robosoccer.webp',
+    alt: 'AR VR experience lab poster',
+    description:
+      'Explore immersive interaction design and spatial computing by creating simple AR and VR experiences with practical visual tools and workflows.',
+    eligibility: [
+      'Open to students from engineering, design and creative technology backgrounds.',
+      'No advanced experience is required; curiosity and creativity are enough.',
+      'Participants may work in pairs or individually.',
+    ],
+    guidelines: [
+      'The lab covers immersive storytelling, interaction design and rapid prototyping.',
+      'Participants will build a mini experience using accessible AR/VR tools.',
+      'Discussion is included on hardware, usability and real-world prototyping.',
+      'The session concludes with a short demo showcase.',
+    ],
+    details: [
+      'Open to — Students interested in immersive technologies and interactive design.',
+      'Topics — AR concepts, VR UX, spatial design and storytelling.',
+      'Takeaways — Starter template, demo assets and workshop certificate.',
+      'Date — 20 September 2026.',
+    ],
+    registerUrl: 'https://snaptiqz.com/event/ws-ar-vr',
+  },
 ]
+
+export const technicalEventsData = [...workshopsData, ...competitionsData]
+
+export function findEventBySlug(slug) {
+  if (!slug) return null
+  const clean = String(slug).toLowerCase().trim()
+  return (
+    technicalEventsData.find((event) => event.slug === clean) ||
+    null
+  )
+}
 
 export const dakshaEventsData = [
   {
@@ -158,8 +660,9 @@ export const dakshaEventsData = [
     slug: 'shark-tank',
     title: 'Shark Tank',
     category: 'DAKSHA',
+    area: 'Startup',
     guidelinesTitle: 'SHARK TANK GUIDELINES',
-    image: '/daksha/shark-tank.png',
+    image: '/techevents/shark-tank.webp',
     alt: 'Shark Tank event',
     description:
       'Pitch your startup or early-stage innovation to seasoned investors and industry mentors for real equity investment and incubation support.',
@@ -173,15 +676,3 @@ export const dakshaEventsData = [
     registerUrl: 'https://snaptiqz.com/event/shark-tank',
   },
 ]
-
-// Helper to look up any event by slug or id
-export function findEventBySlug(slug) {
-  if (!slug) return null
-  const clean = String(slug).toLowerCase().trim()
-  return (
-    competitionsData.find((e) => e.slug === clean) ||
-    workshopsData.find((e) => e.slug === clean) ||
-    dakshaEventsData.find((e) => e.slug === clean) ||
-    null
-  )
-}
