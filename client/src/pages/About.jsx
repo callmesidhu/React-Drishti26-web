@@ -206,14 +206,14 @@ function About({ embedded = false }) {
         <p className="text-[11px] uppercase tracking-[6px] text-gold/60">About Us</p>
         <h1
           ref={h1Ref}
-          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight"
+          className="text-[clamp(32px,8vw,120px)] font-bold uppercase leading-none tracking-tight text-gold-gradient drop-shadow-[0_0_20px_rgba(212,175,55,0.25)]"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Drishti
         </h1>
         <p
           ref={subheadRef}
-          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[4px]"
+          className="mt-2 text-[clamp(18px,3vw,28px)] uppercase tracking-[0.3em] text-gold/80"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Technical Festival
@@ -233,7 +233,7 @@ function About({ embedded = false }) {
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
           ref={numbersHeadRef}
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-[0.12em] text-gold-gradient drop-shadow-[0_0_18px_rgba(212,175,55,0.2)]"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           Our Numbers
@@ -243,7 +243,7 @@ function About({ embedded = false }) {
             <div key={stat.label} className="text-center" style={{ opacity: 0 }}>
               <p
                 ref={(el) => { statRefs.current[i] = el; statNumberRefs.current[i] = el }}
-                className="text-[clamp(36px,6vw,64px)] font-bold"
+                className="text-[clamp(36px,6vw,64px)] font-bold text-gold-gradient"
                 style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
               >
                 0{stat.suffix}
@@ -259,7 +259,7 @@ function About({ embedded = false }) {
       <section className="mx-auto max-w-[1100px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
           ref={valuesHeadRef}
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-[0.12em] text-gold-gradient drop-shadow-[0_0_18px_rgba(212,175,55,0.2)]"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           What We Stand For
@@ -268,13 +268,13 @@ function About({ embedded = false }) {
           {values.map((value, i) => (
             <div
               key={value.title}
-              className="border border-gold/20 bg-[#0a0a0a] p-8 transition-all duration-300 hover:border-gold/40 hover:bg-[#111]"
+              className="border border-gold/20 bg-[#0a0a0a] p-8 transition-all duration-300 hover:border-gold/40 hover:bg-[#111] shadow-[0_0_18px_rgba(0,0,0,0.3)]"
               style={{ opacity: 0 }}
             >
               <span className="text-3xl text-gold">{value.icon}</span>
               <h3
                 ref={(el) => { valueH3Refs.current[i] = el }}
-                className="mt-4 text-xl font-bold uppercase tracking-wider"
+                className="mt-4 text-xl font-bold uppercase tracking-[0.1em] text-gold-gradient"
                 style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
               >
                 {value.title}
@@ -290,7 +290,7 @@ function About({ embedded = false }) {
       <section className="mx-auto max-w-[800px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)]">
         <h2
           ref={journeyHeadRef}
-          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
+          className="text-center text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-[0.12em] text-gold-gradient drop-shadow-[0_0_18px_rgba(212,175,55,0.2)]"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           Our Journey
@@ -307,7 +307,7 @@ function About({ embedded = false }) {
               <div className={`flex-1 ${i % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'}`}>
                 <p
                   ref={(el) => { timelineYearRefs.current[i] = el }}
-                  className="text-2xl font-bold"
+                  className="text-2xl font-bold text-gold-gradient"
                   style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
                 >
                   {item.year}
@@ -329,7 +329,7 @@ function About({ embedded = false }) {
       <section ref={ctaRef} className="px-[clamp(16px,4vw,40px)] py-[clamp(40px,8vw,100px)] text-center">
         <h2
           ref={ctaHeadRef}
-          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-tight"
+          className="text-[clamp(28px,5vw,48px)] font-bold uppercase tracking-[0.08em] text-gold-gradient drop-shadow-[0_0_18px_rgba(212,175,55,0.2)]"
           style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
           Ready to be part of something extraordinary?
