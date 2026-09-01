@@ -37,13 +37,13 @@ export default function Countdown() {
       </h2>
 
       <img
-        className="pointer-events-none absolute -left-[clamp(82px,11vw,180px)] -top-[clamp(72px,8vw,125px)] z-0 w-[clamp(220px,29vw,460px)] max-w-none"
+        className="pointer-events-none absolute -left-[clamp(24px,3vw,44px)] -top-[clamp(24px,3vw,44px)] z-0 w-[clamp(110px,13vw,210px)] max-w-none"
         src={NANOBOT_IMAGE}
         alt=""
         aria-hidden="true"
       />
       <img
-        className="pointer-events-none absolute -bottom-[clamp(72px,8vw,125px)] -right-[clamp(82px,11vw,180px)] z-0 w-[clamp(220px,29vw,460px)] max-w-none rotate-180"
+        className="pointer-events-none absolute -bottom-[clamp(24px,3vw,44px)] -right-[clamp(24px,3vw,44px)] z-0 w-[clamp(110px,13vw,210px)] max-w-none rotate-180"
         src={NANOBOT_IMAGE}
         alt=""
         aria-hidden="true"
