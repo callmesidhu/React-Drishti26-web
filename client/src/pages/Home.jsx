@@ -40,8 +40,13 @@ function Home() {
  <Ideas />
  <Aftermovie />
  
+ {/* Fade gradient that bleeds upwards to blend the sharp edge of ProShows without adding scroll height */}
+ <div className="relative z-30 w-full h-0">
+ <div className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-b from-transparent to-black pointer-events-none" />
+ </div>
+
  {/* ============ PRO SHOWS ============ */}
- <section id="proshows" className="relative w-full bg-black overflow-hidden">
+ <section id="proshows" className="relative w-full bg-black overflow-hidden z-20">
  <ProShows embedded={true} />
  </section>
 

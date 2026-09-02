@@ -61,21 +61,21 @@ export default function Aftermovie() {
  }
  });
 
- // 3. Pinned sequence: Section pins at top, video container slides up and out
+ // 3. Pinned sequence: Section pins at top, video container slides up while next section chases it
  const pinTl = gsap.timeline({
  scrollTrigger: {
  trigger: aftermovieSectionRef.current,
  start: "top top",
- end: "+=120%", // Pin for 120% of viewport height scroll
+ end: "+=100%", // Pin for exactly 1 viewport height
  pin: true,
+ pinSpacing: false, // CRITICAL: Allows the next section to scroll up OVER this section immediately!
  scrub: 0.8
  }
  });
 
  pinTl.to(aftermovieContainerRef.current, {
  y: "-100vh",
- ease: "power2.inOut",
- duration: 1
+ ease: "none" // Linear ease so it perfectly matches the scroll speed of the next section
  });
 
  // 4. Continuous internal video parallax spanning the entire visibility

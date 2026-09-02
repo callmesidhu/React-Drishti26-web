@@ -375,12 +375,9 @@ export default function DomeGallery({
  {
  onDragStart: ({ event }) => {
  pointerTypeRef.current = event.pointerType || 'mouse';
- if (pointerTypeRef.current === 'touch' && window.innerWidth < 768) return;
  if (focusedElRef.current) return;
  stopInertia();
 
- if (pointerTypeRef.current === 'touch') event.preventDefault();
- if (pointerTypeRef.current === 'touch') lockScroll();
  draggingRef.current = true;
  cancelTapRef.current = false;
  movedRef.current = false;
@@ -390,10 +387,7 @@ export default function DomeGallery({
  tapTargetRef.current = potential || null;
  },
  onDrag: ({ event, last, velocity: velArr = [0, 0], direction: dirArr = [0, 0], movement }) => {
- if (pointerTypeRef.current === 'touch' && window.innerWidth < 768) return;
  if (focusedElRef.current || !draggingRef.current || !startPosRef.current) return;
-
- if (pointerTypeRef.current === 'touch') event.preventDefault();
 
  const dxTotal = event.clientX - startPosRef.current.x;
  const dyTotal = event.clientY - startPosRef.current.y;
@@ -455,11 +449,14 @@ export default function DomeGallery({
  if (cancelTapRef.current) setTimeout(() => (cancelTapRef.current = false), 120);
  if (movedRef.current) lastDragEndAt.current = performance.now();
  movedRef.current = false;
- if (pointerTypeRef.current === 'touch') unlockScroll();
  }
  }
  },
- { target: mainRef, eventOptions: { passive: false } }
+ { 
+ target: mainRef, 
+ eventOptions: { passive: true },
+ drag: { touchAction: 'pan-y' }
+ }
  );
 
  useEffect(() => {
