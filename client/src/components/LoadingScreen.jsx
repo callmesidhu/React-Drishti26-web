@@ -12,9 +12,15 @@ function LoadingScreen({ onComplete }) {
   const particlesRef = useRef(null)
   const shimmerRef = useRef(null)
   const bgGridRef = useRef(null)
+  const videoRef = useRef(null)
   const shapesRef = useRef([])
 
   useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 3.5
+      videoRef.current.defaultPlaybackRate = 3.5
+    }
+
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         onComplete: () => {
@@ -98,16 +104,21 @@ function LoadingScreen({ onComplete }) {
 
       // ---- ENTRANCE ANIMATIONS ----
 
+      gsap.fromTo(videoRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.25, ease: 'power2.out' }
+      )
+
       // Background grid fade in
       gsap.fromTo(bgGridRef.current,
         { opacity: 0 },
-        { opacity: 0.1, duration: 1, delay: 0.2 }
+        { opacity: 0.12, duration: 0.4, delay: 0.1 }
       )
 
       // Shimmer line sweep
       gsap.fromTo(shimmerRef.current,
         { x: '-100%' },
-        { x: '200%', duration: 1.5, delay: 0.5, ease: 'power2.inOut' }
+        { x: '200%', duration: 0.5, delay: 0.1, ease: 'power2.inOut' }
       )
 
       // Logo with 3D entrance
@@ -115,27 +126,27 @@ function LoadingScreen({ onComplete }) {
         { scale: 0, rotation: -180, rotationY: 90, opacity: 0 },
         {
           scale: 1, rotation: 0, rotationY: 0, opacity: 1,
-          duration: 1, ease: 'elastic.out(1, 0.4)',
+          duration: 0.55, ease: 'elastic.out(1, 0.4)',
         }
       )
 
       // Rings with stagger and rotation
       tl.fromTo(ringRef.current,
         { scale: 0, opacity: 0, rotation: -90 },
-        { scale: 1, opacity: 1, rotation: 0, duration: 0.8, ease: 'back.out(1.5)' },
-        '-=0.6'
+        { scale: 1, opacity: 1, rotation: 0, duration: 0.35, ease: 'back.out(1.5)' },
+        '-=0.35'
       )
 
       tl.fromTo(ring2Ref.current,
         { scale: 0, opacity: 0, rotation: 90 },
-        { scale: 1, opacity: 0.6, rotation: 0, duration: 0.7, ease: 'back.out(1.3)' },
-        '-=0.5'
+        { scale: 1, opacity: 0.6, rotation: 0, duration: 0.3, ease: 'back.out(1.3)' },
+        '-=0.25'
       )
 
       tl.fromTo(ring3Ref.current,
         { scale: 0, opacity: 0, rotation: -45 },
-        { scale: 1, opacity: 0.3, rotation: 0, duration: 0.6, ease: 'back.out(1.2)' },
-        '-=0.4'
+        { scale: 1, opacity: 0.3, rotation: 0, duration: 0.25, ease: 'back.out(1.2)' },
+        '-=0.2'
       )
 
       // Year text with glitch effect
@@ -143,9 +154,9 @@ function LoadingScreen({ onComplete }) {
         { y: 30, opacity: 0, skewX: 20 },
         {
           y: 0, opacity: 1, skewX: 0,
-          duration: 0.5, ease: 'power3.out',
+          duration: 0.25, ease: 'power3.out',
         },
-        '-=0.2'
+        '-=0.15'
       )
 
       // Corners pop in
@@ -153,9 +164,9 @@ function LoadingScreen({ onComplete }) {
         { scale: 0, opacity: 0 },
         {
           scale: 1, opacity: 1,
-          duration: 0.3, stagger: 0.05, ease: 'back.out(2)',
+          duration: 0.2, stagger: 0.03, ease: 'back.out(2)',
         },
-        '-=0.3'
+        '-=0.15'
       )
 
       // Shapes entrance
@@ -163,10 +174,13 @@ function LoadingScreen({ onComplete }) {
         { scale: 0, opacity: 0, rotation: -180 },
         {
           scale: 1, opacity: 0.6, rotation: 0,
-          duration: 0.5, stagger: 0.08, ease: 'elastic.out(1, 0.5)',
+          duration: 0.25, stagger: 0.04, ease: 'elastic.out(1, 0.5)',
         },
-        '-=0.4'
+        '-=0.2'
       )
+
+      // Hold the reveal visible for ~0.9s so total loading stays around 2s
+      tl.to({}, { duration: 0.9 })
 
       // Continuous rotations
       gsap.to(ringRef.current, {
@@ -272,14 +286,26 @@ function LoadingScreen({ onComplete }) {
       className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505]"
       style={{ perspective: '1000px' }}
     >
+      {/* Background Video */}
+      <video
+        ref={videoRef}
+        src="/home/ideas-emblem-reveal.webm"
+        autoPlay
+        muted
+        playsInline
+        preload="auto"
+        onEnded={() => onComplete?.()}
+        className="absolute top-1/2 left-1/2 z-0 h-[clamp(200px,40vh,500px)] w-auto -translate-x-1/2 -translate-y-1/2 object-contain opacity-100 mix-blend-screen"
+      />
+
       {/* Background grid */}
       <div
         ref={bgGridRef}
-        className="absolute inset-0 opacity-0"
+        className="absolute inset-0 z-10 opacity-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(225,157,0,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(225,157,0,0.1) 1px, transparent 1px)
+            linear-gradient(rgba(212,175,55,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212,175,55,0.1) 1px, transparent 1px)
           `,
           backgroundSize: '50px 50px',
         }}
@@ -291,13 +317,13 @@ function LoadingScreen({ onComplete }) {
           ref={shimmerRef}
           className="absolute top-0 h-full w-32 -skew-x-12"
           style={{
-            background: 'linear-gradient(90deg, transparent, rgba(225,157,0,0.15), transparent)',
+            background: 'linear-gradient(90deg, transparent, rgba(212,175,55,0.15), transparent)',
           }}
         />
       </div>
 
       {/* Floating particles */}
-      <div ref={particlesRef} className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div ref={particlesRef} className="absolute inset-0 z-20 overflow-hidden pointer-events-none">
         {Array.from({ length: 40 }).map((_, i) => (
           <div
             key={i}
@@ -305,7 +331,7 @@ function LoadingScreen({ onComplete }) {
             style={{
               width: `${Math.random() * 6 + 2}px`,
               height: `${Math.random() * 6 + 2}px`,
-              backgroundColor: i % 3 === 0 ? '#e19d00' : i % 3 === 1 ? '#ffffff' : '#ffd700',
+              backgroundColor: i % 3 === 0 ? '#D4AF37' : i % 3 === 1 ? '#ffffff' : '#ffd700',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               opacity: 0,
@@ -334,103 +360,23 @@ function LoadingScreen({ onComplete }) {
             right: shape.right,
             width: `${shape.size}px`,
             height: `${shape.size}px`,
-            border: shape.border ? '1px solid rgba(225,157,0,0.3)' : 'none',
-            backgroundColor: shape.border ? 'transparent' : 'rgba(225,157,0,0.1)',
+            border: shape.border ? '1px solid rgba(212,175,55,0.3)' : 'none',
+            backgroundColor: shape.border ? 'transparent' : 'rgba(212,175,55,0.1)',
             transform: `rotate(${shape.rotation}deg)`,
           }}
         />
       ))}
 
       {/* Logo and rings container */}
-      <div className="relative flex items-center justify-center" style={{ perspective: '800px' }}>
-        {/* Outer ring */}
-        <svg
-          ref={ring3Ref}
-          className="absolute h-[200px] w-[200px] md:h-[260px] md:w-[260px]"
-          viewBox="0 0 260 260"
-          style={{ opacity: 0 }}
-        >
-          <circle
-            cx="130" cy="130" r="125"
-            fill="none" stroke="rgba(225,157,0,0.08)"
-            strokeWidth="0.5" strokeDasharray="4 8"
-          />
-        </svg>
-
-        {/* Middle ring */}
-        <svg
-          ref={ring2Ref}
-          className="absolute h-[170px] w-[170px] md:h-[220px] md:w-[220px]"
-          viewBox="0 0 220 220"
-          style={{ opacity: 0 }}
-        >
-          <circle
-            cx="110" cy="110" r="105"
-            fill="none" stroke="rgba(225,157,0,0.15)"
-            strokeWidth="0.5" strokeDasharray="6 4"
-          />
-          <circle
-            cx="110" cy="110" r="100"
-            fill="none" stroke="rgba(225,157,0,0.08)"
-            strokeWidth="0.5"
-          />
-        </svg>
-
-        {/* Inner ring */}
-        <svg
-          ref={ringRef}
-          className="absolute h-[140px] w-[140px] md:h-[180px] md:w-[180px]"
-          viewBox="0 0 180 180"
-          style={{ opacity: 0 }}
-        >
-          <circle
-            cx="90" cy="90" r="85"
-            fill="none" stroke="rgba(225,157,0,0.3)"
-            strokeWidth="1" strokeDasharray="8 6"
-          />
-          <circle
-            cx="90" cy="90" r="75"
-            fill="none" stroke="rgba(225,157,0,0.15)"
-            strokeWidth="0.5"
-          />
-          {/* Glowing dot on ring */}
-          <circle
-            cx="90" cy="5"
-            r="3"
-            fill="#e19d00"
-            style={{ filter: 'drop-shadow(0 0 6px #e19d00)' }}
-          >
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              from="0 90 90"
-              to="360 90 90"
-              dur="3s"
-              repeatCount="indefinite"
-            />
-          </circle>
-        </svg>
-
-        {/* Logo */}
-        <img
-          ref={logoRef}
-          src="/daksha/drishti-logo.png"
-          alt="Drishti"
-          className="relative z-10 h-[60px] w-auto md:h-[80px]"
-          style={{ opacity: 0, transformStyle: 'preserve-3d' }}
-        />
+      <div className="relative flex items-center justify-center z-20" style={{ perspective: '800px' }}>
+        <div className="hidden" ref={ring3Ref}></div>
+        <div className="hidden" ref={ring2Ref}></div>
+        <div className="hidden" ref={ringRef}></div>
+        <div className="hidden" ref={logoRef}></div>
       </div>
 
-      {/* Text */}
-      <div className="mt-8 text-center">
-        <p
-          ref={yearRef}
-          className="text-xs uppercase tracking-[4px] text-white/30"
-          style={{ opacity: 0 }}
-        >
-          Drishti 2026
-        </p>
-      </div>
+      {/* Text (hidden to preserve GSAP ref) */}
+      <div className="hidden" ref={yearRef}></div>
 
       {/* Corner brackets */}
       {[
@@ -447,23 +393,7 @@ function LoadingScreen({ onComplete }) {
         />
       ))}
 
-      {/* Loading progress bar */}
-      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-32 h-[1px] bg-white/10 overflow-hidden">
-        <div
-          className="h-full bg-gold"
-          style={{
-            animation: 'loadingBar 1.5s ease-in-out forwards',
-          }}
-        />
-      </div>
 
-      <style>{`
-        @keyframes loadingBar {
-          0% { width: 0%; }
-          50% { width: 70%; }
-          100% { width: 100%; }
-        }
-      `}</style>
     </div>
   )
 }

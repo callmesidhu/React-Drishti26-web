@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
@@ -7,34 +7,53 @@ import EventDetailsModal from '../components/EventDetailsModal.jsx'
 import { competitionsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
+const TOTAL = competitionsData.length
+
+// Same 3D deck-of-cards transform used on the Workshops page, so both
+// pages carousel identically.
+function getCarouselTransform(index, activeIndex) {
+  const offset = index - activeIndex
+  const normalized = Math.abs(offset) > TOTAL / 2 ? offset - Math.sign(offset) * TOTAL : offset
+  const abs = Math.abs(normalized)
+
+  return {
+    x: normalized * 120,
+    y: abs * 8,
+    rotateY: normalized * -22,
+    scale: 1 - abs * 0.08,
+    opacity: abs > 2 ? 0 : 1 - abs * 0.26,
+    zIndex: TOTAL - abs,
+  }
+}
+
 function Competitions({ embedded = false }) {
   const { slug } = useParams()
   const routerNavigate = useNavigate()
   const [activeIndex, setActiveIndex] = useState(0)
+  const activeIndexRef = useRef(0)
+  const busyRef = useRef(false)
   const competitions = competitionsData
   const active = competitions[activeIndex] || competitions[0]
 
-  // Find modal event if slug is present in URL
   const selectedModalEvent = slug ? competitions.find((c) => c.slug === slug) : null
 
-  // If URL has slug on initial load, sync activeIndex
   useEffect(() => {
     if (slug) {
       const idx = competitions.findIndex((c) => c.slug === slug)
-      if (idx !== -1) setActiveIndex(idx)
+      if (idx !== -1) {
+        setActiveIndex(idx)
+        activeIndexRef.current = idx
+      }
     }
   }, [slug])
-  const carouselRef = useRef(null)
-  const pageRef = useRef(null)
-  const detailRef = useRef(null)
-  const activeRef = useRef(activeIndex)
-  const navRef = useRef(false)
+
   const h1Ref = useRef(null)
-  const h2Ref = useRef(null)
-  const sidebarItemsRef = useRef([])
-  const registerBtnRef = useRef(null)
-  const arrowRef = useRef(null)
-  const sparkleRef = useRef(null)
+  const titleRef = useRef(null)
+  const descRef = useRef(null)
+  const btnRef = useRef(null)
+  const deckRef = useRef(null)
+  const cardRefs = useRef([])
+  const dotsRef = useRef([])
 
   useEffect(() => {
     if (!h1Ref.current) return
@@ -43,226 +62,202 @@ function Competitions({ embedded = false }) {
   }, [])
 
   useEffect(() => {
-    if (!h2Ref.current) return
-    h2Ref.current.textContent = competitions[activeIndex].title
-    applyLetterGradient(h2Ref.current)
+    if (titleRef.current) {
+      titleRef.current.textContent = competitions[activeIndex].title
+      applyLetterGradient(titleRef.current)
+    }
   }, [activeIndex])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(h1Ref.current, { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 })
-      gsap.fromTo(sidebarItemsRef.current, { x: -40, opacity: 0 }, { x: 0, opacity: 1, stagger: 0.1, duration: 0.5, ease: 'power2.out', delay: 0.3 })
-      gsap.fromTo(detailRef.current, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.5 })
+      gsap.fromTo(h1Ref.current, { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.1 })
 
-      if (sparkleRef.current) {
-        gsap.to(sparkleRef.current, { rotation: 360, duration: 20, ease: 'none', repeat: -1 })
-        gsap.to(sparkleRef.current, { scale: 1.1, duration: 2, ease: 'sine.inOut', yoyo: true, repeat: -1 })
+      const cards = cardRefs.current
+      if (cards.length) {
+        gsap.set(cards, (i) => {
+          const { x, y, rotateY, scale, opacity, zIndex } = getCarouselTransform(i, 0)
+          return { x, y, rotateY, scale, opacity, zIndex }
+        })
       }
+
+      gsap.fromTo([titleRef.current, descRef.current, btnRef.current],
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out', stagger: 0.08, delay: 0.35 },
+      )
     })
 
     return () => ctx.revert()
   }, [])
 
-  const navigate = useCallback((dir) => {
-    if (navRef.current) return
-    navRef.current = true
-    setTimeout(() => { navRef.current = false }, 600)
+  function transitionTo(newIndex) {
+    if (busyRef.current || newIndex === activeIndexRef.current) return
+    busyRef.current = true
+    const prevIndex = activeIndexRef.current
+    activeIndexRef.current = newIndex
+    const comp = competitions[newIndex]
 
-    setActiveIndex((prev) => {
-      const next = prev + dir
-      if (next < 0) return 0
-      if (next >= competitions.length) return competitions.length - 1
-      return next
+    competitions.forEach((_, i) => {
+      const el = cardRefs.current[i]
+      if (!el) return
+
+      const target = getCarouselTransform(i, newIndex)
+      gsap.set(el, { zIndex: target.zIndex })
+      gsap.to(el, {
+        x: target.x,
+        y: target.y,
+        rotateY: target.rotateY,
+        scale: target.scale,
+        opacity: target.opacity,
+        duration: i === prevIndex ? 0.55 : 0.45,
+        ease: i === prevIndex ? 'power2.inOut' : 'power2.out',
+        delay: i === prevIndex ? 0 : 0.06,
+      })
     })
-  }, [])
 
-  useEffect(() => {
-    activeRef.current = activeIndex
-  }, [activeIndex])
+    gsap.to(titleRef.current, { opacity: 0, y: -15, duration: 0.2 })
+    gsap.to(descRef.current, { opacity: 0, y: 15, duration: 0.2 })
+    gsap.to(btnRef.current, { opacity: 0, duration: 0.2 })
 
-  useEffect(() => {
-    const el = pageRef.current
-    if (!el) return
+    setTimeout(() => {
+      setActiveIndex(newIndex)
+      descRef.current.textContent = comp.description
 
-    const isInView = () => {
-      const rect = el.getBoundingClientRect()
-      return rect.top < window.innerHeight && rect.bottom > 0
-    }
+      gsap.fromTo(titleRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.3 })
+      gsap.fromTo(descRef.current, { opacity: 0, y: -15 }, { opacity: 1, y: 0, duration: 0.3, delay: 0.05 })
+      gsap.fromTo(btnRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3, delay: 0.1 })
 
-    const handleWheel = (e) => {
-      if (!isInView()) return
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
-      if (delta > 0 && activeRef.current < competitions.length - 1) {
-        e.preventDefault()
-        navigate(1)
-      } else if (delta < 0 && activeRef.current > 0) {
-        e.preventDefault()
-        navigate(-1)
-      }
-    }
+      dotsRef.current.forEach((dot, i) => {
+        if (!dot) return
+        if (i === newIndex) {
+          dot.classList.add('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(212,175,55,0.6)]')
+          dot.classList.remove('w-3', 'bg-gold/30')
+        } else {
+          dot.classList.remove('w-10', 'bg-gold', 'shadow-[0_0_12px_rgba(212,175,55,0.6)]')
+          dot.classList.add('w-3', 'bg-gold/30')
+        }
+      })
 
-    const handleTouchStart = (e) => {
-      if (!isInView()) return
-      el._touchY = e.touches[0].clientY
-    }
+      busyRef.current = false
+    }, 200)
+  }
 
-    const handleTouchEnd = (e) => {
-      if (!isInView()) return
-      const dy = e.changedTouches[0].clientY - el._touchY
-      if (Math.abs(dy) > 30) {
-        navigate(dy < 0 ? 1 : -1)
-      }
-    }
-
-    el.addEventListener('wheel', handleWheel, { passive: false })
-    el.addEventListener('touchstart', handleTouchStart, { passive: true })
-    el.addEventListener('touchend', handleTouchEnd, { passive: true })
-
-    return () => {
-      el.removeEventListener('wheel', handleWheel)
-      el.removeEventListener('touchstart', handleTouchStart)
-      el.removeEventListener('touchend', handleTouchEnd)
-    }
-  }, [navigate])
-
-  useEffect(() => {
-    if (!detailRef.current) return
-    gsap.fromTo(detailRef.current.children, { opacity: 0, y: 20 }, {
-      opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08,
-    })
-  }, [activeIndex])
-
-  useEffect(() => {
-    if (registerBtnRef.current) {
-      const btn = registerBtnRef.current
-      const handleEnter = () => gsap.to(arrowRef.current, { x: 5, duration: 0.3, ease: 'power2.out' })
-      const handleLeave = () => gsap.to(arrowRef.current, { x: 0, duration: 0.3, ease: 'power2.out' })
-      btn.addEventListener('mouseenter', handleEnter)
-      btn.addEventListener('mouseleave', handleLeave)
-      return () => {
-        btn.removeEventListener('mouseenter', handleEnter)
-        btn.removeEventListener('mouseleave', handleLeave)
-      }
-    }
-  }, [])
+  const goNext = () => transitionTo((activeIndexRef.current + 1) % TOTAL)
+  const goPrev = () => transitionTo((activeIndexRef.current - 1 + TOTAL) % TOTAL)
 
   return (
-    <div ref={pageRef} className={`relative min-h-svh w-full touch-none ${embedded ? 'bg-transparent' : ''}`}>
+    <div className={`relative min-h-screen w-full overflow-x-hidden ${embedded ? 'bg-transparent' : ''}`}>
       {!embedded && <Backdrop />}
       {!embedded && <Navbar activeSection="competitions" />}
 
-      <div className="mx-auto flex min-h-[calc(100vh-60px)] max-w-[1400px] flex-col gap-6 px-[clamp(16px,4vw,40px)] py-8 md:flex-row md:gap-12 md:py-10">
-        <aside
-          ref={carouselRef}
-          className="flex w-full flex-col gap-3 md:w-[35%] md:gap-4"
+      <main className="mx-auto flex w-full max-w-[1200px] flex-col items-center gap-[clamp(24px,4vh,48px)] px-[clamp(16px,4vw,40px)] pb-16 pt-[clamp(100px,16vh,140px)]">
+        {/* Heading */}
+        <h1
+          ref={h1Ref}
+          className="text-center text-[clamp(32px,8vw,80px)] font-bold uppercase leading-none tracking-tight"
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
         >
-          {competitions.map((comp, i) => (
+          <span className="competitions-text">COMPETITIONS</span>
+        </h1>
+
+        {/* Carousel + nav buttons */}
+        <div className="flex w-full items-center justify-center gap-3 md:gap-6">
+          <button
+            type="button"
+            onClick={goPrev}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/60 text-base text-gold transition-all duration-200 hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)] cursor-pointer md:h-14 md:w-14"
+            aria-label="Previous competition"
+          >
+            ←
+          </button>
+
+          <div className="relative aspect-[4/5] w-full max-w-[240px] shrink-0 md:max-w-[320px]">
             <div
-              key={comp.id}
-              ref={(el) => { sidebarItemsRef.current[i] = el }}
-              className="w-full"
-              style={{ opacity: 0 }}
+              ref={deckRef}
+              className="relative h-full w-full cursor-pointer overflow-hidden"
+              style={{ perspective: '1600px' }}
             >
-              <div
-                className={`group flex h-[70px] w-full items-stretch text-left transition-all duration-300 md:h-[180px] ${
-                  i === activeIndex ? 'border-gold' : 'border-transparent opacity-40'
-                }`}
-                onClick={() => setActiveIndex(i)}
-              >
+              {competitions.map((comp, i) => (
                 <div
-                  className={`w-1 flex-shrink-0 transition-all duration-300 ${
-                    i === activeIndex ? 'bg-gold' : 'bg-white/10'
-                  }`}
-                />
-                <div
-                  className={`flex-1 overflow-hidden border border-l-0 transition-all duration-300 ${
-                    i === activeIndex
-                      ? 'border-gold/40 bg-[#11111180]'
-                      : 'border-white/5 bg-[#0a0a0a60]'
-                  }`}
+                  key={comp.id}
+                  ref={(el) => { cardRefs.current[i] = el }}
+                  onClick={() => transitionTo(i)}
+                  className="absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border-2 border-white/15 bg-black/60 p-2 backdrop-blur-md will-change-transform shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <div className={`flex h-full w-full items-center justify-center transition-colors duration-300 px-4 ${
-                    i === activeIndex ? 'bg-[#1a1a1a60]' : 'bg-[#11111140]'
-                  }`}>
-                    <span
-                      className={`text-xs font-semibold uppercase tracking-wider transition-colors duration-300 md:text-sm ${
-                        i === activeIndex ? 'text-gold' : 'text-white/30'
-                      }`}
-                      style={{
-                        writingMode: 'horizontal-tb',
-                        fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif",
-                      }}
-                    >
-                      {comp.title}
-                    </span>
-                  </div>
+                  {comp.image ? (
+                    <img src={comp.image} alt={comp.title} className="block h-full w-full rounded-2xl object-cover" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center rounded-2xl bg-[#111111] px-4 text-center">
+                      <span
+                        className="text-sm font-semibold uppercase tracking-wider text-gold md:text-base"
+                        style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+                      >
+                        {comp.title}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </aside>
-
-        <section className="flex flex-1 flex-col justify-center md:pl-4">
-          <div className="relative mb-2">
-            <h1
-              ref={h1Ref}
-              className="text-[clamp(36px,8vw,110px)] font-bold uppercase leading-none tracking-tight md:text-[clamp(56px,9vw,110px)]"
-              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
-            >
-              <span className="relative inline-block">
-                    <span className="relative z-10 competitions-text">COMPETITIONS</span>
-                    <img
-                      ref={sparkleRef}
-                      src="/workshops/shine.svg"
-                      alt=""
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -left-[8%] -top-[18%] z-0 w-[clamp(54px,10vw,120px)] max-w-none mix-blend-screen"
-                    />
-              </span>
-            </h1>
           </div>
 
-          <div ref={detailRef} className="mt-4 border-l-2 border-gold/30 pl-4 md:mt-6 md:pl-6">
-            <h2
-              ref={h2Ref}
-              className="text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide"
-              style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-            >
-              {active.title}
-            </h2>
+          <button
+            type="button"
+            onClick={goNext}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/60 text-base text-gold transition-all duration-200 hover:border-gold hover:bg-gold/15 shadow-[0_0_12px_rgba(212,175,55,0.2)] cursor-pointer md:h-14 md:w-14"
+            aria-label="Next competition"
+          >
+            →
+          </button>
+        </div>
 
-            <p className="mt-4 max-w-[550px] text-sm leading-relaxed text-white/60 md:mt-5 md:text-[15px]">
-              {active.description}
-            </p>
-
+        {/* Dots */}
+        <div className="flex items-center gap-2.5">
+          {competitions.map((_, i) => (
             <button
-              ref={registerBtnRef}
+              key={i}
               type="button"
-              onClick={() => routerNavigate(`/competitions/${active.slug}`)}
-              className="mt-6 inline-flex items-center gap-3 border border-gold bg-gold px-6 py-3 text-xs font-semibold uppercase tracking-wider text-black transition-all duration-300 hover:bg-transparent hover:text-gold hover:shadow-[0_0_25px_rgba(225,157,0,0.3)] md:mt-8 md:px-8 md:py-3.5 md:text-sm cursor-pointer"
-              style={{ borderRadius: '50px' }}
-            >
-              View Details
-              <svg
-                ref={arrowRef}
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </section>
-      </div>
+              onClick={() => transitionTo(i)}
+              ref={(el) => { dotsRef.current[i] = el }}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                i === activeIndex ? 'w-10 bg-gold shadow-[0_0_12px_#D4AF37]' : 'w-3 bg-gold/30 hover:bg-gold/60'
+              }`}
+              aria-label={`Go to competition ${i + 1}`}
+            />
+          ))}
+        </div>
 
-      {/* View Details Popup Modal */}
+        {/* Text content + CTA — page scrolls to reach this if it doesn't fit */}
+        <div className="flex w-full max-w-[560px] flex-col items-center gap-4 text-center">
+
+
+          <h2
+            ref={titleRef}
+            className="text-[clamp(24px,5vw,44px)] font-bold uppercase tracking-wide"
+            style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+          >
+            {active.title}
+          </h2>
+
+          <p ref={descRef} className="text-sm leading-relaxed text-white/70 md:text-[15px]">
+            {active.description}
+          </p>
+
+          <button
+            ref={btnRef}
+            type="button"
+            onClick={() => routerNavigate(`/competitions/${active.slug}`)}
+            className="inline-flex items-center justify-center gap-3 rounded-[50px] border border-[#FFDB86]/70 bg-gradient-to-r from-[#B78000] via-[#FFDB86] to-[#D4AF37] px-8 py-3.5 text-xs font-bold uppercase tracking-wider text-black shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,219,134,0.7)] md:text-sm cursor-pointer"
+          >
+            View Details
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </main>
+
       {selectedModalEvent && (
         <EventDetailsModal
           event={selectedModalEvent}

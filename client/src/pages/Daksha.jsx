@@ -98,70 +98,65 @@ function Daksha() {
   }, [])
 
   return (
-    <div className="theme-blue relative w-full text-sky-400">
+    <div className="theme-blue relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-center text-sky-400 select-none touch-none">
       <Backdrop theme="blue" />
 
       <Navbar activeSection="daksha" theme="blue" />
 
-      <section ref={heroRef} className="relative min-h-svh w-full">
-        <header className="px-[clamp(16px,4vw,40px)] pb-8 pt-[clamp(40px,6vw,64px)] text-center">
+      <section ref={heroRef} className="relative h-full w-full flex flex-col justify-center items-center pt-16 pb-4">
+        <header className="px-[clamp(16px,4vw,40px)] pb-3 text-center">
           <h1
             ref={h1Ref}
-            className="mt-3 text-[clamp(44px,8vw,80px)] font-bold uppercase leading-[0.95] tracking-tight"
+            className="text-[clamp(36px,6vw,68px)] font-bold uppercase leading-[0.95] tracking-tight"
             style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
             DAKSHA
           </h1>
           <p
             ref={eventsLabelRef}
-            className="text-[30px] uppercase tracking-[4px]"
+            className="text-[22px] md:text-[26px] uppercase tracking-[4px]"
             style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif", opacity: 0 }}
           >
             EVENTS
           </p>
         </header>
 
-        <main className="mx-auto flex max-w-[1180px] flex-col gap-[clamp(56px,8vw,88px)] px-[clamp(16px,4vw,40px)] pb-24">
+        <main className="mx-auto flex w-full max-w-[1180px] flex-col justify-center px-[clamp(16px,4vw,40px)]">
           {events.map((event, i) => (
             <section
               key={event.title}
               ref={eventSectionRef}
-              className="flex flex-col items-center border-t border-sky-500/30 pt-[clamp(32px,5vw,48px)] text-center md:grid md:grid-cols-2 md:items-center md:gap-x-14 md:gap-y-6 md:text-left"
+              className="flex flex-col items-center border-t border-sky-500/30 pt-4 text-center md:grid md:grid-cols-2 md:items-center md:gap-x-12 md:gap-y-4 md:text-left"
             >
               <div ref={eventContentRef} className="order-1 flex flex-col items-center md:col-start-1 md:row-start-1 md:items-start" style={{ opacity: 0 }}>
                 <p className="text-[11px] uppercase tracking-[4px] text-sky-400/70">{event.guidelines}</p>
                 <h2
                   ref={(el) => { eventH2Refs.current[i] = el }}
                   style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
-                  className="mt-3 text-[clamp(32px,5vw,52px)] font-bold uppercase leading-[0.98] tracking-tight"
+                  className="mt-2 text-[clamp(26px,4vw,44px)] font-bold uppercase leading-[0.98] tracking-tight"
                 >
                   {event.title}
                 </h2>
 
-                <ul ref={eventDetailsRef} className="mt-6 flex flex-col gap-4">
+                <ul ref={eventDetailsRef} className="mt-4 flex flex-col gap-2.5">
                   {event.details.map((line, j) => (
-                    <li key={j} className="leading-[1.7] text-sky-100/80" style={{ opacity: 0 }}>
+                    <li key={j} className="text-xs md:text-sm leading-[1.6] text-sky-100/80" style={{ opacity: 0 }}>
                       {formatDetail(line)}
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div ref={eventImageRef} className="relative order-2 mt-8 w-full border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:order-none md:mt-0 md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.2)]" style={{ opacity: 0 }}>
-                <div className="absolute -top-1 -left-1 h-3 w-3 border-l-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -top-1 -right-1 h-3 w-3 border-r-2 border-t-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -bottom-1 -left-1 h-3 w-3 border-l-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-                <div className="absolute -bottom-1 -right-1 h-3 w-3 border-r-2 border-b-2 border-sky-400 shadow-[0_0_10px_#38bdf8]" />
-
-                <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
+              <div ref={eventImageRef} className="relative order-2 mt-4 md:mt-0 w-full max-w-[240px] md:max-w-[300px] mx-auto border border-sky-500/40 bg-black/40 p-2 backdrop-blur-sm md:col-start-2 md:row-start-1 md:row-span-2 shadow-[0_0_40px_rgba(56,189,248,0.25)]" style={{ opacity: 0 }}>
+                  <img className="block aspect-[4/5] w-full object-cover" src={event.image} alt={event.alt} />
               </div>
 
-              <div className="order-3 mt-8 md:mt-0 md:col-start-1 md:row-start-2">
+              <div className="order-3 mt-4 md:mt-0 md:col-start-1 md:row-start-2">
                 <button
                   ref={eventBtnRef}
                   type="button"
                   onClick={() => routerNavigate(`/daksha/${event.slug}`)}
-                  className="inline-block border border-sky-400 bg-sky-500/10 px-10 py-3 text-xs uppercase tracking-[3px] text-sky-400 transition-all duration-200 hover:bg-sky-400 hover:text-black hover:shadow-[0_0_25px_rgba(56,189,248,0.5)] cursor-pointer"
+                  className="inline-block border border-sky-300/80 bg-gradient-to-r from-[#0284c7] via-[#38bdf8] to-[#0ea5e9] px-8 py-2.5 text-xs font-black uppercase tracking-[3px] text-black transition-all duration-300 hover:brightness-110 cursor-pointer"
                   style={{ opacity: 0 }}
                 >
                   View Details
