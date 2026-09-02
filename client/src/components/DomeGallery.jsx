@@ -818,6 +818,15 @@ export default function DomeGallery({
       inset: 10px;
       pointer-events: none;
     }
+
+    .dome-main {
+      touch-action: none;
+    }
+    @media (pointer: coarse) {
+      .dome-main {
+        touch-action: pan-y;
+      }
+    }
   `;
 
   return (
@@ -837,9 +846,8 @@ export default function DomeGallery({
       >
         <main
           ref={mainRef}
-          className="absolute inset-0 grid place-items-center overflow-hidden select-none"
+          className="absolute inset-0 grid place-items-center overflow-hidden select-none dome-main"
           style={{
-            touchAction: 'none',
             WebkitUserSelect: 'none',
             backgroundColor: `var(--overlay-blur-color, ${overlayBlurColor})`
           }}
