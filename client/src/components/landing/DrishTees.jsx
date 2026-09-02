@@ -1,6 +1,15 @@
 export default function DrishTees() {
   return (
-    <section className="relative w-full overflow-visible py-10 sm:py-12 lg:py-16 xl:py-20">
+    <section className="relative isolate w-full overflow-visible bg-black py-10 sm:py-12 lg:py-16 xl:py-20">
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-20 h-16 bg-gradient-to-b from-black via-black/80 to-transparent"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-16 bg-gradient-to-t from-black via-black/80 to-transparent"
+        aria-hidden="true"
+      />
+
       <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10 overflow-visible">
         <div className="relative mt-4 grid items-end gap-4 overflow-visible lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
