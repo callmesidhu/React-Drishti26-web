@@ -85,48 +85,31 @@ export default function DrishTees() {
 
       // MOBILE & TABLET ANIMATIONS
       mm.add("(max-width: 1023px)", () => {
-        gsap.fromTo(
-          shirtRef.current,
-          { y: 150 },
-          {
-            y: -150,
-            ease: 'none',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 1 }
-          }
-        );
-        gsap.fromTo(
-          baseRef.current,
-          { y: 50, xPercent: -50 },
-          {
-            y: -50,
-            xPercent: -50,
-            ease: 'none',
-            scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: 1.5 }
-          }
-        );
+        // Shirt and Base parallax animations removed on mobile to keep them visually locked together
+
         gsap.fromTo(
           titleRef.current,
-          { y: 150 },
+          { y: 50 },
           {
-            y: -100,
+            y: -30,
             ease: 'none',
             scrollTrigger: { trigger: sectionRef.current, start: 'top 95%', end: 'bottom top', scrub: 1 }
           }
         );
         gsap.fromTo(
           descRef.current,
-          { y: 200 },
+          { y: 80 },
           {
-            y: -120,
+            y: -50,
             ease: 'none',
             scrollTrigger: { trigger: sectionRef.current, start: 'top 90%', end: 'bottom top', scrub: 1.4 }
           }
         );
         gsap.fromTo(
           btnRef.current,
-          { y: 250 },
+          { y: 100 },
           {
-            y: -150,
+            y: -70,
             ease: 'none',
             scrollTrigger: { trigger: sectionRef.current, start: 'top 85%', end: 'bottom top', scrub: 1.8 }
           }
@@ -145,7 +128,7 @@ export default function DrishTees() {
         src="/home/circle-half.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-1/2 z-0 h-auto w-[90%] md:w-[75%] lg:w-[50%] max-w-[none] -translate-y-1/2 opacity-30"
+        className="hidden md:block pointer-events-none absolute right-0 top-1/2 z-0 h-auto w-[90%] md:w-[75%] lg:w-[50%] max-w-[none] -translate-y-1/2 opacity-30"
         style={{ 
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)'
@@ -155,7 +138,7 @@ export default function DrishTees() {
         <div className="relative mt-4 grid items-end gap-4 overflow-visible lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
             {/* The base is now z-20 to be on top of the tshirt */}
-            <div ref={baseRef} className="absolute bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain z-20">
+            <div ref={baseRef} className="absolute bottom-[-35px] md:bottom-[-20px] lg:bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain z-20">
               <img
                 src="/home/tshirt-base.png"
                 alt=""
@@ -165,7 +148,7 @@ export default function DrishTees() {
               />
             </div>
             {/* The video is z-10 so it sits behind the front edge of the base */}
-            <div ref={shirtRef} className="relative z-10 h-[78%] w-auto max-w-[520px] pointer-events-none">
+            <div ref={shirtRef} className="relative z-10 h-[78%] w-auto max-w-[520px] pointer-events-none mb-8 md:mb-0">
               <video
                 src="/home/drishtee.webm"
                 autoPlay
