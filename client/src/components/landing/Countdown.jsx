@@ -43,6 +43,11 @@ export default function Countdown() {
         Countdown to Drishti 2026
       </h2>
 
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-black via-black/80 to-transparent"
+        aria-hidden="true"
+      />
+
       <img
         className="pointer-events-none absolute -left-[clamp(24px,3vw,44px)] -top-[clamp(24px,3vw,44px)] z-0 w-[clamp(150px,18vw,280px)] max-w-none"
         src={NANOBOT_IMAGE}
