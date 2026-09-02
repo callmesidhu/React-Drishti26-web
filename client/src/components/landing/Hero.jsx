@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import GridDistortion from "./GridDistortion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -8,6 +9,14 @@ const heroBg = "/home/drishti-take-1.webp";
 const heroLine1 = "/home/line-1.svg";
 const heroLine2 = "/home/line-2.svg";
 
+// Lower grid density on touch/coarse-pointer devices — the per-frame cost
+// of this effect is roughly O(grid^2) in plain JS (not just GPU work), so
+// this meaningfully reduces CPU cost on phones, not just visual fidelity.
+const isCoarsePointer =
+  typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+const DISTORTION_GRID = isCoarsePointer ? 24 : 64;
+const DISTORTION_MOUSE_SIZE = 0.07;
+const DISTORTION_STRENGTH = isCoarsePointer ? 0.1 : 0.15;
 const NOISE_BACKGROUND =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
@@ -177,13 +186,16 @@ export default function Hero() {
       className="relative h-[100svh] max-h-[1024px] min-h-[560px] w-full overflow-hidden bg-black"
       aria-labelledby="drishti-title"
     >
-      <img
-        ref={heroBgRef}
-        className="absolute inset-0 h-full w-full object-cover opacity-0 pointer-events-none"
-        alt=""
-        aria-hidden="true"
-        src={heroBg}
-      />
+      <div ref={heroBgRef} className="absolute inset-0 opacity-0">
+        <GridDistortion
+          imageSrc={heroBg}
+          grid={DISTORTION_GRID}
+          mouse={DISTORTION_MOUSE_SIZE}
+          strength={DISTORTION_STRENGTH}
+          relaxation={0.9}
+          className="h-full w-full"
+        />
+      </div>
 
       {/* Visual noise/grain, purely decorative */}
       <div
@@ -233,7 +245,7 @@ export default function Hero() {
       <h1
         ref={heroTitleRef}
         id="drishti-title"
-        className="absolute bottom-40 md:bottom-10 left-0 w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,13vw,190px)] font-normal leading-none tracking-[0] text-white z-20"
+        className="absolute bottom-40 md:bottom-10 left-0 w-full text-center font-['Bietro_DEMO-Regular',Helvetica] text-[clamp(64px,13vw,190px)] font-normal leading-none tracking-[0] text-white z-20 pointer-events-none"
       >
       </h1>
     </section>
