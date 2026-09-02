@@ -1,5 +1,7 @@
 import DomeGallery from "../DomeGallery";
 
+const isCoarsePointer =
+	typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 const heroBg = "/home/drishti-take-1.webp";
 const categoriesPhoto = "/home/gallery-1.webp";
 const galleryImage1 = "/home/gallery-1.webp";
@@ -46,7 +48,7 @@ export default function GallerySection() {
  imageBorderRadius="18px"
  openedImageBorderRadius="24px"
  overlayBlurColor="#000000"
- scrollParallax={true}
+ scrollParallax={!isCoarsePointer}
  scrollParallaxAngle={110}
  />
  </div>
