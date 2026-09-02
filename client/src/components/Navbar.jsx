@@ -4,15 +4,10 @@ import gsap from 'gsap'
 
 const links = [
   { label: 'Home', to: '/home' },
-<<<<<<< HEAD
   { label: 'Workshops', to: '/workshops' },
   { label: 'Competitions', to: '/competitions' },
   { label: 'Pro Shows', to: '/proshows' },
   { label: 'Daksha', to: '/daksha' },
-=======
-  { label: 'Daksha', to: '/daksha' },
-  { label: 'Tech Events', to: '/workshops' },
->>>>>>> 8c7971786be70b08e53eca11cc50007ec155493d
   { label: 'Team', to: '/team' },
   { label: 'About', to: '/about' },
 ]

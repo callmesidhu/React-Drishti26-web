@@ -47,6 +47,8 @@ function About({ embedded = false }) {
   const valuesRef = useRef(null)
   const timelineRef = useRef(null)
   const introRef = useRef(null)
+  const buildingSectionRef = useRef(null)
+  const buildingRef = useRef(null)
   const ctaRef = useRef(null)
   const timelineLineRef = useRef(null)
   const timelineDotsRef = useRef([])
@@ -89,6 +91,23 @@ function About({ embedded = false }) {
       gsap.fromTo(subheadRef.current, { y: 40, opacity: 0 }, {
         y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.3,
       })
+
+      // Campus illustration enters gently, then moves more slowly than the page on scroll.
+      if (buildingRef.current && buildingSectionRef.current) {
+        gsap.fromTo(buildingRef.current, { y: 48, opacity: 0, scale: 1.03 }, {
+          y: 0, opacity: 1, scale: 1, duration: 1, ease: 'power3.out', delay: 0.2,
+        })
+        gsap.to(buildingRef.current, {
+          yPercent: -12,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: buildingSectionRef.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true,
+          },
+        })
+      }
 
       // Intro paragraph
       gsap.fromTo(introRef.current, { y: 30, opacity: 0 }, {
@@ -219,6 +238,21 @@ function About({ embedded = false }) {
           Technical Festival
         </p>
       </header>
+
+      <section
+        ref={buildingSectionRef}
+        className="relative mx-auto mt-[clamp(24px,4vw,48px)] h-[clamp(190px,39vw,520px)] w-full max-w-[1600px] overflow-hidden"
+        aria-label="KSIT College of Engineering campus"
+      >
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-1/3 bg-gradient-to-t from-[#050505] to-transparent" />
+        <img
+          ref={buildingRef}
+          src="/about/whole-building.png"
+          alt="Illustration of the KSIT College of Engineering building"
+          className="absolute inset-x-0 top-0 z-0 h-auto w-full scale-[1.12] object-cover object-center will-change-transform"
+          style={{ opacity: 0 }}
+        />
+      </section>
 
       <section ref={introRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-[clamp(40px,6vw,80px)] text-center" style={{ opacity: 0 }}>
         <p className="text-[clamp(16px,2vw,20px)] leading-relaxed text-white/60">
