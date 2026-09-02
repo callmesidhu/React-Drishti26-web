@@ -33,11 +33,11 @@ export default function GallerySection() {
  </div>
 
  {/* 3D Dome Gallery Container */}
- <div className="relative w-full h-[72vh] min-h-[560px] max-h-[860px]">
+ <div className="relative h-[60svh] min-h-[400px] max-h-[620px] w-full md:h-[72vh] md:min-h-[560px] md:max-h-[860px]">
  <DomeGallery
  images={drishtiGalleryImages}
  fit={1}
- minRadius={800}
+ minRadius={420}
  maxVerticalRotationDeg={20}
  segments={20}
  grayscale={false}
