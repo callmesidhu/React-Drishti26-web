@@ -15,50 +15,50 @@ import FeaturedEvents from "../components/landing/FeaturedEvents";
 
 
 const featuredEvents = [
-  dakshaEventsData[0],
-  competitionsData[0],
-  competitionsData[1],
-  workshopsData[0],
+ dakshaEventsData[0],
+ competitionsData[0],
+ competitionsData[1],
+ workshopsData[0],
 ];
 
 function Home() {
-  const [activeModalEvent, setActiveModalEvent] = useState(null);
+ const [activeModalEvent, setActiveModalEvent] = useState(null);
 
-  const handleRegistration = (eventIndex) => {
-    setActiveModalEvent(featuredEvents[eventIndex]);
-    window.dispatchEvent(
-      new CustomEvent("featured-event-registration", { detail: { eventIndex } })
-    );
-  };
+ const handleRegistration = (eventIndex) => {
+ setActiveModalEvent(featuredEvents[eventIndex]);
+ window.dispatchEvent(
+ new CustomEvent("featured-event-registration", { detail: { eventIndex } })
+ );
+ };
 
-  return (
-    <main className="relative w-full overflow-x-hidden bg-black">
-      <Navbar />
-      
-      <Hero />
-      <Countdown />
-      <Ideas />
-      <Aftermovie />
-      
-      {/* ============ PRO SHOWS ============ */}
-      <section id="proshows" className="relative w-full bg-black overflow-hidden">
-        <ProShows embedded={true} />
-      </section>
+ return (
+ <main className="relative w-full overflow-x-hidden bg-black">
+ <Navbar />
+ 
+ <Hero />
+ <Countdown />
+ <Ideas />
+ <Aftermovie />
+ 
+ {/* ============ PRO SHOWS ============ */}
+ <section id="proshows" className="relative w-full bg-black overflow-hidden">
+ <ProShows embedded={true} />
+ </section>
 
-      <GallerySection />
-      <DrishTees />
-      <FeaturedEvents onEventClick={handleRegistration} />
+ <GallerySection />
+ <DrishTees />
+ <FeaturedEvents onEventClick={handleRegistration} />
 
-      <Footer />
+ <Footer />
 
-      {activeModalEvent && (
-        <EventDetailsModal
-          event={activeModalEvent}
-          onClose={() => setActiveModalEvent(null)}
-        />
-      )}
-    </main>
-  );
+ {activeModalEvent && (
+ <EventDetailsModal
+ event={activeModalEvent}
+ onClose={() => setActiveModalEvent(null)}
+ />
+ )}
+ </main>
+ );
 }
 
 export default Home;
