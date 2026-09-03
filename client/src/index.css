@@ -22,6 +22,13 @@
 }
 
 @font-face {
+  font-family: "Clash Display";
+  src: url("/fonts/ClashDisplay-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
  font-family: "Mango Grotesque-SemiBold";
  src: url("/fonts/MangoGrotesque-SemiBold-BF6a47cba8b4c2a.ttf") format("truetype");
  font-weight: 600;
@@ -106,23 +113,23 @@
 }
 
 @utility text-gold-gradient {
- background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
- color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .text-gold-gradient {
- background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
- color: transparent;
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
 }
 
 .bg-gold-gradient {
- background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
 }
 
 @utility text-blue-gradient {
