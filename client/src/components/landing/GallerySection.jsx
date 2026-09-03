@@ -1,5 +1,7 @@
 import DomeGallery from "../DomeGallery";
 
+const isCoarsePointer =
+	typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 const heroBg = "/home/drishti-take-1.webp";
 const categoriesPhoto = "/home/gallery-1.webp";
 const galleryImage1 = "/home/gallery-1.webp";
@@ -33,11 +35,11 @@ export default function GallerySection() {
  </div>
 
  {/* 3D Dome Gallery Container */}
- <div className="relative w-full h-[72vh] min-h-[560px] max-h-[860px]">
+ <div className="relative h-[60svh] min-h-[400px] max-h-[620px] w-full md:h-[72vh] md:min-h-[560px] md:max-h-[860px]">
  <DomeGallery
  images={drishtiGalleryImages}
  fit={1}
- minRadius={800}
+ minRadius={420}
  maxVerticalRotationDeg={20}
  segments={20}
  grayscale={false}
@@ -46,7 +48,7 @@ export default function GallerySection() {
  imageBorderRadius="18px"
  openedImageBorderRadius="24px"
  overlayBlurColor="#000000"
- scrollParallax={true}
+ scrollParallax={!isCoarsePointer}
  scrollParallaxAngle={110}
  />
  </div>
