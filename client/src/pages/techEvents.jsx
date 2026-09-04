@@ -109,10 +109,10 @@ function TechEvents() {
  id="event-area"
  value={selectedArea}
  onChange={(event) => setSelectedArea(event.target.value)}
- className="rounded-lg border border-gold/30 bg-[#0d0d0d] px-3 py-2 text-xs uppercase tracking-[0.12em] text-gold-gradient outline-none"
+ className="rounded-lg border border-gold/30 bg-[#0d0d0d] px-3 py-2 text-xs uppercase tracking-[0.12em] text-gold-gradient outline-none scheme-dark"
  >
  {areaOptions.map((area) => (
- <option key={area} value={area}>
+ <option key={area} value={area} className="bg-[#0d0d0d] text-gold">
  {area}
  </option>
  ))}
