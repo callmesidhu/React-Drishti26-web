@@ -125,22 +125,30 @@ function TechEvents() {
  No technical events available for this area.
  </div>
  ) : (
- <div className="grid w-full max-w-[1100px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 xl:grid-cols-4">
+ <div className="grid w-full max-w-[1100px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
  {visibleEvents.map((event) => (
  <button
  key={`${event.type}-${event.id}`}
  type="button"
  onClick={() => setSelectedEvent(event)}
- className="group w-full max-w-[320px] rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40"
+ className="group flex h-[500px] w-full max-w-[320px] flex-col rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40"
  >
- <div className="aspect-[4/5] overflow-hidden rounded-xl border border-white/10 bg-[#111111]">
+ <div className="aspect-[4/5] shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#111111]">
+ {event.image ? (
  <img
  src={event.image}
  alt={event.alt || event.title}
  className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
  />
+ ) : (
+ <div className="flex h-full w-full items-center justify-center px-4 text-center">
+ <span className="text-sm font-semibold uppercase tracking-wider text-gold-gradient">
+ {event.title}
+ </span>
  </div>
- <div className="mt-4 flex items-center justify-between gap-3">
+ )}
+ </div>
+ <div className="mt-4 flex min-h-[64px] flex-1 items-start justify-between gap-3">
  <h2
  className="text-base font-bold uppercase tracking-[0.08em] text-white/90"
  style={{ fontFamily: "'Clash Display-Medium', 'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
