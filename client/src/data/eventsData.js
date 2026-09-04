@@ -193,7 +193,27 @@ export const workshopsData = [
  ],
  registerUrl: 'https://discover.snaptiqz.com/event/4f3MvVykKmO8uLjMW7pwv',
  },
+  {
+ id: 5,
+ type: 'workshop',
+ slug: 'unreal-workshop',
+ title: 'Unreal Engine Workshop',
+ category: 'WORKSHOPS',
+ area: 'Game Dev',
+ image: '/home/unreal.jpeg',
+ guidelinesTitle: 'ANSYS ONLINE WORKSHOP DETAILS',
+ alt: 'Unreal Engine Workshop',
+ description:' Join Drishti’26 × Glitch CET for Unreal Engine: Introduction to Game Development. A hands-on, 6-hour beginner workshop led by Muhammed Faizal PK, founder, Custodian Games.', 
+ details: [
+ 'Date : 19 September 2026.',
+ 'Bring your laptop (with UE 5.6 pre-installed) and a mouse!',
+ 'Format : Offline',
+ 'Registration Fee : ₹249.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/T9MyRQY7qO0M5LeSbuf9W',
+ },
 ]
+
 
 export const technicalEventsData = [...workshopsData, ...competitionsData]
 

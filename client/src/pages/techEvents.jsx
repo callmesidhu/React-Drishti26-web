@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import Footer from '../components/Footer.jsx'
 import { competitionsData, workshopsData, technicalEventsData } from '../data/eventsData.js'
 
 const tabs = [
@@ -68,6 +69,7 @@ function TechEvents() {
  }
 
  return (
+ <>
  <div className="relative min-h-screen w-full overflow-x-hidden bg-[#050505] text-white">
  <Backdrop />
  <Navbar activeSection="workshops" />
@@ -175,6 +177,8 @@ function TechEvents() {
  />
  )}
  </div>
+ <Footer />
+ </>
  )
 }
 
