@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
+import Footer from '../components/Footer.jsx'
 import { dakshaEventsData } from '../data/eventsData.js'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
@@ -56,6 +57,7 @@ function Daksha() {
  }, [])
 
  return (
+ <>
  <div className="theme-blue relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-center text-sky-400 select-none touch-none">
  <Backdrop theme="blue" />
 
@@ -123,6 +125,8 @@ function Daksha() {
  />
  )}
  </div>
+ <Footer />
+ </>
  )
 }
 

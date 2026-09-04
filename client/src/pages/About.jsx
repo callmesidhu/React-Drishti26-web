@@ -148,14 +148,14 @@ function About({ embedded = false }) {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION                                                          */}
       {/* ========================================================================= */}
-      <header className="relative z-10 mx-auto max-w-[1080px] px-4 sm:px-6 pt-[clamp(40px,7vw,80px)] text-center">
+      <header className="relative z-10 mx-auto max-w-[1080px] px-4 sm:px-6 pt-[clamp(48px,8vw,80px)] sm:pt-[clamp(40px,7vw,80px)] text-center">
         <p className="text-[11px] sm:text-xs uppercase tracking-[6px] text-gold-gradient font-bold mb-4">
           // ABOUT DRISHTI &apos;26
         </p>
         <h1
           ref={h1Ref}
           className="flex flex-col items-center justify-center font-normal uppercase leading-[1.05] tracking-wide"
-          style={{ fontFamily: "'SportenPerson', 'Bietro DEMO', sans-serif" }}
+          style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
         >
           <span
             ref={h1Line1Ref}
@@ -246,85 +246,6 @@ function About({ embedded = false }) {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. WHY DRISHTI & OUR VISION (MINIMAL 3 COLUMNS)                           */}
-      {/* ========================================================================= */}
-      <section className="relative z-10 mx-auto max-w-[1140px] px-4 sm:px-6 py-8 sm:py-12">
-        <div className="text-center mb-10">
-          <p className="text-[11px] uppercase tracking-[5px] text-gold-gradient font-bold mb-2">
-            // PURPOSE & VALUE
-          </p>
-          <h2
-            ref={whyHeadingRef}
-            className="text-[clamp(26px,4vw,42px)] font-normal uppercase tracking-wide text-gold-gradient"
-            style={{ fontFamily: "'SportenPerson', 'Bietro DEMO', sans-serif" }}
-          >
-            Why Drishti?
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* For Students */}
-          <div className="rounded-2xl bg-black border border-gold/25 p-6 sm:p-7 hover:border-gold/60 transition-all duration-300">
-            <span className="text-xs font-bold uppercase tracking-[3px] text-gold-gradient">For Students</span>
-            <h3 className="text-lg sm:text-xl font-bold text-gold-gradient mt-2 mb-3">Learn, Build & Compete</h3>
-            <p className="text-xs sm:text-sm text-white leading-relaxed font-light">
-              Participate in high-stakes hackathons, learn emerging technologies through expert workshops,
-              showcase original projects, and network with fellow innovators.
-            </p>
-          </div>
-
-          {/* For Organizations */}
-          <div className="rounded-2xl bg-black border border-gold/35 p-6 sm:p-7 hover:border-gold/70 transition-all duration-300">
-            <span className="text-xs font-bold uppercase tracking-[3px] text-gold-gradient">For Brands & Industry</span>
-            <h3 className="text-lg sm:text-xl font-bold text-gold-gradient mt-2 mb-3">Direct Youth Outreach</h3>
-            <p className="text-xs sm:text-sm text-white leading-relaxed font-light">
-              Direct access to a concentrated, tech-fluent 18–25 student demographic for recruitment,
-              brand visibility, product trials, and innovation partnerships.
-            </p>
-          </div>
-
-          {/* Our Vision */}
-          <div className="rounded-2xl bg-black border border-gold/25 p-6 sm:p-7 hover:border-gold/60 transition-all duration-300">
-            <span className="text-xs font-bold uppercase tracking-[3px] text-gold-gradient">Our Vision</span>
-            <h3 className="text-lg sm:text-xl font-bold text-gold-gradient mt-2 mb-3">Inspire. Innovate. Explore.</h3>
-            <p className="text-xs sm:text-sm text-white leading-relaxed font-light">
-              Encouraging students to think beyond the classroom, collaborate across disciplines, and
-              transform bold curiosity into meaningful technical progress.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 5. OUR INITIATIVES                                                        */}
-      {/* ========================================================================= */}
-      <section className="relative z-10 mx-auto max-w-[1140px] px-4 sm:px-6 py-8 sm:py-12">
-        <div className="text-center mb-8">
-          <p className="text-[11px] uppercase tracking-[5px] text-gold-gradient font-bold mb-2">
-            // BEYOND THE TECH
-          </p>
-          <h2
-            ref={initiativesHeadingRef}
-            className="text-[clamp(24px,3.8vw,38px)] font-normal uppercase tracking-wide text-gold-gradient"
-            style={{ fontFamily: "'SportenPerson', 'Bietro DEMO', sans-serif" }}
-          >
-            Our Initiatives
-          </h2>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {initiatives.map((item, i) => (
-            <div
-              key={i}
-              className="rounded-xl bg-black border border-gold/25 p-5 text-center hover:border-gold/50 transition-all"
-            >
-              <h4 className="text-base sm:text-lg font-bold text-gold-gradient mb-2">{item.title}</h4>
-              <p className="text-xs text-white leading-relaxed font-light">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
       {/* 6. MINIMAL CTA                                                            */}
       {/* ========================================================================= */}
       <section className="relative z-10 mx-auto max-w-[800px] px-4 sm:px-6 py-12 sm:py-16 text-center">
@@ -332,7 +253,7 @@ function About({ embedded = false }) {
           <h3
             className="text-2xl sm:text-4xl font-normal uppercase tracking-wide text-gold-gradient mb-3"
           >
-            <span ref={ctaHeadingRef} style={{ fontFamily: "'SportenPerson', sans-serif" }}>
+            <span ref={ctaHeadingRef} style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}>
               Be Part of Drishti{' '}
             </span>
             {/* <span style={{ fontFamily: "'Clash Display', 'Space Grotesk', sans-serif", fontWeight: 700 }} className="text-gold-gradient">
