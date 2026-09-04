@@ -686,6 +686,48 @@ export const workshopsData = [
  { label: '3 DAY PASS', url: 'https://discover.snaptiqz.com/event/99PUlQQyckhSQEfL-0YHW' },
  ],
  },
+ {
+ id: 12,
+ type: 'workshop',
+ slug: 'solidworks-online-workshop',
+ title: 'SolidWorks Online Workshop',
+ category: 'WORKSHOPS',
+ area: 'Design',
+ image: '/home/solidwork.png',
+ guidelinesTitle: 'SOLIDWORKS ONLINE WORKSHOP DETAILS',
+ alt: 'SolidWorks Online Workshop',
+ description:
+ '⚙️ From Vision to dimension. Drishti’26 × Herakles brings you SolidWorks Online Workshop 🚀 The one session your ideas need to take shape! Your vision. Your Drishti.',
+ details: [
+ 'Date — 16 September 2026.',
+ 'Time — 5–8 PM.',
+ 'Format — Online (Laptop required).',
+ 'Registration Fee — ₹199.',
+ 'Benefits — Certificate + KTU Points.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/ZrKeGZWZytpgL_0sqNJmn',
+ },
+ {
+ id: 13,
+ type: 'workshop',
+ slug: 'matlab-workshop',
+ title: 'MATLAB Workshop',
+ category: 'WORKSHOPS',
+ area: 'Programming',
+ image: '/home/matlab.png',
+ guidelinesTitle: 'MATLAB WORKSHOP DETAILS',
+ alt: 'MATLAB Workshop',
+ description:
+ '💻 Code your concepts into Vision. Join Drishti’26 × Herakles for the MATLAB Workshop and explore MATLAB from the fundamentals of coding to practical applications.',
+ details: [
+ 'Date — 16 September 2026.',
+ 'Time — 5–8 PM.',
+ 'Format — Online.',
+ 'Registration Fee — ₹199.',
+ 'Benefits — Certificate + KTU Points.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/eY8qV1pZsZrQK2cBuSYh5',
+ },
 ]
 
 export const technicalEventsData = [...workshopsData, ...competitionsData]
