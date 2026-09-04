@@ -322,6 +322,28 @@ export const competitionsData = [
  ],
  registerUrl: 'https://snaptiqz.com/event/startup-pitch',
  },
+ {
+ id: 11,
+ type: 'competition',
+ slug: 'fpv-drone-sim-racing',
+ title: 'FPV Drone Sim-Racing',
+ category: 'COMPETITIONS',
+ area: 'Aerospace',
+ image: '/home/fpv.png',
+ guidelinesTitle: 'FPV DRONE SIM-RACING DETAILS',
+ alt: 'FPV Drone Sim-Racing poster',
+ description:
+ '🚁 Experience the thrill of high-speed FPV drone racing! 🏁 Test your speed, precision and reflexes in an exciting competitive challenge.',
+ details: [
+ 'Date — 18 & 19 September 2026.',
+ 'Registration — ₹49 /-.',
+ 'Prize Pool — ₹500 /-.',
+ 'KTU Activity Points — Applicable.',
+ 'Venue — Drishti ’26, College of Engineering Trivandrum.',
+ 'Enquiries — Akul: +91 94474 25533 · Arya: +91 73060 98390.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy',
+ },
 ]
 
 export const workshopsData = [
