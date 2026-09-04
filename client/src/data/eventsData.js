@@ -665,7 +665,7 @@ export const dakshaEventsData = [
  image: '/techevents/shark-tank.webp',
  alt: 'Shark Tank event',
  description:
- 'Pitch your startup or early-stage innovation to seasoned investors and industry mentors for real equity investment and incubation support.',
+ '🦈 The Sharks are ready. Are you? Think you have an idea worth betting on? Shark Tank | Daksha 2026 is now open for registrations! 🚀 Pitch your idea, challenge your thinking and put your vision to the test and if it\'s good enough win upto ₹50,000. 💡 Your idea. Your pitch. Your shot. Registrations are now OPEN! Dive in. Make your pitch. Catch the Sharks.',
  details: [
  'Open to — Student founders, startups in ideation/early-growth stages & registered MSMEs.',
  'Initial Screening → Expert Panel Pitch → Grand Finale with Investors.',
