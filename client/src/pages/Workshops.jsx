@@ -19,7 +19,7 @@ function getCarouselTransform(index, activeIndex) {
  x: normalized * 120,
  y: abs * 8,
  rotateY: normalized * -22,
- scale: 1 - abs * 0.08,
+ scale: 1,
  opacity: abs > 2 ? 0 : 1 - abs * 0.26,
  zIndex: TOTAL - abs,
  }
