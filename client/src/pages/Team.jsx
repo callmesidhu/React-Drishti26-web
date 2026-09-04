@@ -5,33 +5,33 @@ import Backdrop from '../components/Backdrop.jsx'
 import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
+ { id: 5, name: 'Noel', role: 'Convenor', image: '/team/DAKSHA%20CORE/puli.png' },
+ { id: 7, name: 'Sayoojya', role: 'Convenor', image: '/team/DAKSHA%20CORE/say.png' },
  { id: 1, name: 'Afnan', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/afn.png' },
+ { id: 4, name: 'Keerthana', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/kt.png' },
+ { id: 6, name: 'Sahla', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/sahla.png' },
+ { id: 8, name: 'Yashok', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/ysh.png' },
  { id: 2, name: 'Aslam', role: 'Coordinator', image: '/team/DAKSHA%20CORE/aslm.png' },
  { id: 3, name: 'Avneesh', role: 'Coordinator', image: '/team/DAKSHA%20CORE/avnsh.png' },
- { id: 4, name: 'Keerthana', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/kt.png' },
- { id: 5, name: 'Noel', role: 'Convenor', image: '/team/DAKSHA%20CORE/puli.png' },
- { id: 6, name: 'Sahla', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/sahla.png' },
- { id: 7, name: 'Sayoojya', role: 'Convenor', image: '/team/DAKSHA%20CORE/say.png' },
- { id: 8, name: 'Yashok', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/ysh.png' },
 ]
 
 const dakshaTeamMembers = [
+ { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
  { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
  { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
  { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
- { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
  { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
  { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
 ]
 
 const webTeamMembers = [
+ { id: 7, name: 'Sidharth', role: 'Head', image: '/team/WEB/sid.png' },
+ { id: 3, name: 'Kasinath', role: 'Co-Head', image: '/team/WEB/kasi.png' },
+ { id: 6, name: 'Sharon', role: 'Co-Head', image: '/team/WEB/sharn.png' },
  { id: 1, name: 'George', role: 'Developer', image: '/team/WEB/geo.png' },
  { id: 2, name: 'Joseph', role: 'Developer', image: '/team/WEB/jo.png' },
- { id: 3, name: 'Kasinath', role: 'Co-Head', image: '/team/WEB/kasi.png' },
  { id: 4, name: 'Rohan', role: 'Developer', image: '/team/WEB/rohn.png' },
  { id: 5, name: 'Rohit', role: 'Developer', image: '/team/WEB/roht.png' },
- { id: 6, name: 'Sharon', role: 'Co-Head', image: '/team/WEB/sharn.png' },
- { id: 7, name: 'Sidharth', role: 'Head', image: '/team/WEB/sid.png' },
  { id: 8, name: 'Vishnusree', role: 'Developer', image: '/team/WEB/vishnu.png' },
 ]
 
