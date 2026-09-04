@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLENCE", "LEGACY"];
+const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
 const TOTAL_LOGO_FRAMES = 150;
 const FRAME_PRELOAD_WINDOW = 12;
 
@@ -289,27 +289,6 @@ export default function Ideas() {
  style={{ height: "0%" }}
  />
  </div>
- </div>
-
- {/* Mobile Core Values Bar */}
- <div ref={mobileCoreWrapperRef} className="flex md:hidden relative justify-center items-center gap-1.5 px-2 z-20 flex-wrap opacity-0">
- {coreValues.map((value, index) => {
- const isActive = activeCoreValueIndex === index;
- return (
- <button
- key={value}
- type="button"
- onClick={() => handleCoreValueClick(index)}
- className={`px-2.5 py-0.5 rounded-full text-[10px] tracking-wider transition-all duration-300 border ${
- isActive
- ? "bg-[#D4AF37]/15 border-[#D4AF37] text-[#D4AF37] "
- : "bg-black/40 border-white/10 text-white/40"
- }`}
- >
- {value}
- </button>
- );
- })}
  </div>
 
  {/* Center Emblem with Interactive Mouse Parallax */}
