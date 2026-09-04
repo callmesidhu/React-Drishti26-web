@@ -4,7 +4,12 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
 import Footer from '../components/Footer.jsx'
-import { competitionsData, workshopsData, technicalEventsData } from '../data/eventsData.js'
+import workshopJson from '../data/workshop.json'
+import competitionJson from '../data/competition.json'
+
+const workshopsData = workshopJson.workshopsData
+const competitionsData = competitionJson.competitionsData
+const technicalEventsData = [...workshopsData, ...competitionsData]
 
 const tabs = [
  { key: 'workshop', label: 'Workshops' },

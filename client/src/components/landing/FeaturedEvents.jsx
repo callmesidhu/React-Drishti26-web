@@ -1,17 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { dakshaEventsData, competitionsData, workshopsData } from "../../data/eventsData";
+import dakshaJson from "../../data/daksha.json";
+import workshopJson from "../../data/workshop.json";
+import competitionJson from "../../data/competition.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const arrowDownRight = "/home/arrow-down-right.svg";
 
 const featuredEvents = [
- dakshaEventsData[0],
- competitionsData[0],
- competitionsData[1],
- workshopsData[0],
+ dakshaJson.dakshaEventsData[0],
+ competitionJson.competitionsData[0],
+ competitionJson.competitionsData[1],
+ workshopJson.workshopsData[0],
 ];
 
 export default function FeaturedEvents({ onEventClick }) {
