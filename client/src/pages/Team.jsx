@@ -5,6 +5,15 @@ import Backdrop from '../components/Backdrop.jsx'
 import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
+ { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
+ { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
+ { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
+ { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
+ { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
+ { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
+]
+
+const dakshaTeamMembers = [
  { id: 5, name: 'Noel', role: 'Convenor', image: '/team/DAKSHA%20CORE/puli.png' },
  { id: 7, name: 'Sayoojya', role: 'Convenor', image: '/team/DAKSHA%20CORE/say.png' },
  { id: 1, name: 'Afnan', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/afn.png' },
@@ -13,15 +22,6 @@ const teamMembers = [
  { id: 8, name: 'Yashok', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/ysh.png' },
  { id: 2, name: 'Aslam', role: 'Coordinator', image: '/team/DAKSHA%20CORE/aslm.png' },
  { id: 3, name: 'Avneesh', role: 'Coordinator', image: '/team/DAKSHA%20CORE/avnsh.png' },
-]
-
-const dakshaTeamMembers = [
- { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
- { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
- { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
- { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
- { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
- { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
 ]
 
 const webTeamMembers = [
