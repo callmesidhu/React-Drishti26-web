@@ -344,6 +344,30 @@ export const competitionsData = [
  ],
  registerUrl: 'https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy',
  },
+ {
+ id: 12,
+ type: 'competition',
+ slug: 'drun-marathon',
+ title: "D'RUN Marathon",
+ category: 'COMPETITIONS',
+ area: 'Sports',
+ image: '/home/marathon.jpeg',
+ guidelinesTitle: "D'RUN MARATHON DETAILS",
+ alt: "D'RUN Marathon poster",
+ description:
+ "Every stride is a vision in motion. Drishti '26 presents D'RUN Marathon.",
+ details: [
+ 'Date — Sunday, 13 September 2026.',
+ 'Registration Fee — ₹69/-.',
+ 'Route — CET Campus → Chavadimukku → Greenfield International Stadium.',
+ 'Eligibility — Open to all.',
+ 'Zumba — Starts at 5 AM.',
+ 'Partners — Aquench (Electrolytes) · WöhlPhysio (Physio) · Aura (Zumba).',
+ 'Participant Benefits — Official Drishti Badge and Certificate for all participants.',
+ 'Podium — Medals for podium finishers.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/PA_FH1f8VrJJOzIR3Zk6Y',
+ },
 ]
 
 export const workshopsData = [
