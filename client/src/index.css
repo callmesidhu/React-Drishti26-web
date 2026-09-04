@@ -113,7 +113,7 @@
 }
 
 @utility text-gold-gradient {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -121,7 +121,7 @@
 }
 
 .text-gold-gradient {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -129,7 +129,7 @@
 }
 
 .bg-gold-gradient {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FFF09E 18%, #F5C952 48%, #D4AF37 78%, #B38615 100%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
 }
 
 @utility text-blue-gradient {

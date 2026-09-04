@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLANCE", "LEGACY"];
+const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLENCE", "LEGACY"];
 const TOTAL_LOGO_FRAMES = 150;
 const FRAME_PRELOAD_WINDOW = 12;
 
