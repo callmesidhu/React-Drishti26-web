@@ -20,7 +20,7 @@ const drishtiGalleryImages = [
  { src: "/home/aftermovie-bg.webp", alt: "Festival Lights & Crowds" },
  { src: "/home/featured-event-poster.webp", alt: "Featured Events & Keynotes" },
  { src: "/proshow/proshowgrid.webp", alt: "Live Pro Shows Night" },
- { src: "/daksha/shark-tank.webp", alt: "Daksha Ideation & Pitch" },
+ { src: "/home/sharktank.jpeg", alt: "Daksha Ideation & Pitch" },
  { src: heroBg, alt: "Drishti '26 Horizon" },
 ];
 
