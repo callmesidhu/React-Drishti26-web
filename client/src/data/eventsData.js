@@ -641,6 +641,29 @@ export const workshopsData = [
  ],
  registerUrl: 'https://snaptiqz.com/event/ws-ar-vr',
  },
+ {
+ id: 11,
+ type: 'workshop',
+ slug: 'ultimate-rc-plane-workshop',
+ title: 'The Ultimate RC Plane Workshop',
+ category: 'WORKSHOPS',
+ area: 'Aerospace',
+ image: '/home/rcplane.png',
+ guidelinesTitle: 'ULTIMATE RC PLANE WORKSHOP DETAILS',
+ alt: 'The Ultimate RC Plane Workshop',
+ description:
+ '✈️ Drishti\'26 × AeroCET presents The Ultimate RC Plane Workshop. 📡 Explore the fundamentals of aerodynamics, aircraft design and flight control as you configure your very own RC aircraft and put it to the test. 📅 September 18, 19 and 20. Let your vision soar the skies ✨ Your vision. Your Drishti.',
+ details: [
+ 'Dates — 18, 19 & 20 September 2026.',
+ 'Workshop Focus — Aerodynamics · Aircraft Design · Flight Control.',
+ 'Experience — Configure your own RC aircraft and put it to the test.',
+ 'Passes — 1 Day Workshop Pass · 3 Day Workshop Pass.',
+ ],
+ registerOptions: [
+ { label: '1 DAY PASS', url: 'https://discover.snaptiqz.com/event/jYvM8nf4LxGbqjM_j1Qnw' },
+ { label: '3 DAY PASS', url: 'https://discover.snaptiqz.com/event/99PUlQQyckhSQEfL-0YHW' },
+ ],
+ },
 ]
 
 export const technicalEventsData = [...workshopsData, ...competitionsData]

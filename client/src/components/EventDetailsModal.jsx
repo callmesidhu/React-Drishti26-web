@@ -71,6 +71,9 @@ function EventDetailsModal({ event, onClose }) {
  const guidelinesLabel = event.guidelinesTitle || `${event.title.toUpperCase()} GUIDELINES`
  const eligibilityDetails = event.eligibility || []
  const guidelineDetails = event.guidelines || event.details || []
+ const registerOptions = event.registerOptions || [
+ { label: 'REGISTER', url: event.registerUrl || '#' },
+ ]
 
  return (
  <div
@@ -232,20 +235,23 @@ function EventDetailsModal({ event, onClose }) {
  </div>
  )}
 
- <div className="mt-8 flex items-center justify-start">
+ <div className="mt-8 flex flex-wrap items-center justify-start gap-3">
+ {registerOptions.map((option, index) => (
  <a
- ref={registerBtnRef}
- href={event.registerUrl || '#'}
+ key={option.label}
+ ref={index === 0 ? registerBtnRef : undefined}
+ href={option.url}
  target="_blank"
  rel="noopener noreferrer"
- className={`inline-block rounded-none border bg-transparent px-10 py-3.5 text-xs font-bold uppercase tracking-[4px] transition-all duration-300 hover:text-black ${
+ className={`inline-block rounded-none border bg-transparent px-6 py-3.5 text-xs font-bold uppercase tracking-[3px] transition-all duration-300 hover:text-black ${
  isBlue
  ? 'border-sky-400 text-sky-400 hover:bg-sky-400 hover:shadow-[0_0_30px_rgba(56,189,248,0.6)]'
  : 'border-gold text-gold-gradient hover:bg-gold-gradient '
  }`}
  >
- REGISTER
+ {option.label}
  </a>
+ ))}
  </div>
  </div>
 
