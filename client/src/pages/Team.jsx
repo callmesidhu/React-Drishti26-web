@@ -297,17 +297,19 @@ function Team({ embedded = false }) {
  width: '290px',
  }}
  >
- {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
- {isCenter ? (
- <>
- {/* Monochrome Portrait Photo */}
  {member.image && (
  <img
  src={member.image}
  alt={member.name}
- className="absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none"
+ className={`absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none ${
+ isCenter ? '' : 'brightness-75'
+ }`}
  />
  )}
+
+ {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
+ {isCenter ? (
+ <>
 
  {/* Large Vertical Name: On the right side over photo */}
  <div className="absolute top-0 right-2 sm:right-3 flex h-full items-center pointer-events-none z-10">
@@ -333,7 +335,9 @@ function Team({ embedded = false }) {
  </p>
  </div>
  </>
- ) : null}
+ ) : (
+ <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+ )}
  </div>
  </div>
  )
