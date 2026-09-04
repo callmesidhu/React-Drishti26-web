@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
+import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
  { id: 1, name: 'Anjali', role: 'Design Head', image: '/team/anjali.jpg' },
@@ -206,6 +207,7 @@ function Team({ embedded = false }) {
  }, [activeIndex, total])
 
  return (
+ <>
  <div className={`relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-between pt-16 pb-6 select-none touch-none ${embedded ? 'bg-transparent' : 'bg-[#050505]'}`}>
  {!embedded && <Backdrop />}
  {!embedded && <Navbar activeSection="team" />}
@@ -338,6 +340,8 @@ function Team({ embedded = false }) {
  </div>
  </div>
  </div>
+ {!embedded && <Footer />}
+ </>
  )
 }
 

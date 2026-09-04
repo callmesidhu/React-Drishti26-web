@@ -66,6 +66,7 @@ function Contact() {
  }, [])
 
  return (
+ <>
  <div className="relative min-h-svh w-full overflow-hidden bg-[#050505] text-gold">
  <Backdrop />
  <Navbar activeSection="contact" />
@@ -238,6 +239,8 @@ function Contact() {
  </div>
  </main>
  </div>
+ <Footer />
+ </>
  )
 }
 
