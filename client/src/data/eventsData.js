@@ -744,6 +744,27 @@ export const workshopsData = [
  ],
  registerUrl: 'https://discover.snaptiqz.com/event/eY8qV1pZsZrQK2cBuSYh5',
  },
+ {
+ id: 14,
+ type: 'workshop',
+ slug: 'ansys-online-workshop',
+ title: 'ANSYS Online Workshop',
+ category: 'WORKSHOPS',
+ area: 'Engineering',
+ image: '/home/ansys.png',
+ guidelinesTitle: 'ANSYS ONLINE WORKSHOP DETAILS',
+ alt: 'ANSYS Online Workshop',
+ description:
+ '👷‍♀️ Analyze beyond the blueprint. Drishti’26 × Herakles brings you ANSYS Online Workshop. Turn engineering ideas into something you can test, analyse and perfect. Your vision. Your Drishti.',
+ details: [
+ 'Date — 17 September 2026.',
+ 'Time — 5–8 PM.',
+ 'Format — Online.',
+ 'Registration Fee — ₹199.',
+ 'Benefits — Certificate + KTU Points.',
+ ],
+ registerUrl: 'https://discover.snaptiqz.com/event/4f3MvVykKmO8uLjMW7pwv',
+ },
 ]
 
 export const technicalEventsData = [...workshopsData, ...competitionsData]
