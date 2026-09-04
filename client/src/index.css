@@ -1,112 +1,119 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "SportenPerson";
-  src: url("/fonts/sportenperson.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
+ font-family: "SportenPerson";
+ src: url("/fonts/sportenperson.otf") format("opentype");
+ font-weight: 400;
+ font-style: normal;
 }
 
 @font-face {
-  font-family: "Bietro DEMO-Regular";
-  src: url("/fonts/Bietro DEMO.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
+ font-family: "Bietro DEMO-Regular";
+ src: url("/fonts/Bietro DEMO.otf") format("opentype");
+ font-weight: 400;
+ font-style: normal;
 }
 
 @font-face {
-  font-family: "Clash Display-Medium";
+ font-family: "Clash Display-Medium";
+ src: url("/fonts/ClashDisplay-Medium.otf") format("opentype");
+ font-weight: 500;
+ font-style: normal;
+}
+
+@font-face {
+  font-family: "Clash Display";
   src: url("/fonts/ClashDisplay-Medium.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Mango Grotesque-SemiBold";
-  src: url("/fonts/MangoGrotesque-SemiBold-BF6a47cba8b4c2a.ttf") format("truetype");
-  font-weight: 600;
-  font-style: normal;
+ font-family: "Mango Grotesque-SemiBold";
+ src: url("/fonts/MangoGrotesque-SemiBold-BF6a47cba8b4c2a.ttf") format("truetype");
+ font-weight: 600;
+ font-style: normal;
 }
 
 @font-face {
-  font-family: "Space Grotesk-Regular";
-  src: url("/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-style: normal;
+ font-family: "Space Grotesk-Regular";
+ src: url("/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+ font-weight: 400;
+ font-style: normal;
 }
 
 @theme {
-  --color-gold: #D4AF37;
-  --color-ink: #0b0b0b;
-  --font-display: "Bietro DEMO-Regular", "Bietro DEMO", "SportenPerson", ui-sans-serif, system-ui, sans-serif;
-  --font-bietro: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+ --color-gold: #D4AF37;
+ --color-ink: #0b0b0b;
+ --font-display: "Bietro DEMO-Regular", "Bietro DEMO", "SportenPerson", ui-sans-serif, system-ui, sans-serif;
+ --font-bietro: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
 
 @layer base {
-  /* Scrollbar styles for WebKit browsers (Chrome, Safari, Edge, Opera, Brave) */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+ /* Scrollbar styles for WebKit browsers (Chrome, Safari, Edge, Opera, Brave) */
+ ::-webkit-scrollbar {
+ width: 8px;
+ height: 8px;
+ }
 
-  ::-webkit-scrollbar-track {
-    background: #000000;
-  }
+ ::-webkit-scrollbar-track {
+ background: #000000;
+ }
 
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%, #D4AF37 100%);
-    border-radius: 9999px;
-    min-height: 48px;
-  }
+ ::-webkit-scrollbar-thumb {
+ background: linear-gradient(180deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%, #D4AF37 100%);
+ border-radius: 9999px;
+ min-height: 48px;
+ }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #D49B00 0%, #FFF0B8 45%, #BF8700 65%, #C28700 79%, #FFAE00 92%, #FFAE00 100%);
-  }
+ ::-webkit-scrollbar-thumb:hover {
+ background: linear-gradient(180deg, #D49B00 0%, #FFF0B8 45%, #BF8700 65%, #C28700 79%, #FFAE00 92%, #FFAE00 100%);
+ }
 
-  body.theme-blue ::-webkit-scrollbar-thumb,
-  html.theme-blue ::-webkit-scrollbar-thumb,
-  .theme-blue::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%, #0055ff 100%);
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
-  }
+ body.theme-blue ::-webkit-scrollbar-thumb,
+ html.theme-blue ::-webkit-scrollbar-thumb,
+ .theme-blue::-webkit-scrollbar-thumb {
+ background: linear-gradient(180deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%, #0055ff 100%);
+ box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
+ }
 
-  body.theme-blue ::-webkit-scrollbar-thumb:hover,
-  html.theme-blue ::-webkit-scrollbar-thumb:hover,
-  .theme-blue::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #0066ff 0%, #cffafe 45%, #0ea5e9 65%, #0284c7 79%, #38bdf8 92%, #0066ff 100%);
-  }
+ body.theme-blue ::-webkit-scrollbar-thumb:hover,
+ html.theme-blue ::-webkit-scrollbar-thumb:hover,
+ .theme-blue::-webkit-scrollbar-thumb:hover {
+ background: linear-gradient(180deg, #0066ff 0%, #cffafe 45%, #0ea5e9 65%, #0284c7 79%, #38bdf8 92%, #0066ff 100%);
+ }
 
-  ::-webkit-scrollbar-corner {
-    background: #000000;
-  }
+ ::-webkit-scrollbar-corner {
+ background: #000000;
+ }
 
-  body {
-    background: #000;
-  }
+ body {
+ background: #000;
+ }
 
-  html.lenis, html.lenis body {
-    height: auto;
-  }
+ html.lenis, html.lenis body {
+ height: auto;
+ }
 
-  .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
-  }
+ .lenis.lenis-smooth {
+ scroll-behavior: auto !important;
+ }
 
-  .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
-  }
+ .lenis.lenis-smooth [data-lenis-prevent] {
+ overscroll-behavior: contain;
+ }
 
-  .lenis.lenis-stopped {
-    overflow: hidden;
-  }
+ .lenis.lenis-stopped {
+ overflow: hidden;
+ }
 
-  .lenis.lenis-smooth iframe {
-    pointer-events: none;
-  }
+ .lenis.lenis-smooth iframe {
+ pointer-events: none;
+ }
 }
 
 @utility text-gold-gradient {
-  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -114,7 +121,7 @@
 }
 
 .text-gold-gradient {
-  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -122,37 +129,37 @@
 }
 
 .bg-gold-gradient {
-  background: linear-gradient(175deg, #B78000 0%, #FFDB86 45%, #A27200 65%, #A37200 79%, #D4AF37 92%);
+  background: linear-gradient(175deg, rgba(183,128,0,1) 0%, rgba(255,219,134,1) 45%, rgba(162,114,0,1) 65%, rgba(163,114,0,1) 79%, rgba(212,175,55,1) 92%);
 }
 
 @utility text-blue-gradient {
-  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+ background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ color: transparent;
 }
 
 .text-blue-gradient {
-  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+ background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ color: transparent;
 }
 
 .bg-blue-gradient {
-  background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
+ background: linear-gradient(175deg, #0055ff 0%, #a5f3fc 45%, #0284c7 65%, #0369a1 79%, #38bdf8 92%);
 }
 
 @utility font-bietro {
-  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+ font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
 
 .font-bietro {
-  font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
+ font-family: "Bietro DEMO-Regular", "Bietro DEMO", sans-serif;
 }
 
 .remove-black {
-  mix-blend-mode: screen;
+ mix-blend-mode: screen;
 }
