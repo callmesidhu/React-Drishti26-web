@@ -4,7 +4,7 @@ import gsap from 'gsap'
 function Backdrop({ theme = 'gold' }) {
   const gradientRef = useRef(null)
   const gridRef = useRef(null)
-  const linesRef = useRef(null)
+  const linesRef = useRef(null) 
   const cornersRef = useRef([])
 
   const isBlue = theme === 'blue'
