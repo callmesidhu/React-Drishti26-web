@@ -6,12 +6,12 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
 import Footer from '../components/Footer.jsx'
-import { dakshaEventsData } from '../data/eventsData.js'
+import dakshaJson from '../data/daksha.json'
 import { applyLetterGradient } from '../utils/letterGradient.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const events = dakshaEventsData
+const events = dakshaJson.dakshaEventsData
 
 function formatDetail(line) {
  const formatted = line

@@ -1,0 +1,109 @@
+{
+  "competitionsData": [
+    {
+      "id": 1,
+      "type": "competition",
+      "slug": "robo-wars",
+      "title": "Robo Wars",
+      "category": "COMPETITIONS",
+      "area": "Robotics",
+      "guidelinesTitle": "ROBO WARS GUIDELINES",
+      "image": "/techevents/robowar.webp",
+      "alt": "Robo Wars poster",
+      "description": "Build and battle ferocious combat robots in an armored arena. Push your engineering and driving skills to the absolute limit in high-octane mechanical warfare.",
+      "eligibility": [
+        "Open to undergraduate and postgraduate engineering students.",
+        "Teams may consist of 2 to 4 members with valid college ID proof.",
+        "Participants must be comfortable with hardware assembly and safety protocols."
+      ],
+      "guidelines": [
+        "Robot weight limit: 8kg and 15kg categories.",
+        "Each bot must pass a safety inspection before arena entry.",
+        "Judging is based on aggression, damage control, weapon reliability and strategy.",
+        "Final round will be held on 20 September 2026."
+      ],
+      "details": [
+        "Open to : All undergraduate and postgraduate engineering students.",
+        "Weight Category : 8kg & 15kg remote-controlled combat bots.",
+        "Arena Safety : Fully enclosed polycarbonate arena with hazard zones.",
+        "Evaluation : Aggression · Damage · Control · Arena Hazards.",
+        "Prizes : Exciting cash prizes & sponsor swags for top 3 bots.",
+        "Grand Finale : 20 September 2026."
+      ],
+      "registerUrl": "https://snaptiqz.com/event/robo-wars"
+    },
+    {
+      "id": 2,
+      "type": "competition",
+      "slug": "robotic-soccer",
+      "title": "Robotic Soccer",
+      "category": "COMPETITIONS",
+      "area": "Robotics",
+      "guidelinesTitle": "ROBOSOCCER DETAILS",
+      "image": "/home/soccer.png",
+      "alt": "RoboSoccer poster",
+      "description": "25K Prize Pool. 5KG Bots. Zero Mercy. RoboSoccer is back with Drishti '26! Gear up, build your beast, and battle it out on the arena floor. RoboCET × Drishti '26.",
+      "details": [
+        "Registration Fee : ₹749/-.",
+        "Prize Pool : ₹25,000.",
+        "Bots : 5KG category.",
+        "Organised by : RoboCET × Drishti '26.",
+        "Enquiries : Nohid: 7025765360 · Sheheer: 9961656814."
+      ],
+      "registerOptions": [
+        {
+          "label": "REGISTER NOW",
+          "url": "https://discover.snaptiqz.com/event/_7i_CVS3G0uet1apXPcE-"
+        },
+        {
+          "label": "RULEBOOK",
+          "url": "https://drive.google.com/file/d/1xK3w5vq8G0bN4-hbUbX42dED4URRibv-"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "competition",
+      "slug": "fpv-drone-sim-racing",
+      "title": "FPV Drone Sim-Racing",
+      "category": "COMPETITIONS",
+      "area": "Aerospace",
+      "image": "/home/fpv.png",
+      "guidelinesTitle": "FPV DRONE SIM-RACING DETAILS",
+      "alt": "FPV Drone Sim-Racing poster",
+      "description": "Experience the thrill of high-speed FPV drone racing! Test your speed, precision and reflexes in an exciting competitive challenge.",
+      "details": [
+        "Date : 18 & 19 September 2026.",
+        "Registration : ₹49 /-.",
+        "Prize Pool : ₹500 /-.",
+        "KTU Activity Points : Applicable.",
+        "Venue : Drishti ’26, College of Engineering Trivandrum.",
+        "Enquiries : Akul: +91 94474 25533 · Arya: +91 73060 98390."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy"
+    },
+    {
+      "id": 4,
+      "type": "competition",
+      "slug": "drun-marathon",
+      "title": "D'RUN Marathon",
+      "category": "COMPETITIONS",
+      "area": "Sports",
+      "image": "/home/marathon.jpeg",
+      "guidelinesTitle": "D'RUN MARATHON DETAILS",
+      "alt": "D'RUN Marathon poster",
+      "description": "Every stride is a vision in motion. Drishti '26 presents D'RUN Marathon.",
+      "details": [
+        "Date : Sunday, 13 September 2026.",
+        "Registration Fee : ₹69/-.",
+        "Route : CET Campus → Chavadimukku → Greenfield International Stadium.",
+        "Eligibility : Open to all.",
+        "Zumba : Starts at 5 AM.",
+        "Partners : Aquench (Electrolytes) · WöhlPhysio (Physio) · Aura (Zumba).",
+        "Participant Benefits : Official Drishti Badge and Certificate for all participants.",
+        "Podium : Medals for podium finishers."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/PA_FH1f8VrJJOzIR3Zk6Y"
+    }
+  ]
+}

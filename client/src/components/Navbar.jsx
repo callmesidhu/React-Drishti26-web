@@ -220,9 +220,9 @@ function Navbar({ activeSection, theme = 'gold' }) {
  <Link to="/" onClick={handleLinkClick} className="flex items-center gap-2">
  <img
  ref={logoRef}
- className={`block h-12 w-auto transition-all duration-300 ${
- isBlue ? 'filter hue-rotate-[185deg] saturate-[180%] brightness-110 drop-shadow-[0_0_12px_rgba(56,189,248,0.5)]' : ''
- }`}
+className={`block h-12 w-auto transition-all duration-300 ${
+  isBlue ? 'drop-shadow-[0_0_16px_rgba(56,189,248,0.35)]' : ''
+}`}
  src={logoSrc}
  alt={isBlue ? 'Daksha logo' : 'Drishti logo'}
  />

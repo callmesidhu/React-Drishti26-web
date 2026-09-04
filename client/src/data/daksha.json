@@ -1,0 +1,23 @@
+{
+  "dakshaEventsData": [
+    {
+      "id": 1,
+      "slug": "shark-tank",
+      "title": "Shark Tank",
+      "category": "DAKSHA",
+      "area": "Startup",
+      "guidelinesTitle": "SHARK TANK GUIDELINES",
+      "image": "/home/sharktank.jpeg",
+      "alt": "Shark Tank event",
+      "description": "🦈 The Sharks are ready. Are you? Think you have an idea worth betting on? Shark Tank | Daksha 2026 is now open for registrations! 🚀 Pitch your idea, challenge your thinking and put your vision to the test and if it's good enough win upto ₹50,000. 💡 Your idea. Your pitch. Your shot. Registrations are now OPEN! Dive in. Make your pitch. Catch the Sharks.",
+      "details": [
+        "Open to — Student founders, startups in ideation/early-growth stages & registered MSMEs.",
+        "Initial Screening → Expert Panel Pitch → Grand Finale with Investors.",
+        "Pitch your startup before industry experts and investors.",
+        "Evaluation — Innovation · Market Potential · Business Model · Scalability · Investment Potential.",
+        "Grand Finale — 19 September 2026."
+      ],
+      "registerUrl": "https://snaptiqz.com/event/shark-tank"
+    }
+  ]
+}
