@@ -32,7 +32,7 @@ const webTeamMembers = [
  { id: 5, name: 'Rohit', role: 'Developer', image: '/team/WEB/roht.png' },
  { id: 6, name: 'Sharon', role: 'Co-Head', image: '/team/WEB/sharn.png' },
  { id: 7, name: 'Sidharth', role: 'Head', image: '/team/WEB/sid.png' },
- { id: 8, name: 'Vishoushree', role: 'Developer', image: '/team/WEB/vishnu.png' },
+ { id: 8, name: 'Vishnusree', role: 'Developer', image: '/team/WEB/vishnu.png' },
 ]
 
 function shortestDiff(from, to, total) {
