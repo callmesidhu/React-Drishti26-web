@@ -11,6 +11,10 @@ const teamMembers = [
  { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
  { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
  { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
+ { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
+ { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
+ { id: 9, name: 'Shebin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sheb.png' },
+ { id: 10, name: 'Sidharth', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sidhth.png' },
 ]
 
 const dakshaTeamMembers = [
