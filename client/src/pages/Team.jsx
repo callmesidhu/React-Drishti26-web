@@ -5,33 +5,34 @@ import Backdrop from '../components/Backdrop.jsx'
 import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
- { id: 1, name: 'Anjali', role: 'Design Head', image: '/team/anjali.jpg' },
- { id: 2, name: 'Rahul', role: 'President', image: '/team/rahul.jpg' },
- { id: 3, name: 'Ananya', role: 'Vice President', image: '/team/anjali.jpg' },
- { id: 4, name: 'Priya', role: 'Secretary', image: '/team/anjali.jpg' },
- { id: 5, name: 'Arjun', role: 'Treasurer', image: '/team/rahul.jpg' },
- { id: 6, name: 'Sneha', role: 'Technical Head', image: '/team/anjali.jpg' },
- { id: 7, name: 'Vikram', role: 'Marketing Head', image: '/team/rahul.jpg' },
+ { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
+ { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
+ { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
+ { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
+ { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
+ { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
 ]
 
 const dakshaTeamMembers = [
- { id: 1, name: 'Abhiram', role: 'Daksha Lead', image: '/team/rahul.jpg' },
- { id: 2, name: 'Keerthana', role: 'Event Coordinator', image: '/team/anjali.jpg' },
- { id: 3, name: 'Madhav', role: 'Technical Lead', image: '/team/rahul.jpg' },
- { id: 4, name: 'Diya', role: 'Operations Lead', image: '/team/anjali.jpg' },
- { id: 5, name: 'Karthik', role: 'Design & Media', image: '/team/rahul.jpg' },
- { id: 6, name: 'Varsha', role: 'Logistics Head', image: '/team/anjali.jpg' },
- { id: 7, name: 'Naveen', role: 'Public Relations', image: '/team/rahul.jpg' },
+ { id: 5, name: 'Noel', role: 'Convenor', image: '/team/DAKSHA%20CORE/puli.png' },
+ { id: 7, name: 'Sayoojya', role: 'Convenor', image: '/team/DAKSHA%20CORE/say.png' },
+ { id: 1, name: 'Afnan', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/afn.png' },
+ { id: 4, name: 'Keerthana', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/kt.png' },
+ { id: 6, name: 'Sahla', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/sahla.png' },
+ { id: 8, name: 'Yashok', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/ysh.png' },
+ { id: 2, name: 'Aslam', role: 'Coordinator', image: '/team/DAKSHA%20CORE/aslm.png' },
+ { id: 3, name: 'Avneesh', role: 'Coordinator', image: '/team/DAKSHA%20CORE/avnsh.png' },
 ]
 
 const webTeamMembers = [
- { id: 1, name: 'Sidharth', role: 'Lead Developer', image: '/team/rahul.jpg' },
- { id: 2, name: 'Adithya', role: 'Frontend Lead', image: '/team/anjali.jpg' },
- { id: 3, name: 'Aravind', role: 'Backend Lead', image: '/team/rahul.jpg' },
- { id: 4, name: 'Nandana', role: 'UI/UX Designer', image: '/team/anjali.jpg' },
- { id: 5, name: 'Gautam', role: 'Fullstack Dev', image: '/team/rahul.jpg' },
- { id: 6, name: 'Rohan', role: 'Creative Motion', image: '/team/rahul.jpg' },
- { id: 7, name: 'Devika', role: 'QA & Systems', image: '/team/anjali.jpg' },
+ { id: 7, name: 'Sidharth', role: 'Head', image: '/team/WEB/sid.png' },
+ { id: 3, name: 'Kasinath', role: 'Co-Head', image: '/team/WEB/kasi.png' },
+ { id: 6, name: 'Sharon', role: 'Co-Head', image: '/team/WEB/sharn.png' },
+ { id: 1, name: 'George', role: 'Developer', image: '/team/WEB/geo.png' },
+ { id: 2, name: 'Joseph', role: 'Developer', image: '/team/WEB/jo.png' },
+ { id: 4, name: 'Rohan', role: 'Developer', image: '/team/WEB/rohn.png' },
+ { id: 5, name: 'Rohit', role: 'Developer', image: '/team/WEB/roht.png' },
+ { id: 8, name: 'Vishnusree', role: 'Developer', image: '/team/WEB/vishnu.png' },
 ]
 
 function shortestDiff(from, to, total) {
@@ -296,17 +297,19 @@ function Team({ embedded = false }) {
  width: '290px',
  }}
  >
- {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
- {isCenter ? (
- <>
- {/* Monochrome Portrait Photo */}
  {member.image && (
  <img
  src={member.image}
  alt={member.name}
- className="absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none"
+ className={`absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none ${
+ isCenter ? '' : 'brightness-75'
+ }`}
  />
  )}
+
+ {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
+ {isCenter ? (
+ <>
 
  {/* Large Vertical Name: On the right side over photo */}
  <div className="absolute top-0 right-2 sm:right-3 flex h-full items-center pointer-events-none z-10">
@@ -332,7 +335,9 @@ function Team({ embedded = false }) {
  </p>
  </div>
  </>
- ) : null}
+ ) : (
+ <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+ )}
  </div>
  </div>
  )
