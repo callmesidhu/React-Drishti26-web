@@ -53,11 +53,11 @@ function TechEvents() {
  }, [activeTab])
 
  useEffect(() => {
- const nextPath = activeTab === 'workshop' ? '/workshops' : '/competitions'
- if (location.pathname !== nextPath) {
- routerNavigate(nextPath, { replace: true })
- }
- }, [activeTab, routerNavigate, location.pathname])
+  const basePath = activeTab === 'workshop' ? '/workshops' : '/competitions'
+  if (location.pathname !== basePath && location.pathname !== `${basePath}/${slug}`) {
+   routerNavigate(basePath, { replace: true })
+  }
+ }, [activeTab, routerNavigate, location.pathname, slug])
 
  const visibleEvents = useMemo(() => {
  const source = activeTab === 'workshop' ? workshopsData : competitionsData
@@ -69,8 +69,9 @@ function TechEvents() {
  }, [activeTab, selectedArea])
 
  const handleCloseModal = () => {
- setSelectedEvent(null)
- routerNavigate('/workshops')
+  setSelectedEvent(null)
+  const basePath = activeTab === 'workshop' ? '/workshops' : '/competitions'
+  routerNavigate(basePath)
  }
 
  return (
@@ -137,7 +138,11 @@ function TechEvents() {
  <button
  key={`${event.type}-${event.id}`}
  type="button"
- onClick={() => setSelectedEvent(event)}
+  onClick={() => {
+    setSelectedEvent(event)
+    const basePath = event.type === 'workshop' ? '/workshops' : '/competitions'
+    routerNavigate(`${basePath}/${event.slug}`)
+  }}
  className="group flex h-[500px] w-full max-w-[320px] flex-col rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40"
  >
  <div className="aspect-[4/5] shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#111111]">

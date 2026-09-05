@@ -160,10 +160,25 @@ function EventDetailsModal({ event, onClose }) {
  </div>
  </div>
 
+ {/* Poster Image — shown below header on mobile */}
+ <div className="flex items-center justify-center md:hidden mb-6">
+  <div className="relative aspect-[4/5] w-full max-w-[340px] p-2">
+   <div className={`relative h-full w-full overflow-hidden border bg-black/60 ${
+    isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 '
+   }`}>
+     <img
+      src={event.image}
+      alt={event.alt || event.title}
+      className="h-full w-full object-cover"
+     />
+   </div>
+  </div>
+ </div>
+
  {/* 2-Column Content Grid */}
  <div className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
- {/* Left Column: Guidelines & Description */}
- <div className="flex flex-col justify-center md:col-span-7">
+  {/* Left Column: Guidelines & Description */}
+  <div className="flex flex-col justify-center md:col-span-7">
  <p className={`text-[11px] font-semibold uppercase tracking-[4px] ${isBlue ? 'text-sky-400/70' : 'text-gold/70'}`}>
  {guidelinesLabel}
  </p>
@@ -255,9 +270,9 @@ function EventDetailsModal({ event, onClose }) {
  </div>
  </div>
 
- {/* Right Column: Poster Image with Glowing Corner Brackets */}
- <div className="hidden md:flex md:items-center md:justify-center md:col-span-5">
- <div className="relative aspect-[4/5] w-full max-w-[340px] p-2">
+ {/* Right Column: Poster Image — desktop only */}
+  <div className="hidden md:flex md:items-center md:justify-center md:col-span-5">
+   <div className="relative aspect-[4/5] w-full max-w-[340px] p-2">
  {/* Poster Box */}
  <div className={`relative h-full w-full overflow-hidden border bg-black/60 ${
  isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 '
