@@ -311,23 +311,9 @@ function Team({ embedded = false }) {
  />
  )}
 
- {/* Active Center Card with Portrait Photo, Big Vertical Name, and Gold Role Badge */}
+ {/* Active Center Card with Portrait Photo and Gold Role Badge */}
  {isCenter ? (
  <>
-
- {/* Large Vertical Name: On the right side over photo */}
- <div className="absolute top-0 right-2 sm:right-3 flex h-full items-center pointer-events-none z-10">
- <span
- className="text-5xl sm:text-6xl font-black uppercase tracking-wider text-black/85 select-none"
- style={{
- writingMode: 'vertical-lr',
- textOrientation: 'mixed',
- fontFamily: "'Clash Display', 'Inter', sans-serif",
- }}
- >
- {member.name}
- </span>
- </div>
 
  {/* Bottom Role Banner in Metallic Gold */}
  <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end bg-gradient-to-t from-black/95 via-black/40 to-transparent pt-16 pb-6 px-3">
