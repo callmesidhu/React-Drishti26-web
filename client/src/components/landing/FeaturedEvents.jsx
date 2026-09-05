@@ -13,6 +13,7 @@ const featuredEvents = [
  dakshaJson.dakshaEventsData[0],
  competitionJson.competitionsData[0],
  competitionJson.competitionsData[1],
+ competitionJson.competitionsData[2]
 ];
 
 export default function FeaturedEvents({ onEventClick }) {

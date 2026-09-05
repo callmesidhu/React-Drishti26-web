@@ -3,6 +3,24 @@
     {
       "id": 1,
       "type": "competition",
+      "slug": "project-expo",
+      "title": "PROJECT EXPO",
+      "category": "COMPETITIONS",
+      "area": "Project",
+      "image": "/techevents/project-expo.webp ",
+      "guidelinesTitle": "PROJECT EXPO DETAILS",
+      "alt": "project expo poster",
+      "description": "Built something? Let the world see it. Bring it to Drishti '26 Project Expo.  ",
+      "details": [
+        "Date : Sunday, 13 September 2026.",
+        "Registration Fee : ₹49/-.",
+        "₹1,00,000 Price Pool"
+        ],
+      "Guidelines": "https://drive.google.com/file/d/1KOnAKsPeIlV8h9Ek-7b6kXUQvx9JdX9C/view"
+    },
+    {
+      "id": 2,
+      "type": "competition",
       "slug": "robo-wars",
       "title": "Robo Wars",
       "category": "COMPETITIONS",
@@ -33,14 +51,14 @@
       "registerUrl": "https://snaptiqz.com/event/robo-wars"
     },
     {
-      "id": 2,
+      "id": 3,
       "type": "competition",
       "slug": "robotic-soccer",
       "title": "Robotic Soccer",
       "category": "COMPETITIONS",
       "area": "Robotics",
       "guidelinesTitle": "ROBOSOCCER DETAILS",
-      "image": "/home/soccer.png",
+      "image": "/techevents/robosoccer.webp",
       "alt": "RoboSoccer poster",
       "description": "25K Prize Pool. 5KG Bots. Zero Mercy. RoboSoccer is back with Drishti '26! Gear up, build your beast, and battle it out on the arena floor. RoboCET × Drishti '26.",
       "details": [
@@ -62,13 +80,13 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "type": "competition",
       "slug": "fpv-drone-sim-racing",
       "title": "FPV Drone Sim-Racing",
       "category": "COMPETITIONS",
       "area": "Aerospace",
-      "image": "/home/fpv.png",
+      "image": "/techevents/fpv.png",
       "guidelinesTitle": "FPV DRONE SIM-RACING DETAILS",
       "alt": "FPV Drone Sim-Racing poster",
       "description": "Experience the thrill of high-speed FPV drone racing! Test your speed, precision and reflexes in an exciting competitive challenge.",
@@ -83,13 +101,13 @@
       "registerUrl": "https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy"
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "competition",
       "slug": "drun-marathon",
       "title": "D'RUN Marathon",
       "category": "COMPETITIONS",
       "area": "Sports",
-      "image": "/home/marathon.jpeg",
+      "image": "/techevents/marathon.jpeg",
       "guidelinesTitle": "D'RUN MARATHON DETAILS",
       "alt": "D'RUN Marathon poster",
       "description": "Every stride is a vision in motion. Drishti '26 presents D'RUN Marathon.",
@@ -104,6 +122,25 @@
         "Podium : Medals for podium finishers."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/PA_FH1f8VrJJOzIR3Zk6Y"
+    },
+    {
+      "id": 6,
+      "type": "competition",
+      "slug": "signal",
+      "title": "Signal Showdown",
+      "category": "COMPETITIONS",
+      "area": "Electronics",
+      "image": "/techevents/signal.jpeg",
+      "guidelinesTitle": "SIGNAL SHOWDOWN DETAILS",
+      "alt": "Signal Showdown poster",
+      "description": "Decode the noise, master real-world signals, and put your analytical skills to the ultimate test in a high-stakes engineering challenge.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Registration Fee : ₹149/-.",
+        "Prize pool : ₹3000/-",
+        "Benefits : Certificates + KTU Points"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/pTOmGO5YG7SZOfsliWAfi"
     }
   ]
 }
