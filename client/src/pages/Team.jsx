@@ -171,7 +171,7 @@ function Team({ embedded = false }) {
  }, [navigate, total])
 
  useEffect(() => {
- const interval = setInterval(() => navigate(1), 3000)
+ const interval = setInterval(() => navigate(1), 2500)
  return () => clearInterval(interval)
  }, [navigate])
 
