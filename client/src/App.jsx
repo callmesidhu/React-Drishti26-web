@@ -21,36 +21,42 @@ function App() {
  const location = useLocation()
 
  useEffect(() => {
- // Initialize Lenis smooth scrolling
- const lenis = new Lenis({
- duration: 1.2,
- easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
- orientation: 'vertical',
- gestureOrientation: 'vertical',
- smoothWheel: true,
- wheelMultiplier: 1,
- touchMultiplier: 1.5,
- prevent: (node) => node.hasAttribute('data-lenis-prevent') || node.closest?.('[data-lenis-prevent]') != null,
- })
+  const isHome = location.pathname === '/' || location.pathname === '/home'
+  if (!isHome) {
+   document.body.style.overflow = ''
+   return
+  }
 
- // Synchronize Lenis with GSAP ScrollTrigger
- lenis.on('scroll', ScrollTrigger.update)
+  // Initialize Lenis smooth scrolling only on Home page
+  const lenis = new Lenis({
+   duration: 1.2,
+   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+   orientation: 'vertical',
+   gestureOrientation: 'vertical',
+   smoothWheel: true,
+   wheelMultiplier: 1,
+   touchMultiplier: 1.5,
+   prevent: (node) => node.hasAttribute('data-lenis-prevent') || node.closest?.('[data-lenis-prevent]') != null,
+  })
 
- const updateLenis = (time) => {
- lenis.raf(time * 1000)
- }
+  // Synchronize Lenis with GSAP ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update)
 
- gsap.ticker.add(updateLenis)
- gsap.ticker.lagSmoothing(0)
+  const updateLenis = (time) => {
+   lenis.raf(time * 1000)
+  }
 
- window.lenis = lenis
+  gsap.ticker.add(updateLenis)
+  gsap.ticker.lagSmoothing(0)
 
- return () => {
- gsap.ticker.remove(updateLenis)
- lenis.destroy()
- delete window.lenis
- }
- }, [])
+  window.lenis = lenis
+
+  return () => {
+   gsap.ticker.remove(updateLenis)
+   lenis.destroy()
+   delete window.lenis
+  }
+ }, [location.pathname])
 
  // Smooth reset to top on page navigation and refresh ScrollTrigger
  useEffect(() => {
