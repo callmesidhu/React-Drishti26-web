@@ -20,16 +20,12 @@ const faqs = [
  a: 'ProShow passes can be booked online via the official registration link or collected from the Drishti Registration Desk on campus. Passes are linked to your Drishti ID.',
  },
  {
- q: 'Can non-KSIT students attend the ProShow?',
- a: 'Yes! The ProShow is open to students from all colleges with a valid college ID card and an official Drishti ProShow pass.',
- },
- {
- q: 'Are there VIP / Front-Row access options?',
- a: 'Limited VIP passes are available for registered team participants and competition winners. Check the registration portal for upgrade availability.',
+ q: 'Can non-CET students attend the ProShow?',
+ a: 'Yes! The ProShow is open to students from all colleges with a valid ID card and the corresponding official Drishti day pass.',
  },
  {
  q: 'What items are prohibited inside the concert venue?',
- a: 'Prohibited items include professional cameras, tripods, glass bottles, food items, sharp objects, and laser pointers. Standard bags are subject to security search.',
+ a: 'Prohibited items include professional cameras, tripods, glass bottles, food items, sharp objects, laser pointers, alcohol and other intoxicating substances. Standard bags are subject to security search.',
  },
 ]
 
@@ -205,21 +201,21 @@ function ProShowsPage({ embedded = false }) {
  {!embedded && <Navbar activeSection="proshows" />}
 
  {/* Pinned Scroll Section with explicit Navbar clearance */}
- <div ref={pinWrapperRef} className="relative w-full h-screen flex flex-col items-center justify-between pt-24 lg:pt-28 pb-6 overflow-hidden">
+ <div ref={pinWrapperRef} className="relative flex h-[90vh] w-full flex-col items-center overflow-hidden pt-[clamp(6.5rem,16vh,8rem)] pb-2 sm:h-screen">
  
  {/* Page Header (Cleared from Navbar overlap) */}
- <header ref={headerRef} className="z-10 px-[clamp(16px,4vw,40px)] text-center opacity-0">
+ <header ref={headerRef} className="z-10 shrink-0 px-[clamp(16px,4vw,40px)] text-center opacity-0">
  <h1
  ref={h1Ref}
- style={{ fontFamily: "'Clash Display', sans-serif" }}
- className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
+ style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+ className="text-[clamp(40px,8vw,100px)] font-normal uppercase leading-none tracking-[0.03em]"
  >
  Pro Show
  </h1>
  </header>
 
  {/* 3D Stage Area */}
- <main ref={stageAreaRef} className="relative w-full max-w-[1200px] px-4 my-auto flex flex-col items-center justify-center">
+ <main ref={stageAreaRef} className="relative flex w-full flex-col items-center justify-start px-4 pt-2 lg:justify-center lg:pt-0">
  
  {/* Ambient Glow */}
  <div
@@ -253,7 +249,7 @@ function ProShowsPage({ embedded = false }) {
  {/* Flip Container */}
  <div
  ref={cardInnerRef}
- className="transform-style-3d relative w-full h-[460px] sm:h-[500px] lg:h-auto lg:aspect-[16/9] rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)]"
+ className="transform-style-3d relative h-[min(54vh,460px)] w-full rounded-2xl shadow-[0_25px_80px_rgba(0,0,0,0.95)] sm:h-[min(60vh,500px)] lg:h-auto lg:aspect-[16/9]"
  style={{ transformStyle: 'preserve-3d' }}
  >
  {/* BACK OF CARD: Metallic Gold */}
@@ -300,21 +296,21 @@ function ProShowsPage({ embedded = false }) {
  {/* Artist Name */}
  <div 
  ref={artistRef}
- className="z-10 text-center opacity-0"
+ className="z-10 mt-1 max-w-full shrink-0 px-4 text-center opacity-0"
  >
- <h2
- style={{ fontFamily: "'Clash Display', sans-serif" }}
- className="text-[clamp(24px,4vw,44px)] font-bold uppercase tracking-wider text-gold-gradient"
+ <h1
+ style={{ fontFamily: "'Clash Display', 'Clash Display-Medium', sans-serif" }}
+ className="max-w-full break-words text-[clamp(40px,8vw,100px)] font-normal uppercase leading-none tracking-[0.03em] text-gold-gradient"
  >
  {artistName}
- </h2>
+ </h1>
  </div>
  </div>
 
  {/* FAQ Section */}
  <section ref={faqSectionRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
  <h2
- style={{ fontFamily: "'Clash Display', sans-serif" }}
+ style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
  className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
  >
  ProShow Guidelines & FAQ
