@@ -3,25 +3,28 @@ import DomeGallery from "../DomeGallery";
 const isCoarsePointer =
 	typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 const heroBg = "/home/drishti-take-1.webp";
-const categoriesPhoto = "/home/gallery-1.webp";
-const galleryImage1 = "/home/gallery-1.webp";
-const galleryImage2 = "/home/gallery-2.webp";
-const galleryImage3 = "/home/gallery-3.webp";
-const galleryImage4 = "/home/gallery-4.webp";
-const galleryImage5 = "/home/gallery-5.webp";
+const categoriesPhoto = "/home/dome/25krobo.jpeg";
+const galleryImage1 = "/home/dome/25krobo.jpeg";
+const galleryImage2 = "/home/dome/50krobo.jpeg";
+const galleryImage3 = "/home/dome/aisummit.jpeg";
+const galleryImage4 = "/home/dome/biennale.jpeg";
+const galleryImage5 = "/home/dome/drun.jpeg";
+const galleryImage6 = "/home/dome/robosoccer.jpeg";
 
 const drishtiGalleryImages = [
- { src: galleryImage1, alt: "Drishti Festival Stage & Atmosphere" },
- { src: galleryImage2, alt: "Tech Innovation & Robotics" },
- { src: galleryImage3, alt: "Atmosphere & Future Tech" },
- { src: galleryImage4, alt: "Workshops & Tech Sessions" },
- { src: galleryImage5, alt: "Pro Shows Musical Night" },
+ { src: galleryImage1, alt: "Robowar — 25K Prize Pool" },
+ { src: galleryImage2, alt: "Robowar — 50K Prize Pool" },
+ { src: galleryImage3, alt: "AI Summit" },
+ { src: galleryImage4, alt: "Biennale" },
+ { src: galleryImage5, alt: "D'Run Marathon" },
+ { src: galleryImage6, alt: "Robosoccer" },
  { src: categoriesPhoto, alt: "Drishti '26 Competitions" },
- { src: "/home/aftermovie-bg.webp", alt: "Festival Lights & Crowds" },
+ { src: galleryImage3, alt: "AI Summit" },
  { src: "/home/featured-event-poster.webp", alt: "Featured Events & Keynotes" },
  { src: "/proshow/proshowgrid.webp", alt: "Live Pro Shows Night" },
  { src: "/home/sharktank.jpeg", alt: "Daksha Ideation & Pitch" },
  { src: heroBg, alt: "Drishti '26 Horizon" },
+ { src: "/home/sharktank.jpeg", alt: "Daksha Ideation & Pitch" },
 ];
 
 export default function GallerySection() {

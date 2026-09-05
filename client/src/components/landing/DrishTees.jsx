@@ -123,6 +123,8 @@ export default function DrishTees() {
     <section ref={sectionRef} className="relative w-full overflow-visible py-10 sm:py-12 lg:py-16 xl:py-20">
       {/* Top fade overlay to smoothly blend background images moving under the top boundary */}
       <div className="absolute inset-x-0 top-0 z-10 h-32 w-full bg-gradient-to-b from-black to-transparent pointer-events-none" aria-hidden="true" />
+      {/* Bottom fade overlay to smoothly blend the section ending into the next section */}
+      <div className="absolute inset-x-0 bottom-0 z-10 h-32 w-full bg-gradient-to-t from-black to-transparent pointer-events-none" aria-hidden="true" />
       <img
         ref={bgRef}
         src="/home/circle-half.png"
@@ -134,11 +136,24 @@ export default function DrishTees() {
           WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)'
         }}
       />
+      {/* Mobile-only section backdrop: bottom-anchored behind the copy so it clears the shirt area */}
+      <img
+        src="/home/circle-half.png"
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="md:hidden pointer-events-none absolute inset-x-0 bottom-[-6%] z-0 h-[68%] w-full object-cover object-center opacity-30 select-none"
+        style={{
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 26%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 26%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)',
+        }}
+      />
       <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-10 overflow-visible z-10 relative">
         <div className="relative mt-4 grid items-end gap-4 overflow-visible lg:mt-8 lg:grid-cols-[1.05fr_1.45fr]">
           <div className="relative mx-auto flex h-[300px] w-full max-w-[620px] items-end justify-center sm:h-[380px] md:h-[500px] xl:h-[620px]">
             {/* The base is now z-20 to be on top of the tshirt */}
-            <div ref={baseRef} className="absolute bottom-[-35px] md:bottom-[-20px] lg:bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain z-20">
+            <div ref={baseRef} className="hidden md:block absolute bottom-[-20px] lg:bottom-[-12px] left-1/2 w-[86%] max-w-[440px] -translate-x-1/2 object-contain z-20">
               <img
                 src="/home/tshirt-base.png"
                 alt=""

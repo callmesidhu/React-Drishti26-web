@@ -65,7 +65,7 @@ function Footer() {
   >
    <div className="mx-auto max-w-[1600px] px-5 pb-0 pt-8 lg:px-8">
     <div className="flex min-h-[220px] flex-col justify-between">
-     <div className="grid gap-8 pb-8 md:grid-cols-[1fr_1fr_1fr_1fr] lg:gap-12">
+      <div className="grid gap-8 pb-8 md:grid-cols-[1fr_1fr_1.6fr] lg:gap-12">
       <div ref={(el) => { columnsRef.current[0] = el }} style={{ opacity: 0 }}>
        <div className="space-y-3 text-white/80">
         <h4
@@ -74,7 +74,7 @@ function Footer() {
         >
          Pages
         </h4>
-        <ul className="space-y-2 text-[15px] font-light">
+        <ul className="space-y-2 text-[15px] font-light lg:columns-2 lg:gap-10">
          {[
           { name: 'Home', path: '/home' },
           { name: 'Daksha', path: '/daksha' },
@@ -85,7 +85,7 @@ function Footer() {
           { name: 'About Us', path: '/about' },
           { name: 'Contact', path: '/contact' },
          ].map((page) => (
-          <li key={page.name}>
+          <li key={page.name} className="break-inside-avoid">
            <a href={page.path} className="text-white/80 transition-colors duration-200 hover:text-white">
             {page.name}
            </a>
@@ -128,7 +128,7 @@ function Footer() {
        </div>
       </div>
 
-      <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }} className="md:col-span-2">
+      <div ref={(el) => { columnsRef.current[2] = el }} style={{ opacity: 0 }}>
        <div className="space-y-3 text-white/80">
         <h4
          className="text-[11px] font-bold uppercase tracking-[4px] text-white/80"
@@ -137,7 +137,7 @@ function Footer() {
          Location
         </h4>
 
-        <div className="relative mt-2 overflow-hidden rounded-lg border border-white/20 transition-all duration-300 hover:border-gold/60 max-w-[360px]">
+        <div className="relative mt-2 w-full overflow-hidden rounded-lg border border-white/20 transition-all duration-300 hover:border-gold/60">
          <iframe
           title="CET Mini Map"
           src="https://maps.google.com/maps?q=8.5458513,76.9063407&t=k&z=16&ie=UTF8&iwloc=&output=embed"
@@ -187,8 +187,8 @@ function Footer() {
    </div>
    */}
    <div className="bg-[#050505]">
-    <div className="mx-auto max-w-[220px] px-2 py-2 text-center">
-     <p ref={copyrightRef} className="text-[8px] uppercase tracking-[1.5px] text-[#d8a52a]" style={{ opacity: 0 }}>
+     <div className="mx-auto max-w-none px-4 py-3 text-center">
+      <p ref={copyrightRef} className="whitespace-nowrap text-[8px] uppercase tracking-[1.5px] text-[#d8a52a]" style={{ opacity: 0 }}>
       © 2026 DRISHTI. ALL RIGHTS RESERVED.
      </p>
     </div>
