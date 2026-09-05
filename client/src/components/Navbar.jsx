@@ -5,7 +5,9 @@ import gsap from 'gsap'
 const links = [
  { label: 'Home', to: '/home' },
  { label: 'Daksha', to: '/daksha' },
- { label: 'Tech Events', to: '/workshops' },
+ { label: 'AI Summit', to: '/ai-summit' },
+ { label: 'Workshops', to: '/workshops' },
+ { label: 'Competitions', to: '/competitions' },
  { label: 'Team', to: '/team' },
  { label: 'About', to: '/about' },
  { label: 'Contact', to: '/contact' },
@@ -196,7 +198,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
  return activeClean === linkClean
  }
  if (link.to === '/home' && location.pathname === '/') return true
- return location.pathname === link.to
+ return location.pathname === link.to || location.pathname.startsWith(`${link.to}/`)
  }
 
  const handleLinkClick = () => {

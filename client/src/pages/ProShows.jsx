@@ -24,10 +24,6 @@ const faqs = [
   a: 'Yes! The ProShow is open to students from all colleges with a valid college ID card and an official Drishti ProShow pass.',
  },
  {
-  q: 'Are there VIP / Front-Row access options?',
-  a: 'Limited VIP passes are available for registered team participants and competition winners. Check the registration portal for upgrade availability.',
- },
- {
   q: 'What items are prohibited inside the concert venue?',
   a: 'Prohibited items include professional cameras, tripods, glass bottles, food items, sharp objects, and laser pointers. Standard bags are subject to security search.',
  },

@@ -12,6 +12,7 @@ const TechEvents = lazy(() => import('./pages/techEvents.jsx'))
 const About = lazy(() => import('./pages/About.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const ProShows = lazy(() => import('./pages/ProShows.jsx'))
+const AISummit = lazy(() => import('./pages/AISummit.jsx'))
 const Home = lazy(() => import('./pages/Home.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
@@ -105,6 +106,7 @@ function App() {
  <Route path="/competitions" element={<TechEvents />} />
  <Route path="/competitions/:slug" element={<TechEvents />} />
  <Route path="/proshows" element={<ProShows />} />
+ <Route path="/ai-summit" element={<AISummit />} />
  <Route path="/about" element={<About />} />
  <Route path="/contact" element={<Contact />} />
  <Route path="*" element={<Navigate to="/home" replace />} />
