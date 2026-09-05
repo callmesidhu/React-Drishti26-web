@@ -68,9 +68,7 @@ function Team({ embedded = false }) {
  setTimeout(() => { navRef.current = false }, 500)
  setActiveIndex((prev) => {
  const next = prev + dir
- if (next < 0) return 0
- if (next >= total) return total - 1
- return next
+ return (next + total) % total
  })
  }, [total])
 
@@ -134,10 +132,10 @@ function Team({ embedded = false }) {
  const handleWheel = (e) => {
  if (!isInView()) return
  const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY
- if (delta > 0 && activeIndexRef.current < total - 1) {
+ if (delta > 0) {
  e.preventDefault()
  navigate(1)
- } else if (delta < 0 && activeIndexRef.current > 0) {
+ } else if (delta < 0) {
  e.preventDefault()
  navigate(-1)
  }
@@ -153,9 +151,9 @@ function Team({ embedded = false }) {
  const dx = e.changedTouches[0].clientX - touchStart.current.x
  const dy = e.changedTouches[0].clientY - touchStart.current.y
  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
- if (dx < 0 && activeIndexRef.current < total - 1) {
+ if (dx < 0) {
  navigate(1)
- } else if (dx > 0 && activeIndexRef.current > 0) {
+ } else if (dx > 0) {
  navigate(-1)
  }
  }
@@ -171,6 +169,11 @@ function Team({ embedded = false }) {
  el.removeEventListener('touchend', handleTouchEnd)
  }
  }, [navigate, total])
+
+ useEffect(() => {
+ const interval = setInterval(() => navigate(1), 3000)
+ return () => clearInterval(interval)
+ }, [navigate])
 
  const getCardTransform = useCallback((index) => {
  const diff = shortestDiff(activeIndex, index, total)
@@ -277,7 +280,7 @@ function Team({ embedded = false }) {
  style={{ transformStyle: 'preserve-3d' }}
  >
  {members.map((member, index) => {
- const diff = shortestDiff(activeIndex, index)
+ const diff = shortestDiff(activeIndex, index, total)
  const isCenter = diff === 0
 
  return (
