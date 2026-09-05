@@ -5,6 +5,7 @@ import gsap from 'gsap'
 const links = [
  { label: 'Home', to: '/home' },
  { label: 'Daksha', to: '/daksha' },
+ { label: 'AI Summit', to: '/ai-summit' },
  { label: 'Workshops', to: '/workshops' },
  { label: 'Competitions', to: '/competitions' },
  { label: 'Team', to: '/team' },
