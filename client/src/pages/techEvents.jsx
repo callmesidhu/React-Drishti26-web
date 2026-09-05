@@ -20,9 +20,16 @@ function TechEvents() {
  const { slug } = useParams()
  const location = useLocation()
  const routerNavigate = useNavigate()
- const [activeTab, setActiveTab] = useState('workshop')
+ const [activeTab, setActiveTab] = useState(() =>
+  location.pathname.startsWith('/competitions') ? 'competition' : 'workshop',
+ )
  const [selectedArea, setSelectedArea] = useState('All')
  const [selectedEvent, setSelectedEvent] = useState(null)
+
+ useEffect(() => {
+ const routeTab = location.pathname.startsWith('/competitions') ? 'competition' : 'workshop'
+ setActiveTab(routeTab)
+ }, [location.pathname])
 
  useEffect(() => {
  if (!slug) {
@@ -52,13 +59,6 @@ function TechEvents() {
  setSelectedArea('All')
  }, [activeTab])
 
- useEffect(() => {
-  const basePath = activeTab === 'workshop' ? '/workshops' : '/competitions'
-  if (location.pathname !== basePath && location.pathname !== `${basePath}/${slug}`) {
-   routerNavigate(basePath, { replace: true })
-  }
- }, [activeTab, routerNavigate, location.pathname, slug])
-
  const visibleEvents = useMemo(() => {
  const source = activeTab === 'workshop' ? workshopsData : competitionsData
 
@@ -78,7 +78,7 @@ function TechEvents() {
  <>
  <div className="relative min-h-screen w-full overflow-x-hidden bg-[#050505] text-white">
  <Backdrop />
- <Navbar activeSection="workshops" />
+ <Navbar />
 
  <main className="mx-auto flex w-full max-w-[1200px] flex-col items-center gap-8 px-4 pb-16 pt-[clamp(100px,14vh,140px)] md:px-8">
  <div className="text-center">
@@ -97,7 +97,10 @@ function TechEvents() {
  <button
  key={tab.key}
  type="button"
- onClick={() => setActiveTab(tab.key)}
+ onClick={() => {
+  setActiveTab(tab.key)
+  routerNavigate(tab.key === 'workshop' ? '/workshops' : '/competitions')
+ }}
  className={`flex-1 rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
  activeTab === tab.key
  ? 'bg-gold-gradient text-black '

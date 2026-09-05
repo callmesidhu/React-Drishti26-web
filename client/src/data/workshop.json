@@ -7,15 +7,15 @@
       "title": "The Ultimate RC Plane Workshop",
       "category": "WORKSHOPS",
       "area": "Aerospace",
-      "image": "/home/rcplane.png",
+      "image": "/techevents/rcplane.png",
       "guidelinesTitle": "ULTIMATE RC PLANE WORKSHOP DETAILS",
       "alt": "The Ultimate RC Plane Workshop",
-      "description": "✈️ Drishti'26 × AeroCET presents The Ultimate RC Plane Workshop. 📡 Explore the fundamentals of aerodynamics, aircraft design and flight control as you configure your very own RC aircraft and put it to the test. 📅 September 18, 19 and 20. Let your vision soar the skies ✨ Your vision. Your Drishti.",
+      "description": "Drishti'26 × AeroCET presents The Ultimate RC Plane Workshop. Explore the fundamentals of aerodynamics, aircraft design and flight control as you configure your very own RC aircraft and put it to the test. 📅 September 18, 19 and 20. Let your vision soar the skies ✨ Your vision. Your Drishti.",
       "details": [
-        "Dates — 18, 19 & 20 September 2026.",
-        "Workshop Focus — Aerodynamics · Aircraft Design · Flight Control.",
-        "Experience — Configure your own RC aircraft and put it to the test.",
-        "Passes — 1 Day Workshop Pass · 3 Day Workshop Pass."
+        "Dates : 18, 19 & 20 September 2026.",
+        "Workshop Focus : Aerodynamics · Aircraft Design · Flight Control.",
+        "Experience : Configure your own RC aircraft and put it to the test.",
+        "Passes : 1 Day Workshop Pass · 3 Day Workshop Pass."
       ],
       "registerOptions": [
         {
@@ -35,16 +35,16 @@
       "title": "SolidWorks Online Workshop",
       "category": "WORKSHOPS",
       "area": "Design",
-      "image": "/home/solidwork.png",
+      "image": "/techevents/solidwork.png",
       "guidelinesTitle": "SOLIDWORKS ONLINE WORKSHOP DETAILS",
       "alt": "SolidWorks Online Workshop",
-      "description": "⚙️ From Vision to dimension. Drishti’26 × Herakles brings you SolidWorks Online Workshop 🚀 The one session your ideas need to take shape! Your vision. Your Drishti.",
+      "description": "From Vision to dimension. Drishti’26 × Herakles brings you SolidWorks Online Workshop 🚀 The one session your ideas need to take shape! Your vision. Your Drishti.",
       "details": [
-        "Date — 16 September 2026.",
-        "Time — 5–8 PM.",
-        "Format — Online (Laptop required).",
-        "Registration Fee — ₹199.",
-        "Benefits — Certificate + KTU Points."
+        "Date : 16 September 2026.",
+        "Time : 5–8 PM.",
+        "Format : Online (Laptop required).",
+        "Registration Fee : ₹199.",
+        "Benefits : Certificate + KTU Points."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/ZrKeGZWZytpgL_0sqNJmn"
     },
@@ -55,16 +55,16 @@
       "title": "MATLAB Workshop",
       "category": "WORKSHOPS",
       "area": "Programming",
-      "image": "/home/matlab.png",
+      "image": "/techevents/matlab.png",
       "guidelinesTitle": "MATLAB WORKSHOP DETAILS",
       "alt": "MATLAB Workshop",
-      "description": "💻 Code your concepts into Vision. Join Drishti’26 × Herakles for the MATLAB Workshop and explore MATLAB from the fundamentals of coding to practical applications.",
+      "description": "Code your concepts into Vision. Join Drishti’26 × Herakles for the MATLAB Workshop and explore MATLAB from the fundamentals of coding to practical applications.",
       "details": [
-        "Date — 16 September 2026.",
-        "Time — 5–8 PM.",
-        "Format — Online.",
-        "Registration Fee — ₹199.",
-        "Benefits — Certificate + KTU Points."
+        "Date : 16 September 2026.",
+        "Time : 5–8 PM.",
+        "Format : Online.",
+        "Registration Fee : ₹199.",
+        "Benefits : Certificate + KTU Points."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/eY8qV1pZsZrQK2cBuSYh5"
     },
@@ -75,16 +75,16 @@
       "title": "ANSYS Online Workshop",
       "category": "WORKSHOPS",
       "area": "Engineering",
-      "image": "/home/ansys.png",
+      "image": "/techevents/ansys.png",
       "guidelinesTitle": "ANSYS ONLINE WORKSHOP DETAILS",
       "alt": "ANSYS Online Workshop",
-      "description": "👷‍♀️ Analyze beyond the blueprint. Drishti’26 × Herakles brings you ANSYS Online Workshop. Turn engineering ideas into something you can test, analyse and perfect. Your vision. Your Drishti.",
+      "description": "Analyze beyond the blueprint. Drishti’26 × Herakles brings you ANSYS Online Workshop. Turn engineering ideas into something you can test, analyse and perfect. Your vision. Your Drishti.",
       "details": [
-        "Date — 17 September 2026.",
-        "Time — 5–8 PM.",
-        "Format — Online.",
-        "Registration Fee — ₹199.",
-        "Benefits — Certificate + KTU Points."
+        "Date : 17 September 2026.",
+        "Time : 5–8 PM.",
+        "Format : Online.",
+        "Registration Fee : ₹199.",
+        "Benefits : Certificate + KTU Points."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/4f3MvVykKmO8uLjMW7pwv"
     },
@@ -95,17 +95,56 @@
       "title": "Unreal Engine Workshop",
       "category": "WORKSHOPS",
       "area": "Game Dev",
-      "image": "/home/unreal.jpeg",
+      "image": "/techevents/unreal.jpeg",
       "guidelinesTitle": "UNREAL ENGINE WORKSHOP DETAILS",
       "alt": "Unreal Engine Workshop",
       "description": "Join Drishti’26 × Glitch CET for Unreal Engine: Introduction to Game Development. A hands-on, 6-hour beginner workshop led by Muhammed Faizal PK, founder, Custodian Games.",
       "details": [
-        "Date — 19 September 2026.",
+        "Date : 19 September 2026.",
         "Bring your laptop (with UE 5.6 pre-installed) and a mouse!",
-        "Format — Offline.",
-        "Registration Fee — ₹249."
+        "Format : Offline.",
+        "Registration Fee : ₹249."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/T9MyRQY7qO0M5LeSbuf9W"
+    },
+
+    {
+      "id": 6,
+      "type": "workshop",
+      "slug": "space-industry-workshop",
+      "title": "Privatisation of Space Industry",
+      "category": "WORKSHOPS",
+      "area": "Space Tech",
+      "image": "/techevents/space-talk.jpeg",
+      "guidelinesTitle": "PANEL DICUSSION DETAILS",
+      "alt": "Panel discussion",
+      "description": "Join industry experts and space-sector pioneers as they delve into the opportunities, challenges, and future of India’s rapidly evolving private space industry.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "No Registration Fee."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/ybEN6X1n4Zv4kRw-TTAKJ"
+    },
+
+    {
+      "id": 7,
+      "type": "workshop",
+      "slug": "pcb-workshop",
+      "title": "PCB Design Workshop",
+      "category": "WORKSHOPS",
+      "area": "PCB Design",
+      "image": "/techevents/pcb.jpeg",
+      "guidelinesTitle": "PCB DESIGN WORKSHOP DETAILS",
+      "alt": "PCB Design Workshop",
+      "description": "Homegrown talent leading the hardware revolution. Two of our very own CET alumnae are returning to campus as industry powerhouses to show you how real-world boards are engineered. Organized by Drishti’26 × IET",
+      "details": [
+        "Date : 19 & 20 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : ₹699.",
+        "Benefits : Certificate + KTU Points."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/XoWlcntnKPTDdgbqGsMK-"
     }
   ]
 }

@@ -52,6 +52,16 @@ export default function GallerySection() {
  scrollParallaxAngle={110}
  />
  </div>
+
+ <div className="mt-4 flex flex-col items-center gap-2 text-gold/60">
+ <p className="font-['Space_Grotesk-Regular',Helvetica] text-xs uppercase tracking-[0.18em]">
+ Scroll down to see more
+ </p>
+ <span
+ className="h-2.5 w-2.5 rotate-45 border-b border-r border-gold/70"
+ aria-hidden="true"
+ />
+ </div>
  </section>
  );
 }
