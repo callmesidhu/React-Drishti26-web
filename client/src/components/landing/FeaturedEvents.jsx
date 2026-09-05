@@ -13,7 +13,6 @@ const featuredEvents = [
  dakshaJson.dakshaEventsData[0],
  competitionJson.competitionsData[0],
  competitionJson.competitionsData[1],
- workshopJson.workshopsData[0],
 ];
 
 export default function FeaturedEvents({ onEventClick }) {
@@ -56,12 +55,12 @@ export default function FeaturedEvents({ onEventClick }) {
 
  return (
  <section
- className="relative h-[100svh] min-h-[500px] max-h-[1080px] w-full overflow-hidden bg-black py-6 md:py-8 flex flex-col justify-center"
+ className="relative h-auto min-h-[calc(100svh+140px)] w-full overflow-hidden bg-black py-6 md:py-8 flex flex-col justify-center lg:h-[100svh] lg:min-h-[500px] lg:max-h-[1080px]"
  aria-labelledby="featured-events-heading"
  >
 
 
- <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,107px)] mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 h-full pt-24 lg:pt-0 pb-10">
+ <div className="w-full max-w-[1440px] px-[clamp(20px,5vw,107px)] mx-auto relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 min-h-[calc(100svh+140px)] lg:h-full lg:min-h-0 pt-24 lg:pt-0 pb-10">
  
  {/* Left Side: Header Section */}
  <div className="flex flex-col gap-6 w-full lg:w-[40%] flex-shrink-0 z-20">
@@ -82,40 +81,16 @@ export default function FeaturedEvents({ onEventClick }) {
  </p>
  </div>
 
- {/* Navigation Controls */}
- <div className="flex items-center gap-4 mt-4 lg:mt-8">
- <button
- type="button"
- className="flex h-14 w-14 rotate-[135deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:border-[#D4AF37] hover:scale-110 hover:rotate-[180deg]"
- onClick={() => {
- moveFeatured(-1);
- setHasManuallyNavigated(true);
- }}
- aria-label="Previous featured event"
- >
- <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
- </button>
- <button
- type="button"
- className="flex h-14 w-14 -rotate-[45deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:border-[#D4AF37] hover:scale-110 hover:rotate-0"
- onClick={() => {
- moveFeatured(1);
- setHasManuallyNavigated(true);
- }}
- aria-label="Next featured event"
- >
- <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
- </button>
- </div>
  </div>
 
  {/* Right Side: 3D Coverflow Container */}
  <div 
  ref={containerRef}
- className="relative w-full lg:w-[60%] flex-1 h-[50vh] lg:h-[80vh] flex items-center justify-center [perspective:1200px]"
+ className="mt-8 flex w-full flex-col items-center lg:mt-0 lg:w-[60%] lg:flex-1"
  onMouseEnter={() => setIsAutoScrollPaused(true)}
  onMouseLeave={() => setIsAutoScrollPaused(false)}
  >
+ <div className="relative flex h-[50vh] w-full items-center justify-center [perspective:1200px] lg:h-[80vh]">
  {featuredEvents.map((event, index) => {
  // Calculate distance from center (with wrapping logic for smooth carousel)
  let diff = index - featuredIndex;
@@ -137,13 +112,12 @@ export default function FeaturedEvents({ onEventClick }) {
  return (
  <article
  key={index}
- className="absolute h-full aspect-[3/4] max-h-[85vh] overflow-hidden group cursor-pointer transition-colors duration-500"
+ className="group absolute flex h-auto flex-col items-stretch overflow-visible transition-colors duration-500"
  style={{ 
  transform: `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg)`,
  opacity: opacity,
  zIndex: zIndex,
  transition: "all 0.8s cubic-bezier(0.25, 1, 0.5, 1)",
- border: isActive ? "2px solid #D4AF37" : "1px solid rgba(255,255,255,0.1)",
  backgroundColor: "#050505"
  }}
  onClick={() => {
@@ -165,6 +139,10 @@ export default function FeaturedEvents({ onEventClick }) {
  }
  }}
  >
+ <div
+ className="relative aspect-[3/4] h-[50vh] max-h-[520px] w-auto overflow-hidden border bg-[#050505] lg:h-[80vh]"
+ style={{ border: isActive ? "2px solid #D4AF37" : "1px solid rgba(255,255,255,0.1)" }}
+ >
  {/* Event Image */}
  <img
  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -181,12 +159,14 @@ export default function FeaturedEvents({ onEventClick }) {
  <div className="absolute inset-0 bg-black/20" />
  )}
 
- {/* Sharp UI overlay for active card */}
+ </div>
+
+ {/* Attached details control for the active card */}
  {isActive && (
- <div className="absolute inset-x-0 bottom-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black via-black/80 to-transparent">
+ <div className="w-full border-x-2 border-b-2 border-[#D4AF37] bg-black">
  <button
  type="button"
- className="flex h-[60px] w-full items-center justify-between px-6 text-left border border-[#D4AF37] bg-black group/btn transition-all duration-300"
+ className="flex min-h-14 w-full items-center justify-between gap-3 px-4 py-3 text-left group/btn transition-all duration-300 sm:min-h-16 sm:px-6"
  aria-label={`View details for featured event ${index + 1}`}
  onClick={(e) => {
  e.stopPropagation();
@@ -209,6 +189,37 @@ export default function FeaturedEvents({ onEventClick }) {
  </article>
  );
  })}
+ </div>
+
+ <div className="mt-8 hidden items-center gap-8 lg:mt-10 lg:flex">
+ <button
+ type="button"
+ className="flex h-14 w-14 rotate-[135deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:scale-110 hover:rotate-[180deg] hover:border-[#D4AF37]"
+ onClick={() => {
+ moveFeatured(-1);
+ setHasManuallyNavigated(true);
+ }}
+ aria-label="Previous featured event"
+ >
+ <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
+ </button>
+ <button
+ type="button"
+ className="flex h-14 w-14 -rotate-[45deg] items-center justify-center border border-white/20 bg-black transition-all duration-300 hover:scale-110 hover:rotate-0 hover:border-[#D4AF37]"
+ onClick={() => {
+ moveFeatured(1);
+ setHasManuallyNavigated(true);
+ }}
+ aria-label="Next featured event"
+ >
+ <img className="h-6 w-6 opacity-80" src={arrowDownRight} alt="" aria-hidden="true" />
+ </button>
+ </div>
+ <p
+ className="mt-10 text-center font-['Space_Grotesk-Regular',Helvetica] text-xs tracking-[0.08em] text-gold/45 lg:hidden"
+ >
+ Swipe left or right to view featured events
+ </p>
  </div>
  </div>
  </section>
