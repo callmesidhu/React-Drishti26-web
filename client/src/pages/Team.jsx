@@ -6,27 +6,26 @@ import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
  { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
-  { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
+ { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
  { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
+ { id: 10, name: 'Sidharth', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sidhth.png' },
  { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
  { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
  { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
  { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
-  { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
- { id: 10, name: 'Sidharth', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/sidhth.png' },
+ { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
  { id: 9, name: 'Shebin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sheb.png' },
-
 ]
 
 const dakshaTeamMembers = [
  { id: 5, name: 'Noel', role: 'Convenor', image: '/team/DAKSHA%20CORE/puli.png' },
  { id: 7, name: 'Sayoojya', role: 'Convenor', image: '/team/DAKSHA%20CORE/say.png' },
+ { id: 2, name: 'Aslam', role: 'Coordinator', image: '/team/DAKSHA%20CORE/aslm.png' },
+ { id: 3, name: 'Avneesh', role: 'Coordinator', image: '/team/DAKSHA%20CORE/avnsh.png' },
  { id: 1, name: 'Afnan', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/afn.png' },
  { id: 4, name: 'Keerthana', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/kt.png' },
  { id: 6, name: 'Sahla', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/sahla.png' },
  { id: 8, name: 'Yashok', role: 'Co-Convenor', image: '/team/DAKSHA%20CORE/ysh.png' },
- { id: 2, name: 'Aslam', role: 'Coordinator', image: '/team/DAKSHA%20CORE/aslm.png' },
- { id: 3, name: 'Avneesh', role: 'Coordinator', image: '/team/DAKSHA%20CORE/avnsh.png' },
 ]
 
 const webTeamMembers = [
@@ -171,6 +170,11 @@ function Team({ embedded = false }) {
  el.removeEventListener('touchend', handleTouchEnd)
  }
  }, [navigate, total])
+
+ useEffect(() => {
+ const interval = setInterval(() => navigate(1), 2500)
+ return () => clearInterval(interval)
+ }, [navigate])
 
  const getCardTransform = useCallback((index) => {
  const diff = shortestDiff(activeIndex, index, total)
