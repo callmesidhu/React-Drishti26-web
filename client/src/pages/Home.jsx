@@ -3,9 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProShows from "./ProShows";
 import EventDetailsModal from "../components/EventDetailsModal";
-import dakshaJson from "../data/daksha.json";
-import workshopJson from "../data/workshop.json";
-import competitionJson from "../data/competition.json";
+import { featuredEvents } from "../data/featuredCompetitions";
 
 import Hero from "../components/landing/Hero";
 import Countdown from "../components/landing/Countdown";
@@ -15,13 +13,6 @@ import GallerySection from "../components/landing/GallerySection";
 import DrishTees from "../components/landing/DrishTees";
 import FeaturedEvents from "../components/landing/FeaturedEvents";
 
-
-const featuredEvents = [
- dakshaJson.dakshaEventsData[0],
- competitionJson.competitionsData[0],
- competitionJson.competitionsData[1],
- workshopJson.workshopsData[0],
-];
 
 function Home() {
  const [activeModalEvent, setActiveModalEvent] = useState(null);

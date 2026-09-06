@@ -1,32 +1,21 @@
 import DomeGallery from "../DomeGallery";
+import competitionData from "../../data/competition.json";
+import workshopData from "../../data/workshop.json";
+import dakshaData from "../../data/daksha.json";
 
 const isCoarsePointer =
 	typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
-const heroBg = "/home/drishti-take-1.webp";
-const categoriesPhoto = "/home/dome/25krobo.jpeg";
-const galleryImage1 = "/home/dome/25krobo.jpeg";
-const galleryImage2 = "/home/dome/50krobo.jpeg";
-const galleryImage3 = "/home/dome/aisummit.jpeg";
-const galleryImage4 = "/home/dome/biennale.jpeg";
-const galleryImage5 = "/home/dome/drun.jpeg";
-const galleryImage6 = "/home/dome/robosoccer.jpeg";
 
 const drishtiGalleryImages = [
- { src: galleryImage1, alt: "Robowar — 25K Prize Pool" },
- { src: galleryImage2, alt: "Robowar — 50K Prize Pool" },
- { src: galleryImage3, alt: "AI Summit" },
- { src: galleryImage4, alt: "Biennale" },
- { src: galleryImage5, alt: "D'Run Marathon" },
- { src: galleryImage6, alt: "Robosoccer" },
- { src: categoriesPhoto, alt: "Drishti '26 Competitions" },
- { src: galleryImage3, alt: "AI Summit" },
- { src: "/home/featured-event-poster.webp", alt: "Featured Events & Keynotes" },
- { src: "/proshow/proshowgrid.webp", alt: "Live Pro Shows Night" },
- { src: "/home/sharktank.jpeg", alt: "Daksha Ideation & Pitch" },
- { src: heroBg, alt: "Drishti '26 Horizon" },
- { src: "/home/sharktank.jpeg", alt: "Daksha Ideation & Pitch" },
-];
+...workshopData.workshopsData,
+ ...competitionData.competitionsData,
+ ...dakshaData.dakshaEventsData,
 
+ 
+].map(({ image, alt, title }) => ({
+ src: image.trim(),
+ alt: alt || title,
+}));
 export default function GallerySection() {
  return (
  <section className="relative z-20 w-full bg-black flex flex-col items-center justify-center pt-16 md:pt-24 pb-8 overflow-hidden border-y border-white/5" aria-label="Event gallery">

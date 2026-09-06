@@ -21,7 +21,40 @@ gsap.registerPlugin(ScrollTrigger)
 
 function App() {
  const [loading, setLoading] = useState(true)
+ const [pageAssetsReady, setPageAssetsReady] = useState(false)
  const location = useLocation()
+
+ useEffect(() => {
+  let cancelled = false
+
+  const waitForImage = (image) => {
+   if (image.complete) {
+    return image.decode?.().catch(() => {}) ?? Promise.resolve()
+   }
+
+   return new Promise((resolve) => {
+    image.addEventListener('load', resolve, { once: true })
+    image.addEventListener('error', resolve, { once: true })
+   })
+  }
+
+  const preparePage = async () => {
+   // Let the lazy home page mount behind the loading overlay before collecting assets.
+   await homeModule
+   await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+
+   await Promise.all([
+    preloadLogoFrames(),
+    document.fonts?.ready ?? Promise.resolve(),
+    Promise.all([...document.images].map(waitForImage)),
+   ])
+
+   if (!cancelled) setPageAssetsReady(true)
+  }
+
+  preparePage()
+  return () => { cancelled = true }
+ }, [])
 
  useEffect(() => {
   const isHome = location.pathname === '/' || location.pathname === '/home'
@@ -98,9 +131,6 @@ function App() {
 
  return (
  <>
- {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
-
- {!loading && (
  <Suspense
  fallback={
     <div className="min-h-screen bg-[#050505]" />
@@ -123,6 +153,11 @@ function App() {
  <Route path="*" element={<Navigate to="/home" replace />} />
  </Routes>
  </Suspense>
+ {loading && (
+  <LoadingScreen
+   isReady={pageAssetsReady}
+   onComplete={() => setLoading(false)}
+  />
  )}
  </>
  )

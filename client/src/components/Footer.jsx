@@ -76,14 +76,13 @@ function Footer() {
         </h4>
         <ul className="space-y-2 text-[15px] font-light lg:columns-2 lg:gap-10">
          {[
-          { name: 'Home', path: '/home' },
-          { name: 'Daksha', path: '/daksha' },
-          { name: 'Workshops', path: '/workshops' },
-          { name: 'Competitions', path: '/competitions' },
-          { name: 'Pro Shows', path: '/proshows' },
-          { name: 'Team', path: '/team' },
-          { name: 'About Us', path: '/about' },
-          { name: 'Contact', path: '/contact' },
+          { name: 'Home', path: '/#/home' },
+          { name: 'Daksha', path: '/#/daksha' },
+          { name: 'Workshops', path: '/#/workshops' },
+          { name: 'Competitions', path: '/#/competitions' },
+          { name: 'Team', path: '/#/team' },
+          { name: 'About Us', path: '/#/about' },
+          { name: 'Contact', path: '/#/contact' },
          ].map((page) => (
           <li key={page.name} className="break-inside-avoid">
            <a href={page.path} className="text-white/80 transition-colors duration-200 hover:text-white">

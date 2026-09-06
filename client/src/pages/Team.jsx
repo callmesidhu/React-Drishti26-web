@@ -6,15 +6,16 @@ import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
  { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
- { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
+  { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
+ { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
  { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
  { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
  { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
  { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
- { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
- { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
- { id: 9, name: 'Shebin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sheb.png' },
+  { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
  { id: 10, name: 'Sidharth', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sidhth.png' },
+ { id: 9, name: 'Shebin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sheb.png' },
+
 ]
 
 const dakshaTeamMembers = [
@@ -30,13 +31,14 @@ const dakshaTeamMembers = [
 
 const webTeamMembers = [
  { id: 7, name: 'Sidharth', role: 'Head', image: '/team/WEB/sid.png' },
- { id: 3, name: 'Kasinath', role: 'Co-Head', image: '/team/WEB/kasi.png' },
  { id: 6, name: 'Sharon', role: 'Co-Head', image: '/team/WEB/sharn.png' },
- { id: 1, name: 'George', role: 'Developer', image: '/team/WEB/geo.png' },
+  { id: 8, name: 'Vishnusree', role: 'Developer', image: '/team/WEB/vishnu.png' },
  { id: 2, name: 'Joseph', role: 'Developer', image: '/team/WEB/jo.png' },
- { id: 4, name: 'Rohan', role: 'Developer', image: '/team/WEB/rohn.png' },
+ { id: 1, name: 'George', role: 'Developer', image: '/team/WEB/geo.png' },
  { id: 5, name: 'Rohit', role: 'Developer', image: '/team/WEB/roht.png' },
- { id: 8, name: 'Vishnusree', role: 'Developer', image: '/team/WEB/vishnu.png' },
+ { id: 4, name: 'Rohan', role: 'Developer', image: '/team/WEB/rohn.png' },
+  { id: 3, name: 'Kasinath', role: 'Co-Head', image: '/team/WEB/kasi.png' },
+
 ]
 
 function shortestDiff(from, to, total) {
@@ -169,11 +171,6 @@ function Team({ embedded = false }) {
  el.removeEventListener('touchend', handleTouchEnd)
  }
  }, [navigate, total])
-
- useEffect(() => {
- const interval = setInterval(() => navigate(1), 2500)
- return () => clearInterval(interval)
- }, [navigate])
 
  const getCardTransform = useCallback((index) => {
  const diff = shortestDiff(activeIndex, index, total)

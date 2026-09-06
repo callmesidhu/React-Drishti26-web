@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 
-function LoadingScreen({ onComplete }) {
+function LoadingScreen({ isReady, onComplete }) {
  const containerRef = useRef(null)
  const logoRef = useRef(null)
  const ringRef = useRef(null)
@@ -14,6 +14,15 @@ function LoadingScreen({ onComplete }) {
  const bgGridRef = useRef(null)
  const videoRef = useRef(null)
  const shapesRef = useRef([])
+ const readyRef = useRef(isReady)
+ const introCompleteRef = useRef(false)
+ const exitStartedRef = useRef(false)
+ const startExitRef = useRef(null)
+
+ useEffect(() => {
+  readyRef.current = isReady
+  if (isReady && introCompleteRef.current) startExitRef.current?.()
+ }, [isReady])
 
  useEffect(() => {
  if (videoRef.current) {
@@ -22,83 +31,87 @@ function LoadingScreen({ onComplete }) {
  }
 
  const ctx = gsap.context(() => {
- const tl = gsap.timeline({
- onComplete: () => {
- // Dramatic 3D exit animation
- const exitTl = gsap.timeline({
- onComplete: () => onComplete?.(),
- })
+ const startExit = () => {
+  if (exitStartedRef.current) return
+  exitStartedRef.current = true
 
- // Logo 3D flip out
- exitTl.to(logoRef.current, {
- rotationY: 180,
- rotationX: 45,
- scale: 1.5,
- opacity: 0,
- duration: 0.6,
- ease: 'power3.in',
- })
+  // Dramatic 3D exit animation
+  const exitTl = gsap.timeline({
+   onComplete: () => onComplete?.(),
+  })
 
- // Rings expand and fade
- exitTl.to([ringRef.current, ring2Ref.current, ring3Ref.current], {
- scale: 3,
- opacity: 0,
- rotation: '+=180',
- duration: 0.8,
- ease: 'power2.in',
- stagger: 0.05,
- }, '-=0.4')
+  // Logo 3D flip out
+  exitTl.to(logoRef.current, {
+   rotationY: 180,
+   rotationX: 45,
+   scale: 1.5,
+   opacity: 0,
+   duration: 0.6,
+   ease: 'power3.in',
+  })
 
- // Year text slide out
- exitTl.to(yearRef.current, {
- y: -30,
- opacity: 0,
- letterSpacing: '20px',
- duration: 0.4,
- ease: 'power2.in',
- }, '-=0.6')
+  // Rings expand and fade
+  exitTl.to([ringRef.current, ring2Ref.current, ring3Ref.current], {
+   scale: 3,
+   opacity: 0,
+   rotation: '+=180',
+   duration: 0.8,
+   ease: 'power2.in',
+   stagger: 0.05,
+  }, '-=0.4')
 
- // Corners fly out to edges
- exitTl.to(cornersRef.current, {
- scale: 0,
- opacity: 0,
- duration: 0.3,
- stagger: 0.02,
- ease: 'power2.in',
- }, '-=0.4')
+  exitTl.to(yearRef.current, {
+   y: -30,
+   opacity: 0,
+   letterSpacing: '20px',
+   duration: 0.4,
+   ease: 'power2.in',
+  }, '-=0.6')
 
- // Shapes scatter
- exitTl.to(shapesRef.current, {
- scale: 0,
- opacity: 0,
- rotation: '+=360',
- duration: 0.5,
- stagger: 0.03,
- ease: 'power2.in',
- }, '-=0.3')
+  exitTl.to(cornersRef.current, {
+   scale: 0,
+   opacity: 0,
+   duration: 0.3,
+   stagger: 0.02,
+   ease: 'power2.in',
+  }, '-=0.4')
 
- // Particles burst outward
- const particles = particlesRef.current?.children
- if (particles) {
- exitTl.to(Array.from(particles), {
- x: () => (Math.random() - 0.5) * window.innerWidth,
- y: () => (Math.random() - 0.5) * window.innerHeight,
- scale: 2,
- opacity: 0,
- duration: 0.6,
- stagger: 0.01,
- ease: 'power2.in',
- }, '-=0.5')
+  exitTl.to(shapesRef.current, {
+   scale: 0,
+   opacity: 0,
+   rotation: '+=360',
+   duration: 0.5,
+   stagger: 0.03,
+   ease: 'power2.in',
+  }, '-=0.3')
+
+  const particles = particlesRef.current?.children
+  if (particles) {
+   exitTl.to(Array.from(particles), {
+    x: () => (Math.random() - 0.5) * window.innerWidth,
+    y: () => (Math.random() - 0.5) * window.innerHeight,
+    scale: 2,
+    opacity: 0,
+    duration: 0.6,
+    stagger: 0.01,
+    ease: 'power2.in',
+   }, '-=0.5')
+  }
+
+  exitTl.to(containerRef.current, {
+   rotationX: 10,
+   scale: 0.95,
+   opacity: 0,
+   duration: 0.5,
+   ease: 'power2.inOut',
+  }, '-=0.3')
  }
 
- // Container fade with 3D rotate
- exitTl.to(containerRef.current, {
- rotationX: 10,
- scale: 0.95,
- opacity: 0,
- duration: 0.5,
- ease: 'power2.inOut',
- }, '-=0.3')
+ startExitRef.current = startExit
+ const tl = gsap.timeline({
+ onComplete: () => {
+ introCompleteRef.current = true
+ if (readyRef.current) startExit()
  },
  })
 
@@ -294,7 +307,6 @@ function LoadingScreen({ onComplete }) {
  muted
  playsInline
  preload="auto"
- onEnded={() => onComplete?.()}
  className="absolute top-1/2 left-1/2 z-0 h-[clamp(200px,40vh,500px)] w-auto -translate-x-1/2 -translate-y-1/2 object-contain opacity-100 mix-blend-screen"
  />
 
