@@ -189,12 +189,14 @@ export default function DrishTees() {
               </p>
 
               <div ref={btnRef} className="mt-6">
-                <button
-                  type="button"
+                <a
+                  href="https://forms.gle/qDhGRZQ96gBieu1D9"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex cursor-pointer items-center justify-center rounded-full border border-[#d4af37]/70 bg-[linear-gradient(180deg,#e7c567_0%,#d4af37_45%,#b98b1b_100%)] px-8 py-2.5 text-[0.8rem] font-medium uppercase tracking-[0.12em] text-[#0d0d0d] transition-transform duration-200 hover:scale-[1.02]"
                 >
                   Get Now
-                </button>
+                </a>
               </div>
             </div>
           </div>

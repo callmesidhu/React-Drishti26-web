@@ -4,14 +4,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const aftermovieVideo = "/home/aftermovie.webm";
+const aftermovieVideo = "/home/date-reveal.webm";
 const aftermovieLogo = "/home/aftermovie-logo.png";
 
 export default function Aftermovie() {
  const aftermovieSectionRef = useRef(null);
  const aftermovieContainerRef = useRef(null);
- const aftermovieTitleLeftRef = useRef(null);
- const aftermovieTitleRightRef = useRef(null);
  const aftermovieLogoRef = useRef(null);
  const aftermovieGridRef = useRef(null);
  const aftermovieVideoRef = useRef(null);
@@ -120,28 +118,16 @@ export default function Aftermovie() {
  muted
  loop
  playsInline
- aria-label="Drishti '24 aftermovie"
+ aria-label="Drishti date reveal"
  />
  <div className="relative z-10 w-full flex flex-col border-t border-white/50 pt-[clamp(10px,1.8vw,22px)] pb-[clamp(10px,1.8vw,22px)] px-[clamp(16px,3vw,44px)] pointer-events-none">
- <div className="flex items-center justify-between">
- <p
- ref={aftermovieTitleLeftRef}
- className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(30px,4.8vw,60px)] leading-[normal] text-white m-0"
- >
- DRISHTI &lsquo;24
- </p>
+ <div className="relative flex min-h-[clamp(30px,4.8vw,60px)] items-center justify-center">
  <img
  ref={aftermovieLogoRef}
- className="pointer-events-none h-[clamp(30px,3.8vw,46px)] w-auto object-cover absolute left-1/2 -translate-x-1/2"
+ className="pointer-events-none h-[clamp(30px,3.8vw,46px)] w-auto object-cover"
  alt="Drishti"
  src={aftermovieLogo}
  />
- <p
- ref={aftermovieTitleRightRef}
- className="whitespace-nowrap font-['Mango_Grotesque-SemiBold',Helvetica] text-[clamp(30px,4.8vw,60px)] leading-[normal] text-white m-0"
- >
- AFTERMOVIE
- </p>
  </div>
  </div>
  </div>

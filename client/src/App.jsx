@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import LoadingScreen from './components/LoadingScreen.jsx'
+import { preloadLogoFrames } from './utils/logoFramePreloader.js'
 
 const Daksha = lazy(() => import('./pages/Daksha.jsx'))
 const Team = lazy(() => import('./pages/Team.jsx'))
@@ -13,13 +14,25 @@ const About = lazy(() => import('./pages/About.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const ProShows = lazy(() => import('./pages/ProShows.jsx'))
 const AISummit = lazy(() => import('./pages/AISummit.jsx'))
-const Home = lazy(() => import('./pages/Home.jsx'))
+const homeModule = import('./pages/Home.jsx')
+const Home = lazy(() => homeModule)
 
 gsap.registerPlugin(ScrollTrigger)
 
 function App() {
  const [loading, setLoading] = useState(true)
  const location = useLocation()
+
+ useEffect(() => {
+  const isHome = location.pathname === '/' || location.pathname === '/home'
+  if (!isHome) {
+   return undefined
+  }
+
+   preloadLogoFrames()
+
+  return undefined
+ }, [location.pathname])
 
  useEffect(() => {
   const isHome = location.pathname === '/' || location.pathname === '/home'
@@ -90,9 +103,7 @@ function App() {
  {!loading && (
  <Suspense
  fallback={
- <div className="flex min-h-screen items-center justify-center bg-[#050505] text-gold/80 uppercase tracking-[0.35em]">
- Loading...
- </div>
+    <div className="min-h-screen bg-[#050505]" />
  }
  >
  <Routes>

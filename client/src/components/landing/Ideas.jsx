@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+ getLogoFrame,
+ preloadLogoFrames,
+ TOTAL_LOGO_FRAMES,
+} from "../../utils/logoFramePreloader.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const coreValues = ["INNOVATION", "FUTURE", "COLLABORATION", "EXCELLENCE", "LEGACY"];
-const TOTAL_LOGO_FRAMES = 150;
-const FRAME_PRELOAD_WINDOW = 12;
-
-const getLogoFramePath = (frameIndex) =>
- `/3dlogo/ezgif-frame-${String(frameIndex).padStart(3, '0')}.webp`;
 
 export default function Ideas() {
  const [activeCoreValueIndex, setActiveCoreValueIndex] = useState(0);
@@ -29,28 +29,7 @@ export default function Ideas() {
 
  const ensureLogoFrameLoaded = (frameIndex) => {
  const safeIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, frameIndex));
-
- if (logoFrameCacheRef.current[safeIndex]) {
- return logoFrameCacheRef.current[safeIndex];
- }
-
- const image = new Image();
- image.decoding = "async";
- image.loading = "eager";
- image.src = getLogoFramePath(safeIndex);
- logoFrameCacheRef.current[safeIndex] = image;
-
- return image;
- };
-
- const preloadLogoFrameRange = (frameIndex) => {
- const safeIndex = Math.max(1, Math.min(TOTAL_LOGO_FRAMES, frameIndex));
- const start = Math.max(1, safeIndex - FRAME_PRELOAD_WINDOW);
- const end = Math.min(TOTAL_LOGO_FRAMES, safeIndex + FRAME_PRELOAD_WINDOW);
-
- for (let i = start; i <= end; i += 1) {
- ensureLogoFrameLoaded(i);
- }
+ return getLogoFrame(safeIndex) || logoFrameCacheRef.current[safeIndex];
  };
 
  const handleCoreValueClick = (index) => {
@@ -102,27 +81,19 @@ export default function Ideas() {
 
  if (currentFrame !== safeIndex) {
  const cachedFrame = ensureLogoFrameLoaded(safeIndex);
- img.src = cachedFrame.src || getLogoFramePath(safeIndex);
+ if (!cachedFrame) return;
+ img.src = cachedFrame.src;
  img.dataset.frame = String(safeIndex);
  }
-
- preloadLogoFrameRange(safeIndex);
  };
 
- const initialLoad = () => {
- setFrame(1);
- };
-
- const observer = new IntersectionObserver(
- (entries) => {
- if (entries[0]?.isIntersecting) {
- initialLoad();
- observer.disconnect();
- }
- },
- { rootMargin: "200px" }
- );
- observer.observe(section);
+ preloadLogoFrames().then(() => {
+  const trigger = ScrollTrigger.getAll().find((scrollTrigger) => scrollTrigger.vars?.id === "ideas-scroll-trigger");
+  const frameIndex = trigger
+   ? Math.round(trigger.progress * (TOTAL_LOGO_FRAMES - 1)) + 1
+   : 1;
+  setFrame(frameIndex);
+ });
 
  const ctx = gsap.context(() => {
  const lineFill = ideasLineFillRef.current;
@@ -226,7 +197,6 @@ export default function Ideas() {
  }, section);
 
  return () => {
- observer.disconnect();
  ctx.revert();
  };
  }, []);
