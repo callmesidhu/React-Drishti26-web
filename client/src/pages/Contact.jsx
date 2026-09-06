@@ -11,6 +11,25 @@ gsap.registerPlugin(ScrollTrigger)
 const MAP_URL =
  'https://www.google.com/maps/place/College+of+Engineering+Trivandrum+(CET)/@8.5458513,76.9037658,17z/data=!3m1!4b1!4m6!3m5!1s0x3b05bec79541c519:0x98324eb5aafb3778!8m2!3d8.5458513!4d76.9063407!16zL20vMDVtcTdz?entry=ttu&g_ep=EgoyMDI2MDgyNi4wIKXMDSoASAFQAw%3D%3D'
 
+const CONTACT_GROUPS = [
+ { role: 'Event Convener', people: [{ name: 'Gautam KJ', phone: '+91 8590 540 376', email: 'gautamkj2468@gmail.com' }] },
+ { role: 'Finance Coordinator', people: [{ name: 'Daris Benny', phone: '+91 9778 135 924', email: 'darisbenny10@gmail.com' }] },
+ {
+ role: 'Event Coordinators',
+ people: [
+ { name: 'Ephrem Mathews', phone: '+91 9447 434 346', email: 'mathewsephrem@gmail.com' },
+ { name: 'Nikhil Zacharias', phone: '+91 8075 962 883', email: 'nikhilzacharias425@gmail.com' },
+ ],
+ },
+ {
+ role: 'Sponsorship Conveners',
+ people: [
+ { name: 'Meriya Eleyas', phone: '+91 8590 980 718', email: 'meriyaeleyas04@gmail.com' },
+ { name: 'Mhd. Yamin Beck', phone: '+91 7012 837 399', email: 'yaminmuhammedbeck@gmail.com' },
+ ],
+ },
+]
+
 function Contact() {
  const h1Ref = useRef(null)
  const subheadRef = useRef(null)
@@ -90,96 +109,45 @@ function Contact() {
  </p>
  </header>
 
- {/* Minimal Contact & Satellite Map Grid */}
+ {/* Contact directory and satellite map */}
  <main className="mx-auto mt-8 md:mt-12 max-w-[1240px] px-[clamp(16px,4vw,40px)] pb-16 md:pb-24">
  <div className="grid items-stretch gap-6 lg:grid-cols-12 lg:gap-12">
  {/* Left Column: Direct Contact Info */}
- <div ref={leftColRef} className="flex flex-col justify-between gap-5 lg:col-span-5">
- {/* Convenor Card */}
- <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
+ <div ref={leftColRef} className="flex flex-col gap-4 lg:col-span-5">
+ <div className="relative rounded-2xl border border-gold/30 bg-black/70 p-4 md:p-5 backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.6)]">
+ <div className="relative mb-4 flex items-center justify-between gap-3 border-b border-white/10 pb-3 lg:justify-center">
  <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
  <span className="h-1.5 w-1.5 rotate-45 bg-gold-gradient" />
- Convenor, Drishti&apos;26
+ Contact Directory
+ </div>
+ <span className="font-mono text-[10px] text-white/40 lg:absolute lg:right-0">DRISHTI&apos;26</span>
  </div>
 
- <h2
- className="mt-2.5 text-xl md:text-2xl font-bold uppercase tracking-wider text-white"
- style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
- >
- Gautam KJ
- </h2>
-
- <a
- href="tel:+918590540376"
- className="mt-1.5 inline-block font-mono text-base md:text-lg font-semibold text-gold-gradient transition-colors duration-200 hover:text-white"
- >
- +91 85905 40376
- </a>
-
- <div className="mt-5 flex flex-wrap gap-2.5">
- <a
- href="tel:+918590540376"
- className="inline-flex items-center gap-2 rounded-none border border-[#D4AF37]/70 bg-gold-gradient px-4 py-2 text-xs font-bold uppercase tracking-wider text-black transition-all duration-300 hover:brightness-110 cursor-pointer"
- >
- <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
- <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
- </svg>
- Call Now
- </a>
- <a
- href="https://wa.me/918590540376"
- target="_blank"
- rel="noopener noreferrer"
- className="inline-flex items-center gap-2 rounded-none border border-gold/40 bg-gold/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-gold-gradient transition-all duration-300 hover:border-gold hover:bg-gold/20 hover:text-white cursor-pointer"
- >
- WhatsApp
- </a>
+ <div className="space-y-4">
+ {CONTACT_GROUPS.map(({ role, people }) => (
+ <section key={role}>
+ <h2 className="mb-2 text-center text-[10px] font-bold uppercase tracking-[2px] text-gold-gradient">{role}</h2>
+ <div className={`gap-2.5 ${people.length === 1 ? 'flex justify-center' : 'grid sm:grid-cols-2'}`}>
+ {people.map(({ name, phone, email }) => (
+ <div key={name} className="w-full max-w-[300px] rounded-lg border border-white/10 bg-white/[0.03] p-3 text-center transition-colors duration-300 hover:border-gold/40">
+ <p className="text-sm font-bold uppercase tracking-wide text-white">{name}</p>
+ <a href={`tel:${phone.replace(/\s/g, '')}`} className="mt-1 block text-xs font-mono text-white/75 transition-colors hover:text-gold">{phone}</a>
+ <a href={`mailto:${email}`} className="mt-1 block break-all text-[11px] leading-tight text-white/55 transition-colors hover:text-gold">{email}</a>
  </div>
+ ))}
+ </div>
+ </section>
+ ))}
  </div>
 
- {/* Email Card */}
- <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
- <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
+ </div>
+
+ <div className="relative rounded-2xl border border-gold/20 bg-black/50 p-4 backdrop-blur-xl">
+ <div className="flex items-center gap-2 text-[10px] uppercase tracking-[2px] text-gold/70">
  <span className="h-1.5 w-1.5 rotate-45 bg-gold-gradient" />
- Official Email
+ Email
  </div>
-
- <h2
- className="mt-2.5 text-base md:text-lg font-bold uppercase tracking-wider text-white"
- style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
- >
- Festival Correspondence
- </h2>
-
- <a
- href="mailto:drishti@cet.ac.in"
- className="mt-1.5 inline-block text-base md:text-lg font-semibold text-gold-gradient transition-colors duration-200 hover:text-white"
- >
- drishti@cet.ac.in
- </a>
-
- <p className="mt-2 text-xs leading-relaxed text-white/60">
- For partnerships, press, technical registrations, and queries.
- </p>
- </div>
-
- {/* Venue Address Card */}
- <div className="relative rounded-2xl border border-gold/25 bg-black/60 p-5 md:p-7 backdrop-blur-xl transition-all duration-300 hover:border-gold/50 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
- <div className="flex items-center gap-2 text-xs uppercase tracking-[3px] text-gold/70">
- <span className="h-1.5 w-1.5 rotate-45 bg-gold-gradient" />
- Venue Location
- </div>
-
- <h2
- className="mt-2.5 text-base md:text-lg font-bold uppercase tracking-wider text-white"
- style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
- >
- College of Engineering Trivandrum (CET)
- </h2>
-
- <p className="mt-2 text-xs leading-relaxed text-white/70">
- Engineering College P.O, Sreekaryam, Thiruvananthapuram, Kerala 695016
- </p>
+ <a href="mailto:drishti@cet.ac.in" className="mt-2 block text-sm font-semibold text-gold-gradient transition-colors hover:text-white">drishti@cet.ac.in</a>
  </div>
  </div>
 
@@ -234,6 +202,11 @@ function Contact() {
  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
  </svg>
  </a>
+ </div>
+
+ <div className="mt-4 border-t border-white/10 px-1 pt-3">
+ <p className="text-[10px] uppercase tracking-[2px] text-gold/70">College of Engineering Trivandrum (CET)</p>
+ <p className="mt-1 text-xs leading-relaxed text-white/65">Engineering College P.O, Sreekaryam, Thiruvananthapuram, Kerala 695016</p>
  </div>
  </div>
  </div>
