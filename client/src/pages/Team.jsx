@@ -8,6 +8,8 @@ const teamMembers = [
  { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
  { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
  { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
+ { id: 11, name: 'Yamin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/yamin.png' },
+ { id: 12, name: 'Daris', role: 'Coordinator', image: '/team/DRISHTI%20CORE/daris.png' },
  { id: 10, name: 'Sidharth', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sidhth.png' },
  { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
  { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
@@ -170,11 +172,6 @@ function Team({ embedded = false }) {
  el.removeEventListener('touchend', handleTouchEnd)
  }
  }, [navigate, total])
-
- useEffect(() => {
- const interval = setInterval(() => navigate(1), 2500)
- return () => clearInterval(interval)
- }, [navigate])
 
  const getCardTransform = useCallback((index) => {
  const diff = shortestDiff(activeIndex, index, total)
