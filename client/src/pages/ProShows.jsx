@@ -317,7 +317,7 @@ function ProShowsPage({ embedded = false }) {
     >
      ProShow Guidelines & FAQ
     </h2>
-     <div className="mt-10 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
+    <div className="mt-10 grid grid-cols-1 items-start gap-4">
      {faqs.map((faq, i) => {
       const isOpen = openFaq === i;
       return (
