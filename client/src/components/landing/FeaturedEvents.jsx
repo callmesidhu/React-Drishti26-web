@@ -87,7 +87,7 @@ export default function FeaturedEvents({ onEventClick }) {
  {/* Right Side: 3D Coverflow Container */}
  <div 
  ref={containerRef}
- className="mt-8 flex w-full flex-col items-center lg:mt-0 lg:w-[60%] lg:flex-1"
+ className="mt-8 flex w-full flex-col items-center lg:mt-0 lg:w-[60%] lg:flex-1 lg:translate-y-4"
  onMouseEnter={() => setIsAutoScrollPaused(true)}
  onMouseLeave={() => setIsAutoScrollPaused(false)}
  >
