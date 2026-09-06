@@ -207,8 +207,8 @@ export default function Hero() {
  {/* Floating particles */}
  <div ref={heroParticlesRef} className="absolute inset-0 overflow-hidden pointer-events-none z-10" />
 
- {/* Left tagline & line */}
- <div className="absolute left-[clamp(20px,3.5vw,50px)] top-[35%] md:top-[48%] -translate-y-1/2 z-20 flex flex-col items-start gap-2">
+  {/* Left tagline & line */}
+  <div className="absolute left-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 hidden md:flex flex-col items-start gap-2">
  <div
  ref={heroLeftTextRef}
  className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"
@@ -224,8 +224,8 @@ export default function Hero() {
  />
  </div>
 
- {/* Right tagline & line */}
- <div className="absolute right-[clamp(20px,3.5vw,50px)] top-[35%] md:top-[48%] -translate-y-1/2 z-20 flex flex-col items-end gap-2">
+  {/* Right tagline & line */}
+  <div className="absolute right-[clamp(20px,3.5vw,50px)] top-[48%] -translate-y-1/2 z-20 hidden md:flex flex-col items-end gap-2">
  <div
  ref={heroRightTextRef}
  className="text-right font-['Space_Grotesk-Regular',Helvetica] text-[clamp(10px,1.1vw,15px)] font-normal leading-[normal] tracking-[0.5px] text-white opacity-0 whitespace-nowrap"

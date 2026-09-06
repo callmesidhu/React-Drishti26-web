@@ -310,14 +310,14 @@ function ProShowsPage({ embedded = false }) {
    </div>
 
    {/* FAQ Section */}
-   <section ref={faqSectionRef} className="mx-auto max-w-[900px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
+    <section ref={faqSectionRef} className="mx-auto max-w-[900px] lg:max-w-[1200px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
     <h2
      style={{ fontFamily: "'Clash Display', sans-serif" }}
      className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
     >
      ProShow Guidelines & FAQ
     </h2>
-    <div className="mt-10 flex flex-col gap-4">
+     <div className="mt-10 grid grid-cols-1 items-start gap-4 lg:grid-cols-2">
      {faqs.map((faq, i) => {
       const isOpen = openFaq === i;
       return (

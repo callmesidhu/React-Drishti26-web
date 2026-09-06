@@ -237,12 +237,12 @@ export default function Ideas() {
  className="relative h-[100svh] min-h-[600px] max-h-[1080px] w-full overflow-hidden bg-black flex flex-col items-center justify-between py-6 md:py-10 z-20"
  aria-labelledby="hero-title"
  >
- <div className="relative w-full max-w-[1440px] h-full flex flex-col justify-center md:justify-between items-center px-4 sm:px-8 md:px-12 z-10 gap-10 md:gap-0">
+  <div className="relative w-full max-w-[1440px] h-full flex flex-col justify-center md:justify-center lg:justify-between items-center px-4 sm:px-8 md:px-12 z-10 gap-10 md:gap-6 lg:gap-0">
  
  {/* Top / Center Composition: Left Core Values, Center Emblem, Right Details */}
  <div 
  ref={ideasContainerRef}
- className="w-full md:flex-1 flex flex-col md:flex-row items-center justify-center relative md:my-auto py-2 gap-10 md:gap-0"
+  className="w-full lg:flex-1 flex flex-col md:flex-row items-center justify-center relative lg:my-auto py-2 gap-10 md:gap-0"
  >
  {/* Left Column: Core Values & Glowing Progress Line (Desktop) */}
  <div className="hidden md:flex items-center gap-6 lg:gap-8 absolute left-[2%] lg:left-[5%] top-1/2 -translate-y-1/2 z-20">
@@ -322,7 +322,7 @@ export default function Ideas() {
  </div>
 
  {/* Bottom Title & Narrative */}
- <div className="w-full flex flex-col items-center justify-center text-center gap-2 md:gap-3 z-10 md:mt-auto pb-2">
+  <div className="w-full flex flex-col items-center justify-center text-center gap-2 md:gap-3 z-10 md:mt-0 lg:mt-auto md:pb-0 lg:pb-2">
  <h2
  ref={ideasTitleRef}
  id="hero-title"
