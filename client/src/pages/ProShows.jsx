@@ -25,7 +25,7 @@ const faqs = [
  },
  {
   q: 'What items are prohibited inside the concert venue?',
-  a: 'Prohibited items include professional cameras, tripods, glass bottles, food items, sharp objects, and laser pointers. Standard bags are subject to security search.',
+  a: 'Prohibited items include professional cameras, tripods, glass bottles, food items, sharp objects, laser pointers, alcohol and other intoxicating substances. Standard bags are subject to security search.',
  },
 ]
 
@@ -201,21 +201,21 @@ function ProShowsPage({ embedded = false }) {
    {!embedded && <Navbar activeSection="proshows" />}
 
    {/* Pinned Scroll Section with explicit Navbar clearance */}
-   <div ref={pinWrapperRef} className="relative w-full h-screen flex flex-col items-center justify-between pt-24 lg:pt-28 pb-6 overflow-hidden">
+  <div ref={pinWrapperRef} className="relative w-full min-h-screen flex flex-col items-center pt-28 lg:pt-32 pb-6 overflow-hidden">
 
     {/* Page Header (Cleared from Navbar overlap) */}
     <header ref={headerRef} className="z-10 px-[clamp(16px,4vw,40px)] text-center opacity-0">
      <h1
       ref={h1Ref}
-      style={{ fontFamily: "'Clash Display', sans-serif" }}
-      className="text-[clamp(32px,5.5vw,64px)] font-bold uppercase leading-[0.95] tracking-tight"
+      style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
+      className="text-[clamp(40px,7vw,78px)] font-bold uppercase leading-[0.95] tracking-tight"
      >
       Pro Show
      </h1>
     </header>
 
     {/* 3D Stage Area */}
-    <main ref={stageAreaRef} className="relative w-full max-w-[1200px] px-4 my-auto flex flex-col items-center justify-center">
+    <main ref={stageAreaRef} className="relative w-full max-w-[1200px] px-4 mt-6 lg:mt-8 flex flex-col items-center justify-center">
 
      {/* Ambient Glow */}
      <div
@@ -312,7 +312,7 @@ function ProShowsPage({ embedded = false }) {
    {/* FAQ Section */}
     <section ref={faqSectionRef} className="mx-auto max-w-[900px] lg:max-w-[1200px] px-[clamp(16px,4vw,40px)] py-20 opacity-0">
     <h2
-     style={{ fontFamily: "'Clash Display', sans-serif" }}
+     style={{ fontFamily: "'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
      className="text-center text-3xl font-bold uppercase tracking-tight text-gold-gradient"
     >
      ProShow Guidelines & FAQ
