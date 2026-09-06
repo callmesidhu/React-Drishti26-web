@@ -461,6 +461,8 @@ function DistortionImage({ src, alt = "", className = "" }) {
  src={src}
  alt={alt}
  aria-hidden={alt === "" ? "true" : undefined}
+ loading="lazy"
+ decoding="async"
  className="absolute inset-0 h-full w-full object-cover"
  />
  <canvas

@@ -28,7 +28,7 @@ function Navbar({ activeSection, theme = 'gold' }) {
 
  const isHome = location.pathname === '/' || location.pathname === '/home' || activeSection?.toLowerCase() === 'home'
  const isBlue = theme === 'blue' || activeSection?.toLowerCase() === 'daksha' || location.pathname.startsWith('/daksha')
- const logoSrc = isBlue ? '/daksha/daksha-frame.png' : '/daksha/drishti-logo.png'
+ const logoSrc = isBlue ? '/daksha/daksha-frame.png' : '/daksha/drishti-logo.webp'
 
  // Automatically close menu when location changes
  useEffect(() => {
@@ -227,6 +227,8 @@ className={`block h-12 w-auto transition-all duration-300 ${
 }`}
  src={logoSrc}
  alt={isBlue ? 'Daksha logo' : 'Drishti logo'}
+ loading="eager"
+ decoding="async"
  />
  </Link>
 

@@ -140,6 +140,8 @@ export default function FeaturedEvents({ onEventClick }) {
  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
  alt={`Featured event ${index + 1}`}
  src={event.image || "https://placehold.co/600x800/111/fff?text=EVENT"}
+ loading={isActive ? "eager" : "lazy"}
+ decoding="async"
  style={{
  filter: isActive ? "grayscale(0) brightness(1)" : "grayscale(0.6) brightness(0.6)",
  transition: "filter 0.8s ease"

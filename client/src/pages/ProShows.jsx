@@ -273,19 +273,16 @@ function ProShowsPage({ embedded = false }) {
           willChange: 'transform'
          }}
         >
-         {/* Laptop Viewport (proshowgrid.jpeg) */}
-         <img
-          src={ProShowGrid}
-          alt="Shaan Rahman Live in Concert - Desktop"
-          className="hidden lg:block h-full w-full object-cover rounded-2xl relative z-10"
-         />
-
-         {/* Mobile/Tablet Viewport (proshow.png) */}
-         <img
-          src={ProShowMobile}
-          alt="Shaan Rahman Live in Concert - Mobile"
-          className="block lg:hidden h-full w-full object-cover rounded-2xl relative z-10"
-         />
+         <picture>
+          <source media="(min-width: 1024px)" srcSet={ProShowGrid} />
+          <img
+           src={ProShowMobile}
+           alt="Shaan Rahman Live in Concert"
+           loading="lazy"
+           decoding="async"
+           className="h-full w-full object-cover rounded-2xl relative z-10"
+          />
+         </picture>
         </div>
        </div>
       </div>

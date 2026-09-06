@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -76,18 +77,18 @@ function Footer() {
         </h4>
         <ul className="space-y-2 text-[15px] font-light lg:columns-2 lg:gap-10">
          {[
-          { name: 'Home', path: '/#/home' },
-          { name: 'Daksha', path: '/#/daksha' },
-          { name: 'Workshops', path: '/#/workshops' },
-          { name: 'Competitions', path: '/#/competitions' },
-          { name: 'Team', path: '/#/team' },
-          { name: 'About Us', path: '/#/about' },
-          { name: 'Contact', path: '/#/contact' },
+          { name: 'Home', path: '/' },
+          { name: 'Daksha', path: '/daksha' },
+          { name: 'Workshops', path: '/workshops' },
+          { name: 'Competitions', path: '/competitions' },
+          { name: 'Team', path: '/team' },
+          { name: 'About Us', path: '/about' },
+          { name: 'Contact', path: '/contact' },
          ].map((page) => (
           <li key={page.name} className="break-inside-avoid">
-           <a href={page.path} className="text-white/80 transition-colors duration-200 hover:text-white">
+           <Link to={page.path} className="text-white/80 transition-colors duration-200 hover:text-white">
             {page.name}
-           </a>
+           </Link>
           </li>
          ))}
         </ul>
@@ -185,12 +186,17 @@ function Footer() {
     </div>
    </div>
    */}
-   <img
-    src="/home/footer.jpg.webp"
-    alt=""
-    aria-hidden="true"
-    className="block h-auto w-full"
-   />
+   <picture>
+    <source media="(max-width: 767px)" srcSet="/home/footer-mobile.webp" />
+    <img
+     src="/home/footer.jpg.webp"
+     alt=""
+     aria-hidden="true"
+     loading="lazy"
+     decoding="async"
+     className="block h-auto w-full"
+    />
+   </picture>
    <div className="bg-[#050505]">
      <div className="mx-auto max-w-none px-4 py-3 text-center">
       <p ref={copyrightRef} className="whitespace-nowrap text-[8px] uppercase tracking-[1.5px] text-[#d8a52a]" style={{ opacity: 0 }}>

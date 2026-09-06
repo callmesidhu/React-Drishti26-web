@@ -109,16 +109,20 @@ export default function Countdown() {
       <img
         ref={leftBotRef}
         className="pointer-events-none absolute -left-[clamp(24px,3vw,44px)] -top-[clamp(24px,3vw,44px)] z-20 w-[clamp(150px,18vw,280px)] max-w-none"
-        src={NANOBOT_IMAGE}
-        alt=""
-        aria-hidden="true"
+ src={NANOBOT_IMAGE}
+ alt=""
+ aria-hidden="true"
+ loading="lazy"
+ decoding="async"
       />
       <img
         ref={rightBotRef}
         className="pointer-events-none absolute -bottom-[clamp(24px,3vw,44px)] -right-[clamp(24px,3vw,44px)] z-20 w-[clamp(150px,18vw,280px)] max-w-none -scale-x-100"
-        src={NANOBOT_IMAGE}
-        alt=""
-        aria-hidden="true"
+ src={NANOBOT_IMAGE}
+ alt=""
+ aria-hidden="true"
+ loading="lazy"
+ decoding="async"
       />
 
       <time

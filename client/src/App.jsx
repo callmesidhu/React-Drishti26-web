@@ -5,7 +5,6 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import LoadingScreen from './components/LoadingScreen.jsx'
-import { preloadLogoFrames } from './utils/logoFramePreloader.js'
 
 const Daksha = lazy(() => import('./pages/Daksha.jsx'))
 const Team = lazy(() => import('./pages/Team.jsx'))
@@ -14,8 +13,7 @@ const About = lazy(() => import('./pages/About.jsx'))
 const Contact = lazy(() => import('./pages/Contact.jsx'))
 const ProShows = lazy(() => import('./pages/ProShows.jsx'))
 const AISummit = lazy(() => import('./pages/AISummit.jsx'))
-const homeModule = import('./pages/Home.jsx')
-const Home = lazy(() => homeModule)
+const Home = lazy(() => import('./pages/Home.jsx'))
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -27,44 +25,20 @@ function App() {
  useEffect(() => {
   let cancelled = false
 
-  const waitForImage = (image) => {
-   if (image.complete) {
-    return image.decode?.().catch(() => {}) ?? Promise.resolve()
-   }
-
-   return new Promise((resolve) => {
-    image.addEventListener('load', resolve, { once: true })
-    image.addEventListener('error', resolve, { once: true })
-   })
-  }
-
   const preparePage = async () => {
-   // Let the lazy home page mount behind the loading overlay before collecting assets.
-   await homeModule
+   // Only wait for the route code and first render. Images below the fold load on demand.
+   if (location.pathname === '/' || location.pathname === '/home') {
+    await import('./pages/Home.jsx')
+   }
    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
 
-   await Promise.all([
-    preloadLogoFrames(),
-    document.fonts?.ready ?? Promise.resolve(),
-    Promise.all([...document.images].map(waitForImage)),
-   ])
+   await (document.fonts?.ready ?? Promise.resolve())
 
    if (!cancelled) setPageAssetsReady(true)
   }
 
   preparePage()
   return () => { cancelled = true }
- }, [])
-
- useEffect(() => {
-  const isHome = location.pathname === '/' || location.pathname === '/home'
-  if (!isHome) {
-   return undefined
-  }
-
-   preloadLogoFrames()
-
-  return undefined
  }, [location.pathname])
 
  useEffect(() => {

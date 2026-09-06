@@ -203,6 +203,8 @@ function About({ embedded = false }) {
             <img
               src={panoramaImg}
               alt="College of Engineering Trivandrum Campus"
+              loading="lazy"
+              decoding="async"
               className="w-full max-w-[1040px] h-auto object-contain block drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)]"
             />
           </div>

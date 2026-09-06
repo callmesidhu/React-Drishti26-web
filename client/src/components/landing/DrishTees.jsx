@@ -129,7 +129,9 @@ export default function DrishTees() {
         ref={bgRef}
         src="/home/circle-half.png"
         alt=""
-        aria-hidden="true"
+ aria-hidden="true"
+ loading="lazy"
+ decoding="async"
         className="hidden md:block pointer-events-none absolute right-0 top-1/2 z-0 h-auto w-[90%] md:w-[75%] lg:w-[50%] max-w-[none] -translate-y-1/2 opacity-30"
         style={{ 
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%)',
@@ -140,8 +142,8 @@ export default function DrishTees() {
       <img
         src="/home/circle-half.png"
         alt=""
-        aria-hidden="true"
-        loading="lazy"
+ aria-hidden="true"
+ loading="lazy"
         decoding="async"
         className="md:hidden pointer-events-none absolute inset-x-0 bottom-[-6%] z-0 h-[68%] w-full object-cover object-center opacity-30 select-none"
         style={{
@@ -157,8 +159,10 @@ export default function DrishTees() {
               <img
                 src="/home/tshirt-base.png"
                 alt=""
-                aria-hidden="true"
-                className="w-full h-auto"
+ aria-hidden="true"
+ className="w-full h-auto"
+ loading="lazy"
+ decoding="async"
                 style={{ animation: 'float-base 6.5s ease-in-out infinite' }}
               />
             </div>

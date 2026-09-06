@@ -306,7 +306,7 @@ function LoadingScreen({ isReady, onComplete }) {
  autoPlay
  muted
  playsInline
- preload="auto"
+ preload="metadata"
  className="absolute top-1/2 left-1/2 z-0 h-[clamp(200px,40vh,500px)] w-auto -translate-x-1/2 -translate-y-1/2 object-contain opacity-100 mix-blend-screen"
  />
 

@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ProShows from "./ProShows";
-import EventDetailsModal from "../components/EventDetailsModal";
+import DeferredSection from "../components/DeferredSection";
 import { featuredEvents } from "../data/featuredCompetitions";
 
 import Hero from "../components/landing/Hero";
 import Countdown from "../components/landing/Countdown";
-import Ideas from "../components/landing/Ideas";
-import Aftermovie from "../components/landing/Aftermovie";
-import GallerySection from "../components/landing/GallerySection";
-import DrishTees from "../components/landing/DrishTees";
-import FeaturedEvents from "../components/landing/FeaturedEvents";
+const Ideas = lazy(() => import("../components/landing/Ideas"));
+const Aftermovie = lazy(() => import("../components/landing/Aftermovie"));
+const ProShows = lazy(() => import("./ProShows"));
+const GallerySection = lazy(() => import("../components/landing/GallerySection"));
+const DrishTees = lazy(() => import("../components/landing/DrishTees"));
+const FeaturedEvents = lazy(() => import("../components/landing/FeaturedEvents"));
+const EventDetailsModal = lazy(() => import("../components/EventDetailsModal"));
 
 
 function Home() {
@@ -30,8 +31,8 @@ function Home() {
  
  <Hero />
  <Countdown />
- <Ideas />
- <Aftermovie />
+ <DeferredSection minHeight="100svh"><Ideas /></DeferredSection>
+ <DeferredSection minHeight="100svh"><Aftermovie /></DeferredSection>
  
  {/* Fade gradient that bleeds upwards to blend the sharp edge of ProShows without adding scroll height */}
  <div className="relative z-30 w-full h-0">
@@ -39,21 +40,21 @@ function Home() {
  </div>
 
  {/* ============ PRO SHOWS ============ */}
- <section id="proshows" className="relative w-full bg-black overflow-hidden z-20">
- <ProShows embedded={true} />
- </section>
+ <DeferredSection minHeight="100svh"><section id="proshows" className="relative w-full bg-black overflow-hidden z-20"><ProShows embedded={true} /></section></DeferredSection>
 
- <GallerySection />
- <DrishTees />
- <FeaturedEvents onEventClick={handleRegistration} />
+ <DeferredSection minHeight="80svh"><GallerySection /></DeferredSection>
+ <DeferredSection minHeight="100svh"><DrishTees /></DeferredSection>
+ <DeferredSection minHeight="100svh"><FeaturedEvents onEventClick={handleRegistration} /></DeferredSection>
 
  <Footer />
 
  {activeModalEvent && (
- <EventDetailsModal
- event={activeModalEvent}
- onClose={() => setActiveModalEvent(null)}
- />
+ <Suspense fallback={null}>
+  <EventDetailsModal
+  event={activeModalEvent}
+  onClose={() => setActiveModalEvent(null)}
+  />
+ </Suspense>
  )}
  </main>
  );

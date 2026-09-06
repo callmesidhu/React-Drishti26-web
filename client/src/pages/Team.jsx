@@ -305,6 +305,8 @@ function Team({ embedded = false }) {
  <img
  src={member.image}
  alt={member.name}
+ loading={isCenter ? "eager" : "lazy"}
+ decoding="async"
  className={`absolute inset-0 h-full w-full object-cover grayscale contrast-115 select-none ${
  isCenter ? '' : 'brightness-75'
  }`}
