@@ -173,11 +173,6 @@ function Team({ embedded = false }) {
  }
  }, [navigate, total])
 
- useEffect(() => {
- const interval = setInterval(() => navigate(1), 2500)
- return () => clearInterval(interval)
- }, [navigate])
-
  const getCardTransform = useCallback((index) => {
  const diff = shortestDiff(activeIndex, index, total)
  const absDiff = Math.abs(diff)
