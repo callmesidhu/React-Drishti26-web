@@ -1,10 +1,11 @@
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './App.css'
 import LoadingScreen from './components/LoadingScreen.jsx'
+import { preloadLogoFrames } from './utils/logoFramePreloader.js'
 
 const Daksha = lazy(() => import('./pages/Daksha.jsx'))
 const Team = lazy(() => import('./pages/Team.jsx'))
@@ -20,6 +21,29 @@ gsap.registerPlugin(ScrollTrigger)
 function App() {
  const [loading, setLoading] = useState(true)
  const location = useLocation()
+ const logoFramesReadyRef = useRef(false)
+ const loadingAnimationCompleteRef = useRef(false)
+
+ const handleLoadingComplete = () => {
+  loadingAnimationCompleteRef.current = true
+  if (logoFramesReadyRef.current) setLoading(false)
+ }
+
+ useEffect(() => {
+  const isHome = location.pathname === '/' || location.pathname === '/home'
+  if (!isHome) {
+   logoFramesReadyRef.current = true
+   return undefined
+  }
+
+  logoFramesReadyRef.current = false
+  preloadLogoFrames().then(() => {
+   logoFramesReadyRef.current = true
+   if (loadingAnimationCompleteRef.current) setLoading(false)
+  })
+
+  return undefined
+ }, [location.pathname])
 
  useEffect(() => {
   const isHome = location.pathname === '/' || location.pathname === '/home'
@@ -85,7 +109,7 @@ function App() {
 
  return (
  <>
- {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+ {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
 
  {!loading && (
  <Suspense
