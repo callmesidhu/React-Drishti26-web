@@ -10,8 +10,6 @@ const drishtiGalleryImages = [
 ...workshopData.workshopsData,
  ...competitionData.competitionsData,
  ...dakshaData.dakshaEventsData,
-
- 
 ].map(({ image, alt, title }) => ({
  src: image.trim(),
  alt: alt || title,
