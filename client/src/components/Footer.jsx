@@ -186,6 +186,12 @@ function Footer() {
     </div>
    </div>
    */}
+   <img
+    src="/home/footer.jpg.webp"
+    alt=""
+    aria-hidden="true"
+    className="block h-auto w-full"
+   />
    <div className="bg-[#050505]">
      <div className="mx-auto max-w-none px-4 py-3 text-center">
       <p ref={copyrightRef} className="whitespace-nowrap text-[8px] uppercase tracking-[1.5px] text-[#d8a52a]" style={{ opacity: 0 }}>
