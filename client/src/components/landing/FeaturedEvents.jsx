@@ -15,6 +15,8 @@ export default function FeaturedEvents({ onEventClick }) {
  const featuredHeadingRef = useRef(null);
  const featuredParagraphRef = useRef(null);
  const containerRef = useRef(null);
+ const swipeStartRef = useRef(null);
+ const suppressClickRef = useRef(false);
 
  const moveFeatured = (direction) => {
  setFeaturedIndex((current) => {
@@ -24,6 +26,27 @@ export default function FeaturedEvents({ onEventClick }) {
  if (next >= featuredEvents.length) return 0;
  return next;
  });
+ };
+
+ const handleSwipeStart = (event) => {
+  swipeStartRef.current = { x: event.clientX, y: event.clientY };
+  suppressClickRef.current = false;
+  event.currentTarget.setPointerCapture(event.pointerId);
+ };
+
+ const handleSwipeEnd = (event) => {
+  const start = swipeStartRef.current;
+  if (!start) return;
+
+  const deltaX = event.clientX - start.x;
+  const deltaY = event.clientY - start.y;
+  swipeStartRef.current = null;
+
+  if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+  moveFeatured(deltaX < 0 ? 1 : -1);
+  setHasManuallyNavigated(true);
+  suppressClickRef.current = true;
  };
 
  useEffect(() => {
@@ -82,7 +105,13 @@ export default function FeaturedEvents({ onEventClick }) {
  onMouseEnter={() => setIsAutoScrollPaused(true)}
  onMouseLeave={() => setIsAutoScrollPaused(false)}
  >
- <div className="relative flex h-[50vh] w-full items-center justify-center [perspective:1200px] lg:h-[80vh]">
+ <div
+ className="relative flex h-[50vh] w-full items-center justify-center [perspective:1200px] lg:h-[80vh]"
+ onPointerDown={handleSwipeStart}
+ onPointerUp={handleSwipeEnd}
+ onPointerCancel={() => { swipeStartRef.current = null; }}
+ style={{ touchAction: "pan-y" }}
+ >
  {featuredEvents.map((event, index) => {
  // Calculate distance from center (with wrapping logic for smooth carousel)
  let diff = index - featuredIndex;
@@ -113,6 +142,10 @@ export default function FeaturedEvents({ onEventClick }) {
  backgroundColor: "#050505"
  }}
  onClick={() => {
+ if (suppressClickRef.current) {
+  suppressClickRef.current = false;
+  return;
+ }
  if (isActive) {
  onEventClick(index);
  } else {
