@@ -1,21 +1,38 @@
-# ---------- Build React app ----------
+# =========================
+# Stage 1: Build React app
+# =========================
+
 FROM node:22-alpine AS build
 
 WORKDIR /app
 
+# Copy package files first
 COPY package*.json ./
 
+# Install dependencies
 RUN npm ci
 
+# Copy source code
 COPY . .
 
+# Build Vite application
 RUN npm run build
 
 
-# ---------- Serve with Nginx ----------
+# =========================
+# Stage 2: Nginx
+# =========================
+
 FROM nginx:alpine
 
+# Remove default nginx configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy React production files
 COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copy our React nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
