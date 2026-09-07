@@ -84,13 +84,35 @@ function Daksha() {
  <main className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-4 pb-16 pt-8 md:px-8">
  <div className="grid w-full max-w-[1100px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 xl:grid-cols-4">
  {events.map((event) => (
- <button
+ <div
  key={event.slug}
- type="button"
+ role="button"
+ tabIndex={0}
  onClick={() => routerNavigate(`/daksha/${event.slug}`)}
- className="group w-full max-w-[320px] rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-sky-400/40"
+ onKeyDown={(keyboardEvent) => {
+  if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+  keyboardEvent.preventDefault()
+  routerNavigate(`/daksha/${event.slug}`)
+  }
+ }}
+ className="group relative flex h-auto min-h-0 w-full max-w-[320px] flex-col border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-sky-400/40"
  >
- <div className="aspect-[4/5] overflow-hidden rounded-xl border border-white/10 bg-[#111111]">
+ <button
+ type="button"
+ aria-label={`View details for ${event.title}`}
+ onClick={(clickEvent) => {
+  clickEvent.stopPropagation()
+  routerNavigate(`/daksha/${event.slug}`)
+ }}
+ className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center border border-sky-400/30 bg-black/40 opacity-100 transition-colors duration-300 group-hover:border-sky-400/70 group-hover:bg-sky-400/10"
+ >
+ <img
+ src="/home/arrow-down-right.svg"
+ alt=""
+ className="h-7 w-7 -rotate-90"
+ />
+ </button>
+ <div className="aspect-[4/5] shrink-0 overflow-hidden border border-white/10 bg-[#111111]">
  <img
  src={event.image}
  alt={event.alt || event.title}
@@ -99,7 +121,7 @@ function Daksha() {
  className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
  />
  </div>
- <div className="mt-4 flex items-center justify-between gap-3">
+ <div className="mt-4 flex min-h-[64px] shrink-0 items-start justify-between gap-3">
  <h2
  className="text-base font-bold uppercase tracking-[0.08em] text-white/90"
  style={{ fontFamily: "'Clash Display-Medium', 'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
@@ -107,13 +129,13 @@ function Daksha() {
  {event.title}
  </h2>
  <span
- className="rounded-md border border-sky-400/30 bg-sky-400/10 px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-sky-400/80"
+ className="border border-sky-400/30 bg-sky-400/10 px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-sky-400/80"
  style={{ fontFamily: "'Clash Display-Medium', 'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
  >
  EVENT
  </span>
  </div>
- </button>
+ </div>
  ))}
  </div>
  </main>
