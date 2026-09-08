@@ -18,16 +18,16 @@ services:
     env_file:
       - .env
 
-    command: >
-      sh -c "python manage.py collectstatic --noinput &&
-             gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers 3"
-
     expose:
       - "8000"
 
     volumes:
+      - django_data:/app/data
       - django_static:/app/staticfiles
       - django_media:/app/media
+
+    environment:
+      DATABASE_PATH: /app/data/db.sqlite3
 
   nginx:
     image: nginx:alpine
@@ -47,5 +47,6 @@ services:
       - server
 
 volumes:
+  django_data:
   django_static:
   django_media:
