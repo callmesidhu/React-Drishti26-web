@@ -107,7 +107,6 @@
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/T9MyRQY7qO0M5LeSbuf9W"
     },
-
     {
       "id": 6,
       "type": "workshop",
@@ -126,7 +125,6 @@
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/ybEN6X1n4Zv4kRw-TTAKJ"
     },
-
     {
       "id": 7,
       "type": "workshop",
@@ -145,6 +143,25 @@
         "Benefits : Certificate + KTU Points."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/XoWlcntnKPTDdgbqGsMK-"
+    },
+    {
+      "id": 8,
+      "type": "workshop",
+      "slug": "beyond-progress-humanitys-future-in-a-changing-cosmos",
+      "title": "Beyond Progress: Humanity's future in a changing cosmos",
+      "category": "WORKSHOP",
+      "area": "Space Tech",
+      "image": "/techevents/astro-talk.jpeg",
+      "guidelinesTitle": "TALK SESSION DETAILS",
+      "alt": "Beyond Progress Talk Session",
+      "description": "Join us for an insightful conversation on humanity, science, progress, and our place in a rapidly changing cosmos featuring Jithinraj R S (Founder, JR Studio | Journalist | Science Communicator).",
+      "details": [
+        "Date : 18 September 2026.",
+        "Format : Offline.",
+        "Speaker : Jithinraj R S",
+        "No registration fee."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/fVz7zqZqvu5dghN9G3KZ4"
     }
   ]
 }
