@@ -4,8 +4,8 @@ from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import CampusAmbassador
-from .serializers import CampusAmbassadorSerializer
+from .models import CampusAmbassador, Event
+from .serializers import CampusAmbassadorSerializer, EventSerializer
 
 from django.shortcuts import get_object_or_404
 from django.db.models import F
@@ -60,4 +60,37 @@ class AddPointsLeaderboardAPIView(APIView):
 class AddCampusAmbassadorAPIView(CreateAPIView):
     serializer_class=CampusAmbassadorSerializer
     permission_classes=[HasAPIKey]
+
+
+class EventListAPIView(APIView):
+    def get(self, request):
+        events = Event.objects.filter(is_published=True).prefetch_related('links')
+
+        event_type = request.query_params.get('type')
+        if event_type:
+            events = events.filter(event_type=event_type)
+
+        featured = request.query_params.get('featured')
+        if featured in ('true', '1'):
+            events = events.filter(is_featured=True)
+
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
+
+
+class EventDetailAPIView(APIView):
+    def get(self, request, slug):
+        event = get_object_or_404(
+            Event.objects.filter(is_published=True).prefetch_related('links'),
+            slug=slug,
+        )
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
+
+
+class FeaturedEventListAPIView(APIView):
+    def get(self, request):
+        events = Event.objects.filter(is_published=True, is_featured=True).prefetch_related('links')
+        serializer = EventSerializer(events, many=True)
+        return Response(serializer.data)
     

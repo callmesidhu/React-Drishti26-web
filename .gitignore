@@ -47,7 +47,9 @@ coverage/
 .tmp/
 
 # python
-db.sqlite3
+server/db.sqlite3
+server/media/
+server/staticfiles/
 __pycache__/
 *.py[cod]
 api.http
