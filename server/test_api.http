@@ -30,3 +30,50 @@ Authorization: Api-Key <api_key>
     "college": "GEC Thrissur",
     "referral_code": "GEC090"
 }
+
+###
+
+
+# Events
+GET http://127.0.0.1:3025/api/events/ HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# Workshop events
+GET http://127.0.0.1:3025/api/events/?type=workshop HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# Competition events
+GET http://127.0.0.1:3025/api/events/?type=competition HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# Daksha events
+GET http://127.0.0.1:3025/api/events/?type=daksha HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# Featured events
+GET http://127.0.0.1:3025/api/events/featured/ HTTP/1.1
+content-type: application/json
+
+
+###
+
+
+# Event detail
+GET http://127.0.0.1:3025/api/events/project-expo/ HTTP/1.1
+content-type: application/json

@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
 
 import django
+
+
+"""Import events data from json to database"""
 
 
 # Docker compose command to import events data........
@@ -36,6 +40,19 @@ def lines_to_text(value):
     if isinstance(value, list):
         return "\n".join(str(line).strip() for line in value if str(line).strip())
     return str(value or "").strip()
+
+
+def get_prize_pool(event_data):
+    details = event_data.get("details", [])
+    if not isinstance(details, list):
+        return 0
+
+    for detail in details:
+        if re.search(r"prize\s*pool|price\s*pool", str(detail), re.IGNORECASE):
+            digits = re.sub(r"\D", "", str(detail))
+            return int(digits or 0)
+
+    return 0
 
 
 def copy_poster(image_path):
@@ -120,6 +137,28 @@ def import_json_file(json_file):
     return imported_count
 
 
+def mark_featured_competitions(json_files):
+    competition_events = []
+
+    for json_file in json_files:
+        with Path(json_file).open(encoding="utf-8") as handle:
+            data = json.load(handle)
+
+        competition_events.extend(data.get("competitionsData", []))
+
+    featured_slugs = [
+        event_data["slug"]
+        for event_data in sorted(competition_events, key=get_prize_pool, reverse=True)[:3]
+        if event_data.get("slug")
+    ]
+
+    Event.objects.filter(event_type=Event.EventType.COMPETITION).update(is_featured=False)
+    Event.objects.filter(slug__in=featured_slugs).update(is_featured=True)
+
+    if featured_slugs:
+        print(f"Marked featured competitions: {', '.join(featured_slugs)}")
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python import_events.py <json-file> [<json-file> ...]")
@@ -129,6 +168,7 @@ def main():
     for json_file in sys.argv[1:]:
         total_count += import_json_file(json_file)
 
+    mark_featured_competitions(sys.argv[1:])
     print(f"Done. Imported {total_count} event(s).")
 
 
