@@ -15,7 +15,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Collect static files
-RUN python manage.py collectstatic --noinput
+# no need of collectstatic as django is not serving static files so far
+# RUN python manage.py collectstatic --noinput 
 
 EXPOSE 8000
 

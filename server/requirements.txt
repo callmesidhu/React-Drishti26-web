@@ -4,4 +4,5 @@ djangorestframework==3.18.0
 djangorestframework-api-key==3.1.0
 gunicorn==26.2.0
 packaging==26.3
+python-dotenv==1.1.1
 sqlparse==0.6.0

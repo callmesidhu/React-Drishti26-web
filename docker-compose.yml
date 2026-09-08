@@ -15,6 +15,9 @@ services:
     container_name: drishti-server
     restart: unless-stopped
 
+    env_file:
+      - .env
+
     expose:
       - "8000"
 
