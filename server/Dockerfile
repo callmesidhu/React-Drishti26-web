@@ -14,10 +14,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy Django project
 COPY . .
 
-# Collect static files
-# no need of collectstatic as django is not serving static files so far
-# RUN python manage.py collectstatic --noinput 
-
 EXPOSE 8000
 
 # Start Django using Gunicorn

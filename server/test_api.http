@@ -1,7 +1,7 @@
 
 
 # Leaderboard
-GET http://127.0.0.1:8000/api/ambassador/leaderboard/ HTTP/1.1
+GET http://127.0.0.1:3025/api/ambassador/leaderboard/ HTTP/1.1
 content-type: application/json
 
 
@@ -9,7 +9,7 @@ content-type: application/json
 
 
 # To add points
-POST http://127.0.0.1:8000/api/ambassador/add_points/ HTTP/1.1
+POST http://127.0.0.1:3025/api/ambassador/add_points/ HTTP/1.1
 content-type: application/json
 Authorization: Api-Key <api_key>
 
@@ -21,7 +21,7 @@ Authorization: Api-Key <api_key>
 
 
 # To add campus ambassodors
-POST http://127.0.0.1:8000/api/ambassador/add/ HTTP/1.1
+POST http://127.0.0.1:3025/api/ambassador/add/ HTTP/1.1
 content-type: application/json
 Authorization: Api-Key <api_key>
 
