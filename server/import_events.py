@@ -8,7 +8,6 @@ from pathlib import Path
 
 import django
 
-
 """Import events data from json to database"""
 
 
@@ -25,9 +24,8 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "server.settings")
 django.setup()
 
-from django.conf import settings  # noqa: E402
 from api.models import Event, EventLink  # noqa: E402
-
+from django.conf import settings  # noqa: E402
 
 DATA_KEYS = {
     "workshopsData": Event.EventType.WORKSHOP,
@@ -61,7 +59,7 @@ def copy_poster(image_path):
         return ""
 
     repo_root = Path(__file__).resolve().parent.parent
-    source_path = repo_root / "client" / "public" / image_path.lstrip("/")
+    source_path = repo_root / "public" / image_path.lstrip("/")
 
     if not source_path.exists():
         print(f"Poster not found, storing original path: {image_path}")
@@ -148,11 +146,15 @@ def mark_featured_competitions(json_files):
 
     featured_slugs = [
         event_data["slug"]
-        for event_data in sorted(competition_events, key=get_prize_pool, reverse=True)[:3]
+        for event_data in sorted(competition_events, key=get_prize_pool, reverse=True)[
+            :3
+        ]
         if event_data.get("slug")
     ]
 
-    Event.objects.filter(event_type=Event.EventType.COMPETITION).update(is_featured=False)
+    Event.objects.filter(event_type=Event.EventType.COMPETITION).update(
+        is_featured=False
+    )
     Event.objects.filter(slug__in=featured_slugs).update(is_featured=True)
 
     if featured_slugs:
