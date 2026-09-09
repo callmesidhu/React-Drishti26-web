@@ -127,9 +127,9 @@ function Contact() {
  {CONTACT_GROUPS.map(({ role, people }) => (
  <section key={role}>
  <h2 className="mb-2 text-center text-[10px] font-bold uppercase tracking-[2px] text-gold-gradient">{role}</h2>
- <div className={`gap-2.5 ${people.length === 1 ? 'flex justify-center' : 'grid sm:grid-cols-2'}`}>
+ <div className="flex flex-wrap justify-center gap-2.5 sm:grid sm:grid-cols-2">
  {people.map(({ name, phone, email }) => (
- <div key={name} className="w-full max-w-[300px] rounded-lg border border-white/10 bg-white/[0.03] p-3 text-center transition-colors duration-300 hover:border-gold/40">
+ <div key={name} className="max-w-[380px] rounded-lg border border-white/10 bg-white/[0.03] p-3 text-center transition-colors duration-300 hover:border-gold/40">
  <p className="text-sm font-bold uppercase tracking-wide text-white">{name}</p>
  <a href={`tel:${phone.replace(/\s/g, '')}`} className="mt-1 block text-xs font-mono text-white/75 transition-colors hover:text-gold">{phone}</a>
  <a href={`mailto:${email}`} className="mt-1 block break-all text-[11px] leading-tight text-white/55 transition-colors hover:text-gold">{email}</a>
