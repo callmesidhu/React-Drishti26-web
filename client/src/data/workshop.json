@@ -107,7 +107,6 @@
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/T9MyRQY7qO0M5LeSbuf9W"
     },
-
     {
       "id": 6,
       "type": "workshop",
@@ -126,7 +125,6 @@
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/ybEN6X1n4Zv4kRw-TTAKJ"
     },
-
     {
       "id": 7,
       "type": "workshop",
@@ -145,6 +143,92 @@
         "Benefits : Certificate + KTU Points."
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/XoWlcntnKPTDdgbqGsMK-"
+    },
+    {
+      "id": 8,
+      "type": "workshop",
+      "slug": "beyond-progress-humanitys-future-in-a-changing-cosmos",
+      "title": "Beyond Progress: Humanity's future in a changing cosmos",
+      "category": "WORKSHOP",
+      "area": "Space Tech",
+      "image": "/techevents/astro-talk.jpeg",
+      "guidelinesTitle": "TALK SESSION DETAILS",
+      "alt": "Beyond Progress Talk Session",
+      "description": "Join us for an insightful conversation on humanity, science, progress, and our place in a rapidly changing cosmos featuring Jithinraj R S (Founder, JR Studio | Journalist | Science Communicator).",
+      "details": [
+        "Date : 18 September 2026.",
+        "Format : Offline.",
+        "Speaker : Jithinraj R S",
+        "No registration fee."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/fVz7zqZqvu5dghN9G3KZ4"
+    },
+
+    {
+      "id": 9,
+      "type": "workshop",
+      "slug": "decoding-ai",
+      "title": "DECODING AI",
+      "category": "WORKSHOP",
+      "area": "AI",
+      "image": "/techevents/astro-talk.jpeg",
+      "guidelinesTitle": "TALK SESSION DETAILS",
+      "alt": "Decoding AI",
+      "description": "AI is everywhere, but what is really going on behind the hood?\nIt’s time to look beyond the prompts and understand what makes AI tick.",
+      "details": [
+        "Speaker: Dr. Deepak Mishra - IIST, Thiruvananthapuram",
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "Speaker : Jithinraj R S",
+        "No registration fee.",
+        "For enquiry : Aromal Sunilkumar - 8590147038"
+        
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/_ki9WhyH187IdLbYVIKbx"
+    },
+
+    {
+      "id": 10,
+      "type": "workshop",
+      "slug": "quantum",
+      "title": "WHEN LIGHT GOES QUANTUM : PHOTONS & TECHNOLOGY",
+      "category": "WORKSHOP",
+      "area": "QUANTUM TECH",
+      "image": "/techevents/quantum.jpeg",
+      "guidelinesTitle": "TALK SESSION DETAILS",
+      "alt": "Quantum Technology",
+      "description": "What if the smallest particles could power the biggest breakthroughs? \nStep into the world of quantum computing and technology.",
+      "details": [
+        "Speaker: Dr. Ashok Kumar, Associate Professor, Department of Physics, IIST.",
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : Free.",
+        "For enquiry : Aromal Sunilkumar - 8590147038"
+        
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/Eeqy_-96FHkT6DAruX6Wl"
+    },
+
+    {
+      "id": 11,
+      "type": "workshop",
+      "slug": "fpga",
+      "title": "VERILOG AND FPGA",
+      "category": "WORKSHOP",
+      "area": "Eletronics",
+      "image": "/techevents/fgpa.jpeg",
+      "guidelinesTitle": "VERILOG & FPGA DETAILS",
+      "alt": "Verilog and fpga",
+      "description": "What if the logic you write could actually come alive on a chip? Step into the world of VLSI and digital design, get started with Verilog HDL, and explore hands-on FPGA implementation using Xilinx Vivado — where theory meets real-world chip design. Organized by Drishti'26 × RoboCET",
+      "details": [
+        "Ensure laptops for the session",
+        "Date : 18 September 2026.",
+        "Format : Offline.",
+        "Registration Fee :  ₹399/-",
+        "For enquiry : Sisira - 9544758104"
+        
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/g-bp-FI4Sx5c3kKro4JVg"
     }
   ]
 }
