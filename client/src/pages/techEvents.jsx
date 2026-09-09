@@ -138,17 +138,43 @@ function TechEvents() {
  ) : (
  <div className="grid w-full max-w-[1100px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 lg:grid-cols-3">
  {visibleEvents.map((event) => (
- <button
+ <div
  key={`${event.type}-${event.id}`}
- type="button"
+ role="button"
+ tabIndex={0}
   onClick={() => {
     setSelectedEvent(event)
     const basePath = event.type === 'workshop' ? '/workshops' : '/competitions'
     routerNavigate(`${basePath}/${event.slug}`)
   }}
- className="group flex h-[500px] w-full max-w-[320px] flex-col rounded-2xl border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40"
+ onKeyDown={(keyboardEvent) => {
+  if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+  keyboardEvent.preventDefault()
+  setSelectedEvent(event)
+  const basePath = event.type === 'workshop' ? '/workshops' : '/competitions'
+  routerNavigate(`${basePath}/${event.slug}`)
+  }
+ }}
+ className="group relative flex h-[500px] w-full max-w-[320px] flex-col border border-white/10 bg-black/30 p-3 text-left transition-all duration-300 hover:-translate-y-1 hover:border-gold/40"
  >
- <div className="aspect-[4/5] shrink-0 overflow-hidden rounded-xl border border-white/10 bg-[#111111]">
+ <button
+ type="button"
+ aria-label={`View details for ${event.title}`}
+ onClick={(clickEvent) => {
+  clickEvent.stopPropagation()
+  setSelectedEvent(event)
+  const basePath = event.type === 'workshop' ? '/workshops' : '/competitions'
+  routerNavigate(`${basePath}/${event.slug}`)
+ }}
+ className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center border border-gold/30 bg-black/40 opacity-100 transition-colors duration-300 group-hover:border-gold/70 group-hover:bg-gold/10"
+ >
+ <img
+ src="/home/arrow-down-right.svg"
+ alt=""
+ className="h-7 w-7 -rotate-90"
+ />
+ </button>
+ <div className="aspect-[4/5] shrink-0 overflow-hidden border border-white/10 bg-[#111111]">
  {event.image ? (
  <img
  src={event.image}
@@ -173,13 +199,13 @@ function TechEvents() {
  {event.title}
  </h2>
  <span
- className="rounded-md border border-gold/30 bg-gold/8 px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-gold/80"
+ className="border border-gold/30 bg-gold/8 px-2 py-1 text-[9px] uppercase tracking-[0.18em] text-gold/80"
  style={{ fontFamily: "'Clash Display-Medium', 'Bietro DEMO-Regular', 'Bietro DEMO', sans-serif" }}
  >
  {event.area}
  </span>
  </div>
- </button>
+ </div>
  ))}
  </div>
  )}
