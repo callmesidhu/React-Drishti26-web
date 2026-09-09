@@ -1,0 +1,60 @@
+{
+	"locations": [
+		{
+			"eventKey": "competition/project-expo",
+			"buildingName": "Main Building",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "competition/robo-wars",
+			"buildingName": "Indoor Stadium",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "competition/robotic-soccer",
+			"buildingName": "Indoor Stadium",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "competition/fpv-drone-sim-racing",
+			"buildingName": "CSE Dept Block",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "competition/drun-marathon",
+			"buildingName": null,
+			"room": null,
+			"floor": null,
+			"mode": "route"
+		},
+		{
+			"eventKey": "workshop/ultimate-rc-plane-workshop",
+			"buildingName": "Hydraulics Workshop",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "workshop/unreal-workshop",
+			"buildingName": "CSE Dept Block",
+			"room": null,
+			"floor": null,
+			"mode": "offline"
+		},
+		{
+			"eventKey": "workshop/solidworks-online-workshop",
+			"buildingName": null,
+			"room": null,
+			"floor": null,
+			"mode": "online"
+		}
+	]
+}
