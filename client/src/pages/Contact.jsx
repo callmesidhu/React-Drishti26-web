@@ -127,7 +127,7 @@ function Contact() {
  {CONTACT_GROUPS.map(({ role, people }) => (
  <section key={role}>
  <h2 className="mb-2 text-center text-[10px] font-bold uppercase tracking-[2px] text-gold-gradient">{role}</h2>
- <div className="flex flex-wrap justify-center gap-2.5 sm:grid sm:grid-cols-2">
+ <div className={`gap-2.5 ${people.length === 1 ? 'flex justify-center' : 'flex w-full flex-wrap justify-center sm:grid sm:grid-cols-2 sm:w-auto sm:justify-items-center'}`}>
  {people.map(({ name, phone, email }) => (
  <div key={name} className="max-w-[380px] rounded-lg border border-white/10 bg-white/[0.03] p-3 text-center transition-colors duration-300 hover:border-gold/40">
  <p className="text-sm font-bold uppercase tracking-wide text-white">{name}</p>
