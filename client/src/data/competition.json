@@ -21,6 +21,32 @@
     {
       "id": 2,
       "type": "competition",
+      "slug": "dslove",
+      "title": "D-SOLVE HACKATHON",
+      "category": "COMPETITIONS",
+      "area": "SOFTWARE",
+      "guidelinesTitle": "HACKATHON GUIDELINES",
+      "image": "/techevents/d-solve.jpeg",
+      "alt": "D-Solve poster",
+      "description": "Our flagship hackathon organized by Drishti'26 x CS Association, where ideas are weaponised into prototypes and 3 AM debugging sessions become part of the story.",
+      "guidelines": [
+        "Team size : 2-4 members",
+        "One ticket per team: Each team must have one registration ticket.",
+        "Same institution: All team members must belong to the same college/institution; no inter-college teams.",
+        "One team only: Each participant can register/participate in only one team.", 
+        "No team changes: Team members cannot be changed after registration."
+      ],
+      "details": [
+        "Open to : All undergraduate and postgraduate engineering students.",
+        "Prize Pool : ₹1,00,000.",
+        "Duration : 36 hours"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/8F457tMXigHYkMsbTjmTS"
+    },
+
+    {
+      "id": 3,
+      "type": "competition",
       "slug": "robo-wars",
       "title": "Robo Wars",
       "category": "COMPETITIONS",
@@ -52,7 +78,7 @@
       "registerUrl": "https://snaptiqz.com/event/robo-wars"
     },
     {
-      "id": 3,
+      "id": 4,
       "type": "competition",
       "slug": "robotic-soccer",
       "title": "Robotic Soccer",
@@ -81,7 +107,7 @@
       ]
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "competition",
       "slug": "fpv-drone-sim-racing",
       "title": "FPV Drone Sim-Racing",
@@ -102,7 +128,7 @@
       "registerUrl": "https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy"
     },
     {
-      "id": 5,
+      "id": 6,
       "type": "competition",
       "slug": "drun-marathon",
       "title": "D'RUN Marathon",
@@ -125,7 +151,7 @@
       "registerUrl": "https://discover.snaptiqz.com/event/PA_FH1f8VrJJOzIR3Zk6Y"
     },
     {
-      "id": 6,
+      "id": 7,
       "type": "competition",
       "slug": "signal",
       "title": "Signal Showdown",
@@ -142,6 +168,48 @@
         "Benefits : Certificates + KTU Points"
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/pTOmGO5YG7SZOfsliWAfi"
+    },
+
+    {
+      "id": 8,
+      "type": "competition",
+      "slug": "pixelcraft",
+      "title": "Pixelcraft",
+      "category": "COMPETITIONS",
+      "area": "Design",
+      "image": "/techevents/figma.jpeg",
+      "guidelinesTitle": "PIXELCRAFT DETAILS",
+      "alt": "pixelcraft poster",
+      "description": "Every pixel has a story. What is yours?\nTurn ideas into visuals and creativity into competition.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Registration Fee : ₹100/-.",
+        "Prize pool : ₹3000/-",
+        "Benefits : Certificates + KTU Points",
+        "For enquiry: Rayan - 85906 39173\n Neha - 88481 60300"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/JS5vGFQJYoOr22PRGTbr5"
+    },
+
+    {
+      "id": 9,
+      "type": "competition",
+      "slug": "treasure hunt",
+      "title": "Stellar Odessey : Treasure Hunt",
+      "category": "COMPETITIONS",
+      "area": "Treasure Hunt",
+      "image": "/techevents/treasure.jpeg",
+      "guidelinesTitle": "TREASURE HUNT DETAILS",
+      "alt": "treasure hunt poster",
+      "description": "Something mysterious has landed at DRISHTI ’26. AstroCET presents — STELLAR ODYSSEY: TREASURE HUNT .\nBring your crew. Follow the trail. And somewhere at the end of it all… there’s a treasure waiting.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Registration Fee : ₹199/- per team ",
+        "Prize pool : ₹2000/-",
+        "For enquiry: Akshay - 90740 85750\n Adithyan - 99611 02958"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/NwfCWINSI-Ww8cNJ0wiD-"
     }
+    
   ]
 }
