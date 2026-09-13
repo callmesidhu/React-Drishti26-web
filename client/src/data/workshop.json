@@ -229,6 +229,115 @@
         
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/g-bp-FI4Sx5c3kKro4JVg"
-    }
+    },
+
+    {
+      "id": 12,
+      "type": "workshop",
+      "slug": "etabs",
+      "title": "ETABS",
+      "category": "WORKSHOP",
+      "area": "Structural Engineering",
+      "image": "/techevents/etabs.jpeg",
+      "guidelinesTitle": "ETABS WORKSHOP DETAILS",
+      "alt": "ETABS workshop",
+      "description": "Every strong structure starts as numbers on a screen. ETABS is where engineers turn sketches into certainty. Come learn how the strongest buildings actually get made with Drishti'26 x ICI CET",
+      "details": [
+        "Ensure laptops for the session",
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : ₹249/-",
+        "Perks : KTU Activity Points",
+        "For enquiry : Gowri - +91 80752 39739, Hibha - +91 80896 70332"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/io-_mFTmTWNAINYq0joSp"
+    },
+
+    {
+      "id": 13,
+      "type": "workshop",
+      "slug": "race-car-dynamics",
+      "title": "Race Car Dynamics",
+      "category": "WORKSHOP",
+      "area": "Automotive Engineering",
+      "image": "/techevents/race-car-dynamics.jpeg",
+      "guidelinesTitle": "RACE CAR DYNAMICS WORKSHOP DETAILS",
+      "alt": "Race Car Dynamics workshop",
+      "description": "Speed has its own language. Force. Motion. Control. Learn how calculations, control, and engineering come together in Race Car Dynamics with Drishti'26 x Zenith.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : ₹399/-",
+        "Perks : KTU Activity Points"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/p9U3vgo7zjGOuylFWwMKB"
+  },
+
+  {
+      "id": 14,
+      "type": "workshop",
+      "slug": "arduino",
+      "title": "Arduino",
+      "category": "WORKSHOP",
+      "area": "Electronics",
+      "image": "/techevents/arduino.jpeg",
+      "guidelinesTitle": "ARDUINO WORKSHOP DETAILS",
+      "alt": "Arduino workshop",
+      "description": "From code to circuits, turn your ideas into something you can actually build. Get hands-on with Arduino, explore the world of electronics, and bring your own ideas to life with Drishti'26 x Herakles.",
+      "details": [
+        "Date : 20 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : ₹999/- per participant",
+        "Takeaway Kits : Provided",
+        "Perks : KTU Activity Points",
+        "Limited slots available",
+        "For enquiry : Abja - +91 94474 77394"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/qW-evrfDXcogXQnyupYGy"
+  },
+
+  {
+      "id": 15,
+      "type": "workshop",
+      "slug": "nix-and-nixos",
+      "title": "Nix & NixOS",
+      "category": "WORKSHOP",
+      "area": "DevOps & Infra",
+      "image": "/techevents/nix.jpeg",
+      "guidelinesTitle": "NIX & NIXOS WORKSHOP DETAILS",
+      "alt": "Nix and NixOS workshop",
+      "description": "Shift from fragile setups to immutable perfection. Join Vysakh Premkumar to unlock pure declarative power and eliminate 'works on my machine' forever with Drishti'26 x FOSS CET.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Format : Offline.",
+        "Registration Fee : ₹49/-",
+        "Laptops are mandatory",
+        "Perks : KTU Activity Points eligible",
+        "For enquiry : Nikhil - +91 90741 07930, Johan - +91 94954 04263"
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/PkS4Zohx6b9v71oNpqeB2"
+  },
+
+  {
+    "id": 16,
+    "type": "workshop",
+    "slug": "tinyml",
+    "title": "TinyML: From Zero to Edge Intelligence",
+    "category": "WORKSHOP",
+    "area": "AI",
+    "image": "techevents/edge-ai.jpeg",
+    "guidelinesTitle": "TINYML WORKSHOP DETAILS",
+    "alt": "TinyML: From Zero to Edge Intelligence workshop",
+    "description": "Discover how intelligence moves from the cloud to the edge, giving tiny devices a brain of their own. Join Abhinav Krishna N, Ranger Seeed Studio, for a workshop on TinyML and edge intelligence with Drishti'26 × IEEE SB CET.",
+    "details": [
+      "Date : 18 & 19 September 2026.",
+      "Format : Offline.",
+      "Registration Fee : ₹399/-",
+      "Ensure laptops for the session",
+      "Perks : KTU Activity Points included",
+      "For enquiry : Meera - +91 79074 99956, Madhav - +91 80787 08396"
+    ],
+    "registerUrl": "https://discover.snaptiqz.com/event/6D2oBnlcTjqG343wp4zSC"
+}
   ]
 }
