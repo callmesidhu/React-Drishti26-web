@@ -229,6 +229,83 @@
         
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/g-bp-FI4Sx5c3kKro4JVg"
+    },
+    {
+      "id": 12,
+      "type": "workshop",
+      "slug": "tinyml-zero-to-edge-intelligence",
+      "title": "TinyML: From Zero to Edge Intelligence",
+      "category": "WORKSHOPS",
+      "area": "AI",
+      "image": "/techevents/tinyml.jpeg",
+      "guidelinesTitle": "TINYML WORKSHOP DETAILS",
+      "alt": "TinyML: From Zero to Edge Intelligence Workshop",
+      "description": "Drishti'26 × IEEE SB CET presents TinyML: From Zero to Edge Intelligence Workshop. Discover how intelligence moves from the cloud to the edge, giving tiny devices a brain of their own. Featuring Abhinav Krishna N, Ranger Seeed Studio.",
+      "details": [
+        "Date : 18 & 19 September 2026.",
+        "Format : Offline. Ensure laptops for the session.",
+        "Speaker : Abhinav Krishna N, Ranger Seeed Studio.",
+        "Registration Fee : ₹399/-.",
+        "Benefits : Certificate + KTU Points."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/6D2oBnlcTjqG343wp4zSC"
+    },
+    {
+      "id": 13,
+      "type": "workshop",
+      "slug": "building-8-bit-computer",
+      "title": "Building an 8-Bit Computer Workshop",
+      "category": "WORKSHOPS",
+      "area": "Electronics",
+      "image": "/techevents/8bit.jpeg",
+      "guidelinesTitle": "8-BIT COMPUTER WORKSHOP DETAILS",
+      "alt": "Building an 8-Bit Computer Workshop",
+      "description": "Drishti'26 × Her Aura presents Building an 8-Bit Computer Workshop. Forget just using a computer — get behind the logic that makes one work. Get hands-on with the fundamentals of digital computing and explore how simple components come together to create a working 8-bit computer. Build. Connect. Understand.",
+      "details": [
+        "Date : 18 September 2026.",
+        "Format : Offline. Ensure laptops for the session.",
+        "Registration Fee : ₹99/-.",
+        "Benefits : KTU Points."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/cAPxanP80NforBISqE3Py"
+    },
+    {
+      "id": 14,
+      "type": "workshop",
+      "slug": "opencv-computer-vision",
+      "title": "OpenCV Workshop on Computer Vision",
+      "category": "WORKSHOPS",
+      "area": "AI",
+      "image": "/techevents/opencv.jpeg",
+      "guidelinesTitle": "OPENCV WORKSHOP DETAILS",
+      "alt": "OpenCV Workshop on Computer Vision",
+      "description": "Drishti'26 × AstroCET presents OpenCV Workshop on Computer Vision. Images are everywhere. But making a computer understand them? That's where things get interesting. Step into Computer Vision with OpenCV and explore how machines detect, recognise, and make sense of what they see. No magic. Just pixels, code, and a whole new way of looking at things.",
+      "details": [
+        "Date : 18 September 2026.",
+        "Format : Offline. Ensure laptops for the session.",
+        "Registration Fee : ₹149/-.",
+        "Benefits : KTU Points."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/lZJKx5l4tnAii78zR3vlp"
+    },
+    {
+      "id": 15,
+      "type": "workshop",
+      "slug": "robotic-arm-development",
+      "title": "Robotic Arm Development Workshop",
+      "category": "WORKSHOPS",
+      "area": "Robotics",
+      "image": "/techevents/robothand.jpeg",
+      "guidelinesTitle": "ROBOTIC ARM DEVELOPMENT WORKSHOP DETAILS",
+      "alt": "Robotic Arm Development Workshop",
+      "description": "Drishti'26 × AstroCET presents Robotic Arm Development Workshop. Go beyond watching robots move and actually understand what makes them move. Get introduced to robotic arm development and explore the world where engineering, automation, and robotics come together.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Format : Online. Ensure laptops for the session.",
+        "Registration Fee : ₹199/-.",
+        "Benefits : KTU Points."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/rQ5k9xyxSbgK86UNYNkCz"
     }
   ]
 }
