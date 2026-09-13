@@ -6,17 +6,19 @@ import Footer from '../components/Footer.jsx'
 
 const teamMembers = [
  { id: 4, name: 'Gautam', role: 'Convenor', image: '/team/DRISHTI%20CORE/gaut.png' },
+ { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
+ { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
  { id: 8, name: 'Nikhil', role: 'Coordinator', image: '/team/DRISHTI%20CORE/nikh.png' },
  { id: 7, name: 'Ephraim', role: 'Coordinator', image: '/team/DRISHTI%20CORE/eph.png' },
  { id: 11, name: 'Yamin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/yamin.png' },
  { id: 12, name: 'Daris', role: 'Coordinator', image: '/team/DRISHTI%20CORE/daris.png' },
  { id: 10, name: 'Sidharth', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sidhth.png' },
- { id: 2, name: 'Aiveen', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/aiv.png' },
- { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
- { id: 5, name: 'Maram', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/mar.png' },
- { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
- { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' },
+ { id: 13, name: 'Abhira', role: 'Execom', image: '/team/DRISHTI%20CORE/abhira.webp' },
+ { id: 14, name: 'Alvin', role: 'Execom', image: '/team/DRISHTI%20CORE/alvin.webp' },
  { id: 9, name: 'Shebin', role: 'Coordinator', image: '/team/DRISHTI%20CORE/sheb.png' },
+ { id: 6, name: 'Noel', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/noel.png' },
+ { id: 3, name: 'Devan', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/dev.png' },
+ { id: 1, name: 'Abhimanyu', role: 'Co-Convenor', image: '/team/DRISHTI%20CORE/abhi.png' }
 ]
 
 const dakshaTeamMembers = [

@@ -58,12 +58,12 @@ function Daksha() {
 
  return (
  <>
- <div className="theme-blue relative h-svh max-h-svh w-full overflow-hidden flex flex-col justify-center text-sky-400 select-none touch-none">
+ <div className="theme-blue relative w-full min-h-svh md:h-svh md:max-h-svh overflow-y-auto md:overflow-hidden flex flex-col justify-start md:justify-center text-sky-400 select-none md:touch-none">
  <Backdrop theme="blue" />
 
  <Navbar activeSection="daksha" theme="blue" />
 
- <section className="relative h-full w-full flex flex-col justify-center items-center pt-16 pb-4">
+ <section className="relative w-full flex flex-col justify-start md:justify-center items-center pt-16 pb-4">
  <header className="px-[clamp(16px,4vw,40px)] pb-3 text-center">
  <h1
  ref={h1Ref}

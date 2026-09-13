@@ -45,7 +45,25 @@
     },
 
     {
-      "id": 3,
+  "id": 3,
+  "type": "competition",
+  "slug": "robowar-robosoccer",
+  "title": "RoboWar × RoboSoccer",
+  "category": "COMPETITIONS",
+  "area": "Robotics",
+  "image": "/techevents/combo.jpeg",
+  "guidelinesTitle": "ROBOWAR × ROBOSOCCER DETAILS",
+  "alt": "RoboWar and RoboSoccer competition poster",
+  "description": "Three registrations. One very good excuse to go all in. RoboWar 8KG, RoboWar 25KG and RoboSoccer, presented by Drishti'26 x RoboCET.",
+  "details": [
+    "Competitions : RoboWar 8KG, RoboWar 25KG, RoboSoccer.",
+    "Offer Price : ₹3,499 /-."
+  ],
+  "registerUrl": "https://discover.snaptiqz.com/event/Vrud3XBSY3i8rt5LNnjCJ"
+},
+
+    {
+      "id": 4,
       "type": "competition",
       "slug": "robo-wars",
       "title": "Robo Wars",
@@ -78,7 +96,7 @@
       "registerUrl": "https://snaptiqz.com/event/robo-wars"
     },
     {
-      "id": 4,
+      "id": 5,
       "type": "competition",
       "slug": "robotic-soccer",
       "title": "Robotic Soccer",
@@ -107,7 +125,7 @@
       ]
     },
     {
-      "id": 5,
+      "id": 6,
       "type": "competition",
       "slug": "fpv-drone-sim-racing",
       "title": "FPV Drone Sim-Racing",
@@ -128,7 +146,7 @@
       "registerUrl": "https://discover.snaptiqz.com/event/cyPFpVrKbQjwpb9nE4Kdy"
     },
     {
-      "id": 6,
+      "id": 7,
       "type": "competition",
       "slug": "drun-marathon",
       "title": "D'RUN Marathon",
@@ -151,7 +169,7 @@
       "registerUrl": "https://discover.snaptiqz.com/event/PA_FH1f8VrJJOzIR3Zk6Y"
     },
     {
-      "id": 7,
+      "id": 8,
       "type": "competition",
       "slug": "signal",
       "title": "Signal Showdown",
@@ -171,7 +189,7 @@
     },
 
     {
-      "id": 8,
+      "id": 9,
       "type": "competition",
       "slug": "pixelcraft",
       "title": "Pixelcraft",
@@ -192,7 +210,7 @@
     },
 
     {
-      "id": 9,
+      "id": 10,
       "type": "competition",
       "slug": "treasure hunt",
       "title": "Stellar Odessey : Treasure Hunt",
@@ -209,7 +227,90 @@
         "For enquiry: Akshay - 90740 85750\n Adithyan - 99611 02958"
       ],
       "registerUrl": "https://discover.snaptiqz.com/event/NwfCWINSI-Ww8cNJ0wiD-"
-    }
+    },
+
+    {
+      "id": 11,
+      "type": "competition",
+      "slug": "sangraha-26",
+      "title": "Sangraha ’26",
+      "category": "COMPETITIONS",
+      "area": "Collectibles & History",
+      "image": "/techevents/sangraha.jpeg",
+      "guidelinesTitle": "SANGRAHA ’26 DETAILS",
+      "alt": "Sangraha ’26 Exhibition and Competition of Collectibles poster",
+      "description": "An exhibition and competition of collectibles where coins, curiosities, keepsakes and fragments of time come together. Discover objects from the past and showcase your own collection at Sangraha ’26 by Drishti ’26 x HCS.",
+      "details": [
+        "Date : 20 September 2026.",
+        "Registration : ₹49 /-.",
+        "Prize Pool : ₹6,000 /-.",
+        "KTU Activity Points : Applicable.",
+        "Venue : Drishti ’26, College of Engineering Trivandrum.",
+        "Enquiries : Melvin: +91 75920 58411 · Geevarghese: +91 95393 20860."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/7fueTiYgjWEbec9Jkkupg"
+    },
+
+    {
+      "id": 12,
+      "type": "competition",
+      "slug": "website-redesign",
+      "title": "Website Re-Design Competition",
+      "category": "COMPETITIONS",
+      "area": "Web Design & UI/UX",
+      "image": "/techevents/redesign.jpeg",
+      "guidelinesTitle": "WEBSITE RE-DESIGN COMPETITION DETAILS",
+      "alt": "Website Re-Design Competition poster",
+      "description": "Take an existing website, break away from the familiar, and reimagine how it could look, feel, and work. Redesign the web experience with your own creative vision at the Website Re-Design Competition by Drishti ’26 x TinkerHub CET.",
+      "details": [
+        "Date : 19 September 2026.",
+        "Prize Pool : ₹1,500 /-.",
+        "Venue : Drishti ’26, College of Engineering Trivandrum.",
+        "Enquiries : Rohit: +91 62350 23093 · Rose: +91 79940 16940."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/Az-9eNJEzekzU5USjAM-L"
+    },
+
+    {
+      "id": 13,
+      "type": "competition",
+      "slug": "vision-cet",
+      "title": "VISION CET",
+      "category": "COMPETITIONS",
+      "area": "Ideathon",
+      "image": "/techevents/vision.jpeg",
+      "guidelinesTitle": "VISION CET DETAILS",
+      "alt": "VISION CET Ideathon poster",
+      "description": "A one-of-a-kind Ideathon that invites you to imagine and propose a better CET. Bring your aspirations, ideas and vision for what CET could become and pitch your vision to make it a reality.",
+      "details": [
+        "Submission Deadline : 12 September 2026.",
+        "Pitch : 18 September 2026.",
+        "Prize Pool : ₹8,000 /-."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/jdXFCtGOMTHdf3nqrNsfJ"
+      },
+
+  {
+    "id": 14,
+    "type": "competition",
+    "slug": "cad-clash",
+    "title": "CAD Clash",
+    "category": "COMPETITIONS",
+    "area": "Computer-Aided Design",
+    "image": "/techevents/cad-clash.jpeg",
+    "guidelinesTitle": "CAD CLASH DETAILS",
+    "alt": "CAD Clash AutoCAD Drawing Competition poster",
+    "description": "Put your technical drafting skills to the ultimate test against the clock. Showcase your precision, orthographic drawing skills and AutoCAD expertise in the CAD Clash competition by Drishti ’26 × ICI.",
+    "details": [
+      "Date : 19 September 2026.",
+      "Registration : ₹149 /- (Team of 2).",
+      "Prize Pool : ₹3,500 /-.",
+      "KTU Activity Points : Applicable.",
+      "Ensure laptops for the session (AutoCAD pre-installed).",
+      "Enquiries : Afra: +91 79942 59363 · Udhay: +91 70124 99358."
+    ],
+    "registerUrl": "https://discover.snaptiqz.com/event/4WJFSYxweXpjbsiqz2Gok"
+  }
     
   ]
 }
