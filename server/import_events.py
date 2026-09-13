@@ -58,12 +58,27 @@ def copy_poster(image_path):
     if not image_path:
         return ""
 
+    relative_image_path = image_path.lstrip("/")
     repo_root = Path(__file__).resolve().parent.parent
-    source_path = repo_root / "public" / image_path.lstrip("/")
+    candidate_roots = [
+        repo_root / "public",
+        repo_root / "client" / "public",
+    ]
 
-    if not source_path.exists():
+    assets_root = os.environ.get("EVENT_ASSETS_ROOT")
+    if assets_root:
+        candidate_roots.insert(0, Path(assets_root).expanduser().resolve())
+
+    source_path = None
+    for candidate_root in candidate_roots:
+        candidate_path = candidate_root / relative_image_path
+        if candidate_path.exists():
+            source_path = candidate_path
+            break
+
+    if source_path is None:
         print(f"Poster not found, storing original path: {image_path}")
-        return image_path.lstrip("/")
+        return relative_image_path
 
     destination_dir = Path(settings.MEDIA_ROOT) / "events" / "posters"
     destination_dir.mkdir(parents=True, exist_ok=True)
