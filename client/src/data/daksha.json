@@ -18,6 +18,62 @@
         "Grand Finale — 19 September 2026."
       ],
       "registerUrl": "https://snaptiqz.com/event/shark-tank"
+    },
+    {
+      "id": 2,
+      "slug": "market-verse",
+      "title": "Market Verse",
+      "category": "DAKSHA",
+      "area": "Marketing",
+      "guidelinesTitle": "MARKET VERSE GUIDELINES",
+      "image": "/daksha/marketverse.jpeg",
+      "alt": "Market Verse event",
+      "description": "Market Verse | Daksha '26 — Where Brand Meets Brilliance. A competitive marketing game to put your branding, marketing strategy, creativity, and business communication skills to the test through engaging challenges and real-world scenarios. Build the brand. Make the move. Own the market.",
+      "details": [
+        "Date : 18 September 2026.",
+        "Team Size : 4 members.",
+        "Eligibility : UG & PG students, same college.",
+        "Registration Fee : ₹1,000 per team.",
+        "Prize Pool : ₹30,000."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/e-K3NyQn5rQ-XNSKpnO8V"
+    },
+    {
+      "id": 3,
+      "slug": "dare-and-deliver",
+      "title": "Dare & Deliver",
+      "category": "DAKSHA",
+      "area": "Innovation",
+      "guidelinesTitle": "DARE & DELIVER GUIDELINES",
+      "image": "/daksha/darendeliver.jpeg",
+      "alt": "Dare & Deliver event",
+      "description": "Dare & Deliver | Daksha '26 — Turn Ideas into Impact. A high-energy challenge designed to test your creativity, problem-solving, decision-making, and ability to turn ideas into action. Dare it. Build it. Deliver it.",
+      "details": [
+        "Date : 18 September 2026.",
+        "Team Size : 2 members.",
+        "Eligibility : Open to students.",
+        "Registration Fee : ₹600 per team.",
+        "Prize Pool : ₹25,000."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/AnvwtAcTSZH-5lLRKYbgq"
+    },
+    {
+      "id": 4,
+      "slug": "peoples-manager",
+      "title": "People's Manager",
+      "category": "DAKSHA",
+      "area": "Management",
+      "guidelinesTitle": "PEOPLE'S MANAGER GUIDELINES",
+      "image": "/daksha/peoplemanager.jpeg",
+      "alt": "People's Manager event",
+      "description": "People's Manager | Daksha '26 — Where strategy meets people. Put your leadership, communication, decision-making, and people-management skills to the test. Step into the manager's shoes and prove great management is about understanding people.",
+      "details": [
+        "Date : 18 September 2026.",
+        "Team Size : 4 members.",
+        "Registration Fee : ₹1,000 per team.",
+        "Prize Pool : ₹30,000."
+      ],
+      "registerUrl": "https://discover.snaptiqz.com/event/jjkdtKQTF4U4J_cINNz5U"
     }
   ]
 }
