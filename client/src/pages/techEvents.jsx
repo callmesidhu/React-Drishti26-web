@@ -4,12 +4,7 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
 import Footer from '../components/Footer.jsx'
-import workshopJson from '../data/workshop.json'
-import competitionJson from '../data/competition.json'
-
-const workshopsData = workshopJson.workshopsData
-const competitionsData = competitionJson.competitionsData
-const technicalEventsData = [...workshopsData, ...competitionsData]
+import { fetchEvents } from '../api/events.js'
 
 const tabs = [
  { key: 'workshop', label: 'Workshops' },
@@ -25,6 +20,41 @@ function TechEvents() {
  )
  const [selectedArea, setSelectedArea] = useState('All')
  const [selectedEvent, setSelectedEvent] = useState(null)
+ const [technicalEventsData, setTechnicalEventsData] = useState([])
+ const [isLoading, setIsLoading] = useState(true)
+ const [loadError, setLoadError] = useState('')
+
+ useEffect(() => {
+ let cancelled = false
+
+ const loadEvents = async () => {
+  try {
+   setIsLoading(true)
+   setLoadError('')
+   const [workshops, competitions] = await Promise.all([
+    fetchEvents({ type: 'workshop' }),
+    fetchEvents({ type: 'competition' }),
+   ])
+   if (!cancelled) setTechnicalEventsData([...workshops, ...competitions])
+  } catch {
+   if (!cancelled) setLoadError('Unable to load events right now.')
+  } finally {
+   if (!cancelled) setIsLoading(false)
+  }
+ }
+
+ loadEvents()
+ return () => { cancelled = true }
+ }, [])
+
+ const workshopsData = useMemo(
+  () => technicalEventsData.filter((event) => event.type === 'workshop'),
+  [technicalEventsData],
+ )
+ const competitionsData = useMemo(
+  () => technicalEventsData.filter((event) => event.type === 'competition'),
+  [technicalEventsData],
+ )
 
  useEffect(() => {
  const routeTab = location.pathname.startsWith('/competitions') ? 'competition' : 'workshop'
@@ -42,7 +72,7 @@ function TechEvents() {
  setSelectedEvent(event)
  setActiveTab(event.type)
  }
- }, [slug])
+ }, [slug, technicalEventsData])
 
  const areaOptions = useMemo(() => {
  const areaSet = new Set()
@@ -53,7 +83,7 @@ function TechEvents() {
  })
 
  return ['All', ...Array.from(areaSet)]
- }, [activeTab])
+ }, [activeTab, competitionsData, workshopsData])
 
  useEffect(() => {
  setSelectedArea('All')
@@ -66,7 +96,7 @@ function TechEvents() {
  if (selectedArea === 'All') return true
  return event.area === selectedArea
  })
- }, [activeTab, selectedArea])
+ }, [activeTab, competitionsData, selectedArea, workshopsData])
 
  const handleCloseModal = () => {
   setSelectedEvent(null)
@@ -131,7 +161,15 @@ function TechEvents() {
  </div>
  </div>
 
- {visibleEvents.length === 0 ? (
+ {isLoading ? (
+ <div className="border border-gold/20 bg-black/30 px-8 py-12 text-center text-gold/80">
+ Loading technical events...
+ </div>
+ ) : loadError ? (
+ <div className="border border-red-400/30 bg-red-950/20 px-8 py-12 text-center text-red-200">
+ {loadError}
+ </div>
+ ) : visibleEvents.length === 0 ? (
  <div className="rounded-2xl border border-gold/20 bg-black/30 px-8 py-12 text-center text-gold/80">
  No technical events available for this area.
  </div>

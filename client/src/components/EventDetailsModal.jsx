@@ -277,12 +277,25 @@ function EventDetailsModal({ event, onClose }) {
  <div className={`relative h-full w-full overflow-hidden border bg-black/60 ${
  isBlue ? 'border-sky-500/40 shadow-[0_0_50px_rgba(56,189,248,0.25)]' : 'border-gold/40 '
  }`}>
+ {event.image ? (
  <img
  ref={posterRef}
  src={event.image}
  alt={event.alt || event.title}
  className="h-full w-full object-cover"
  />
+ ) : (
+ <div
+ ref={posterRef}
+ className="flex h-full w-full items-center justify-center px-5 text-center"
+ >
+ <span className={`text-sm font-bold uppercase tracking-[0.18em] ${
+ isBlue ? 'text-sky-400' : 'text-gold-gradient'
+ }`}>
+ {event.title}
+ </span>
+ </div>
+ )}
  </div>
  </div>
  </div>

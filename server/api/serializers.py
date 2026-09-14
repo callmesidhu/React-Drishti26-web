@@ -44,6 +44,11 @@ class EventSerializer(ModelSerializer):
     def get_image(self, obj):
         if not obj.poster:
             return ''
+        poster_name = obj.poster.name.strip()
+        if poster_name.startswith(('http://', 'https://')):
+            return poster_name
+        if not obj.poster.storage.exists(poster_name):
+            return ''
         return obj.poster.url
 
     def get_alt(self, obj):

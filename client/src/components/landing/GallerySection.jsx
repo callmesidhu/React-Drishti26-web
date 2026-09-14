@@ -1,20 +1,36 @@
+import { useEffect, useState } from "react";
 import DomeGallery from "../DomeGallery";
-import competitionData from "../../data/competition.json";
-import workshopData from "../../data/workshop.json";
-import dakshaData from "../../data/daksha.json";
+import { fetchEvents } from "../../api/events.js";
 
 const isCoarsePointer =
 	typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
 
-const drishtiGalleryImages = [
-...workshopData.workshopsData,
- ...competitionData.competitionsData,
- ...dakshaData.dakshaEventsData,
-].map(({ image, alt, title }) => ({
- src: image.trim(),
- alt: alt || title,
-}));
 export default function GallerySection() {
+ const [galleryImages, setGalleryImages] = useState([]);
+
+ useEffect(() => {
+ let cancelled = false;
+
+ const loadGalleryImages = async () => {
+ try {
+ const events = await fetchEvents();
+ const images = events
+ .map(({ image, alt, title }) => ({
+ src: image?.trim?.() || "",
+ alt: alt || title,
+ }))
+ .filter((image) => image.src);
+
+ if (!cancelled) setGalleryImages(images);
+ } catch {
+ if (!cancelled) setGalleryImages([]);
+ }
+ };
+
+ loadGalleryImages();
+ return () => { cancelled = true; };
+ }, []);
+
  return (
  <section className="relative z-20 w-full bg-black flex flex-col items-center justify-center pt-16 md:pt-24 pb-8 overflow-hidden border-y border-white/5" aria-label="Event gallery">
  {/* Title placed directly above the dome */}
@@ -27,7 +43,7 @@ export default function GallerySection() {
  {/* 3D Dome Gallery Container */}
  <div className="relative h-[60svh] min-h-[400px] max-h-[620px] w-full md:h-[72vh] md:min-h-[560px] md:max-h-[860px]">
  <DomeGallery
- images={drishtiGalleryImages}
+ images={galleryImages}
  fit={1}
  minRadius={420}
  maxVerticalRotationDeg={20}
