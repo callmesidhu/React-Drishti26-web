@@ -53,6 +53,10 @@ def get_prize_pool(event_data):
     return 0
 
 
+def get_display_details(event_data):
+    return event_data.get("guidelines") or event_data.get("details")
+
+
 def copy_poster(image_path):
     image_path = str(image_path or "").strip()
     if not image_path:
@@ -121,7 +125,7 @@ def import_event(event_data, event_type):
             "area": event_data.get("area", ""),
             "description": event_data.get("description", ""),
             "poster": copy_poster(event_data.get("image")),
-            "details": lines_to_text(event_data.get("details")),
+            "details": lines_to_text(get_display_details(event_data)),
             "eligibility": lines_to_text(event_data.get("eligibility")),
             "is_published": True,
         },
@@ -182,10 +186,22 @@ def main():
         raise SystemExit(1)
 
     total_count = 0
+    imported_slugs = set()
     for json_file in sys.argv[1:]:
         total_count += import_json_file(json_file)
+        with Path(json_file).open(encoding="utf-8") as handle:
+            data = json.load(handle)
+        for data_key in DATA_KEYS:
+            imported_slugs.update(
+                event_data["slug"]
+                for event_data in data.get(data_key, [])
+                if event_data.get("slug")
+            )
 
     mark_featured_competitions(sys.argv[1:])
+    Event.objects.filter(event_type__in=DATA_KEYS.values()).exclude(
+        slug__in=imported_slugs
+    ).update(is_published=False)
     print(f"Done. Imported {total_count} event(s).")
 
 
