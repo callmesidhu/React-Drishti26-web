@@ -1,13 +1,12 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { featuredEvents } from "../../data/featuredCompetitions";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const arrowDownRight = "/home/arrow-down-right.svg";
 
-export default function FeaturedEvents({ onEventClick }) {
+export default function FeaturedEvents({ events = [], onEventClick }) {
  const [featuredIndex, setFeaturedIndex] = useState(0);
  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
  const [hasManuallyNavigated, setHasManuallyNavigated] = useState(false);
@@ -18,15 +17,16 @@ export default function FeaturedEvents({ onEventClick }) {
  const swipeStartRef = useRef(null);
  const suppressClickRef = useRef(false);
 
- const moveFeatured = (direction) => {
+ const moveFeatured = useCallback((direction) => {
+ if (events.length === 0) return;
  setFeaturedIndex((current) => {
  const next = current + direction;
  // Loop around
- if (next < 0) return featuredEvents.length - 1;
- if (next >= featuredEvents.length) return 0;
+ if (next < 0) return events.length - 1;
+ if (next >= events.length) return 0;
  return next;
  });
- };
+ }, [events.length]);
 
  const handleSwipeStart = (event) => {
   swipeStartRef.current = { x: event.clientX, y: event.clientY };
@@ -60,13 +60,19 @@ export default function FeaturedEvents({ onEventClick }) {
 
  useEffect(() => {
  if (isAutoScrollPaused || hasManuallyNavigated) return;
+ if (events.length <= 1) return;
  
  const interval = setInterval(() => {
  moveFeatured(1);
  }, 1500);
  
  return () => clearInterval(interval);
- }, [isAutoScrollPaused, hasManuallyNavigated]);
+ }, [isAutoScrollPaused, hasManuallyNavigated, events.length, moveFeatured]);
+
+ useEffect(() => {
+ setFeaturedIndex(0);
+ setHasManuallyNavigated(false);
+ }, [events.length]);
 
  return (
  <section
@@ -112,10 +118,14 @@ export default function FeaturedEvents({ onEventClick }) {
  onPointerCancel={() => { swipeStartRef.current = null; }}
  style={{ touchAction: "pan-y" }}
  >
- {featuredEvents.map((event, index) => {
+ {events.length === 0 ? (
+ <div className="border border-gold/20 bg-black/30 px-8 py-12 text-center font-['Space_Grotesk-Regular',Helvetica] text-sm uppercase tracking-[0.14em] text-gold/70">
+ No featured events available.
+ </div>
+ ) : events.map((event, index) => {
  // Calculate distance from center (with wrapping logic for smooth carousel)
  let diff = index - featuredIndex;
- const length = featuredEvents.length;
+ const length = events.length;
  if (diff > Math.floor(length / 2)) diff -= length;
  if (diff < -Math.floor(length / 2)) diff += length;
 
@@ -147,7 +157,7 @@ export default function FeaturedEvents({ onEventClick }) {
   return;
  }
  if (isActive) {
- onEventClick(index);
+ onEventClick?.(index);
  } else {
  setFeaturedIndex(index);
  setHasManuallyNavigated(true);
@@ -197,7 +207,7 @@ export default function FeaturedEvents({ onEventClick }) {
  aria-label={`View details for featured event ${index + 1}`}
  onClick={(e) => {
  e.stopPropagation();
- onEventClick(index);
+ onEventClick?.(index);
  }}
  >
  <span className="font-['Space_Grotesk-Regular',Helvetica] text-[clamp(16px,2vw,20px)] font-bold tracking-[0.1em] text-[#D4AF37] uppercase transition-colors duration-300">

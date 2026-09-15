@@ -1,8 +1,8 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DeferredSection from "../components/DeferredSection";
-import { featuredEvents } from "../data/featuredCompetitions";
+import { fetchFeaturedEvents } from "../api/events.js";
 
 import Hero from "../components/landing/Hero";
 import Countdown from "../components/landing/Countdown";
@@ -17,9 +17,28 @@ const EventDetailsModal = lazy(() => import("../components/EventDetailsModal"));
 
 function Home() {
  const [activeModalEvent, setActiveModalEvent] = useState(null);
+ const [featuredEvents, setFeaturedEvents] = useState([]);
+
+ useEffect(() => {
+ let cancelled = false;
+
+ const loadFeaturedEvents = async () => {
+ try {
+ const events = await fetchFeaturedEvents();
+ if (!cancelled) setFeaturedEvents(events);
+ } catch {
+ if (!cancelled) setFeaturedEvents([]);
+ }
+ };
+
+ loadFeaturedEvents();
+ return () => { cancelled = true; };
+ }, []);
 
  const handleRegistration = (eventIndex) => {
- setActiveModalEvent(featuredEvents[eventIndex]);
+ const event = featuredEvents[eventIndex];
+ if (!event) return;
+ setActiveModalEvent(event);
  window.dispatchEvent(
  new CustomEvent("featured-event-registration", { detail: { eventIndex } })
  );
@@ -44,7 +63,7 @@ function Home() {
 
  <DeferredSection minHeight="80svh"><GallerySection /></DeferredSection>
  <DeferredSection minHeight="100svh"><DrishTees /></DeferredSection>
- <DeferredSection minHeight="100svh"><FeaturedEvents onEventClick={handleRegistration} /></DeferredSection>
+ <DeferredSection minHeight="100svh"><FeaturedEvents events={featuredEvents} onEventClick={handleRegistration} /></DeferredSection>
 
  <Footer />
 

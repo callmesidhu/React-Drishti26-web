@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import json
 import os
-import re
 import shutil
 import sys
 from pathlib import Path
@@ -14,8 +13,9 @@ import django
 # Docker compose command to import events data........
 """"docker compose run --rm \
   -v "$PWD:/workspace" \
+  -e EVENT_ASSETS_ROOT=/workspace/client/public \
   server \
-  python /workspace/server/import_events.py \
+  python /app/import_events.py \
     /workspace/client/src/data/workshop.json \
     /workspace/client/src/data/competition.json \
     /workspace/client/src/data/daksha.json"""
@@ -40,17 +40,18 @@ def lines_to_text(value):
     return str(value or "").strip()
 
 
-def get_prize_pool(event_data):
-    details = event_data.get("details", [])
-    if not isinstance(details, list):
-        return 0
+def get_display_details(event_data):
+    return event_data.get("guidelines") or event_data.get("details")
 
-    for detail in details:
-        if re.search(r"prize\s*pool|price\s*pool", str(detail), re.IGNORECASE):
-            digits = re.sub(r"\D", "", str(detail))
-            return int(digits or 0)
 
-    return 0
+def get_featured_value(event_data):
+    for key in ("is_featured", "isFeatured", "featured"):
+        if key in event_data:
+            value = event_data[key]
+            if isinstance(value, str):
+                return value.strip().lower() in ("1", "true", "yes")
+            return bool(value)
+    return False
 
 
 def copy_poster(image_path):
@@ -113,25 +114,32 @@ def import_event(event_data, event_type):
     if not slug or not title:
         raise ValueError(f"Event is missing slug/title: {event_data}")
 
+    defaults = {
+        "title": title,
+        "event_type": event_type,
+        "area": event_data.get("area", ""),
+        "description": event_data.get("description", ""),
+        "poster": copy_poster(event_data.get("image")),
+        "details": lines_to_text(get_display_details(event_data)),
+        "eligibility": lines_to_text(event_data.get("eligibility")),
+        "is_published": True,
+    }
+    featured_value = get_featured_value(event_data)
+    defaults["is_featured"] = featured_value
+
     event, created = Event.objects.update_or_create(
         slug=slug,
-        defaults={
-            "title": title,
-            "event_type": event_type,
-            "area": event_data.get("area", ""),
-            "description": event_data.get("description", ""),
-            "poster": copy_poster(event_data.get("image")),
-            "details": lines_to_text(event_data.get("details")),
-            "eligibility": lines_to_text(event_data.get("eligibility")),
-            "is_published": True,
-        },
+        defaults=defaults,
     )
 
     EventLink.objects.filter(event=event).delete()
     for index, (label, url) in enumerate(get_links(event_data)):
         EventLink.objects.create(event=event, label=label, url=url, sort_order=index)
 
-    print(f"{'Created' if created else 'Updated'}: {event.title}")
+    print(
+        f"{'Created' if created else 'Updated'}: "
+        f"{event.title} (featured={featured_value})"
+    )
 
 
 def import_json_file(json_file):
@@ -139,41 +147,20 @@ def import_json_file(json_file):
         data = json.load(handle)
 
     imported_count = 0
+    imported_slugs = set()
+    imported_event_types = set()
     for data_key, event_type in DATA_KEYS.items():
         for event_data in data.get(data_key, []):
             import_event(event_data, event_type)
             imported_count += 1
+            imported_event_types.add(event_type)
+            if event_data.get("slug"):
+                imported_slugs.add(event_data["slug"])
 
     if imported_count == 0:
         print(f"No events found in {json_file}")
 
-    return imported_count
-
-
-def mark_featured_competitions(json_files):
-    competition_events = []
-
-    for json_file in json_files:
-        with Path(json_file).open(encoding="utf-8") as handle:
-            data = json.load(handle)
-
-        competition_events.extend(data.get("competitionsData", []))
-
-    featured_slugs = [
-        event_data["slug"]
-        for event_data in sorted(competition_events, key=get_prize_pool, reverse=True)[
-            :3
-        ]
-        if event_data.get("slug")
-    ]
-
-    Event.objects.filter(event_type=Event.EventType.COMPETITION).update(
-        is_featured=False
-    )
-    Event.objects.filter(slug__in=featured_slugs).update(is_featured=True)
-
-    if featured_slugs:
-        print(f"Marked featured competitions: {', '.join(featured_slugs)}")
+    return imported_count, imported_slugs, imported_event_types
 
 
 def main():
@@ -182,11 +169,22 @@ def main():
         raise SystemExit(1)
 
     total_count = 0
+    imported_slugs = set()
+    imported_event_types = set()
     for json_file in sys.argv[1:]:
-        total_count += import_json_file(json_file)
+        count, slugs, event_types = import_json_file(json_file)
+        total_count += count
+        imported_slugs.update(slugs)
+        imported_event_types.update(event_types)
 
-    mark_featured_competitions(sys.argv[1:])
+    deleted_count = 0
+    if imported_event_types:
+        deleted_count, _ = Event.objects.filter(
+            event_type__in=imported_event_types
+        ).exclude(slug__in=imported_slugs).delete()
+
     print(f"Done. Imported {total_count} event(s).")
+    print(f"Deleted {deleted_count} stale event row(s).")
 
 
 if __name__ == "__main__":

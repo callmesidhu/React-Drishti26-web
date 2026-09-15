@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -6,38 +6,40 @@ import Navbar from '../components/Navbar.jsx'
 import Backdrop from '../components/Backdrop.jsx'
 import EventDetailsModal from '../components/EventDetailsModal.jsx'
 import Footer from '../components/Footer.jsx'
-import dakshaJson from '../data/daksha.json'
 import { applyLetterGradient } from '../utils/letterGradient.js'
+import { fetchEvents } from '../api/events.js'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const events = dakshaJson.dakshaEventsData
-
-function formatDetail(line) {
- const formatted = line
- .replace(/^Open to:\s*/i, 'Open to — ')
- .replace(/^Evaluation:\s*/i, 'Evaluation — ')
- .replace(/^Grand Finale:\s*/i, 'Grand Finale — ')
- .replace(/•/g, '·')
-
- if (formatted.includes(' — ')) {
- const [label, ...rest] = formatted.split(' — ')
- return (
- <span>
- <span className="font-semibold text-sky-400">{label} — </span>
- <span className="text-white/85">{rest.join(' — ')}</span>
- </span>
- )
- }
- return <span className="text-white/85">{formatted}</span>
-}
 
 function Daksha() {
  const { slug } = useParams()
  const routerNavigate = useNavigate()
+ const [events, setEvents] = useState([])
+ const [isLoading, setIsLoading] = useState(true)
+ const [loadError, setLoadError] = useState('')
  const selectedModalEvent = slug ? events.find((e) => e.slug === slug) : null
  const h1Ref = useRef(null)
  const eventsLabelRef = useRef(null)
+
+ useEffect(() => {
+ let cancelled = false
+
+ const loadEvents = async () => {
+  try {
+  setIsLoading(true)
+  setLoadError('')
+  const dakshaEvents = await fetchEvents({ type: 'daksha' })
+  if (!cancelled) setEvents(dakshaEvents)
+  } catch {
+  if (!cancelled) setLoadError('Unable to load Daksha events right now.')
+  } finally {
+  if (!cancelled) setIsLoading(false)
+  }
+ }
+
+ loadEvents()
+ return () => { cancelled = true }
+ }, [])
 
  useEffect(() => {
  document.body.classList.add('theme-blue')
@@ -82,6 +84,15 @@ function Daksha() {
  </header>
 
  <main className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-4 pb-16 pt-8 md:px-8">
+ {isLoading ? (
+ <div className="border border-sky-400/20 bg-black/30 px-8 py-12 text-center text-sky-400/80">
+ Loading Daksha events...
+ </div>
+ ) : loadError ? (
+ <div className="border border-red-400/30 bg-red-950/20 px-8 py-12 text-center text-red-200">
+ {loadError}
+ </div>
+ ) : (
  <div className="grid w-full max-w-[1100px] grid-cols-1 place-items-center gap-6 sm:grid-cols-2 xl:grid-cols-4">
  {events.map((event) => (
  <div
@@ -113,6 +124,7 @@ function Daksha() {
  />
  </button>
  <div className="aspect-[4/5] shrink-0 overflow-hidden border border-white/10 bg-[#111111]">
+ {event.image ? (
  <img
  src={event.image}
  alt={event.alt || event.title}
@@ -120,6 +132,13 @@ function Daksha() {
  decoding="async"
  className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
  />
+ ) : (
+ <div className="flex h-full w-full items-center justify-center px-4 text-center">
+ <span className="text-sm font-semibold uppercase tracking-wider text-sky-400">
+ {event.title}
+ </span>
+ </div>
+ )}
  </div>
  <div className="mt-4 flex min-h-[64px] shrink-0 items-start justify-between gap-3">
  <h2
@@ -138,6 +157,7 @@ function Daksha() {
  </div>
  ))}
  </div>
+ )}
  </main>
  </section>
 
