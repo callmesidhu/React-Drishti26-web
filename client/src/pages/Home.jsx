@@ -45,7 +45,7 @@ function Home() {
  };
 
  return (
- <main className="relative w-full overflow-x-hidden bg-black">
+ <main className="relative w-full overflow-x-clip bg-black">
  <Navbar />
  
  <Hero />
@@ -59,7 +59,7 @@ function Home() {
  </div>
 
  {/* ============ PRO SHOWS ============ */}
- <DeferredSection minHeight="100svh"><section id="proshows" className="relative w-full bg-black overflow-hidden z-20"><ProShows embedded={true} /></section></DeferredSection>
+ <DeferredSection minHeight="100svh"><section id="proshows" className="relative w-full bg-black z-20"><ProShows embedded={true} /></section></DeferredSection>
 
  <DeferredSection minHeight="80svh"><GallerySection /></DeferredSection>
  <DeferredSection minHeight="100svh"><DrishTees /></DeferredSection>
